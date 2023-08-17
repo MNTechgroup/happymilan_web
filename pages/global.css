@@ -1,0 +1,378 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply leading-[normal] m-0;
+}
+
+*,
+::before,
+::after {
+  border-width: 0;
+}
+
+#nav-links a {
+  color: #FFF;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration: none;
+}
+
+#home-title h1 {
+  color: #FFF;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 700;
+  /* line-height: 50px; 113.636% */
+}
+
+#home-title p {
+  flex-shrink: 0;
+  color: #FFF;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+
+#home-title button {
+  width: 231px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #0F52BA;
+  color: #FFF;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  cursor: pointer;
+  margin: "5px"
+}
+
+#hero-section {
+  flex-shrink: 0;
+  background-color: #EF4136;
+  background: linear-gradient(177deg, #EF4136 28.01%, #B5352C 100%);
+}
+
+#sec-2-title {
+  color: #000;
+  font-family: Open Sans;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  flex-shrink: 0;
+}
+
+#sec-2-stories-num {
+  color: #EF4136;
+  font-family: Open Sans;
+  font-size: 45px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+#sec-2-explore-str {
+  color: #000;
+  font-family: Open Sans;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+#sec-2-explore-story {
+  width: 199px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: linear-gradient(199deg, #EF4136 0%, #2B3990 100%);
+}
+
+#sec-2-explore-story span {
+  color: #FFF;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+#profile-section {
+  flex-shrink: 0;
+  border-radius: 24px;
+  background: #FFF;
+  box-shadow: 0px 10px 40px 0px rgba(158, 158, 158, 0.19);
+}
+
+#profile-section span {
+  color: #000;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+#sec-3-content {
+  flex-shrink: 0;
+}
+
+#sec-3-content h1 {
+  color: #000;
+  font-family: Open Sans;
+  sfont-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+#sec-3-content p {
+  color: #000;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+
+#sec-3-content button {
+  width: 199px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: linear-gradient(199deg, #EF4136 0%, #2B3990 100%);
+}
+
+#sec-3-content span {
+  color: #FFF;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+#section-4-title {
+  height: 98px;
+  flex-shrink: 0;
+  color: #000;
+  text-align: center;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+#download-section span {
+  color: #000;
+  font-family: Poppins;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+#footer-section footer {
+  background: #E9E9E9;
+}
+
+#footer-links {
+  padding-top: 10px;
+}
+
+#footer-links ul {
+  padding: 25px;
+}
+
+#footer-links ul li {
+  margin: 5px;
+  color: #333;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-left: 40px;
+}
+
+#login-box {
+  width: 452px;
+  height: 484px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #FFF;
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.13);
+}
+
+#login-wraper h1 {
+  color: #000;
+  text-align: center;
+  font-family: Poppins;
+  padding-top: 35px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+#toggle-1,
+#toggle-2 {
+  color: #000;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+#scan-qr-text {
+  color: #000;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+
+#login-icons-text span {
+  color: #000;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+#signUp-sec-1 {
+  width: 300px;
+  height: 50px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  border: 1px solid #D4D4D4;
+  background: #FFF;
+}
+
+#signUp-sec-1 span {
+  color: #000;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+#signin-phone-title {
+  color: #000;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+#signin-phone-OtpText {
+  color: #000;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+#signin-phone-Resend {
+  color: #0F52BA;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration-line: underline;
+}
+
+#Send-otp-btn {
+  color: #FFF;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border-radius: 10px;
+  background: linear-gradient(199deg, #EF4136 0%, #2B3990 100%);
+}
+
+#already-signup-text {
+  color: #000;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+#register-text {
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+#register-welcome-text {
+  color: #000;
+  font-family: Poppins;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+#progress-container {
+  height: 1px;
+  background-color: #ECECEC;
+}
+
+#progress-inner {
+  height: 100%;
+  background-color: #17C270;
+}
+
+#register-input-box {
+  width: 300px;
+  height: 50px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: #FFF;
+}
+
+/* Change */
+#photo-grid-container {
+  grid-template-columns: repeat(5, 200px);
+  grid-template-rows: repeat(5, 200px);
+  gap: 35px;
+}
+
