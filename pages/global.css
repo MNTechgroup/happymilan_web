@@ -211,8 +211,6 @@ body {
 }
 
 #login-box {
-  width: 452px;
-  height: 484px;
   flex-shrink: 0;
   border-radius: 10px;
   background: #FFF;

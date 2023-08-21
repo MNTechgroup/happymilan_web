@@ -5,9 +5,7 @@ import {
     Navbar,
     MobileNav,
     Typography,
-    Button,
     IconButton,
-    Card,
     Input,
 } from "@material-tailwind/react";
 
@@ -48,7 +46,7 @@ function login() {
         lineHeight: "normal",
         flexShrink: "0",
         borderRadius: "10px",
-        background: "white",
+        background: "#f8f8f8",
     };
 
     const [isActive, setisActive] = useState(false);
@@ -94,9 +92,13 @@ function login() {
         </ul>
     );
 
-    
+
     const [phone, setphone] = useState(false)
     const [viaEmail, setviaEmail] = useState(false)
+
+    const HandleClick = () => {
+        setphone(false)
+    }
 
     const SignupPage = () => {
         return (
@@ -117,7 +119,7 @@ function login() {
                         </div>
                     </button>
                     <button
-                    onClick={()=>setviaEmail(true)}
+                        onClick={() => setviaEmail(true)}
                         id="signUp-sec-1"
                         className="my-5 grid place-items-center cursor-pointer"
                     >
@@ -156,7 +158,7 @@ function login() {
                                 <button className="flex items-center  w-[300px] h-[50px]" id="Send-otp-btn"><span className="mx-auto">Send OTP</span> <img src="/vector.svg" className="mr-[15px]" /></button>
                             </div>
                             <div>
-                                <h1 className="cursor-pointer my-[50px]" onClick={() => { setphone(false) }} id="already-signup-text">Already Registered? Login</h1>
+                                <h1 className="cursor-pointer my-[50px]" onClick={HandleClick} id="already-signup-text">Already Registered? Login</h1>
                             </div>
                         </div>
                     </div>
@@ -166,7 +168,16 @@ function login() {
         );
     };
 
-    
+
+    const [openNav, setOpenNav] = React.useState(false);
+
+    React.useEffect(() => {
+        window.addEventListener(
+            "resize",
+            () => window.innerWidth >= 960 && setOpenNav(false),
+        );
+    }, []);
+
 
     return (
         <>
@@ -180,69 +191,104 @@ function login() {
                             <div className="flex items-center justify-between text-blue-gray-900">
                                 <Typography
                                     as="a"
-                                    href="#"
+                                    href="/"
                                     className="mr-4 cursor-pointer py-1.5 font-medium"
                                 >
                                     <img src="happy-milan-logo.svg" />
                                 </Typography>
                                 <div className="flex items-center gap-4">
                                     <div className="mr-[50px] hidden lg:block">{navList}</div>
+                                    <IconButton
+                                        variant="text"
+                                        className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
+                                        ripple={false}
+                                        onClick={() => setOpenNav(!openNav)}
+                                    >
+                                        {openNav ? (
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                className="h-6 w-6"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                                style={{ color: "white" }}
+                                                strokeWidth={2}
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    d="M6 18L18 6M6 6l12 12"
+                                                />
+                                            </svg>
+                                        ) : (
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                className="h-6 w-6"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                style={{ color: "white" }}
+                                                strokeWidth={2}
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    d="M4 6h16M4 12h16M4 18h16"
+                                                />
+                                            </svg>
+                                        )}
+                                    </IconButton>
                                 </div>
                             </div>
                         </div>
+                        <MobileNav open={openNav}>{navList}</MobileNav>
+
                     </Navbar>
                 </div>
 
                 <div>
                     <div className="flex items-center lg:items-start flex-col lg:flex-row  lg:justify-evenly">
-                        <div className="hidden lg:block relative top-[103px] w-[730px] ">
-                            {isActive ? (
-                                <img
-                                    src="/loginassests/login-group-image.png"
-                                    className="w-full h-[671.429px]"
-                                />
-                            ) : (
-                                <img
-                                    src="/loginassests/signup-group-img.png"
-                                    className="w-full lg:w-[800px] h-[678px]"
-                                />
-                            )}
+                        <div className="hidden lg:block relative top-[90px] w-[840px] ">
+
+                            <img
+                                src="/loginassests/signup-group-img.png"
+                                className="w-full lg:w-full h-full"
+                            />
                         </div>
-                        <div className="h-full  relative h-[495px] top-[150px] ">
-                            <div id="login-box" className="">
-                                {viaEmail ? <SignInEmail setviaEmail={setviaEmail}/> : <>
-                                {phone ? <SignInPhone /> :
-                                    <>
-                                        <div id="login-wraper">
-                                            <h1>Welcome to Happy Milan</h1>
-                                        </div>
-                                        <div className="my-[30px] flex justify-center">
-                                            <div className="" style={Logindiv}>
-
-                                                <div className="flex">
-                                                    <button
-                                                        onClick={() => { setisActive(false) }}
-                                                        className=""
-                                                        style={!isActive ? Logintoggle : NotActiveLogintoggle}
-                                                    >
-                                                        New USer?
-                                                    </button>
-                                                    <button
-                                                        onClick={() => { setisActive(true) }}
-                                                        className=""
-                                                        style={!isActive ? NotActiveLogintoggle : Logintoggle}
-                                                    >
-                                                        Login
-                                                    </button>
-                                                </div>
-
-                                                {isActive ? <LoginPage /> : <SignupPage />}
-                                            
-
+                        <div className="h-full  relative h-[495px] top-[220px] ">
+                            <div id="login-box" className="w-[420px] h-[440px]">
+                                {viaEmail ? <SignInEmail setviaEmail={setviaEmail} /> : <>
+                                    {phone ? <SignInPhone /> :
+                                        <>
+                                            <div id="login-wraper">
+                                                <h1>Welcome to Happy Milan</h1>
                                             </div>
-                                        </div>
-                                    </>}
-</>}
+                                            <div className="my-[30px] flex justify-center">
+                                                <div className="" style={Logindiv}>
+
+                                                    <div className="flex">
+                                                        <button
+                                                            onClick={() => { setisActive(false) }}
+                                                            className=""
+                                                            style={!isActive ? Logintoggle : NotActiveLogintoggle}
+                                                        >
+                                                            New USer?
+                                                        </button>
+                                                        <button
+                                                            onClick={() => { setisActive(true) }}
+                                                            className=""
+                                                            style={!isActive ? NotActiveLogintoggle : Logintoggle}
+                                                        >
+                                                            Login
+                                                        </button>
+                                                    </div>
+
+                                                    {isActive ? <LoginPage /> : <SignupPage />}
+
+
+                                                </div>
+                                            </div>
+                                        </>}
+                                </>}
                             </div>
                         </div>
                     </div>

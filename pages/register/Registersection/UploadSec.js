@@ -45,7 +45,7 @@ function UploadSec() {
                         <h1 style={Text1}>Almost Done! <span style={SpanStyle}>Upload Photos</span></h1>
                     </div>
 
-                    <div className='grid place-items-center w-[300px] md:w-[650px] lg:w-[1270px] h-[327px] bg-[#F5F5F5]'>
+                    <div className='grid place-items-center w-[300px] sm:w-[100%]   md:w-[650px] lg:w-[1270px] h-[327px] bg-[#F5F5F5]'>
 
                         <div className='w-[250px]  lg:w-[346px] h-[67px]'>
                             <div className='w-full grid place-items-center mt-[-10%] mb-[10%]'>

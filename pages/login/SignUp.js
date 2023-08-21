@@ -3,12 +3,7 @@
 import React, { useState } from "react";
 import {
     Navbar,
-    MobileNav,
-    Typography,
-    Button,
-    IconButton,
-    Card,
-    Input,
+    Typography
 } from "@material-tailwind/react";
 
 function Signup() {
@@ -99,7 +94,7 @@ function Signup() {
                         Scan QR to Login
                     </span>
                     <div className="relative right-[10%] my-[10px]">
-                        <img src="/loginassests/login-QR.svg" />
+                     <img src="/loginassests/login-QR.svg" />
                     </div>
                     <div className="w-[370px] relative my-[10%] right-[9%]">
                         <ul id="login-icons-ul" className="flex justify-evenly">

@@ -4,8 +4,27 @@ import dynamic from 'next/dynamic';
 
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
-import React, { useState } from "react";
-import { customStyles } from '../commonStyle';
+import React  from "react";
+
+//Style for Select Box 
+const customStyles = {
+  control: (provided) => ({
+    ...provided,
+    paddingRight: '10px',
+    width:"300px",
+    height:"50px",
+    borderRadius:"8px" // Add padding on the right side
+  }),
+  indicatorSeparator: (provided) => ({
+    ...provided,
+    display: 'none',
+    paddingRight:"20px"
+    // Hide the vertical line behind the arrow
+  }),
+};
+
+
+
 const Spanstyle = {
   color: "#000",
   fontFamily: "Poppins",
@@ -37,7 +56,7 @@ const Btntextstyle = {
   lineHeight: "normal",
 };
 
-const AddressSection = ({ data, setData }) => {
+const AddressSection = () => {
  
   
 
@@ -60,12 +79,10 @@ const AddressSection = ({ data, setData }) => {
           <div className="m-5">
             <h1 id="register-text">Address Details</h1>
           </div>
-          <div
-            className="m-5 my-5 w-[300px] md:w-auto lg:w-[667px]"
-            id="progress-container"
-          >
+          <div className="m-5 my-5 md:w-auto w-[300px] lg:w-[630px]" id="progress-container">
             <div className=" w-[100px] lg:w-[161px]" id="progress-inner"></div>
           </div>
+          <div className="ml-[6px]">
           <div className="flex flex-wrap gap-1">
             <div className="m-3">
               <span style={Spanstyle}>Current Residing Address</span>
@@ -73,10 +90,7 @@ const AddressSection = ({ data, setData }) => {
                 <input
                   style={{ border: "2px solid #c7c7c7" }}
                   placeholder="username"
-                  name="current_residing"
-                  value={data.current_residing}
-                  onChange={setData}
-                  className="pl-[10px] outline-blue border-2  rounded-[8px] h-[50px]  w-[300px] lg:w-[650px]"
+                  className="pl-[10px] outline-blue border-2  rounded-[8px] h-[50px]  w-[300px] lg:w-[630px]"
                   label="Username"
                 />
               </div>
@@ -116,6 +130,7 @@ const AddressSection = ({ data, setData }) => {
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>

@@ -74,7 +74,7 @@ function Sidebar() {
                 >
                     Member Login{" "}
                     <img
-                        src="/Vector1.svg"
+                        src="/assests/Black/Vector-2.svg"
                         className="mr-10  relative left-[15px]"
                     />
                 </Link>
@@ -96,10 +96,10 @@ function Sidebar() {
                             href="#"
                             className="mr-4 cursor-pointer py-1.5 font-medium"
                         >
-                     <img src="asset-1-1.svg" />
+                     <img src="/asset-1-1.svg" />
                         </Typography>
                         <div className="flex items-center gap-4">
-                            <div className="mr-4 hidden lg:block">{navList}</div>
+                            <div className="mr-14 hidden lg:block">{navList}</div>
                             <IconButton
                                 variant="text"
                                 className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"

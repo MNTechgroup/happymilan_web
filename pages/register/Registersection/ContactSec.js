@@ -1,9 +1,28 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import dynamic from "next/dynamic";
-import { customStyle2 } from "../commonStyle";
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
+
+//Style for Select Box
+const customStyle2 = {
+  control: (provided) => ({
+    ...provided,
+    paddingRight: '10px',
+    width:"200px",
+    height:"50px",
+    borderRadius:"8px" // Add padding on the right side
+  }),
+  indicatorSeparator: (provided) => ({
+    ...provided,
+    display: 'none',
+    paddingRight:"20px"
+    // Hide the vertical line behind the arrow
+  }),
+};
+
+
+
 
 const Spanstyle = {
   color: "#000",
@@ -37,13 +56,11 @@ const ContactSection = () => {
           <div className="m-5">
             <h1 id="register-text">Contact Details</h1>
           </div>
-          <div
-            className="m-5 my-5 md:w-auto lg:w-[667px]"
-            id="progress-container"
-          >
+          <div className="m-5 my-5 md:w-auto w-[300px] lg:w-[630px]" id="progress-container">
             <div className="w-[234px]" id="progress-inner"></div>
           </div>
-          <div className="flex flex-col w-full flex-wrap gap-3">
+          <div className="ml-[6px]">
+          <div className="flex flex-col w-full flex-wrap gap-1">
             <div className="m-3">
               <span style={Spanstyle}>Mobile Number</span>
 
@@ -51,10 +68,10 @@ const ContactSection = () => {
                 <div class="flex items-center">
                   <DynamicSelect styles={customStyle2} options={options1} />
                 </div>
-                <div className="mt-[10px] md:mt-0 lg:mt-0 md:ml-[8%] lg:ml-[8%]">
+                <div className="mt-[10px] md:mt-0 lg:mt-0 md:ml-[8%] lg:ml-[4%]">
                   <input
                     placeholder="Number"
-                    className="pl-[10px] rounded-[8px] border-2 w-[350px] lg:w-[400px] h-[52px]"
+                    className="pl-[10px] rounded-[8px] border-2 w-[320px] lg:w-[400px] h-[52px]"
                     label="Number"
                     style={{ border: "2px solid #c7c7c7" }}
                   />
@@ -70,10 +87,10 @@ const ContactSection = () => {
                 <DynamicSelect styles={customStyle2} options={options2} />
                 
                 </div>
-                <div className="mt-[10px] md:mt-0 lg:mt-0 md:ml-[8%] lg:ml-[8%]">
+                <div className="mt-[10px] md:mt-0 lg:mt-0 md:ml-[8%] lg:ml-[4%]">
                   <input
                     placeholder="Number"
-                    className="pl-[10px] rounded-[8px] w-[350px] lg:w-[400px] h-[52px]"
+                    className="pl-[10px] rounded-[8px] w-[320px] lg:w-[400px] h-[52px]"
                     label="Number"
                     style={{ border: "2px solid #c7c7c7" }}
                   />
@@ -85,12 +102,13 @@ const ContactSection = () => {
               <div className="w-full">
                 <input
                   placeholder="Email"
-                  className="pl-[10px] rounded-[8px]  h-[50px] w-[350px] border-2 md:w-[670px]  lg:w-[670px]"
+                  className="pl-[10px] rounded-[8px]  h-[50px] w-[320px] border-2 md:w-[670px]  lg:w-[630px]"
                   label="Email"
                   style={{ border: "2px solid #c7c7c7" }}
                 />
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>

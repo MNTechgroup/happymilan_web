@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const LoginPage = () => {
     return (
         <>
@@ -6,15 +8,17 @@ const LoginPage = () => {
                     Scan QR to Login
                 </span>
                 <div className="relative right-[10%] my-[10px]">
+                <Link href="/register"> 
                     <img src="/loginassests/login-QR.svg" />
+                </Link>
                 </div>
-                <div className="w-[370px] relative my-[10%] right-[9%]">
+                <div className="w-[370px] relative my-[6%] right-[9%]">
                     <ul id="login-icons-ul" className="flex justify-evenly">
                         <div id="login-icons-text" className="flex items-center">
-                            <img
+                           <img
                                 src="/assests/Black/Contact.svg"
                                 className="w-[16px] h-[16px]"
-                            />{" "}
+                            />{" "} 
                             <span className="relative left-[10px]">Sign via Phone</span>
                         </div>
                         <span className="w-[1px] h-[26px] bg-[#E8E8E8]"></span>

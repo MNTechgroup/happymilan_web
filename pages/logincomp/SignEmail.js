@@ -1,14 +1,6 @@
-import {
-    Navbar,
-    MobileNav,
-    Typography,
-    Button,
-    IconButton,
-    Card,
-    Input,
-} from "@material-tailwind/react";
+import { Input } from "@material-tailwind/react";
 
-const SignInEmail = ({setviaEmail}) => {
+const SignInEmail = ({ setviaEmail }) => {
     return (
         <>
             <div className="">

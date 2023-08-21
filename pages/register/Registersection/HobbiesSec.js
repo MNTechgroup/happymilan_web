@@ -74,16 +74,16 @@ function HobbiesSec() {
     return (
       <>
        
-        <div className="flex justify-between mt-[1%] mr-[20%] ml-[2%]">
+        <div className="flex justify-between  mt-[1%] mr-[20%] ml-[2%]">
           <h1 style={Text1}>{title}</h1>
         </div>
-        <div className="flex flex-wrap mt-[10px]">
+        <div className="flex flex-wrap lg:ml-[12px] lg:w-[680px]  mt-[10px]">
           {hobbies.map((res) => {
             return (
               <>
-                <div className="m-1 ml-[15px]">
+                <div className="m-1 ml-[10px] lg:ml-[4px]">
                   <button
-                    className={` duration-500 w-[216px] h-[40px] rounded-[8px] hover:bg-[#0F52BA] hover:text-white ${
+                    className={` text-left pl-[10px] duration-500 w-[170px] lg:w-[207px] md:w-[210px] h-[40px] rounded-[8px] hover:bg-[#0F52BA] hover:text-white ${
                       selectedHobbies.includes(res)
                         ? "bg-[#0F52BA] text-white"
                         : ""
@@ -119,16 +119,12 @@ function HobbiesSec() {
         <div className="m-5">
           <h1 id="register-text">Hobbies and Interest</h1>
         </div>
-        <div
-          className="m-5 my-5 md:w-auto w-[85%] lg:w-[667px]"
-          id="progress-container"
-        >
+        <div className="m-5 my-5 md:w-auto w-[90%] lg:w-[630px]" id="progress-container">
           <div className="w-[100%]" id="progress-inner"></div>
         </div>
-
-        <div className="flex justify-between mr-[20%] ml-[2%]">
+        <div className=" lg:w-[630px] flex justify-between mr-[20%] ml-[2%]">
           <h1 style={Text1}>Creative</h1>
-          <h1 className="lg:mr-[4%]" style={Text1}>
+          <h1 className="" style={Text1}>
             Selected :{" "}
             <span className="w-full font-bold">{selectedHobbies.length}/5</span>
           </h1>
@@ -146,7 +142,7 @@ function HobbiesSec() {
           ))}
         </div>
       </div>
-    </>
+      </>
   );
 }
 

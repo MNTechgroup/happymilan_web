@@ -26,21 +26,6 @@ const btnstyle = {
 };
 
 function Home() {
-    const [data, setData] = useState({
-        first_name: "",
-        last_name: "",
-        current_residing: "",
-        current_city: "",
-        current_country: "",
-    });
-
-    const HandleChangeInp = (e) => {
-        const { name, value } = e.target;
-        setData({
-            ...data,
-            [name]: value,
-        });
-    };
 
     const [activeTab, setActiveTab] = useState(1);
 
@@ -51,9 +36,9 @@ function Home() {
     const renderTabContent = () => {
         switch (activeTab) {
             case 1:
-                return <GeneralSection data={data} setData={HandleChangeInp} />;
+                return <GeneralSection />;
             case 2:
-                return <AddressSection data={data} setData={HandleChangeInp} />;
+                return <AddressSection />;
             case 3:
                 return <ContactSection />;
             case 4:
@@ -204,11 +189,11 @@ function Home() {
                                         <div className="lg:w-[450px] flex items-center justify-center lg:relative top-[40px] lg:ml-[40px]">
                                             <h1 id="register-welcome-text">Welcome to Happy Milan!</h1>
                                         </div>
-                                        <div className="grid place-items-center lg:ml-[20%]">
+                                        <div className="grid place-items-center lg:ml-[18%]">
                                             <div className="lg:m-5 md:m-5 lg:my-14">
                                                 <img
                                                     src="/assests/pic/StoryPhotosSize.svg"
-                                                    className="relative  top-[100px] lg:top-[0px] object-cover"
+                                                    className="relative h-[420px]  top-[100px] lg:top-[0px] object-cover"
                                                 />
                                                 
                                             </div>
@@ -219,17 +204,17 @@ function Home() {
                                 {/* { Story Section End } */}
 
                                 {/* content */}
-                                <div className="lg:mt-[5px] lg:ml-[41%] lg:block md:grid place-items-center  w-full">
+                                <div className="lg:mt-[5px] lg:ml-[40.5%] lg:block md:grid place-items-center  w-full">
                                     <div className=" w-full lg:block justify-end flex lg:ml-0 ml-[-20px]">
                                         <img
                                             className="hidden  lg:block lg:relative left-[88%] top-[25px]"
                                             src="/assests/Black/Arrow2.svg"
                                         />
                                     </div>
-                                    <div className="m-5 lg:m-0 lg:ml-[-12px] lg:relative md:relative flex  lg:my-[5%] flex-start gap-2 lg:gap-7">
+                                    <div className=" m-5 lg:m-0 lg:ml-[-12px] lg:relative md:relative flex  lg:my-[5%] flex-start gap-2 lg:gap-7">
                                         <div
                                             onClick={() => HandleTabclick(1)}
-                                            className={`rounded-[10px] w-[54px] h-[54px] grid place-items-center bg-[#0F52BA] ${activeTab === 2 ||
+                                            className={` rounded-[10px] w-[54px] h-[54px] grid place-items-center bg-[#0F52BA] ${activeTab === 2 ||
                                                 activeTab === 3 ||
                                                 activeTab === 4 ||
                                                 activeTab === 5 ||
@@ -242,7 +227,7 @@ function Home() {
                                         </div>
                                         <div
                                             onClick={() => HandleTabclick(2)}
-                                            className={`rounded-[10px] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 3 ||
+                                            className={` ${activeTab === 1 ? "bg-[#EAEAEA]" :  "" } rounded-[10px] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 3 ||
                                                 activeTab === 4 ||
                                                 activeTab === 5 ||
                                                 activeTab === 6
@@ -266,7 +251,7 @@ function Home() {
                                         </div>
                                         <div
                                             onClick={() => HandleTabclick(3)}
-                                            className={`rounded-[10px] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 4 || activeTab === 5 || activeTab === 6
+                                            className={`${activeTab === 1 || activeTab === 2  ? "bg-[#EAEAEA]" : ""} rounded-[10px] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 4 || activeTab === 5 || activeTab === 6
                                                 ? "bg-green-500"
                                                 : ""
                                                 }   ${activeTab === 3 ? "bg-[#0F52BA]" : ""}`}
@@ -285,7 +270,7 @@ function Home() {
                                         </div>
                                         <div
                                             onClick={() => HandleTabclick(4)}
-                                            className={`rounded-[10px] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 5 || activeTab === 6 ? "bg-green-500" : ""
+                                            className={`${activeTab === 4 || activeTab === 5 || activeTab === 6 ? "" : "bg-[#EAEAEA]"} rounded-[10px] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 5 || activeTab === 6 ? "bg-green-500" : ""
                                                 }  ${activeTab === 4 ? "bg-[#0F52BA]" : ""}`}
                                         >
                                             {
@@ -303,7 +288,7 @@ function Home() {
                                         </div>
                                         <div
                                             onClick={() => HandleTabclick(5)}
-                                            className={`rounded-[10px] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 6 ? "bg-green-500" : ""
+                                            className={`${activeTab === 5 || activeTab === 6 ? "" : "bg-[#EAEAEA]"} rounded-[10px] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 6 ? "bg-green-500" : ""
                                                 }  ${activeTab === 5 ? "bg-[#0F52BA]" : ""}`}
                                         >
                                             {
@@ -320,7 +305,7 @@ function Home() {
                                         </div>
                                         <div
                                             onClick={() => HandleTabclick(6)}
-                                            className={`rounded-[10px] w-[54px] h-[54px] flex items-center justify-center   ${activeTab === 6 ? "bg-[#0F52BA]" : ""
+                                            className={`${activeTab === 6 ? "" : "bg-[#EAEAEA]"} rounded-[10px] w-[54px] h-[54px] flex items-center justify-center   ${activeTab === 6 ? "bg-[#0F52BA]" : ""
                                                 }`}
                                         >
                                             {
@@ -348,21 +333,20 @@ function Home() {
 
                 <div className="fixed top-[90%] md:top-[85%] lg:top-[88%] bg-[#FFF] border-t-2  h-[150px] w-full md:w-full lg:w-screen">
                     <div className="flex justify-between">
-                        <div className="m-5 lg:ml-[9%]">
+                        <div className="m-5 lg:ml-[9.5%]">
                             <button
                                 style={btnstyle}
-                                onClick={() => console.log(data)}
-                                className="text-[#000] border-2 border-[#000] rounded-[10px] w-[125px] h-[49px]"
+                                className="text-[#000] border-2 border-[#000] rounded-[10px] w-[120px]  md:w-[125px] lg:w-[125px] h-[49px]"
                             >
                                 Save as Draft
                             </button>
                         </div>
-                        <div className="m-5  lg:mr-[17%]">
+                        <div className="m-5  lg:mr-[19%]">
                             {activeTab <= 1 ? (
                                 <>
                                     <button
                                         style={btnstyle}
-                                        className="text-[#FFF] bg-[#0F52BA] rounded-[10px] w-[125px] h-[49px]"
+                                        className="text-[#FFF] bg-[#0F52BA] rounded-[10px] w-[130px] md:w-[100px] relative right-[20px] lg:left-[0px]   lg:w-[125px] h-[49px]"
                                         onClick={() => HandleTabclick(activeTab + 1)}
                                     >
                                         Continue
@@ -373,15 +357,16 @@ function Home() {
                                     <div className="flex lg:gap-5 ">
                                         <button
                                             style={btnstyle}
-                                            className="text-[#000]  relative right-[25px] mr-[5%] lg:mr-[5px] border-2 border-[#000] rounded-[10px] w-[90px] lg:w-[120px] h-[49px]"
+                                            className="text-[#000]  relative lg:right-[8px] right-[14%] mr-[5%] lg:mr-0 border-2 border-[#000] rounded-[10px] w-[65px] sm:w-[120px] md:w-[120px] lg:w-[120px] h-[49px]"
                                             onClick={() => HandleTabclick(activeTab - 1)}
                                         >
                                             Back
                                         </button>
                                         <button
                                             style={btnstyle}
-                                            className="text-[#FFF] bg-[#0F52BA] rounded-[10px] w-[100px] relative right-[20px]  lg:w-[125px] h-[49px]"
-                                            onClick={() => HandleTabclick(activeTab + 1)}
+                                            className="text-[#FFF] bg-[#0F52BA] rounded-[10px] w-[130px] md:w-[100px]  relative right-[20px] lg:left-[0px]
+                                               lg:w-[125px] h-[49px]"
+                                            onClick={() => activeTab >= 8 ? setActiveTab(8)  : HandleTabclick(activeTab + 1)}
                                         >
                                             {activeTab === 8 ? "Start Searching" : "Continue"}
                                         </button>
