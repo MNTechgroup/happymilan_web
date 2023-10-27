@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
-    Navbar,
     MobileNav,
     Typography,
     IconButton,
 } from "@material-tailwind/react";
 import Link from "next/link";
+import { useRouter } from 'next/router';
 import GeneralSection from "./Registersection/GeneralSec";
 import ContactSection from "./Registersection/ContactSec";
 import AddressSection from "./Registersection/AddressSec";
@@ -16,6 +16,9 @@ import ProfessionalSec from "./Registersection/ProfessionalSec";
 import HobbiesSec from "./Registersection/HobbiesSec";
 import UploadSec from "./Registersection/UploadSec";
 import GridphotoSec from "./Registersection/GridphotoSec";
+import Navbar from "../components/Navbar";
+import SelectionSec from "./Registersection/SelectionSec";
+import PartnerPreference from "./Registersection/PartnerPreference";
 
 const btnstyle = {
     fontFamily: "Poppins",
@@ -27,10 +30,23 @@ const btnstyle = {
 
 function Home() {
 
+    const [FormOpen, setFormOpen] = useState(true);
+
+
+
+
+  useEffect(() => {
+    if (!FormOpen) {
+      window.scrollTo(0, 0)
+    }
+  }, [FormOpen]);
+
+
     const [activeTab, setActiveTab] = useState(1);
 
     const HandleTabclick = (id) => {
         setActiveTab(id);
+        setFormOpen(true)
     };
 
     const renderTabContent = () => {
@@ -42,176 +58,60 @@ function Home() {
             case 3:
                 return <ContactSection />;
             case 4:
-                return <EducationSec />;
+                return <EducationSec HandleTabclick={HandleTabclick} activeTab={activeTab} />;
             case 5:
-                return <ProfessionalSec />;
+                return <ProfessionalSec HandleTabclick={HandleTabclick} activeTab={activeTab} />;
             case 6:
-                return <HobbiesSec />;
+                return <HobbiesSec HandleTabclick={HandleTabclick} activeTab={activeTab} />;
             default:
                 "";
         }
     };
 
-    const [openNav, setOpenNav] = React.useState(false);
 
-    React.useEffect(() => {
-        window.addEventListener(
-            "resize",
-            () => window.innerWidth >= 960 && setOpenNav(false),
-        );
-    }, []);
+    <img
+        src="/assests/pic/StoryPhotosSize.svg"
+        className="relative  lg:max-h-[340px] xl:max-h-[310px]  2xl:max-h-[365.5px]   top-[100px] lg:top-0"
+    />
+    const router = useRouter();
 
-    const navList = (
-        <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-            <Typography
-                id="nav-links"
-                as="li"
-                variant="small"
-                color="blue-gray"
-                className="p-1 font-normal"
-            >
-                <a
-                    href="#"
-                    className="flex items-center poppins"
-                    style={{ textDecoration: "none", color: "black" }}
-                >
-                    About Happy Milan
-                </a>
-            </Typography>
-            <Typography
-                id="nav-links"
-                as="li"
-                variant="small"
-                color="blue-gray"
-                className="p-1 font-normal poppins"
-            >
-                <a style={{ color: "black" }} href="#" className="flex items-center">
-                    Blogs
-                </a>
-            </Typography>
-            <Typography
-                id="nav-links"
-                as="li"
-                variant="small"
-                color="blue-gray"
-                className="p-1 font-normal"
-            >
-                <a style={{ color: "black" }} href="#" className="flex items-center">
-                    Success Stories
-                </a>
-            </Typography>
-            <Typography
-                id="nav-links"
-                as="li"
-                variant="small"
-                color="blue-gray"
-                className="p-1 font-normal"
-            >
-                <Link
-                    style={{ color: "black" }}
-                    href="/login"
-                    className="flex items-center"
-                >
-                    Member Login{" "}
-                    <img
-                        src="assests/Black/Vector.svg"
-                        className="mr-10  relative left-[15px]"
-                    />
-                </Link>
-            </Typography>
-        </ul>
-    );
+    const Text1 = {
+        color: "#000",
+        fontFamily: "Poppins",
+        fontSize: "16px",
+        fontStyle: "normal",
+        lineHeight: "normal",
+    };
     return (
         <>
-            <div className="max-h-[768px] w-auto">
-                <Navbar className="sticky top-0 z-10 h-max max-w-full shadow-none rounded-none py-2 px-4 lg:px-8 lg:py-4">
-                    <div className="flex items-center justify-between">
-                        <Typography
-                            as="a"
-                            href="#"
-                            className="mr-4 cursor-pointer py-1.5 font-medium"
-                        >
-                            <img src="/heroSec/Happy-milan2.svg" />
-                        </Typography>
-                        <div className="flex items-center gap-4">
-                            <div className="mr-4 hidden lg:block">{navList}</div>
-                            <IconButton
-                                variant="text"
-                                className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
-                                ripple={false}
-                                onClick={() => setOpenNav(!openNav)}
-                            >
-                                {openNav ? (
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        className="h-6 w-6"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                        style={{ color: "black" }}
-                                        strokeWidth={2}
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M6 18L18 6M6 6l12 12"
-                                        />
-                                    </svg>
-                                ) : (
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="h-6 w-6"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        style={{ color: "black" }}
-                                        strokeWidth={2}
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M4 6h16M4 12h16M4 18h16"
-                                        />
-                                    </svg>
-                                )}
-                            </IconButton>
-                        </div>
-                    </div>
-                    <MobileNav open={openNav}>{navList}</MobileNav>
-                </Navbar>
+            <Navbar />
+            {activeTab === 8 ? <GridphotoSec /> : <>
+                {activeTab === 7 ? <UploadSec /> : <>
 
-                {activeTab === 8 ? <GridphotoSec /> : <>
-                    {activeTab === 7 ? <UploadSec /> : <>
-                        <div className="">
-                            <div className="flex lg:flex-row flex-col">
-                                {/* { Story Section Start } */}
-                                <div className=" z-[10] lg:block hidden  lg:w-[550px] lg:fixed  lg:h-screen ">
-                                    <div className=" lg:mr-[50px]">
-                                        <div className="lg:w-[450px] flex items-center justify-center lg:relative top-[40px] lg:ml-[40px]">
-                                            <h1 id="register-welcome-text">Welcome to Happy Milan!</h1>
-                                        </div>
-                                        <div className="grid place-items-center lg:ml-[18%]">
-                                            <div className="lg:m-5 md:m-5 lg:my-14">
-                                                <img
-                                                    src="/assests/pic/StoryPhotosSize.svg"
-                                                    className="relative h-[420px]  top-[100px] lg:top-[0px] object-cover"
-                                                />
-                                                
-                                            </div>
-                                        </div>
+                    <div className='w-full h-full grid place-items-center pt-[100px]'>
+
+
+
+
+                        <div className='block lg:flex  2xl:gap-x-[70px] xl:gap-x-[0px]'>
+
+                            <div className='lg:block hidden 2xl:mr-0 xl:mr-0 lg:ml-0 2xl:w-[400px] xl:w-[400px] lg:w-[300px] w-full  h-[600px] 2xl:ml-0 xl:ml-[100px] '>
+                                <div className='fixed'>
+
+                                    <div className='pb-[17px]'>
+                                        <h1 className='text-[#000]' style={Text1}>Welcome to Happy Milan!</h1>
                                     </div>
+                                    <img src='/assests/common/Mariage-img-1.svg' onClick={() => router.push("/successstories/1")} className='cursor-pointer 2xl:h-auto xl:h-[300px]' />
                                 </div>
+                            </div>
 
-                                {/* { Story Section End } */}
+                            <div className='lg:pb-0 2xl:pb-0 xl:pb-0 w-[90%] md:w-[700px] lg:w-[700px] h-screen '>
+                                <div className='w-full h-full pt-[40px] ml-2 md:ml-[10px]'>
+                                    
+                                {activeTab === 9 ? <PartnerPreference/>: 
+                                <>
+                                    <div className='flex gap-x-[10px] md:gap-x-[20px]'>
 
-                                {/* content */}
-                                <div className="lg:mt-[5px] lg:ml-[40.5%] lg:block md:grid place-items-center  w-full">
-                                    <div className=" w-full lg:block justify-end flex lg:ml-0 ml-[-20px]">
-                                        <img
-                                            className="hidden  lg:block lg:relative left-[88%] top-[25px]"
-                                            src="/assests/Black/Arrow2.svg"
-                                        />
-                                    </div>
-                                    <div className=" m-5 lg:m-0 lg:ml-[-12px] lg:relative md:relative flex  lg:my-[5%] flex-start gap-2 lg:gap-7">
                                         <div
                                             onClick={() => HandleTabclick(1)}
                                             className={` rounded-[10px] w-[54px] h-[54px] grid place-items-center bg-[#0F52BA] ${activeTab === 2 ||
@@ -227,7 +127,7 @@ function Home() {
                                         </div>
                                         <div
                                             onClick={() => HandleTabclick(2)}
-                                            className={` ${activeTab === 1 ? "bg-[#EAEAEA]" :  "" } rounded-[10px] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 3 ||
+                                            className={` ${activeTab === 1 ? "bg-[#EAEAEA]" : ""} rounded-[10px] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 3 ||
                                                 activeTab === 4 ||
                                                 activeTab === 5 ||
                                                 activeTab === 6
@@ -251,7 +151,7 @@ function Home() {
                                         </div>
                                         <div
                                             onClick={() => HandleTabclick(3)}
-                                            className={`${activeTab === 1 || activeTab === 2  ? "bg-[#EAEAEA]" : ""} rounded-[10px] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 4 || activeTab === 5 || activeTab === 6
+                                            className={`${activeTab === 1 || activeTab === 2 ? "bg-[#EAEAEA]" : ""} rounded-[10px] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 4 || activeTab === 5 || activeTab === 6
                                                 ? "bg-green-500"
                                                 : ""
                                                 }   ${activeTab === 3 ? "bg-[#0F52BA]" : ""}`}
@@ -319,30 +219,38 @@ function Home() {
                                             }
 
                                         </div>
+
                                     </div>
-                                    {/* Forms Input Start */}
-                                    {renderTabContent()}
-                                    {/* Forms Input End */}
-                                 </div>
+
+                                    <div className='2xl:ml-[5px] xl:ml-[5px]'>
+
+                                        {renderTabContent()}
+
+                                    </div>
+
+                                    </>}
+
+                                </div>
+
                             </div>
 
                         </div>
-                    </>}
+
+
+
+                    </div>
+
+
                 </>}
+            </>}
 
 
-                <div className="fixed top-[90%] md:top-[85%] lg:top-[88%] bg-[#FFF] border-t-2  h-[150px] w-full md:w-full lg:w-screen">
-                    <div className="flex justify-between">
-                        <div className="m-5 lg:ml-[9.5%]">
-                            <button
-                                style={btnstyle}
-                                className="text-[#000] border-2 border-[#000] rounded-[10px] w-[120px]  md:w-[125px] lg:w-[125px] h-[49px]"
-                            >
-                                Save as Draft
-                            </button>
-                        </div>
-                        <div className="m-5  lg:mr-[19%]">
-                            {activeTab <= 1 ? (
+            <div className=' w-full h-full grid place-items-center'>
+                <div className='fixed z-10 bottom-0 flex justify-center bg-[#FFF] border-[1px] border-[#ECECEC] w-full 2xl:h-[100px] xl:h-[100px] lg:h-[80px] h-[80px]'>
+
+                    <div className="m-5 flex justify-end w-full lg:w-full 2xl:w-[1130px] xl:w-[1162px] md:w-full ">
+                        <div className="flex lg:gap-5 ml-[5px]">
+                            {activeTab < 1 ? (
                                 <>
                                     <button
                                         style={btnstyle}
@@ -357,28 +265,28 @@ function Home() {
                                     <div className="flex lg:gap-5 ">
                                         <button
                                             style={btnstyle}
-                                            className="text-[#000]  relative lg:right-[8px] right-[14%] mr-[5%] lg:mr-0 border-2 border-[#000] rounded-[10px] w-[65px] sm:w-[120px] md:w-[120px] lg:w-[120px] h-[49px]"
-                                            onClick={() => HandleTabclick(activeTab - 1)}
+                                            onClick={() => activeTab === 1 ? router.push("/login/1") : HandleTabclick(activeTab - 1)}
+                                            className="text-[#000]  relative lg:right-[8px] right-[14%] mr-[5%] lg:mr-0 border-[1px] border-[#000] rounded-[10px] w-[120px] sm:w-[120px] md:w-[120px] lg:w-[120px] h-[49px]"
                                         >
                                             Back
                                         </button>
                                         <button
                                             style={btnstyle}
+                                            onClick={() => activeTab >= 9 ? router.push("/dashboard") : HandleTabclick(activeTab + 1)}
                                             className="text-[#FFF] bg-[#0F52BA] rounded-[10px] w-[130px] md:w-[100px]  relative right-[20px] lg:left-[0px]
                                                lg:w-[125px] h-[49px]"
-                                            onClick={() => activeTab >= 8 ? setActiveTab(8)  : HandleTabclick(activeTab + 1)}
                                         >
-                                            {activeTab === 8 ? "Start Searching" : "Continue"}
+                                            {activeTab === 8 ? "Explore Now" : "Continue"}
                                         </button>
                                     </div>
                                 </>
                             )}
                         </div>
                     </div>
+
                 </div>
 
             </div>
-
 
         </>
     );

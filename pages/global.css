@@ -25,7 +25,6 @@ body {
 }
 
 #home-title h1 {
-  color: #FFF;
   font-family: Poppins;
   font-style: normal;
   font-weight: 700;
@@ -34,7 +33,6 @@ body {
 
 #home-title p {
   flex-shrink: 0;
-  color: #FFF;
   font-family: Poppins;
   font-size: 12px;
   font-style: normal;
@@ -43,8 +41,6 @@ body {
 }
 
 #home-title button {
-  width: 231px;
-  height: 60px;
   flex-shrink: 0;
   border-radius: 10px;
   background: #0F52BA;
@@ -68,7 +64,6 @@ body {
 #sec-2-title {
   color: #000;
   font-family: Open Sans;
-  font-size: 32px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -132,10 +127,10 @@ body {
   flex-shrink: 0;
 }
 
-#sec-3-content h1 {
+#sec-3-content #sec-3-h1 {
   color: #000;
   font-family: Open Sans;
-  sfont-style: normal;
+  font-style: normal;
   font-weight: 400;
   line-height: normal;
 }
@@ -186,9 +181,9 @@ body {
   line-height: normal;
 }
 
-#footer-section footer {
+/* #footer-section footer {
   background: #E9E9E9;
-}
+} */
 
 #footer-links {
   padding-top: 10px;
@@ -200,7 +195,6 @@ body {
 
 #footer-links ul li {
   margin: 5px;
-  color: #333;
   text-align: center;
   font-family: Poppins;
   font-size: 12px;
@@ -221,7 +215,6 @@ body {
   color: #000;
   text-align: center;
   font-family: Poppins;
-  padding-top: 35px;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -241,7 +234,6 @@ body {
 
 #scan-qr-text {
   color: #000;
-  text-align: center;
   font-family: Poppins;
   font-size: 12px;
   font-style: normal;
@@ -343,10 +335,10 @@ body {
 #register-welcome-text {
   color: #000;
   font-family: Poppins;
-  font-size: 18px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  width: 231px;
 }
 
 #progress-container {
@@ -367,10 +359,210 @@ body {
   background: #FFF;
 }
 
+#faq-title-1{
+  color: #000;
+text-align: center;
+font-family: Poppins;
+font-size: 24px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+#faq-title-2{
+  color: #000;
+font-family: Poppins;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
 /* Change */
 #photo-grid-container {
   grid-template-columns: repeat(5, 200px);
-  grid-template-rows: repeat(5, 200px);
-  gap: 35px;
+ 
+}
+
+/* ::-webkit-scrollbar {
+  display: none;
+} */
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Show scrollbar for .req-slide */
+
+
+
+
+.custom-dialog-backdrop {
+  background-color: rgba(0, 0, 0, 0); /* Transparent background */
+  backdrop-filter: none; /* Remove blur */
+  transition: backdrop-filter 0.3s ease; /* Optional transition effect */
+}
+
+#number-input::-webkit-inner-spin-button,
+#number-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#user-card {
+  width: 100%; /* Set the desired width of your card */
+  border-radius: 5px;
+}
+
+#user-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Create 3 equal columns */
+  grid-gap: 5px; /* Add some space between grid items */
+  list-style: none;
+  padding: 0;
+}
+
+.profile-page-scroll {
+  scroll-behavior: smooth;
+  scroll-padding-top: 70px; /* Adjust as needed to accommodate your tab/header height */
+}
+
+.sliding-panel {
+  transition: transform 0.5s;
+  transform: translateX(400px);
+}
+
+.sliding-panel.open {
+  transform: translateX(0);
+}
+
+
+
+/* Heart Animation  */
+
+.heart-App {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} 
+
+.heart-icon {
+  height: 100px;
+  width: 100px;
+  background: url("/assests/animation/heart.png");
+  background-position: left;
+  cursor: pointer;
+  position: absolute;
+  
+}
+
+.heart-bg {
+  background: rgba(255, 192, 200, 0);
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 100ms ease;
+  background: #0F52BA;
+}
+
+.heart-bg:hover {
+  /* background: rgba(255, 192, 200, 0.7); */
+  background: #0F52BA;
+}
+
+.likes-amount {
+  font-size: 20px;
+  font-family: "Roboto", sans-serif;
+  color: #888;
+  font-weight: 900;
+  margin-left: 6px;
+}
+
+.heart-icon.liked {
+  animation: like-anim 0.7s steps(28) forwards;
+}
+
+@keyframes like-anim {
+  to {
+    background-position: right;
+  }
+}
+
+.likes-amount.liked {
+  color: red;
+}
+
+
+
+.verification {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-family: Arial, sans-serif;
+}
+
+.checkmark {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: block;
+  stroke-width: 2;
+  stroke: #00adef;
+  stroke-miterlimit: 10;
+  box-shadow: inset 0px 0px 0px #00adef;
+  animation: fill 0.4s ease-in-out 0.4s forwards;
+}
+
+.checkmark_stem {
+  width: 15px;
+  height: 30px;
+  position: absolute;
+  display: block;
+  background-color: #00adef;
+  top: 28px;
+  left: 29px;
+  animation: fill 0.4s ease-in-out 0.4s forwards;
+}
+
+.checkmark_kick {
+  width: 5px;
+  height: 9px;
+  position: absolute;
+  display: block;
+  background-color: #00adef;
+  top: 41px;
+  left: 23px;
+  animation: fill 0.4s ease-in-out 0.4s forwards;
+}
+
+@keyframes fill {
+  0% {
+    box-shadow: inset 0px 0px 0px transparent;
+  }
+  100% {
+    box-shadow: inset 0px 0px 0px 40px #00adef;
+  }
+}
+
+.verify-p {
+  margin-top: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #00adef;
+  animation: fade-in 0.5s ease-in-out 0.8s forwards;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 

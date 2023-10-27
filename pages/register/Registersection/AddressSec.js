@@ -1,66 +1,42 @@
 "use client";
 
+import { Checkbox } from '@material-tailwind/react';
 import dynamic from 'next/dynamic';
 
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
-import React  from "react";
+import React, { useEffect, useState } from "react";
 
 //Style for Select Box 
 const customStyles = {
-  control: (provided) => ({
+  control: (provided, state) => ({
     ...provided,
     paddingRight: '10px',
-    width:"300px",
-    height:"50px",
-    borderRadius:"8px" // Add padding on the right side
+    paddingLeft: "8px",
+    width: "300px",
+    height: "50px",
+    borderRadius: "8px", // Add padding on the right side
+    border: "1px solid #e6e6e6",
+    borderColor: state.isFocused ? 'black' : provided.borderColor,
+    '&:hover': {
+      borderColor: 'black',
+    },
+    boxShadow: state.isFocused ? 'none' : provided.boxShadow,
   }),
   indicatorSeparator: (provided) => ({
     ...provided,
     display: 'none',
-    paddingRight:"20px"
+    paddingRight: "20px"
     // Hide the vertical line behind the arrow
   }),
 };
 
 
 
-const Spanstyle = {
-  color: "#000",
-  fontFamily: "Poppins",
-  fontSize: "12px",
-  fontStyle: "normal",
-  fontWeight: "400",
-  lineHeight: "normal",
-  position: "relative",
-  top: "-10px",
-  left: "4px",
-};
-
-const Headtext = {
-  color: "#000",
-  fontFamily: "Poppins",
-  fontSize: "14px",
-  fontStyle: "normal",
-  fontWeight: "600",
-  lineHeight: "normal",
-};
-
-const Btntextstyle = {
-  color: "#000",
-  textAlign: "center",
-  fontFamily: "Poppins",
-  fontSize: "14px",
-  fontStyle: "normal",
-  fontWeight: "400",
-  lineHeight: "normal",
-};
 
 const AddressSection = () => {
- 
-  
 
-  const options1 = [
+  const options = [
     { value: 'option1', label: 'Option 1' },
     { value: 'option2', label: 'Option 2' },
     { value: 'option3', label: 'Option 3' },
@@ -70,70 +46,115 @@ const AddressSection = () => {
     { value: 'option2', label: 'Option 2' },
     { value: 'option3', label: 'Option 3' },
   ];
+  const Text1 = {
+    fontFamily: "Poppins",
+    fontSize: "16px",
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: "normal"
+  }
+
+  const Text2 = {
+    fontFamily: "Poppins",
+    fontSize: "12px",
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: "normal"
+  }
+
+
+  const Btntextstyle = {
+    color: "#000",
+    textAlign: "center",
+    fontFamily: "Poppins",
+    fontSize: "14px",
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: "normal",
+  };
  
- 
+  const doItlater = {
+    fontFamily: "Poppins",
+    fontSize: "14px",
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: "normal"
+}
   return (
     <>
-      <div className=" lg:relative  top-[-15px] left-[-30px] lg:pb-0 pb-[100px]">
+      <div className='pt-[33px] gap-y-[30px] flex flex-col'>
+      <div className='flex justify-between 2xl:w-[664px] xl:w-[664px] md:w-full lg:w-full'>
+                    <div>
+                        <h1 className='text-[#000]' style={Text1}>Address Details</h1>
+                    </div>
+                    <div>
+                        <h1  className='cursor-pointer text-[#0F52BA]' style={doItlater}>I{"’"}ll do it later</h1>
+                    </div>
+                </div>
         <div>
-          <div className="m-5">
-            <h1 id="register-text">Address Details</h1>
-          </div>
-          <div className="m-5 my-5 md:w-auto w-[300px] lg:w-[630px]" id="progress-container">
-            <div className=" w-[100px] lg:w-[161px]" id="progress-inner"></div>
-          </div>
-          <div className="ml-[6px]">
-          <div className="flex flex-wrap gap-1">
-            <div className="m-3">
-              <span style={Spanstyle}>Current Residing Address</span>
-              <div className="lg:w-full">
-                <input
-                  style={{ border: "2px solid #c7c7c7" }}
-                  placeholder="username"
-                  className="pl-[10px] outline-blue border-2  rounded-[8px] h-[50px]  w-[300px] lg:w-[630px]"
-                  label="Username"
-                />
-              </div>
-            </div>
-
-            <div className="m-3">
-              <span style={Spanstyle}>Current City</span>
-
-              <div class="flex items-center space-x-2">
-              <DynamicSelect styles={customStyles} options={options1}/>
-              </div>
-            </div>
-            <div className="m-3">
-              <span style={Spanstyle}>Current Residing Country</span>
-
-              <div class="flex items-center space-x-2">
-                <DynamicSelect styles={customStyles} options={options2}/>
-              </div>
-            </div>
-            <div className="m-3">
-              <span className="" style={Headtext}>
-                Same as current address
-              </span>
-              <div className="flex flex-col lg:flex-row mt-[10px]">
-                <div>
-                  <button
-                    style={Btntextstyle}
-                    className="w-[300px] h-[50px] bg-[#F8F8F8]"
-                  >
-                    Add Your Origin
-                  </button>
-                </div>
-                <div className="lg:mt-0 mt-[10px]">
-                  <button className="w-[300px] h-[50px] ">
-                    Same as current address
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div className='2xl:w-[664px] xl:w-[664px] md:w-full lg:w-full h-[1px] bg-[#DCDCDC]'>
+            <div className='h-[1px] w-[161px] bg-[#17C270]'></div>
           </div>
         </div>
       </div>
+
+      <div className='2xl:pb-[120px] xl:pb-[120px] md:pb-[120px] lg:w-auto md:w-[100%] flex flex-wrap gap-x-[65px] gap-y-[20px] pt-[20px]'>
+
+        <div className='2xl:w-[665px] xl:w-[665px] md:w-full lg:w-full'>
+          <h1 className='text-[#000] pb-[10px]' style={Text2}>Current Residing Address</h1>
+          <input type='text' placeholder='First Name' className='outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[100%] border-[1px] border-[#e6e6e6] pl-[10px] rounded-[8px] ' />
+        </div>
+
+        <div className="">
+          <h1 className='text-[#000] pb-[10px]' style={Text2}>Current City</h1>
+
+          <div class="flex items-center space-x-2">
+            <DynamicSelect
+              className="h-[50px] w-[300px] flex justify-end"
+              styles={customStyles}
+              options={options}
+            />
+          </div>
+        </div>
+
+        <div className="">
+          <h1 className='text-[#000] pb-[10px]' style={Text2}>Current Residing Country</h1>
+
+          <div class="flex items-center space-x-2">
+            <DynamicSelect
+              className="h-[50px] w-[300px] flex justify-end"
+              styles={customStyles}
+              options={options}
+            />
+          </div>
+        </div>
+
+        <div className="">
+          <h1 className='text-[#000] pb-[10px]' style={Text2}>Same as current address</h1>
+
+
+          <button
+            style={Btntextstyle}
+            className="w-[300px] h-[50px] bg-[#F8F8F8] rounded-[10px]"
+          >
+            Add Your Origin
+          </button>
+
+        </div>
+        <div className="">
+
+        <h1 className='text-[#000] pb-[10px] h-[31px]' style={Text2}></h1>
+          <div className='w-[300px] flex justify-start items-center'>
+            <div className='ml-[-10px]'><Checkbox className='border-none  rounded-[4px] bg-[#F3F3F3]' /></div>
+            <div><h1>Same as current address</h1></div>
+          </div>
+
+        </div>
+
+
+      </div>
+
+
     </>
   );
 };

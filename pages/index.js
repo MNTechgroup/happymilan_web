@@ -5,7 +5,7 @@ import Sidebar from './components/Navigation'
 function index() {
   return (
     <>
-   <Sidebar/>
+   <HeroSection/>
     </>
   )
 }

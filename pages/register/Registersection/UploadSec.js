@@ -38,14 +38,14 @@ lineHeight: "32px"
 function UploadSec() {
     return (
         <>
-
-            <div>
-                <div className='ml-[8.5%] p-2'>
+<div className='w-full h-full grid place-items-center'>
+            <div className='max-w-[1900px] pt-[100px]'>
+                <div className='p-2 ml-[10px]'>
                     <div className='pb-[20px]'>
                         <h1 style={Text1}>Almost Done! <span style={SpanStyle}>Upload Photos</span></h1>
                     </div>
 
-                    <div className='grid place-items-center w-[300px] sm:w-[100%]   md:w-[650px] lg:w-[1270px] h-[327px] bg-[#F5F5F5]'>
+                    <div className='rounded-[10px] grid place-items-center w-[300px] sm:w-[100%]   md:w-[650px] lg:w-[1120px] h-[327px] bg-[#F5F5F5]'>
 
                         <div className='w-[250px]  lg:w-[346px] h-[67px]'>
                             <div className='w-full grid place-items-center mt-[-10%] mb-[10%]'>
@@ -57,7 +57,7 @@ function UploadSec() {
                     </div>
                 </div>
             </div>
-
+</div>
         </>
     )
 }
