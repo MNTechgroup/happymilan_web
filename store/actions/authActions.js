@@ -15,7 +15,7 @@ export const login = (credentials) => {
   return async (dispatch) => {
     try {
       // Make the login API request
-      const response = await axios.post('http://62.72.59.23:3000/api/v1/user/auth/login', credentials);
+      const response = await axios.post('https://happymilan.tech/api/v1/user/auth/login', credentials);
 
       // Assuming your API returns a JWT token upon successful login
       const jwtToken = "token";

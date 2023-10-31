@@ -11,18 +11,18 @@ const LoginPage = ({ setrendercomponent, rendercomponent }) => {
     const UerSession = async (req,res) =>{
         const session = await getSession({ req });
 
-    if (!session) {
-      return res.status(401).end('Unauthorized');
-    }
+    // if (!session) {
+    //   return res.status(401).end('Unauthorized');
+    // }
   
-    const userData = {
-      id: session.user.id,
-      name: session.user.name,
-      email: session.user.email,
-      // Add more user data as needed
-    };
+//     const userData = {
+//       id: session.user.id,
+//       name: session.user.name,
+//       email: session.user.email,
+//       // Add more user data as needed
+//     };
     
-   console.log(session)
+//    console.log(session)
     }
 
     useEffect(()=>{
@@ -31,8 +31,7 @@ const LoginPage = ({ setrendercomponent, rendercomponent }) => {
     
         },[])
    
-    // const { data: session } = useSession();
-  const handleLogin = async (e) => {
+    const handleLogin = async (e) => {
     e.preventDefault()
     const googleSignin = await signIn('google');
     console.log(googleSignin)

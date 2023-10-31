@@ -28,7 +28,7 @@ export const verifyGoogleAccount = createAsyncThunk(
   async (idToken, { dispatch }) => {
     try {
       const response = await axios.post(
-        'http://62.72.59.23:3000/api/v1/user/auth/google',
+        'https://happymilan.tech/api/v1/user/auth/google',
         { access_token: idToken }
       );
 
