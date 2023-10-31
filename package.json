@@ -28,7 +28,7 @@
     },
     "scripts": {
         "dev": "next dev",
-        "build": "next build & next export",
+        "build": "next build",
         "start": "npx serve@latest out -p 3002",
         "lint": "next lint"
     }
