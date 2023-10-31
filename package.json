@@ -28,8 +28,8 @@
     },
     "scripts": {
         "dev": "next dev",
-        "build": "build next build && next export -o build/",
-        "start": "next start",
+        "build": "next build & next export",
+        "start": "npx serve@latest out -p 3002",
         "lint": "next lint"
     }
 }

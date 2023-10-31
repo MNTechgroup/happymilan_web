@@ -4,7 +4,7 @@ import axios from 'axios';
 
 // Define an async thunk to handle the login request
 export const loginAsync = createAsyncThunk('auth/login', async (credentials) => {
-  const response = await axios.post('http://62.72.59.23:3000/api/v1/user/auth/login', credentials);
+  const response = await axios.post('https://happymilan.tech/api/v1/user/auth/login', credentials);
   return response.data;
 //  return console.log(response.data)
 });

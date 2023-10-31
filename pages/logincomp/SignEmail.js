@@ -89,7 +89,7 @@ const SignInEmail = () => {
                 const emailofuser = localStorage.getItem('email')
 
                 const response = await axios.post(
-                    'http://62.72.59.23:3000/api/v1/user/auth/send-verify-otp-email',
+                    'https://happymilan.tech/api/v1/user/auth/send-verify-otp-email',
                     {
                         email: emailofuser,
                     },
@@ -127,7 +127,7 @@ const SignInEmail = () => {
 
         try {
             const emailofuser = localStorage.getItem('email')
-            const response = await axios.post('http://62.72.59.23:3000/api/v1/user/auth/verify-otp-email', {
+            const response = await axios.post('https://happymilan.tech/api/v1/user/auth/verify-otp-email', {
                 email: emailofuser,
                 otp: otp.join(''), // Join the OTP digits into a single string
             });
@@ -163,7 +163,7 @@ const SignInEmail = () => {
                     Authorization: `Bearer ${authToken}`, // Include the token
                     'Content-Type': 'application/json', // Set the content type
                 };
-                const response = await axios.put("http://62.72.59.23:3000/api/v1/user/auth/update-user", requestBody, { headers });
+                const response = await axios.put("https://happymilan.tech/api/v1/user/auth/update-user", requestBody, { headers });
 
                 // Handle the response as needed (e.g., display a success message)
                 console.log('Password submission successful:', response.data);

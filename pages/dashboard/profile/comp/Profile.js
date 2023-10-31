@@ -441,7 +441,7 @@ const router = useRouter();
                         </div>
                         <div className='grid place-items-center'>
                             <img className='w-[184px] h-[184px] 2xl:w-[184px] 2xl:h-[184px] xl:w-[160px] xl:h-[160px]' src='/assests/dashboard/user/userProfile.svg' />
-                            <div>
+                            <div className='pb-[10px] pt-[10px]'>
                                 <h1 style={Username} className='text-[20px] xl:text-[20px] 2xl:text-[24px]'>Riya M Shah</h1>
                             </div>
                         </div>

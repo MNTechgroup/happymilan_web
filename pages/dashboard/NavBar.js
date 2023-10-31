@@ -71,6 +71,19 @@ const userStatus = {
     lineHeight: "normal"
 }
 
+const planPrice = {
+    fontFamily: "Poppins",
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: "14px"
+}
+const planPrice2 = {
+    fontFamily: "Poppins",
+    fontStyle: "normal",
+    fontWeight: "bold",
+    lineHeight: "14px"
+}
+
 const BoxSdow2 = {
     borderRadius: "10px",
     background: "#FFF",
@@ -436,9 +449,9 @@ function NavBar() {
                                 <div>
                                     <ul className="relative right-[18px] flex items-center space-x-[10px]">
                                         <li className=""><img src="/assests/dashboard/menu/verfied-tick.svg" /></li>
-                                        <li className=""><h1>Gold</h1></li>
+                                        <li style={planPrice2} className="text-[12px]"><h1>Gold</h1></li>
                                     </ul>
-                                    <h1>One Month</h1>
+                                    <h1 style={planPrice} className="text-[12px]">One Month</h1>
                                 </div>
                             </div>
 
@@ -455,8 +468,12 @@ function NavBar() {
                             </div>
                             <div className="pt-[21px] flex  flex-col space-y-[21px]">
                                 <ul style={Text4} className="pl-[30px] text-[#000] space-y-[21px]">
-                                    <li className="flex items-center space-x-[10px]"><img src="/assests/dashboard/menu/menu-seting.svg" className="w-[17.223px] h-[16px]" /><h1>My Profile</h1></li>
-                                    <li className="flex items-center space-x-[10px]"><img src="/assests/dashboard/menu/menu-profile.svg" className="w-[17.223px] h-[16px]" /><h1>Accounts</h1></li>
+                                    
+                                    <li className="cursor-pointer flex items-center space-x-[10px]">
+                                    <Link href="/dashboard/profile" className="cursor-pointer flex items-center space-x-[10px]" > <img src="/assests/dashboard/menu/menu-profile.svg" className="w-[17.223px] h-[16px]" />
+                                    <h1>My Profile</h1></Link>
+                                    </li>
+                                    <li className="flex items-center space-x-[10px]"><img src="/assests/dashboard/menu/menu-seting.svg" className="w-[17.223px] h-[16px]" /><h1>Accounts</h1></li>
                                     <li className="flex items-center space-x-[10px]"><img src="/assests/dashboard/menu/menu-lock.svg" className="w-[17.223px] h-[16px]" /><h1>Privacy Policy</h1></li>
                                 </ul>
 

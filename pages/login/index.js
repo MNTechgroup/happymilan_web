@@ -200,6 +200,8 @@ function login() {
 
         const handleSubmit = async (event) => {
             event.preventDefault();
+
+            // console.log(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/user/auth/register`)
             if (firstName === "" || email === "") {
 
             }
