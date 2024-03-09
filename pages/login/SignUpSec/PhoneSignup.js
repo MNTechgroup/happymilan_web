@@ -1,4 +1,3 @@
-import { Input } from "@material-tailwind/react";
 import { useRouter } from "next/router";
 import { useRef } from "react";
 import { useState } from "react";
@@ -33,9 +32,8 @@ const PhoneSignUp = ({ userdata, setuserdata, HanldeInput }) => {
 
     const Register = () => {
         router.push("/login/1")
-        console.log(userdata)
+       
     }
-
 
 
     const [otp, setOTP] = useState(['', '', '', '']); // Initialize an array to store OTP digits
@@ -53,15 +51,14 @@ const PhoneSignUp = ({ userdata, setuserdata, HanldeInput }) => {
         setOTP(updatedOTP);
     };
 
-
     return (
         <>
             {
                 visible ?
                     <>
-                       <div className=" relative top-[15px] flex flex-col  justify-center 2xl:gap-y-[50px] xl:gap-y-[25px] gap-y-[15px]">
+                       <div className=" relative top-[15px] flex flex-col  justify-center 2xl:gap-y-[50px] xl:gap-y-[25px] gap-y-[36px]">
                             <div></div>
-                            <div className="relative top-[40px] mt-[20px] 2xl:mt-[0px] xl:mt-[40px] 2xl:top-[20px] xl:top-[-10px]">
+                            <div className="relative lg:top-[40px] top-[10px] mt-[20px] 2xl:mt-[0px] xl:mt-[40px] 2xl:top-[20px] xl:top-[-10px]">
                                 <h1 style={TextStyle}>Set your password</h1>
                                 <p className="text-[#AEAEAE]" style={Text2}>+91 *****90801</p>
                             </div>
@@ -77,14 +74,14 @@ const PhoneSignUp = ({ userdata, setuserdata, HanldeInput }) => {
                                 </div>
                             </div>
 
-                            <div className="text-center flex flex-col 2xl:pt-0 xl:pt-[10px] justify-center items-center">
-                                <button style={Text2} className="w-[300px] h-[51px] bg-[#0F52BA] rounded-[10px] text-[#FFF]" onClick={Register}>Register Now</button>
+                            <div className="text-center 1- flex flex-col 2xl:pt-[1px] xl:pt-[10px] justify-center items-center">
+                                <button id="grad-btn" style={Text2} className="w-[300px] h-[51px] bg-[#0F52BA] rounded-[10px] text-[#FFF]" onClick={Register}>Register Now</button>
                             </div>
                         </div>
                     </> : <>
-                    <div className=" relative top-[15px] flex flex-col  justify-center 2xl:gap-y-[30px] xl:gap-y-[20px] gap-y-[15px]">
+                    <div className="relative top-[15px] flex flex-col  justify-center 2xl:gap-y-[30px] xl:gap-y-[20px] gap-y-[30px]">
                             <div></div>
-                            <div className="relative top-[40px] mt-[20px] 2xl:mt-[0px] xl:mt-[40px] 2xl:top-[40px] xl:top-0">
+                            <div className="relative top-[20px] lg:top-[40px] mt-[20px] 2xl:mt-[0px] xl:mt-[40px] 2xl:top-[40px] xl:top-0">
                                 <h1 style={TextStyle}>Please enter verification code</h1>
                                 <p className="text-[#AEAEAE]" style={Text2}>Verification code sent +91 *****90801</p>
                             </div>
@@ -115,7 +112,7 @@ const PhoneSignUp = ({ userdata, setuserdata, HanldeInput }) => {
 
                             <div className="text-center flex flex-col 2xl:pt-0 xl:pt-[10px] justify-center items-center">
                             
-                                <button style={Text2} className="w-[300px] h-[51px] bg-[#0F52BA] rounded-[10px] text-[#FFF]" onClick={() => setvisible(true)}>Register Now</button>
+                                <button id="grad-btn" style={Text2} className="w-[300px] h-[51px] bg-[#0F52BA] rounded-[10px] text-[#FFF]" onClick={() => setvisible(true)}>Register Now</button>
                             </div>
                         </div>
 

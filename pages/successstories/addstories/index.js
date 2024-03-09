@@ -3,6 +3,7 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 import { Textarea } from '@material-tailwind/react'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
 function index() {
 
@@ -80,14 +81,14 @@ function index() {
                             <div className='grid place-items-center'>
                                 <h1 className='text-[18px] text-[#000]' style={TitleText}>Let's spread your love story to the world.</h1>
                             </div>
-                            <div className='w-full lg:w-auto lg:block grid place-items-end lg:mt-[0px] mt-[10px]'>
+                            <div className='hidden w-full lg:w-auto lg:block grid place-items-end lg:mt-[0px] mt-[10px]'>
                                 <h1 onClick={()=>router.back()} className=' cursor-pointer inline text-[14px] lg:mr-[20px]  pb-[10px] text-[#000] lg:pb-[0px]' style={TitleText}>Not now</h1>
-                                <button onClick={()=>router.push("/successstories")} className='w-[104px] h-[50px] rounded-[10px] border-[1px] bg-[#0F52BA]' style={TitleText}> <span className='text-[14px] text-[#fff]' style={TitleText}>Publish</span></button>
+                                <button id='grad-btn' onClick={()=>router.push("/successstories")} className='w-[104px] h-[50px] rounded-[10px] border-[1px] bg-[#0F52BA]' style={TitleText}> <span className='text-[14px] text-[#fff]' style={TitleText}>Publish</span></button>
                             </div>
                         </div>
                     </div>
 
-                    <div className='flex flex-col lg:flex-row lg:w-full 2xl:w-[1200px] xl:w-[1200px] justify-center gap-x-[25px] pt-[39px]'>
+                    <div className='flex flex-col lg:flex-row lg:w-full 2xl:w-[1200px] xl:w-[1200px] justify-center gap-x-[25px] 2xl:gap-x-[25px] xl:gap-x-[25px] lg:gap-x-[25px] md:gap-x-[25px] gap-x-[25px] pt-[39px]'>
 
                         <div className='w-full lg:w-full pl-[20px] 2xl:pl-0 xl:pl-0  2xl:w-[670px] xl:w-[670px] h-[700px]  rounded-[8px]'>
 
@@ -107,35 +108,39 @@ function index() {
                                 </div>
                                 <textarea type='text' className='outline-none pl-[20px] pt-[5px] border-[1px] border-[black] w-[90%] lg:w-[100%] 2xl:w-[652px] xl:w-[652px] h-[256px] rounded-[10px]' />
                                 </div>
+                                <div className='hidden'>
+                                <h1 onClick={()=>router.back()} className=' cursor-pointer inline text-[14px] lg:mr-[20px]  pb-[10px] text-[#000] lg:pb-[0px]' style={TitleText}>Not now</h1>
+                                <button onClick={()=>router.push("/successstories")} className='w-[104px] h-[50px] rounded-[10px] border-[1px] bg-[#0F52BA]' style={TitleText}> <span className='text-[14px] text-[#fff]' style={TitleText}>Publish</span></button>
+                                </div>
                             </div>
 
                         </div>
 
-                        <div className='flex h-full justify-center flex-wrap w-full lg:w-full 2xl:w-[415px] xl:w-[415px]  pt-[20px] lg:pt-0  gap-y-[20px] gap-x-[17px]'>
+                        <div className='flex h-full justify-center flex-wrap w-full lg:w-full 2xl:w-[415px] xl:w-[415px]  pt-[0px] lg:pt-0  gap-y-[20px] gap-x-[17px]'>
                             <div className='w-[45%] lg:w-[197px] h-[289px] rounded-[8px] bg-[#F8F8F8]'>
 
                                 <div className='flex justify-center flex-col items-center h-full'>
-                                    <img src='/assests/stories/Add.svg' className='  h-[31.473px]  w-[31.47px]' />
+                                    <Image width={24} height={24} src='/assests/stories/Add-2.svg' className='  h-[31.473px]  w-[31.47px]' />
                                     <h1 className='text-[12px] text-[#000] pt-[10px]' style={TitleText}>Add Photo</h1>
                                 </div>
 
                             </div>
                             <div className='w-[45%] lg:w-[197px] h-[289px] rounded-[8px] bg-[#F8F8F8]'>
                             <div className='flex justify-center flex-col items-center h-full'>
-                                    <img src='/assests/stories/Add.svg' className='  h-[31.473px]  w-[31.47px]' />
+                                    <Image width={24} height={24} src='/assests/stories/Add-2.svg' className='  h-[31.473px]  w-[31.47px]' />
                                     <h1 className='text-[12px] text-[#000] pt-[10px]' style={TitleText}>Add Photo</h1>
                                 </div>
                             </div>
                             <div className='w-[90%] lg:w-[410px] h-[197px] rounded-[8px] bg-[#F8F8F8]'>
                             <div className='flex justify-center flex-col items-center h-full'>
-                                    <img src='/assests/stories/Add.svg' className='  h-[31.473px]  w-[31.47px]' />
+                                    <Image width={24} height={24} src='/assests/stories/Add-2.svg' className='  h-[31.473px]  w-[31.47px]' />
                                     <h1 className='text-[12px] text-[#000] pt-[10px]' style={TitleText}>Add Photo</h1>
                                 </div>
                             </div>
                             </div>
-                            <div className='hidden w-full lg:w-auto  grid place-items-center lg:mt-[0px] mt-[10px]'>
-                                <h1 className='inline text-[14px] lg:mr-[20px]  pb-[10px] text-[#000] lg:pb-[0px]' style={TitleText}>Not now</h1>
-                                <button className='w-[104px] h-[50px] rounded-[10px] border-[1px] bg-[#0F52BA]' style={TitleText}> <span className='text-[14px] text-[#fff]' style={TitleText}>Publish</span></button>
+                            <div className=' lg:hidden  w-full lg:w-auto  flex justify-center items-center space-x-[20px]  lg:mt-[0px] mt-[10px]'>
+                            <button onClick={()=>router.push("/successstories")} className='w-[104px] h-[50px] rounded-[10px] border-[1px] bg-[#0F52BA]' style={TitleText}> <span className='text-[14px] text-[#fff]' style={TitleText}>Publish</span></button>
+                                <h1 onClick={()=>router.back()} className='inline text-[14px] lg:mr-[20px]  pb-[10px] text-[#000] lg:pb-[0px]' style={TitleText}>Not now</h1>
                             </div>
 
                     </div>

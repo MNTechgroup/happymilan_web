@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
@@ -87,11 +88,11 @@ function UpgradePage() {
         return (
             <>
                 <div className='w-full h-full flex justify-center items-center mt-[100px]'>
-                    <div className='grid place-items-center w-[896px] h-[490px] 2xl:w-[896px] 2xl:h-[490px] xl:w-[796px] xl:h-[390px] rounded-[8px] border-[1px] border-[#0F52BA]'>
+                    <div className='grid place-items-center w-[896px] h-[490px] 2xl:w-[896px] 2xl:h-[490px] xl:w-[796px] xl:h-[390px] lg:w-[700px] lg:h-[300px] md:w-[600px] md:h-[300px] rounded-[8px] border-[1px] border-[#0F52BA]'>
                         
                         {Animate ? <>
                         
-                        <img src='/assests/dashboard/menu/payment-done.gif' />
+                        <Image alt='done' width={50} height={50} src='/assests/dashboard/menu/payment-done.gif' />
 
                         </> : <>
 
@@ -104,7 +105,7 @@ function UpgradePage() {
                                 </svg>
                             </div>
                             <div className='w-full text-center'>
-                                <p style={Text2} className='text-[34px]'>Congratulation <br/> Now reach to the millions</p>
+                                <p style={Text2} className='text-[24px] 2xl:text-[34px] xl:text-[34px] lg:text-[25px] md:text-[22px]'>Congratulation <br/> Now reach to the millions</p>
                             </div>
                             <div>
 
@@ -115,7 +116,7 @@ function UpgradePage() {
                                 </ul>
                             </div>
                             <div className='flex justify-center pt-[20px]'>
-                                <button onClick={()=>router.push("/dashboard")} className='w-[184px] h-[49px] bg-[#FFF] border-[1px] border-[#0F52BA] rounded-[10px]'>Send Message</button>
+                                <button onClick={()=>router.push("/dashboard")} className='w-[184px] h-[49px] 2xl:w-[184px] 2xl:h-[49px] xl:w-[184px] xl:h-[49px] lg:w-[180px] lg:h-[45px] bg-[#FFF] border-[1px] border-[#0F52BA] rounded-[10px]'>Send Message</button>
                             </div>
                         </div>
                         </>}
@@ -126,16 +127,16 @@ function UpgradePage() {
             </>
         )
     }
-
+{/* <img  */}
     return (
         <>
 
-            <div className='w-full h-[500px]  mt-[90px] '>
+            <div className='w-full w-full pb-[150px] lg:h-[500px]  mt-[90px] '>
 
                 <div className='text-center'>
                     <h1 style={Text4} className='text-[20px] text-[#000]'>One step away to reach millions</h1>
                 </div>
-                <div className='flex space-x-[96px] pt-[30px] space-y-[45px] justify-center'>
+                <div className='lg:pl-0 lg:pr-0 pl-[10px] pr-[10px] flex lg:flex-row flex-col lg:space-x-[96px] pt-[30px] space-y-[45px] justify-center'>
 
                     <div className='w-[398px] space-y-[20px]'>
 
@@ -195,8 +196,8 @@ function UpgradePage() {
                         <div className='pl-[30px] flex justify-between w-[340px]'>
 
                             <div className='relative left-[10px]'>
-                                <h1 style={Text1} className='text-[16px] relative right-[14px] flex'><img className='pr-[10px]' src='/assests/dashboard/menu/verified-mark2.svg' /> Gold : <span style={Text3} className=' text-[16px]'>One Month</span></h1>
-                                <p onClick={() => router.back()} style={Text1} className='text-[12px] cursor-pointer relative left-[10px] text-[#0F52BA] flex'>Change Plan <img className='pl-[10px]' src='/assests/dashboard/menu/arrow-upgrade.svg' /></p>
+                                <h1 style={Text1} className='text-[16px] relative right-[14px] flex'><Image alt='verify-mark' width={14} height={14} className='pr-[10px]' src='/assests/dashboard/menu/verified-mark2.svg' /> Gold : <span style={Text3} className=' text-[16px]'>One Month</span></h1>
+                                <p onClick={() => router.back()} style={Text1} className='text-[12px] cursor-pointer relative left-[10px] text-[#0F52BA] flex'>Change Plan <Image alt='arrow' width={8} height={8} className='pl-[10px]' src='/assests/dashboard/menu/arrow-upgrade.svg' /></p>
                             </div>
                             <div className='relative left-[30px] text-right'>
                                 <h1 style={Text1} className='text-[16px]'>INR 599.00</h1>
@@ -212,17 +213,17 @@ function UpgradePage() {
 
                         <div className='pl-[30px]'>
                             <div className='flex items-center space-x-[20px] space-y-[10px] text-left'>
-                                <img className='w-[14px] h-[14px] relative top-[4px]' src="/assests/dashboard/menu/verfied-tick.svg" />
+                                <Image alt='verify-tick' width={14} height={14} className='w-[14px] h-[14px] relative top-[4px]' src="/assests/dashboard/menu/verfied-tick.svg" />
                                 <h1 style={Text4} className='w-[185px] text-[black] 2xl:text-[14px] xl:text-[12px]'>Message to <span className='text-[#0F52BA]'>10 Profiles</span></h1>
 
                             </div>
                             <div className='flex items-center space-x-[20px] space-y-[10px] text-left'>
-                                <img className='w-[14px] h-[14px] relative top-[4px]' src="/assests/dashboard/menu/verfied-tick.svg" />
+                                <Image alt='verify-tick' width={14} height={14} className='w-[14px] h-[14px] relative top-[4px]' src="/assests/dashboard/menu/verfied-tick.svg" />
                                 <h1 style={Text4} className='w-[185px] text-[black] 2xl:text-[14px] xl:text-[12px]' >Send request to <span className='text-[#0F52BA]'>10 Profiles</span></h1>
 
                             </div>
                             <div className='flex items-center space-x-[20px] space-y-[10px] text-left'>
-                                <img className='w-[14px] h-[14px] relative top-[4px]' src="/assests/dashboard/menu/verfied-tick.svg" />
+                                <Image alt='verify-tick' width={14} height={14} className='w-[14px] h-[14px] relative top-[4px]' src="/assests/dashboard/menu/verfied-tick.svg" />
                                 <h1 style={Text4} className='w-[185px] text-[black] 2xl:text-[14px] xl:text-[12px]'>Online Support</h1>
 
 
@@ -245,13 +246,12 @@ function UpgradePage() {
                         </div>
 
                         <div className='text-center pt-[10px]'>
-                            <button className='w-[340px] h-[44px] rounded-[10px] text-[16px] text-[#FFF] bg-[#0F52BA]' onClick={() => setpaymentDone(true)} style={Text1}>Confirm Payment</button>
+                            <button id='grad-btn' className='w-[340px] h-[44px] rounded-[10px] text-[16px] text-[#FFF] bg-[#0F52BA]' onClick={() => setpaymentDone(true)} style={Text1}>Confirm Payment</button>
                         </div>
                     </div>
 
                 </div>
             </div>
-
 
         </>
     )

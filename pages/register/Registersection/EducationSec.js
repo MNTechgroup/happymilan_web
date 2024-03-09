@@ -1,6 +1,8 @@
 import React from "react";
 import dynamic from 'next/dynamic';
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
+import { updateFormData } from "../../../store/actions/registerUser";
+import { connect } from "react-redux";
 
 //Style for Select Box
 const customStyles = {
@@ -49,16 +51,6 @@ const Text2 = {
 }
 
 
-const Btntextstyle = {
-    color: "#000",
-    textAlign: "center",
-    fontFamily: "Poppins",
-    fontSize: "14px",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "normal",
-};
-
 const doItlater = {
     fontFamily: "Poppins",
     fontSize: "14px",
@@ -79,33 +71,50 @@ const Spanstyle = {
     left: "4px",
 };
 
-function EducationSec({HandleTabclick,activeTab}) {
+function EducationSec({ formData, updateFormData, HandleTabclick, activeTab }) {
+    
+    const StateOptions = [
+        { value: 'gujarat', label: 'Gujarat' },
+        { value: 'otava', label: 'Otava' },
+        { value: 'Assam', label: 'Assam' },
+    ];
+    const CollageOptions = [
+        { value: 'harvard', label: 'Harvard' },
+        { value: 'stanford', label: 'Stanford' },
+        { value: 'mit', label: 'MIT' },
+        { value: 'caltech', label: 'Caltech' },
+        { value: 'oxford', label: 'Oxford' }
+    ];
+    const CityOptions = [
+        { value: "ahmedabad", label: "Ahmedabad" },
+        { value: "surat", label: "Surat" },
+        { value: "toronto", label: "Toronto" },
+    ];
+    const DegreeOption = [
+        { value: 'bs', label: 'Bachelor of Science (B.S.)' },
+        { value: 'ba', label: 'Bachelor of Arts (B.A.)' },
+        { value: 'ms', label: 'Master of Science (M.S.)' },
+        { value: 'mba', label: 'Master of Business Administration (MBA)' },
+        { value: 'phd', label: 'Doctor of Philosophy (Ph.D.)' }
+    ];
+    const CountryOptions = [
+        { value: "india", label: "India" },
+        { value: "us", label: "United States" },
+        { value: "canada", label: "Canada" },
+        { value: "mexico", label: "Mexico" },
+    ];
 
-    const options1 = [
-        { value: 'option1', label: 'Option 1' },
-        { value: 'option2', label: 'Option 2' },
-        { value: 'option3', label: 'Option 3' },
-    ];
-    const options2 = [
-        { value: 'option1', label: 'Option 1' },
-        { value: 'option2', label: 'Option 2' },
-        { value: 'option3', label: 'Option 3' },
-    ];
-    const options3 = [
-        { value: 'option1', label: 'Option 1' },
-        { value: 'option2', label: 'Option 2' },
-        { value: 'option3', label: 'Option 3' },
-    ];
-    const options4 = [
-        { value: 'option1', label: 'Option 1' },
-        { value: 'option2', label: 'Option 2' },
-        { value: 'option3', label: 'Option 3' },
-    ];
-    const options5 = [
-        { value: 'option1', label: 'Option 1' },
-        { value: 'option2', label: 'Option 2' },
-        { value: 'option3', label: 'Option 3' },
-    ];
+
+
+const handleInputChange = (e) =>{
+const value = e.target.value;
+const name = e.target.name;
+
+updateFormData({
+    education: { ...formData.education, [name]: value }
+  });
+}
+
 
     return (
         <>
@@ -115,7 +124,7 @@ function EducationSec({HandleTabclick,activeTab}) {
                         <h1 className='text-[#000]' style={Text1}>Education Details</h1>
                     </div>
                     <div>
-                        <h1 onClick={()=>HandleTabclick(activeTab+1)} className='cursor-pointer text-[#0F52BA]' style={doItlater}>I{"’"}ll do it later</h1>
+                        <h1 onClick={() => HandleTabclick(activeTab + 1)} className='cursor-pointer text-[#0F52BA]' style={doItlater}>I{"’"}ll do it later</h1>
                     </div>
                 </div>
                 <div>
@@ -134,7 +143,9 @@ function EducationSec({HandleTabclick,activeTab}) {
                         <DynamicSelect
                             className="h-[50px] w-[300px] flex justify-end"
                             styles={customStyles}
-                            options={options1}
+                            options={DegreeOption}
+                            defaultValue={formData?.education.degree}
+                            onChange={(selectedOption) => handleInputChange({ target: { name: "degree", value: selectedOption?.value } })}
                         />
                     </div>
                 </div>
@@ -146,7 +157,9 @@ function EducationSec({HandleTabclick,activeTab}) {
                         <DynamicSelect
                             className="h-[50px] w-[300px] flex justify-end"
                             styles={customStyles}
-                            options={options2}
+                            options={CollageOptions}
+                            defaultValue={formData?.education.collage}
+                            onChange={(selectedOption) => handleInputChange({ target: { name: "collage", value: selectedOption?.value } })}
                         />
                     </div>
                 </div>
@@ -158,7 +171,9 @@ function EducationSec({HandleTabclick,activeTab}) {
                         <DynamicSelect
                             className="h-[50px] w-[300px] flex justify-end"
                             styles={customStyles}
-                            options={options3}
+                            options={CityOptions}
+                            defaultValue={formData?.education.city}
+                            onChange={(selectedOption) => handleInputChange({ target: { name: "city", value: selectedOption?.value } })}
                         />
                     </div>
                 </div>
@@ -170,7 +185,9 @@ function EducationSec({HandleTabclick,activeTab}) {
                         <DynamicSelect
                             className="h-[50px] w-[300px] flex justify-end"
                             styles={customStyles}
-                            options={options4}
+                            options={StateOptions}
+                            defaultValue={formData?.education.state}
+                            onChange={(selectedOption) => handleInputChange({ target: { name: "state", value: selectedOption?.value } })}
                         />
                     </div>
                 </div>
@@ -182,7 +199,9 @@ function EducationSec({HandleTabclick,activeTab}) {
                         <DynamicSelect
                             className="h-[50px] w-[300px] flex justify-end"
                             styles={customStyles}
-                            options={options5}
+                            options={CountryOptions}
+                            defaultValue={formData?.education.country}
+                            onChange={(selectedOption) => handleInputChange({ target: { name: "country", value: selectedOption?.value } })}
                         />
                     </div>
                 </div>
@@ -192,4 +211,5 @@ function EducationSec({HandleTabclick,activeTab}) {
     );
 }
 
-export default EducationSec;
+export default connect((state) => ({ formData: state.form.formData }), { updateFormData })(EducationSec);
+

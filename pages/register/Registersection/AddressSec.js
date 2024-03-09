@@ -2,10 +2,12 @@
 
 import { Checkbox } from '@material-tailwind/react';
 import dynamic from 'next/dynamic';
+import { updateFormData } from "../../../store/actions/registerUser";
 
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
 import React, { useEffect, useState } from "react";
+import { connect } from 'react-redux';
 
 //Style for Select Box 
 const customStyles = {
@@ -34,17 +36,38 @@ const customStyles = {
 
 
 
-const AddressSection = () => {
+const AddressSection = ({ formData, updateFormData ,  HandleTabclick, activeTab  }) => {
 
-  const options = [
-    { value: 'option1', label: 'Option 1' },
-    { value: 'option2', label: 'Option 2' },
-    { value: 'option3', label: 'Option 3' },
+  // const EnumOfCurrentCountry = {
+  //   INDIA: 'india',
+  //   US: 'us',
+  //   CANADA: 'canada',
+  //   MEXICO: 'mexico',
+  // };
+  // const EnumOfState = {
+  //   GUJARAT: 'gujarat',
+  //   OTAVA: 'otava',
+  //   ASSAM: 'Assam',
+  // };
+
+  // SURAT: 'surat',
+  // Ahmedabad: 'ahmedabad',
+  // TORONTO: 'toronto',
+
+  const currentcityOption = [
+    { value: "ahmedabad", label: "Ahmedabad" },
+    { value: "surat", label: "Surat" },
+    { value: "toronto", label: "Toronto" },
+    // Add more cities as needed
   ];
-  const options2 = [
-    { value: 'option1', label: 'Option 1' },
-    { value: 'option2', label: 'Option 2' },
-    { value: 'option3', label: 'Option 3' },
+
+  // Countries
+  const countryoflivingOptions = [
+    { value: "india", label: "India" },
+    { value: "us", label: "United States" },
+    { value: "canada", label: "Canada" },
+    { value: "mexico", label: "Mexico" },
+    // Add more countries as needed
   ];
   const Text1 = {
     fontFamily: "Poppins",
@@ -72,25 +95,62 @@ const AddressSection = () => {
     fontWeight: "400",
     lineHeight: "normal",
   };
- 
+
   const doItlater = {
     fontFamily: "Poppins",
     fontSize: "14px",
     fontStyle: "normal",
     fontWeight: "400",
     lineHeight: "normal"
-}
+  }
+
+  // currentResidenceAddress: "",
+  // currentCity: "",
+  // currentCountry: "",
+  // originResidenceAddress: "",
+  // originCity: "",
+  // originCountry: ""
+
+  const [selectBoxData, SetselectBoxData] = useState({
+    currentCity: "",
+    currentCountry: ""
+  });
+
+  const HandleSetAddress = () => {
+    // updateFormData({
+    //     address: {
+    //         ...formData.address, // Spread the existing address object
+    //         originResidenceAddress: formData.address.currentResidenceAddress,
+    //         originCity: formData.address.currentCity,
+    //         originCountry : formData.address.currentCountry
+    //     }
+    // });
+};
+
+  const handleInputChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+
+
+    updateFormData({
+      address: { ...formData.address, [name]: value }
+    });
+  }
+
+  const HanldeShow = () => {
+    console.log(formData.address)
+  }
   return (
     <>
       <div className='pt-[33px] gap-y-[30px] flex flex-col'>
-      <div className='flex justify-between 2xl:w-[664px] xl:w-[664px] md:w-full lg:w-full'>
-                    <div>
-                        <h1 className='text-[#000]' style={Text1}>Address Details</h1>
-                    </div>
-                    <div>
-                        <h1  className='cursor-pointer text-[#0F52BA]' style={doItlater}>I{"’"}ll do it later</h1>
-                    </div>
-                </div>
+        <div className='flex justify-between 2xl:w-[664px] xl:w-[664px] md:w-full lg:w-full'>
+          <div>
+            <h1 className='text-[#000]' style={Text1}>Address Details</h1>
+          </div>
+          <div>
+            <h1 onClick={()=>HandleTabclick(activeTab+1)} className='cursor-pointer text-[#0F52BA]' style={doItlater}>I{"’"}ll do it later</h1>
+          </div>
+        </div>
         <div>
           <div className='2xl:w-[664px] xl:w-[664px] md:w-full lg:w-full h-[1px] bg-[#DCDCDC]'>
             <div className='h-[1px] w-[161px] bg-[#17C270]'></div>
@@ -102,7 +162,7 @@ const AddressSection = () => {
 
         <div className='2xl:w-[665px] xl:w-[665px] md:w-full lg:w-full'>
           <h1 className='text-[#000] pb-[10px]' style={Text2}>Current Residing Address</h1>
-          <input type='text' placeholder='First Name' className='outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[100%] border-[1px] border-[#e6e6e6] pl-[10px] rounded-[8px] ' />
+          <input type='text' placeholder='Residing Address' value={formData?.address.currentResidenceAddress} name='currentResidenceAddress' onChange={handleInputChange} className='outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[100%] border-[1px] border-[#e6e6e6] pl-[10px] rounded-[8px] ' />
         </div>
 
         <div className="">
@@ -112,10 +172,30 @@ const AddressSection = () => {
             <DynamicSelect
               className="h-[50px] w-[300px] flex justify-end"
               styles={customStyles}
-              options={options}
+              options={currentcityOption}
+              defaultValue={formData?.address.currentCity}
+              onChange={(selectedOption) => handleInputChange({ target: { name: "currentCity", value: selectedOption?.value } })}
+
+
             />
           </div>
         </div>
+
+        {/* <div className="">
+          <h1 className='text-[#000] pb-[10px]' style={Text2}>Country of Living</h1>
+
+          <div class="flex items-center space-x-2">
+            <DynamicSelect
+              className="h-[50px] w-[300px] flex justify-end"
+              styles={customStyles}
+              options={countryoflivingOptions}
+              defaultValue={formData?.address.currentCountry}
+              onChange={(selectedOption) => handleInputChange({ target: { name: "currentCountry", value: selectedOption?.value } })}
+
+            />
+
+          </div>
+        </div> */}
 
         <div className="">
           <h1 className='text-[#000] pb-[10px]' style={Text2}>Current Residing Country</h1>
@@ -124,18 +204,23 @@ const AddressSection = () => {
             <DynamicSelect
               className="h-[50px] w-[300px] flex justify-end"
               styles={customStyles}
-              options={options}
+              options={countryoflivingOptions}
+              defaultValue={formData?.address.currentCountry}
+              onChange={(selectedOption) => handleInputChange({ target: { name: "currentCountry", value: selectedOption?.value } })}
+
+
             />
           </div>
         </div>
 
         <div className="">
-          <h1 className='text-[#000] pb-[10px]' style={Text2}>Same as current address</h1>
+          <h1 onClick={HandleSetAddress} className='text-[#000] pb-[10px]' style={Text2}>Same as current address</h1>
 
 
           <button
             style={Btntextstyle}
             className="w-[300px] h-[50px] bg-[#F8F8F8] rounded-[10px]"
+            onClick={HanldeShow}
           >
             Add Your Origin
           </button>
@@ -143,7 +228,7 @@ const AddressSection = () => {
         </div>
         <div className="">
 
-        <h1 className='text-[#000] pb-[10px] h-[31px]' style={Text2}></h1>
+          <h1 className='text-[#000] pb-[10px] h-[31px]' style={Text2}></h1>
           <div className='w-[300px] flex justify-start items-center'>
             <div className='ml-[-10px]'><Checkbox className='border-none  rounded-[4px] bg-[#F3F3F3]' /></div>
             <div><h1>Same as current address</h1></div>
@@ -159,4 +244,4 @@ const AddressSection = () => {
   );
 };
 
-export default AddressSection;
+export default connect((state) => ({ formData: state.form.formData }), { updateFormData })(AddressSection);

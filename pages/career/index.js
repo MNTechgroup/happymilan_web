@@ -5,10 +5,9 @@ import {
     TabsHeader,
     TabsBody,
     Tab,
-    TabPanel,
-    Button,
-} from "@material-tailwind/react";
+  } from "@material-tailwind/react";
 import Footer from '../components/Footer';
+import Image from 'next/image';
 
 function index() {
 
@@ -105,14 +104,9 @@ function index() {
             <div className='w-full  h-full grid place-items-center'>
                 <div className=''>
                     <div className='w-full h-full mt-[50px]  2xl:mt-[20px] xl:mt-[20px] gap-x-[90px]  flex flex-col-reverse flex-col lg:flex-row justify-evenly'>
-                        {/* <div className='h-[500px]   w-full lg:w-[500px] 2xl:w-[500px] flex justify-center lg:items-end   '>
-                            <div>
-                                <img src='/assests/common/career-img.svg' />
-                            </div>
-                        </div> */}
                         <div className="flex justify-center items-end  mt-[30px]  lg:h-[600px] lg:w-[100%] 2xl:h-[570px] 2xl:w-[100%] xl:w-[500px] xl:h-[500px]   grid place-items-center">
-                        <div className="">
-                        <img src="/assests/common/career-img.svg" className="" />
+                        <div className="md:pr-0 md:pl-0 pl-[10px] pr-[10px]">
+                        <Image alt="img" width={466} height={445} src="/assests/common/career-img.svg" className="" />
                         </div>
                          </div>
                          <div className=" w-full h-full lg:h-[600px] lg:w-[100%] 2xl:h-[600px] 2xl:w-[530px] xl:w-[500px] xl:h-[500px]   grid place-items-center">
@@ -121,8 +115,8 @@ function index() {
                         <div className=' h-[500px] flex justify-center items-center  w-full lg:w-[530px] 2xl:w-[530px] '>
                             <div>
                                 <h1 className='pb-[20px]' style={contentText} >Career</h1>
-                                <h1 className='pb-[10px] ' style={TitleText}>Start Your Career Journey with Us: Your Path to Success Begins Here!</h1>
-                                <h1 className='pt-[20px] lg:w-[503px]' style={contentText}>Explore our current job openings and take the next step towards a rewarding career in the exciting world of IT. Join us and embark on a journey of professional growth, innovation, and endless possibilities.</h1>
+                                <h1 className='pb-[10px] md:pl-0 md:pr-0 pl-[10px] pr-[10px] ' style={TitleText}>Start Your Career Journey with Us: Your Path to Success Begins Here!</h1>
+                                <h1 className='pt-[20px] lg:w-[503px] md:pl-0 md:pr-0 pl-[10px] pr-[10px]' style={contentText}>Explore our current job openings and take the next step towards a rewarding career in the exciting world of IT. Join us and embark on a journey of professional growth, innovation, and endless possibilities.</h1>
                             </div>
                         </div>
                    </div>
@@ -171,7 +165,7 @@ function index() {
                             <button style={Btntext} className='h-[40px] border-[1px] border-[#DADADA] rounded-[10px] w-[84px] bg-[#0F52BA] text-[white] text-center'>HR</button>
                             <button style={Btntext} className='h-[40px] border-[1px] border-[#DADADA] rounded-[10px] w-[84px]  bg-[#FFF] hover:bg-[#0F52BA] duration-300 hover:text-[white]  text-[black] text-center'>IT</button>
                             <button style={Btntext} className='h-[40px] border-[1px] border-[#DADADA] p-[10px] rounded-[10px]  bg-[#FFF] hover:bg-[#0F52BA] duration-300 hover:text-[white]  text-[black] '>Sales & Marketing</button>
-                            <button style={Btntext} className='h-[40px] border-[1px] border-[#DADADA] rounded-[10px] w-[111px] bg-[#FFF] hover:bg-[#0F52BA] duration-300 hover:text-[white]  text-[black] text-center'>Design</button>
+                            <button style={Btntext} className='h-[40px] border-[1px] border-[#DADADA] rounded-[10px]  md:w-[111px] bg-[#FFF] hover:bg-[#0F52BA] duration-300 hover:text-[white]  text-[black] text-center'>Design</button>
                         </div>
 
                     </div>
@@ -190,9 +184,9 @@ function index() {
                                         <h1 className='m-[4px] pb-[10px]' style={CardTitle}>Web Developer</h1>
 
 
-                                        <img className='m-[5px] inline' src='/assests/Black/remote.svg' />
+                                        <Image alt="img" width={8} height={10} className='m-[5px] inline' src='/assests/Black/remote.svg' />
                                         <span className='m-[5px] inline' style={CardContent}>Remote</span>
-                                        <img className='ml-[25px] m-[5px] inline' src='/assests/Black/clock.svg' />
+                                        <Image alt="img" width={10} height={10} className='ml-[25px] m-[5px] inline' src='/assests/Black/clock.svg' />
                                         <span className='m-[5px] inline' style={CardContent}>5 Days Work</span>
 
                                     </div>

@@ -1,51 +1,18 @@
 import { Tooltip } from "@material-tailwind/react";
-import { useEffect, useState } from "react";
-import { getSession, signIn, signOut, useSession } from 'next-auth/react';
-import { useDispatch } from 'react-redux';
-import { setUser } from '../../store/reducers/authReducer';
+import {  useState } from "react";
+import {  signIn } from 'next-auth/react';
+import Image from "next/image";
 const LoginPage = ({ setrendercomponent, rendercomponent }) => {
 
-    
-    const dispatch = useDispatch();
-   
-    const UerSession = async (req,res) =>{
-        const session = await getSession({ req });
-
-    // if (!session) {
-    //   return res.status(401).end('Unauthorized');
-    // }
-  
-//     const userData = {
-//       id: session.user.id,
-//       name: session.user.name,
-//       email: session.user.email,
-//       // Add more user data as needed
-//     };
-    
-//    console.log(session)
-    }
-
-    useEffect(()=>{
-        // localStorage.setItem('user', JSON.stringify(user));
-        UerSession();
-    
-        },[])
-   
     const handleLogin = async (e) => {
-    e.preventDefault()
-    const googleSignin = await signIn('google');
-    console.log(googleSignin)
+        e.preventDefault()
+        const googleSignin = await signIn('google');
+        console.log(googleSignin)
     };
 
-  const handleLogout = () => {
-    signOut();
-    dispatch(setUser(null));
-    localStorage.removeItem('user');
-  };
 
-    
-    
-    
+
+
     const TextStyle = {
         textAlign: "center",
         fontFamily: "Poppins",
@@ -72,14 +39,13 @@ const LoginPage = ({ setrendercomponent, rendercomponent }) => {
     const ToolTipContent = () => {
         return (
             <>
-           
-            <img src="/assests/Scanner/hover-profile.svg" />
+
+                <Image alt="profile" width={163} height={162} src="/assests/Scanner/hover-profile.svg" />
             </>
         )
     }
 
-// clipPath
-
+   
 
     return (
         <>
@@ -102,7 +68,7 @@ const LoginPage = ({ setrendercomponent, rendercomponent }) => {
                             “My Profile”  </Tooltip> </span> and scan with scanning function</h1>
                 </div>
                 <div className="relative top-[40px]">
-                    <img className="h-[100px] w-[100px] md:w-[100px] md:h-[100px] 2xl:w-[117px] 2xl:h-[117px] xl:w-[100px] xl:h-[100px]" src="/loginassests/login-QR.svg" />
+                    <Image alt="qr-code" width={117} height={117} className="h-[100px] w-[100px] md:w-[100px] md:h-[100px] 2xl:w-[117px] 2xl:h-[117px] xl:w-[100px] xl:h-[100px]" src="/loginassests/login-QR.svg" />
                 </div>
 
 
@@ -117,10 +83,10 @@ const LoginPage = ({ setrendercomponent, rendercomponent }) => {
 
                 <div className='flex items-center justify-center gap-x-[30px] 2xl:mt-[-15px] xl:mt-0'>
                     <div className="xl:w-[45px] xl:h-[45px] 2xl:w-[50px] 2xl:h-[50px]">
-                        <img onClick={handleLogin} src='/assests/social/google-icon-btn.svg' />
+                        <Image alt="google-icon"  width={50} height={50} onClick={handleLogin} src='/assests/social/google-icon-btn.svg' />
                     </div>
                     <div className="xl:w-[45px] xl:h-[45px] 2xl:w-[50px] 2xl:h-[50px]">
-                        <img src='/assests/social/facebook-icon-btn.svg' />
+                        <Image alt="fb-icon" width={50} height={50} src='/assests/social/facebook-icon-btn.svg' />
                     </div>
                     <div className=" xl:w-[45px] xl:h-[45px] 2xl:w-[50px] 2xl:h-[50px]">
                         {rendercomponent != 1 ?
@@ -138,7 +104,7 @@ const LoginPage = ({ setrendercomponent, rendercomponent }) => {
                                 </svg>
                             </div>
                             :
-                            <div onClick={HandleSignInEmail} className="bg-[#0F52BA] 2xl:w-[50px] 2xl:h-[50px] xl:w-[45px] xl:h-[45px] h-[50px] w-[50px] border-[1px] rounded-[50px] border-[#D4D4D4] grid place-items-center">
+                            <div onClick={HandleSignInEmail} id="grad-btn" className=" 2xl:w-[50px] 2xl:h-[50px] xl:w-[45px] xl:h-[45px] h-[50px] w-[50px] border-[1px] rounded-[50px] border-[#D4D4D4] grid place-items-center">
 
                                 <svg width="26" height="20" viewBox="0 0 26 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g clipPath="url(#clip0_576_254)">
@@ -153,8 +119,6 @@ const LoginPage = ({ setrendercomponent, rendercomponent }) => {
                             </div>
 
                         }
-
-
                     </div>
                     <div className="xl:w-[45px] xl:h-[45px] 2xl:w-[50px] 2xl:h-[50px]">
                         <div onClick={() => setrendercomponent(2)} className="cursor-pointer group hover:bg-[#F8F8F8] 2xl:w-[50px] 2xl:h-[50px] h-[50px] w-[50px] xl:w-[45px] xl:h-[45px] border-[1px] rounded-[50px] border-[#D4D4D4] grid place-items-center">

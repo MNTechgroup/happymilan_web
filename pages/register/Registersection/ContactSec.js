@@ -1,8 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { Checkbox } from "@material-tailwind/react";
+import { updateFormData, updateGeneralInfo } from "../../../store/actions/registerUser";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { getCookie } from "cookies-next";
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
 //Style for Select Box
@@ -80,28 +82,81 @@ const doItlater = {
   lineHeight: "normal"
 }
 
-const ContactSection = () => {
+const ContactSection = ({ formData, updateFormData, HandleTabclick, activeTab }) => {
 
-  const options = [
-    { value: 'option1', label: 'Option 1' },
-    { value: 'option2', label: 'Option 2' },
-    { value: 'option3', label: 'Option 3' },
+
+  const dispatch = useDispatch();
+  const { contact } = useSelector((state) => state.form?.formData)
+
+  const [Codes, SetCodes] = useState({
+    homeCode: "",
+    mobileCode: ""
+  })
+  const countryCodes = [
+    { value: '+1', label: 'United States (+1)' },
+    { value: '+44', label: 'United Kingdom (+44)' },
+    { value: '+91', label: 'India (+91)' },
+    // Add more country codes as needed
   ];
-  const options2 = [
-    { value: 'option1', label: 'Option 1' },
-    { value: 'option2', label: 'Option 2' },
-    { value: 'option3', label: 'Option 3' },
-  ];
+
+
+
+
+  const handleInputChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    if (name == "mobileCode") {
+      const selectedCurrentCity = countryCodes.find((option) => option.value === value);
+      SetCodes({
+        ...Codes,
+        mobileCode: selectedCurrentCity
+      });
+    } else if (name == "homeCode") {
+      const selectedcode = countryCodes.find((option) => option.value === value);
+      SetCodes({
+        ...Codes,
+        homeCode: selectedcode
+      })
+    }
+
+
+
+    updateFormData({
+      contact: { ...formData.contact, [name]: value }
+    });
+  }
+
+  const Check = () => {
+
+    dispatch(updateGeneralInfo({
+
+      mobileNumber: contact.mobileCode + contact.mobileNumber,
+      homeMobileNumber: contact.homeCode + contact.homeMobileNumber
+
+    }))
+
+    // console.log({mobileNumber : contact.mobileCode + " " + contact.mobileNumber,
+    // homeMobileNumber : contact.homeCode +" " + contact.homeMobileNumber})
+    
+   
+
+  }
+
+  const [Uemail, setUemail] = useState();
+    
+  useEffect(() => {
+    setUemail(getCookie('email'))
+  }, [])
 
   return (
     <>
       <div className='pt-[33px] gap-y-[30px] flex flex-col'>
         <div className='flex justify-between 2xl:w-[664px] xl:w-[664px] md:w-full lg:w-full'>
           <div>
-            <h1 className='text-[#000]' style={Text1}>Contact Details</h1>
+            <h1 onClick={Check} className='text-[#000]' style={Text1}>Contact Details</h1>
           </div>
           <div>
-            <h1 className='cursor-pointer text-[#0F52BA]' style={doItlater}>I{"’"}ll do it later</h1>
+            <h1 onClick={() => HandleTabclick(activeTab + 1)} className='cursor-pointer text-[#0F52BA]' style={doItlater}>I{"’"}ll do it later</h1>
           </div>
         </div>
 
@@ -117,13 +172,22 @@ const ContactSection = () => {
           <h1 className='text-[#000] pb-[10px]' style={Text2}>Mobile Number</h1>
           <div className="flex flex-col md:flex-row justify-center 2xl:items-center xl:items-center lg:gap-y-0  gap-y-[10px] gap-x-[29px]">
             <div className="">
-              <DynamicSelect styles={customStyle2} options={options} />
+              <DynamicSelect
+                defaultValue={Codes.mobileCode}
+                styles={customStyle2}
+                options={countryCodes}
+                onChange={(selectedOption) => handleInputChange({ target: { name: "mobileCode", value: selectedOption?.value } })}
+              />
             </div>
             <div className="">
               <input
                 placeholder="Number"
                 className="focus:outline-none focus:border-black border-[#e6e6e6] text-[#000] border-[1px] pl-[18px] rounded-[8px] w-full  lg:w-[481px] h-[50px]"
                 label="Number"
+                name="mobileNumber"
+                type="number"
+                onChange={handleInputChange}
+                value={formData?.contact.mobileNumber}
 
               />
             </div>
@@ -134,14 +198,21 @@ const ContactSection = () => {
           <h1 className='text-[#000] pb-[10px]' style={Text2}>Home Number</h1>
           <div className="flex flex-col md:flex-row justify-center 2xl:items-center xl:items-center lg:gap-y-0  gap-y-[10px] gap-x-[29px]">
             <div className="">
-              <DynamicSelect styles={customStyle2} options={options} />
+              <DynamicSelect
+                styles={customStyle2}
+                defaultValue={Codes.homeCode}
+                options={countryCodes}
+                onChange={(selectedOption) => handleInputChange({ target: { name: "homeCode", value: selectedOption?.value } })}
+              />
             </div>
             <div className="">
               <input
                 placeholder="Number"
                 className="focus:outline-none focus:border-black border-[#e6e6e6] text-[#000] border-[1px] pl-[18px] rounded-[8px] w-full  lg:w-[481px] h-[50px]"
                 label="Number"
-
+                name="homeMobileNumber"
+                onChange={handleInputChange}
+                value={formData?.contact?.homeMobileNumber}
               />
             </div>
           </div>
@@ -149,7 +220,7 @@ const ContactSection = () => {
 
         <div className='w-full 2xl:w-[665px] xl:w-[665px] md:w-full lg:w-full'>
           <h1 className='text-[#000] pb-[10px]' style={Text2}>Enter Email Address</h1>
-          <input type='text' placeholder='Email Address' className='outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[100%] border-[1px] border-[#e6e6e6] pl-[10px] rounded-[8px] ' />
+          <input type='text' value={Uemail} placeholder='Email Address' className='outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[100%] border-[1px] border-[#e6e6e6] pl-[10px] rounded-[8px] ' />
         </div>
 
       </div>
@@ -157,4 +228,5 @@ const ContactSection = () => {
   );
 };
 
-export default ContactSection;
+
+export default connect((state) => ({ formData: state.form?.formData }), { updateFormData })(ContactSection);

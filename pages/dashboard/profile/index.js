@@ -1,100 +1,16 @@
+'use client';
 
-import React, { useState } from 'react'
+import React from 'react'
 import NavBar from '../NavBar'
 import SideBar from '../SideBar'
-import Footer from '../../components/Footer'
 import UserStory from '../commonCompo/UserStory'
 import Profile from './comp/Profile'
 import UploadSection from './comp/UploadSection'
+import MoreSuggestion from '../commonCompo/MoreSuggestion'
 
 function index() {
 
-  const Text7 = {
-    color: "#000",
-    fontFamily: "Poppins",
-    fontSize: "14px",
-    fontStyle: "normal",
-    fontWeight: "600",
-    lineHeight: "normal"
-  }
-  const Text8 = {
-    fontFamily: "Poppins",
-    fontSize: "12px",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "normal"
-  }
-  const BoldText = {
-    color: "#000",
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: "500",
-    lineHeight: "normal"
-  }
-  const ProfileName = {
-    color: "#000",
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: "600",
-    lineHeight: "normal"
-  }
-  const Text3 = {
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "normal"
-  }
-
-  const ListText = {
-    color: "#000",
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "24px" /* 171.429% */
-  }
-
-  const Text4 = {
-    color: "#000",
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "12px"
-  }
-
-  const Box = {
-    borderRadius: "10px",
-    background: "#FFF",
-    boxShadow: "0px 0px 14px 0px rgba(0, 0, 0, 0.07)"
-  }
-
-  const Text5 = {
-    color: "#0F52BA",
-    fontFamily: "Poppins",
-    fontSize: "16px",
-    fontStyle: "normal",
-    fontWeight: "500",
-    lineHeight: "22px"
-  }
-  const Text6 = {
-    color: "#000",
-    fontFamily: "Poppins",
-    fontSize: "16px",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "22px"
-  }
-  const RequestBox = {
-    borderRadius: "10px",
-    background: "#FFF",
-    boxShadow: "0px 0px 14px 0px rgba(0, 0, 0, 0.07)"
-  }
-
-  const ProfileCard = {
-    borderRadius: "10px",
-    background: "#FFF",
-    boxShadow: "0px 0px 14px 0px rgba(0, 0, 0, 0.07)"
-  }
-  const [Listtype, setListtype] = useState(false);
+  
 
   
   return (
@@ -108,22 +24,22 @@ function index() {
       {/* Main Section Start */}
       
       
-      <div className=' 2xl:pl-[280px] xl:pl-[240px] flex  mt-[100px]'>
-        <div className='h-full'>
+      <div id='main-centerlized-content' className='flex justify-center flex-col'>
+        <div id='first-child' className='pl-[0px] lg:pl-[240px] 2xl:pl-[280px] xl:pl-[240px] flex  mt-[100px]'>
+
+          <div className='h-full'>
           {/* Side Section 1 */}
 
-          <div className='2xl:ml-0 xl:ml-[10px]'>
-          <UserStory/>
-        </div>
+          <div id='story-centerlized-content' className='pl-[15px] md:pl-[15px] lg:pl-[10px] 2xl:pl-0 xl:pl-0'>
+              <UserStory />
+            </div>
 
-          <div>
+          <div  id='centerlized-content' className='ml-[-5px] 2xl:mt-0 xl:mt-0 lg:mt-0 mt-[80px]'>
             <div className='relative 2xl:w-[715px] xl:w-[635px] m-[10px] flex justify-between'>
 
+            <Profile/>
              
-              <Profile/>
-             
-
-              </div>
+              </div>  
             </div>
 
             {/* User Card  */}
@@ -133,77 +49,17 @@ function index() {
           </div>
         </div>
 
-        <div className='z-[-10] absolute 2xl:top-[180px] xl:top-[180px] right-0 flex flex-col space-y-[50px] justify-center items-center w-full 2xl:w-[450px] xl:w-[350px]'>
+        {/* <div className='z-[-10] absolute 2xl:top-[180px] xl:top-[180px] right-0 flex flex-col space-y-[50px] justify-center items-center w-full 2xl:w-[450px] xl:w-[350px]'> */}
+        <div className='hidden  absolute 2xl:top-[175px] xl:top-[175px] right-10  xl:flex 2xl:flex flex-col space-y-[50px] justify-center items-end w-full 2xl:w-[380px] xl:w-[350px]'>
           {/* Side Section 2 */}
          <UploadSection/>
 
-          <div className='p-[20px] ralative 2xl:w-[300px] xl:w-[300px] h-[367px] bg-[#FFF]' style={RequestBox}>
-
-            <h1 style={Text8} className=' text-[#000]'>More Suggestion</h1>
-
-            <div className='pt-[25px]'>
-              <div className=' h-[57px] flex space-x-[10px]'>
-                <div>
-                  <img src='/assests/pic/Request-1.svg' />
-                </div>
-                <div className='pl-[15px]'>
-                  <h1 style={Text7}>Jeet Shashtri</h1>
-                  <h1 className='text-[#000]' style={Text8}>M, 29, IT Expert</h1>
-                  <h1 className="text-[#AEAEAE]" style={Text8}>Junagdh, India</h1>
-                </div>
-                <div className='pl-[50px]'>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="12" r="12" fill="#0F52BA" />
-                    <path d="M9.16853 14.8896L6.05891 11.78L5 12.8315L9.16853 17L18.1171 8.05145L17.0656 7L9.16853 14.8896Z" fill="white" />
-                  </svg>
-                </div>
-              </div>
-              {/* Request 2 */}
-              <div className='pt-[25px]'>
-                <div className=' h-[57px] flex space-x-[10px]'>
-                  <div>
-                    <img src='/assests/pic/Request-1.svg' />
-                  </div>
-                  <div className='pl-[15px]'>
-                    <h1 style={Text7}>Jeet Shashtri</h1>
-                    <h1 className='text-[#000]' style={Text8}>M, 29, IT Expert</h1>
-                    <h1 className="text-[#AEAEAE]" style={Text8}>Junagdh, India</h1>
-                  </div>
-                  <div className='pl-[50px]'>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                      <circle cx="12" cy="12" r="12" fill="#0F52BA" />
-                      <path d="M9.16853 14.8896L6.05891 11.78L5 12.8315L9.16853 17L18.1171 8.05145L17.0656 7L9.16853 14.8896Z" fill="white" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              {/* Request 3 */}
-              <div className='pt-[25px]'>
-                <div className=' h-[57px] flex space-x-[10px]'>
-                  <div>
-                    <img src='/assests/pic/Request-1.svg' />
-                  </div>
-                  <div className='pl-[15px]'>
-                    <h1 style={Text7}>Jeet Shashtri</h1>
-                    <h1 className='text-[#000]' style={Text8}>M, 29, IT Expert</h1>
-                    <h1 className="text-[#AEAEAE]" style={Text8}>Junagdh, India</h1>
-                  </div>
-                  <div className='pl-[50px]'>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                      <circle cx="12" cy="12" r="12" fill="#0F52BA" />
-                      <path d="M9.16853 14.8896L6.05891 11.78L5 12.8315L9.16853 17L18.1171 8.05145L17.0656 7L9.16853 14.8896Z" fill="white" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <button className=' mt-[20px] w-[252px] h-[40px] rounded-[10px] bg-[#F5F5F5] text-[#000]'>View All</button>
-            </div>
-          </div>
+         <MoreSuggestion/>
         </div>
 
         
         
-       
+       </div>
      
     </>
   )

@@ -17,8 +17,7 @@ function GeneralSection() {
         { value: 'option3', label: 'Option 3' },
     ];
     
-    const router = useRouter();
-
+   
 
     const customStyles = {
         control: (provided,state) => ({
@@ -44,14 +43,7 @@ function GeneralSection() {
         }),
     };
 
-    const TitleText = {
-        color: "#000",
-        fontFamily: "Poppins",
-        fontSize: "18px",
-        fontStyle: "normal",
-        fontWeight: "400",
-        lineHeight: "normal"
-    }
+    
     const Text1 = {
         fontFamily: "Poppins",
         fontSize: "16px",

@@ -1,17 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LoginPage from "../logincomp/Loginpage";
 import SignInEmail from "../logincomp/SignEmail";
 import { useRouter } from "next/router";
-import CommonNavbar from "../components/Navbar";
 import PhoneSignUp from "./SignUpSec/PhoneSignup";
 import dynamic from "next/dynamic";
 import LoginWithEmail from "./LoginSec/LoginWithEmail";
 import LoginWithPhone from "./LoginSec/LoginWithPhone";
-import SignupWithEmail from "./SignUpSec/SignupWithEmail";
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 import axios from "axios";
+import { useSelector } from "react-redux";
+import Link from "next/link";
+import Image from "next/image";
+import { Alert, Snackbar } from "@mui/material";
+import { getCookie } from 'cookies-next'
 
 //Style for Select Box
 const customStyle2 = {
@@ -36,6 +39,32 @@ const customStyle2 = {
         paddingRight: "20px"
         // Hide the vertical line behind the arrow
     }),
+
+};
+
+const customStyle3 = {
+    control: (provided, state) => ({
+        ...provided,
+        paddingRight: '10px',
+        paddingLeft: "8px",
+        marginTop: "10px",
+        width: "95px",
+        height: "50px",
+        borderRadius: "8px", // Add padding on the right side
+        border: "1px solid #e6e6e6",
+        borderColor: state.isFocused ? 'black' : provided.borderColor,
+        '&:hover': {
+            borderColor: 'black',
+        },
+        boxShadow: state.isFocused ? 'none' : provided.boxShadow,
+    }),
+    indicatorSeparator: (provided) => ({
+        ...provided,
+        display: 'none',
+        paddingRight: "20px"
+        // Hide the vertical line behind the arrow
+    }),
+
 };
 const customStyle1 = {
     control: (provided, state) => ({
@@ -69,6 +98,13 @@ const options = [
 ];
 
 //Styles 
+const gradientTextLogin = {
+    fontFamily: "Poppins",
+    fontSize: "48px",
+    fontStyle: "normal",
+    fontWeight: "700",
+    lineHeight: "normal",
+}
 
 const Logindiv = {
     width: "300px",
@@ -90,7 +126,7 @@ const Logintoggle = {
     flexShrink: "0",
     borderRadius: "10px",
     // background: "linear-gradient(199deg, #EF4136 0%, #2B3990 100%)",
-    background: "#EF4136",
+    background: "#0F52BA",
 };
 const NotActiveLogintoggle = {
     width: "147px",
@@ -107,7 +143,13 @@ const NotActiveLogintoggle = {
     background: "#f8f8f8",
 };
 
-
+const ListText = {
+    fontFamily: "Poppins",
+    fontSize: "12px",
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: "normal",
+}
 
 function login() {
     const router = useRouter();
@@ -132,8 +174,8 @@ function login() {
 
     const [isActive, setisActive] = useState(true)
     const [PhoneSec, setPhoneSec] = useState(false)
-    
-    
+
+
     const HandleBack = () => {
         setElement(false)
         setPhoneSec(false)
@@ -143,23 +185,33 @@ function login() {
         setPhoneSec(true)
     }
 
-    //For LoginPages
+    //For LoginPages <img
 
     const [rendercomponent, setrendercomponent] = useState(0);
     const ReturnComp = () => {
         switch (rendercomponent) {
             case 1: return <LoginWithEmail rendercomponent={rendercomponent} setrendercomponent={setrendercomponent} />;
             case 2: return <LoginWithPhone rendercomponent={rendercomponent} setrendercomponent={setrendercomponent} />;
-            case 3: return <SignupWithEmail rendercomponent={rendercomponent} setrendercomponent={setrendercomponent} />;
             default: return "<h1>Hello</h1>";
         }
     }
+
+    const [openOTPModal, setOpenOTPModal] = React.useState(false);
+    const [AlertMessage, SetAlertMessage] = useState('');
+    const [isModal, setisModal] = useState('');
+
+    const handleCloseOTPAlert = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenOTPModal(false);
+    };
 
     function SignUp() {
         const TextStyle = {
             textAlign: "center",
             fontFamily: "Poppins",
-            fontSize: "8px",
             fontStyle: "normal",
             fontWeight: "400",
             lineHeight: "normal",
@@ -178,6 +230,9 @@ function login() {
             fontWeight: "400",
             lineHeight: "normal",
         }
+
+
+
 
         const [firstName, setFirstName] = useState('');
         const [email, setEmail] = useState('');
@@ -198,10 +253,12 @@ function login() {
             setIsValidEmail(emailRegex.test(inputEmail));
         };
 
+
+
+
         const handleSubmit = async (event) => {
             event.preventDefault();
 
-            // console.log(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/user/auth/register`)
             if (firstName === "" || email === "") {
 
             }
@@ -225,23 +282,25 @@ function login() {
                         }
                     );
 
-                    // Handle the response as needed (e.g., display a success message)
-                    console.log('Registration successful:', response.data);
+                  
                     const thedata = response.data.data;
-                  if(thedata.success){
-                    localStorage.setItem("email",email)
-                  }
-                        // localStorage.setItem("email",email)
-                    // Optionally, you can reset the form fields after a successful request
+                    if (thedata.success) {
+                        localStorage.setItem("email", email)
+                        SetAlertMessage(" OTP sent successfully! Check your email for the verification code.")
+                        setOpenOTPModal(true)
+                        setisModal("success")
+                    }
+             
                     setElement(true)
                 } catch (error) {
-                    // Handle errors (e.g., display an error message)
+                   setisModal("error")
+                    SetAlertMessage("Login failed. Please check your credentials and try again. If you continue to experience issues, contact support.")
+                    setOpenOTPModal(true)
                     console.error('Registration failed:', error);
                 }
-              }
+            }
 
-          
-        }
+             }
         return (
             <>
 
@@ -259,7 +318,7 @@ function login() {
                                 className='outline-none focus:border-[1px] focus:border-[#000] pl-[50px] w-[300px] h-[50px] 2xl:h-[50px] xl:h-[40px] rounded-[8px] bg-[#FFF] border-[1px] border-[#E6E6E6]'
                             />
 
-                            <img
+                            <Image width={20} height={20}
                                 src='/assests/common/profile-icon.svg'
                                 className='w-[20px] h-[20px] absolute left-4 2xl:top-[40px] xl:top-[36px] top-[35px] transform -translate-y-1/2'
                                 alt='Email Icon'
@@ -272,7 +331,7 @@ function login() {
                                 onChange={handleEmailChange}
                                 className='outline-none focus:border-[1px] mt-[10px] focus:border-[#000] pl-[50px] w-[300px] h-[50px] 2xl:h-[50px] xl:h-[40px] rounded-[8px] bg-[#FFF] border-[1px] border-[#E6E6E6]'
                             />
-                            <img
+                            <Image width={20} height={20}
                                 src='/assests/Blue/Message.svg'
                                 className='w-[20px] h-[20px] absolute left-4 2xl:top-[100px] xl:top-[85px] top-[94px] transform -translate-y-1/2'
                                 alt='Email Icon'
@@ -286,10 +345,10 @@ function login() {
 
                         </div>
                         <div className=''>
-                            <h1 className='' style={TextStyle}>By creating account, I Agee to Happy Milan <span className='text-[#0F52BA]'>Privacy Policy</span> and <span className='text-[#0F52BA]'> T&C</span></h1>
+                            <h1 className='2xl:text-[10px] xl:text-[10px] text-[8px]' style={TextStyle}>By creating account, I Agee to Happy Milan <span className='text-[#0F52BA]'>Privacy Policy</span> and <span className='text-[#0F52BA]'> T&C</span></h1>
                         </div>
                         <div>
-                            <button onClick={handleSubmit} style={BtnText} className='w-[300px] h-[50px] 2xl:w-[300px] 2xl:h-[50px] xl:w-[300px] xl:h-[45px]  bg-[#0F52BA] rounded-[10px] text-[#FFF] hover:opacity-[0.95]'>Send Code <img className='inline relative left-[60px]' src='/vector.svg' /></button>
+                            <button id="grad-btn" onClick={handleSubmit} style={BtnText} className='w-[300px] h-[50px] 2xl:w-[300px] 2xl:h-[50px] xl:w-[300px] xl:h-[45px]  bg-[#0F52BA] rounded-[10px] text-[#FFF] hover:opacity-[0.95]'>Send Code <Image alt="arrow" width={18} height={20} className='inline relative left-[60px]' src='/vector.svg' /></button>
                         </div>
 
                     </>
@@ -303,7 +362,7 @@ function login() {
                                     className='outline-none focus:border-[1px] focus:border-[#000] pl-[50px] w-[300px] h-[50px] 2xl:h-[50px] xl:h-[40px] rounded-[8px] bg-[#FFF] border-[1px] border-[#E6E6E6]'
                                 />
 
-                                <img
+                                <Image width={20} height={20}
                                     src='/assests/common/profile-icon.svg'
                                     className='w-[20px] h-[20px] absolute left-4 2xl:top-[40px] xl:top-[36px] top-[35px] transform -translate-y-1/2'
 
@@ -314,7 +373,9 @@ function login() {
                                 <div className="flex gap-x-[12px]">
                                     <DynamicSelect placeholder="+91" styles={customStyle1} options={options} className="2xl:block hidden xl:hidden" />
 
-                                    <DynamicSelect placeholder="+91" styles={customStyle2} options={options} className="2xl:hidden block xl:block" />
+                                    <DynamicSelect placeholder="+91" styles={customStyle2} options={options} className="2xl:hidden xl:h-[10px]  hidden xl:block" />
+
+                                    <DynamicSelect placeholder="+91" styles={customStyle3} options={options} className="2xl:hidden xl:hidden  block " />
 
 
                                     <input
@@ -333,18 +394,18 @@ function login() {
 
                             </div>
                             <div className='w-[302px]'>
-                                <h1 className='' style={TextStyle}>By creating account, I Agee to Happy Milan <span className='text-[#0F52BA]'>Privacy Policy</span> and <span className='text-[#0F52BA]'> T&C</span></h1>
+                                <h1 className='2xl:text-[10px] xl:text-[10px] text-[8px]' style={TextStyle}>By creating account, I Agee to Happy Milan <span className='text-[#0F52BA]'>Privacy Policy</span> and <span className='text-[#0F52BA]'> T&C</span></h1>
 
                             </div>
                             <div>
-                                <button onClick={() => setElement(true)} style={BtnText} className='w-[300px] h-[50px] 2xl:w-[300px] 2xl:h-[50px] xl:w-[300px] xl:h-[45px]  bg-[#0F52BA] rounded-[10px] text-[#FFF] hover:opacity-[0.95]'>Send Code <img className='inline relative left-[60px]' src='/vector.svg' /></button>
+                                <button id="grad-btn" onClick={() => setElement(true)} style={BtnText} className='w-[300px] h-[50px] 2xl:w-[300px] 2xl:h-[50px] xl:w-[300px] xl:h-[45px]  bg-[#0F52BA] rounded-[10px] text-[#FFF] hover:opacity-[0.95]'>Send Code <Image alt="arrow" width={18} height={20} className='inline relative left-[60px]' src='/vector.svg' /></button>
                             </div>
 
                         </>
                     }
 
 
-                    <div className='flex items-center justify-center 2xl:mt-[16px] xl:mt-[18px] mt-[5px]'>
+                    <div className=' flex items-center justify-center 2xl:mt-[0px] xl:mt-[0px] lg:mt-[4.50px]  mt-[5px]'>
 
                         <div className='w-[79px] h-[1px]  bg-[#EBEBEB]'> </div>
                         <div className='p-[12px]'>
@@ -353,12 +414,12 @@ function login() {
                         <div className='w-[79px] h-[1px]  bg-[#EBEBEB]'> </div>
                     </div>
 
-                    <div className='flex items-center justify-center gap-x-[30px] 2xl:mt-[-15px] xl:mt-0'>
+                    <div className='flex items-center justify-center gap-x-[30px] 2xl:mt-[-15px] xl:mt-0 lg:mt-[10px]'>
                         <div className="xl:w-[45px] xl:h-[45px] 2xl:w-[50px] 2xl:h-[50px]">
-                            <img src='/assests/social/google-icon-btn.svg' />
+                            <Image alt="google-icon" width={50} height={50} src='/assests/social/google-icon-btn.svg' />
                         </div>
                         <div className="xl:w-[45px] xl:h-[45px] 2xl:w-[50px] 2xl:h-[50px]">
-                            <img src='/assests/social/facebook-icon-btn.svg' />
+                            <Image alt="fb-icon" width={50} height={50} src='/assests/social/facebook-icon-btn.svg' />
                         </div>
                         <div className="xl:w-[45px] h-[30px] xl:h-[45px] h-[50px] w-[50px] 2xl:w-[50px] 2xl:h-[50px]">
                             {!PhoneSec ?
@@ -370,7 +431,7 @@ function login() {
                                     </svg>
 
                                 </div>
-                                : <div onClick={HandleToggle} className="bg-[#0F52BA] 2xl:w-[50px] h-[50px] w-[50px] 2xl:h-[50px] xl:w-[45px] xl:h-[45px] border-[1px] rounded-[50px] border-[#D4D4D4] grid place-items-center">
+                                : <div onClick={HandleToggle} id="grad-btn" className="bg-[#0F52BA] 2xl:w-[50px] h-[50px] w-[50px] 2xl:h-[50px] xl:w-[45px] xl:h-[45px] border-[1px] rounded-[50px] border-[#D4D4D4] grid place-items-center">
 
 
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -388,28 +449,88 @@ function login() {
         )
     }
 
+    const { status } = useSelector((state) => state.login)
+
+    useEffect(() => {
+        const token = getCookie("jwtToken");
+        if (status === "idle" && token) {
+            router.push("/dashboard")
+        }
+    }, [router, status])
+
 
     return (
         <>
-            <CommonNavbar />
+            {/* <CommonNavbar /> */}
+            <div className=" absolute left-[0px] lg:left-[62px]">
+                <div className=" p-[20px] mt-[2px]">
+                    <Link href="/">  <Image alt="logo" width={148} height={36} src="/heroSec/Happy-milan2.svg" /></Link>
+                </div>
 
-            <div className="w-full h-screen  xl:h-screen 2xl:h-screen overflow-scroll md:overflow-hidden bg-[#FFF]">
 
-                <div className="grid place-items-center">
+            </div>
+
+            <div className="w-full h-screen  xl:h-screen 2xl:h-screen overflow-scroll lg:overflow-hidden bg-[#FFF]">
+
+                <div className=" flex justify-center  mt-[20px]">
                     <div>
-                        <div className="flex items-center lg:items-start flex-col lg:flex-row w-full h-full">
-                            <div className="hidden lg:block  relative my-[90px] max-w-[840px]  lg:mr-[5%]">
+                        <div className=" w-[100%] flex justify-center lg:justify-between xl:space-x-[180px] xl:space-x-[80px] space-x-[0px] items-center 2xl:mt-[40px] xl:mt-0">
 
-                                <img
-                                    src="/loginassests/signup-group-img.png"
-                                    className="w-full lg:w-full h-full"
-                                />
+                            {/* Content Section Start  */}
+
+                            <div className="relative 2xl:right-[52px]  hidden lg:hidden xl:block 2xl:block  relative my-[0px] max-w-[840px]  lg:mr-[0]">
+
+                                <div className="">
+                                    <div className="w-[593px]">
+                                        <h1 id="gradient-text-login" style={gradientTextLogin} className="gradient-text-login">Connecting Hearts,
+                                            Creating Forever Bonds.</h1>
+                                    </div>
+                                    <div className="relative top-[20px] left-[5px] w-[557px]">
+                                        <ul className="flex justify-between">
+                                            <li className="flex space-x-[10px]">
+                                                <span><Image alt="icon-1" width={14} height={18} src="/loginassests/List-icon-1.svg" /></span>
+                                                <span style={ListText}>100% Privacy</span>
+                                            </li>
+                                            <li className="flex space-x-[10px]">
+                                                <span><Image alt="icon-2" width={14} height={14} src="/loginassests/List-icon-2.svg" /></span>
+                                                <span style={ListText}>0% Fake Profile</span>
+                                            </li>
+                                            <li className="flex space-x-[10px]">
+                                                <span><Image alt="icon-3" width={14} height={18} src="/loginassests/List-icon-3.svg" /></span>
+                                                <span style={ListText}>Fully Secured</span>
+                                            </li>
+                                            <li className="flex space-x-[10px]">
+                                                <span><Image alt="icon-4" width={20} height={19} src="/loginassests/List-icon-4.svg" /></span>
+                                                <span style={ListText}>Verified Profiles</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div className="relative left-[5px] top-[100px]">
+                                        <h1 style={ListText}>Get the App Today</h1>
+                                        <div className="flex space-x-[22px] pt-[13px]">
+                                            <div>
+                                                <Image alt="play-store" width={128} height={38} src='/image-1@2x.png' />
+                                            </div>
+                                            <div>
+                                                <Image alt="app-store" width={128} height={38} src='/image-2@2x.png' />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
                             </div>
-                            <div className="h-full  lg:mr-[50px]  relative lg:top-0 my-[9%] 2xl:my-[9%] xl:my-[9%]  top-[220px]  ">
+
+                            {/* Content Section End  */}
+
+                            {/* Login Box Start <img */}
+
+                            <div id="main-login-box" className="grid place-items-center lg:block relative 2xl:top-[50px] 2xl:left-[30px] xl:top-[70px] 2xl:left-[60px]">
                                 <div id="login-box" className="w-[380px] h-[440px] md:w-[420px] md:h-[440px] lg:w-[420px] lg:h-[440px] xl:h-[440px] xl:w-[400px] 2xl:h-[490px] 2xl:w-[450px]">
                                     {rendercomponent > 0 ? ReturnComp() : <>
 
-                                        {Element || PhoneSec ? <img className="z-10 cursor-pointer absolute p-[20px]" src="/assests/common/Back-Arow.svg" onClick={HandleBack} /> : ""}
+                                        {Element || PhoneSec ? <Image alt="back-arrow" width={0} height={0} style={{ height: "auto", width: "auto" }} className="z-10 cursor-pointer absolute p-[20px]" src="/assests/common/Back-Arow.svg" onClick={HandleBack} /> : ""}
 
                                         {Element ? <>
 
@@ -432,7 +553,7 @@ function login() {
                                                                 New User?
                                                             </button>
                                                             <button
-                                                                onClick={() => { setisActive(true) , setPhoneSec(false) }}
+                                                                onClick={() => { setisActive(true), setPhoneSec(false) }}
                                                                 className=""
                                                                 style={!isActive ? NotActiveLogintoggle : Logintoggle}
                                                             >
@@ -451,6 +572,28 @@ function login() {
 
                                 </div>
                             </div>
+                            {
+                                isModal === "error" && (
+
+                                <Snackbar open={openOTPModal} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={6000} onClose={handleCloseOTPAlert}>
+                                    <Alert onClose={handleCloseOTPAlert} severity={"error"} sx={{ width: '100%' }}>
+                                        {AlertMessage}
+                                    </Alert>
+                                </Snackbar>
+                                )
+                            }
+
+                            {isModal === "success" && (
+                            
+                                <Snackbar open={openOTPModal} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={6000} onClose={handleCloseOTPAlert}>
+                                    <Alert onClose={handleCloseOTPAlert} severity={"success"} sx={{ width: '100%' }}>
+                                        {AlertMessage}
+                                    </Alert>
+                                </Snackbar>
+                            )
+                            }
+
+                            {/* Login Box End  <img */}
                         </div>
                     </div>
                 </div>

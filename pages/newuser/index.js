@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic';
 import GeneralSection from './tabs/GeneralSection';
 import HobbySection from './tabs/HobbySection';
+import Image from 'next/image';
 
 function index() {
 
@@ -54,21 +55,7 @@ function index() {
         fontWeight: "400",
         lineHeight: "normal"
     }
-    // const Text1 = {
-    //     fontFamily: "Poppins",
-    //     fontSize: "16px",
-    //     fontStyle: "normal",
-    //     fontWeight: "400",
-    //     lineHeight: "normal"
-    // }
-    // const Text2 = {
-    //     fontFamily: "Poppins",
-    //     fontSize: "12px",
-    //     fontStyle: "normal",
-    //     fontWeight: "400",
-    //     lineHeight: "normal"
-    // }
-
+   
     const btnstyle = {
         fontFamily: "Poppins",
         fontSize: "14px",
@@ -102,7 +89,7 @@ function index() {
     }
 
 
-//  Hobbies Section Data 
+//  Hobbies Section Data  <img
 
 
 const Text1 = {
@@ -144,7 +131,7 @@ const Text1 = {
                             <div className='pb-[17px]'>
                                 <h1 className='text-[#000]' style={Text1}>Welcome to Happy Milan!</h1>
                             </div>
-                            <img src='/assests/dating/Dating-register-1.svg' onClick={()=>router.push("/successstories/1")} className='cursor-pointer 2xl:h-auto xl:h-[300px]' />
+                            <Image width={0} height={0} style={{width:"auto",height:"auto"}} src='/assests/dating/Dating-register-1.svg' onClick={()=>router.push("/successstories/1")} className='cursor-pointer 2xl:h-auto xl:h-[300px]' />
                         </div>
                     </div>
                     <div className='lg:pb-0 2xl:pb-0 xl:pb-0 w-[300px] md:w-[700px] lg:w-[700px] h-screen '>
@@ -163,7 +150,7 @@ const Text1 = {
                                          } 
                                         ${activeTab === 1 ? "bg-[#0F52BA]" : ""}`}
                                 >
-                                    <img src="/loginassests/register-icons/profile-icon-white.svg" />
+                                    <Image width={19} height={18} src="/loginassests/register-icons/profile-icon-white.svg" />
                                 </div>
 
                                 {/* Tab 2 */}
@@ -201,7 +188,7 @@ const Text1 = {
 
                 </div>
 
-
+{/* <img  */}
 
             </div>
 
@@ -235,5 +222,6 @@ const Text1 = {
         </>
     )
 }
+
 
 export default index

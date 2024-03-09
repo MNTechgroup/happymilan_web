@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React  from "react";
 import {
     Navbar,
     Typography,
@@ -100,12 +100,6 @@ function Bluenav() {
                     >
                         <Link href="/">  <img src="/happy-milan-logo.svg" /></Link>
                     </Typography>
-                    {/* <Typography
-                        className="mr-4 cursor-pointer py-1.5 font-medium ml-[50px]"
-                    >
-
-                        <Link href="/"> <img src="/happy-milan-logo.svg" /> </Link>
-                    </Typography> */}
                     <div className="flex items-center gap-4">
                         <div className="w-[600px] hidden lg:block ">{navList}</div>
                         <IconButton

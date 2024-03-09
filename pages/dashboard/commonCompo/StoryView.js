@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import React from 'react'
 
 function StoryView() {
@@ -19,12 +20,12 @@ function StoryView() {
         fontStyle: "normal",
         fontWeight: "400",
         lineHeight: "normal"
-    }
-
+    } 
+ 
     return (
         <>
 
-            <div className='relative 2xl:w-[715px] xl:w-[635px] m-[10px] flex justify-between'>
+            <div className='relative 2xl:w-[715px] xl:w-[635px]  xl:w-[615px] m-[10px] flex justify-between'>
 
                 <h1 className='p-[5px] relative 2xl:left-[40px] xl:left-[55px]'><span style={Text2} className='text-[16px]'>Success Stories</span></h1>
                 <div className='flex space-x-[10px] relative right-[50px]'>
@@ -42,23 +43,25 @@ function StoryView() {
             </div>
             <div className="relative 2xl:left-[40px] xl:left-[53px] left-[40px]">
 
-                <div style={boxShadow} className={`flex m-[10px] 2xl:w-[631px] 2xl:h-[294px] xl:w-[550px] xl:h-[284px] bg-[#FFF]`}>
+                <div style={boxShadow} className={`w-[250px] flex m-[10px] 2xl:w-[631px] 2xl:h-[294px] xl:w-[520px] xl:h-[284px] bg-[#FFF]`}>
 
-                    <div className='pl-[10px] flex items-center space-x-[30px]'>
-                        <div className='w-[197px] h-[258px]'>
-                            <img className="w-[197px] h-[258px]" src='/assests/dashboard/menu/story-section.svg' />
+                    <div className='pl-[10px] flex lg:flex-row flex-col items-center space-x-[30px]'>
+                        <div className='lg:pt-0 pt-[10px] w-[197px] h-[258px] 2xl:w-[197px] 2xl:h-[258px] xl:w-[195px] xl:h-[258px]'>
+                            <Image alt='img' width={197} height={258} className="2xl:w-[197px] xl:w-[197px] lg:w-[197px] w-full h-[258px]" src='/assests/dashboard/menu/story-section.svg' />
                         </div>
-                        <div className='space-y-[20px] '>
+                        <div className='lg:pt-0 pt-[10px] lg:pl-0 lg:pr-0 pl-[15px] pr-[15px] space-y-[20px] '>
                             <div>
                                 <h1 style={Text1}>Riya & Rohan</h1>
                                 <p style={Text2} className='text-[12px]'>(Married on 19 Apr 2023)</p>
                             </div>
                             <div>
-                                <p style={Text2} className='w-full 2xl:w-[358px] xl:w-[300px] text-[12px] 2xl:text-[12px] xl:text-[11px]'>When the Tudor king fell for a young lady-in-waiting, Anne Boleyn, who possessed eyes "black and beautiful," he was long married to a Spanish princess. But Anne refused to be a royal mistress, and the king rocked the Western world to win his divorce and make Anne queen. Ambassadors could not believe how enslaved the king was by his love for Anne. "This accursed Anne has her foot in the stirrup,"
-                                </p>
+                                <div className='hidden lg:block'>
+                                    <p style={Text2} className='w-full 2xl:w-[358px] xl:w-[280px] text-[12px] 2xl:text-[12px] xl:text-[10px]'>When the Tudor king fell for a young lady-in-waiting, Anne Boleyn, who possessed eyes "black and beautiful," he was long married to a Spanish princess. But Anne refused to be a royal mistress, and the king rocked the Western world to win his divorce and make Anne queen. Ambassadors could not believe how enslaved the king was by his love for Anne. "This accursed Anne has her foot in the stirrup,"
+                                    </p>
+                                </div>
                             </div>
                             <div>
-                                <button style={Text2} className='text-[14px] rounded-[10px] w-[116px] h-[34px] text-[#FFF] bg-[#0F52BA]'>Read More</button>
+                                <button id='grad-btn' style={Text2} className='text-[14px] rounded-[10px] w-[116px] h-[34px] text-[#FFF] bg-[#0F52BA]'>Read More</button>
                             </div>
                         </div>
                     </div>

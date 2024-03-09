@@ -14,6 +14,80 @@ body {
   border-width: 0;
 }
 
+/* heart-bg */
+:root {
+  --blue: #0f52ba;
+  --white: #ffffff;
+  --gradient-color-1: #0F52BA;
+  --gradient-color-2: #BA0FA9;
+}
+
+#bg-grad-color-faq{
+  background: linear-gradient(103deg, rgba(15, 82, 186, 0.1) -25.03%, rgba(186, 15, 169, 0.1) 137.92%);
+
+}
+
+#active-reg-tab {
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+}
+
+#grad-button{
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+  color: white;
+}
+#grad-bg{
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+
+}
+
+#grad-text{
+  color: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+}
+
+#landing-navigation-bg {
+  background: linear-gradient(92deg, #0F52BA 17.13%, #8225AF 117.79%);
+}
+
+#landingPage-background {
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+}
+
+
+
+#addstories-btn {
+  border: 1px solid linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+}
+
+#grad-btn {
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+}
+
+#active-no {
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+  color: white;
+}
+
+#pagination-count {
+  background: white;
+  color: black;
+}
+
+
+
+#pagination-count:hover {
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+  color: white;
+}
+
+#req-sent {
+  background: #EDEDED;
+}
+
+#ignore-hover {
+  fill: none;
+}
+
+
 #nav-links a {
   color: #FFF;
   font-family: Poppins;
@@ -43,8 +117,8 @@ body {
 #home-title button {
   flex-shrink: 0;
   border-radius: 10px;
-  background: #0F52BA;
-  color: #FFF;
+  background: #ffffff;
+  color: #0F52BA;
   text-align: center;
   font-family: Poppins;
   font-size: 16px;
@@ -53,6 +127,10 @@ body {
   line-height: normal;
   cursor: pointer;
   margin: "5px"
+}
+
+#home-title button:hover {
+  opacity: 0.90;
 }
 
 #hero-section {
@@ -71,7 +149,7 @@ body {
 }
 
 #sec-2-stories-num {
-  color: #EF4136;
+  color: #0F52BA;
   font-family: Open Sans;
   font-size: 45px;
   font-style: normal;
@@ -93,7 +171,7 @@ body {
   height: 60px;
   flex-shrink: 0;
   border-radius: 10px;
-  background: linear-gradient(199deg, #EF4136 0%, #2B3990 100%);
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
 }
 
 #sec-2-explore-story span {
@@ -148,7 +226,7 @@ body {
   height: 60px;
   flex-shrink: 0;
   border-radius: 10px;
-  background: linear-gradient(199deg, #EF4136 0%, #2B3990 100%);
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
 }
 
 #sec-3-content span {
@@ -183,6 +261,7 @@ body {
 
 /* #footer-section footer {
   background: #E9E9E9;
+  ::we
 } */
 
 #footer-links {
@@ -208,7 +287,27 @@ body {
   flex-shrink: 0;
   border-radius: 10px;
   background: #FFF;
-  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.13);
+  border: 1px solid #E2E2E2;
+
+  ;
+}
+
+@media screen and (min-width: 960px) and (max-width: 1345px) {
+  #login-flex-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #login-image {
+    display: none;
+  }
+
+  #login-box {
+    position: relative;
+    top: -60;
+    right: 0;
+  }
 }
 
 #login-wraper h1 {
@@ -359,29 +458,29 @@ body {
   background: #FFF;
 }
 
-#faq-title-1{
+#faq-title-1 {
   color: #000;
-text-align: center;
-font-family: Poppins;
-font-size: 24px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
-#faq-title-2{
+#faq-title-2 {
   color: #000;
-font-family: Poppins;
-font-size: 14px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 /* Change */
 #photo-grid-container {
   grid-template-columns: repeat(5, 200px);
- 
+
 }
 
 /* ::-webkit-scrollbar {
@@ -398,9 +497,12 @@ line-height: normal;
 
 
 .custom-dialog-backdrop {
-  background-color: rgba(0, 0, 0, 0); /* Transparent background */
-  backdrop-filter: none; /* Remove blur */
-  transition: backdrop-filter 0.3s ease; /* Optional transition effect */
+  background-color: rgba(0, 0, 0, 0);
+  /* Transparent background */
+  backdrop-filter: none;
+  /* Remove blur */
+  transition: backdrop-filter 0.3s ease;
+  /* Optional transition effect */
 }
 
 #number-input::-webkit-inner-spin-button,
@@ -410,21 +512,25 @@ line-height: normal;
 }
 
 #user-card {
-  width: 100%; /* Set the desired width of your card */
+  width: 100%;
+  /* Set the desired width of your card */
   border-radius: 5px;
 }
 
 #user-card-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Create 3 equal columns */
-  grid-gap: 5px; /* Add some space between grid items */
+  grid-template-columns: repeat(2, 1fr);
+  /* Create 3 equal columns */
+  grid-gap: 5px;
+  /* Add some space between grid items */
   list-style: none;
   padding: 0;
 }
 
 .profile-page-scroll {
   scroll-behavior: smooth;
-  scroll-padding-top: 70px; /* Adjust as needed to accommodate your tab/header height */
+  scroll-padding-top: 70px;
+  /* Adjust as needed to accommodate your tab/header height */
 }
 
 .sliding-panel {
@@ -445,16 +551,16 @@ line-height: normal;
   display: flex;
   align-items: center;
   justify-content: center;
-} 
+}
 
 .heart-icon {
   height: 100px;
   width: 100px;
-  background: url("/assests/animation/heart.png");
+  background: url("/assests/animation/heart-Animation-3.png");
   background-position: left;
   cursor: pointer;
   position: absolute;
-  
+
 }
 
 .heart-bg {
@@ -466,12 +572,15 @@ line-height: normal;
   align-items: center;
   justify-content: center;
   transition: all 100ms ease;
-  background: #0F52BA;
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+  /* background: white; */
+
 }
+
 
 .heart-bg:hover {
   /* background: rgba(255, 192, 200, 0.7); */
-  background: #0F52BA;
+  /* background: #0F52BA; */
 }
 
 .likes-amount {
@@ -544,6 +653,7 @@ line-height: normal;
   0% {
     box-shadow: inset 0px 0px 0px transparent;
   }
+
   100% {
     box-shadow: inset 0px 0px 0px 40px #00adef;
   }
@@ -561,8 +671,357 @@ line-height: normal;
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
 }
 
+/* Customize the height and width of pagination bullets */
+.swiper-pagination-clickable .swiper-pagination-bullet {
+  width: 12px;
+  /* Set the desired width */
+  height: 12px;
+  /* Set the desired height */
+  background-color: #D6D6D6;
+  opacity: 0.50;
+  position: relative;
+  top: -5px;
+}
+
+/* Customize the active pagination bullet */
+.swiper-pagination-clickable .swiper-pagination-bullet-active {
+  width: 12px;
+  /* Set the desired width for the active bullet */
+  height: 12px;
+  /* Set the desired height for the active bullet */
+  background-color: #007aff;
+  /* Customize background color for active bullet */
+}
+
+.image-selection-container {
+  display: flex;
+}
+
+.left-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.left-section img {
+  opacity: 0.1;
+  cursor: pointer;
+}
+
+.left-section img.selected {
+  opacity: 1;
+}
+
+.right-section img {
+  max-width: 100%;
+}
+
+/* styles.module.css */
+
+/* Define the breakpoint for medium screens */
+@media (max-width: 768px) {
+  .expanded-sidebar {
+    /* Style for expanded sidebar on medium screens */
+  }
+
+  .collapsed-sidebar {
+    /* Style for collapsed sidebar on medium screens */
+    width: 64px;
+    /* You can adjust this as needed */
+  }
+}
+
+#nearby-places-main {
+  border-radius: 10px;
+  background: #FFF;
+  box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.03);
+}
+
+.css-6hp17o-MuiList-root-MuiMenu-list {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  box-shadow: none;
+  outline: none;
+}
+
+/* login-box */
+@media (orientation: portrait) {
+  #main-login-box {
+    display: grid;
+    height: 100%;
+    margin-top: 50%;
+    width: 100%;
+    place-items: center;
+  }
+}
+
+@media (max-width: 370px) {
+
+  #story-img {
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  #story-img-background {
+    width: 100%;
+  }
+}
+
+#PriceBox2 {
+  display: none;
+}
+
+#PriceBox {
+  display: block;
+}
+
+@media screen and (max-width: 930px) {
+  #PriceBox2 {
+    display: block;
+  }
+
+  #PriceBox {
+    display: none;
+  }
+
+  .swiper-horizontal>.swiper-pagination-bullets,
+  .swiper-pagination-bullets.swiper-pagination-horizontal {
+    position: relative;
+    top: 0px;
+    margin-top: 20px;
+  }
+
+  .swiper-pagination-custom,
+  .swiper-pagination-fraction {
+    top: 0px;
+    margin-top: 90px;
+  }
+}
+
+@media screen and (min-width: 1430px) {
+  #doItText {
+    position: absolute;
+    right: -280px;
+  }
+
+  #pricing-box {
+    margin-top: 50px;
+  }
+
+  #centerlized-content {
+    position: relative;
+    left: -40px;
+  }
+
+  #main-centerlized-content {
+    display: grid;
+    place-items: center;
+    padding-left: 0;
+    margin-left: 0;
+  }
+
+  #story-centerlized-content {
+    position: relative;
+    left: -45px;
+  }
+
+  #main-centerlized-content #first-child {
+    padding-left: 0;
+
+  }
+
+  #id-search-centerlized {
+    margin-left: 75px;
+  }
+}
+
+
+@media screen and (max-width: 929px) and (min-width: 720px) {
+  #pricebox-2-main {
+    position: relative;
+    left: 100px;
+  }
+}
+
+
+@media screen and (min-width: 1429px) and (max-width: 1500px) {
+  #id-search-centerlized {
+    position: absolute;
+    left: 20.70%;
+  }
+  
+}
+
+@media screen and (min-width: 1501px) and (max-width: 1525px) {
+  #id-search-centerlized {
+    position: absolute;
+    left: 21.20%;
+  }
+}
+
+@media screen and (min-width: 1560px) {
+  #id-search-centerlized {
+    position: absolute;
+    left: 24.60%;
+  }
+}
+
+
+@media (min-width: 1430px) and (max-width: 1530px) {
+
+  /* Your CSS styles for this range go here */
+  #doItText {
+    position: absolute;
+    right: -27%;
+  }
+
+  /* Add more styles as needed */
+}
+
+
+@media screen and (min-width: 1555px) {
+
+  /* Your styles for screens 1555 pixels and wider go here */
+  #landingPage-content {
+    padding-bottom: 170px;
+  }
+
+}
+
+@media screen and (min-width: 1640px) {
+
+  /* Your styles for screens 1555 pixels and wider go here */
+  #landingPage-content {
+    padding-bottom: 200px;
+  }
+
+}
+
+
+@media screen and (width: 1280px) and (height: 720px) {
+  #pricing-box {
+    padding-bottom: 50px;
+    padding-top: 30px;
+  }
+
+  #doItText {
+    position: absolute;
+    right: -27%;
+  }
+
+  #upgrade-bg-img {
+    margin-top: 50px;
+  }
+}
+
+
+@media screen and (width: 1440px) and (height: 900px) {
+  #doItText {
+    position: absolute;
+    right: -26%;
+  }
+}
+
+@media screen and (min-width: 1037px) and (max-width: 1139px) {
+
+  #landingPage-content {
+    padding-bottom: 140px;
+  }
+}
+
+
+@media only screen and (min-width: 960px) and (max-width: 1139px) {
+
+  #story-section-center {
+    left: -5px;
+  }
+
+}
+
+.user-card.skeleton {
+  background: #e2e2e2;
+  color: transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.user-card.skeleton::before {
+  content: "";
+  position: absolute;
+  left: 0%;
+  top: 0;
+  height: 100%;
+  width: 50px;
+  background: linear-gradient(to right, #e2e2e2 25%, #d5d5d5 50%, #e2e2e2 100%);
+  animation-name: gradient-animation;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  filter: blur(5px);
+}
+
+.user-card.skeleton .hide-text::before {
+  content: "";
+  position: absolute;
+  left: 0%;
+  top: 0;
+  height: 100%;
+  width: 50px;
+  background: linear-gradient(to right, #e2e2e2 25%, #d5d5d5 50%, #e2e2e2 100%);
+  animation-name: gradient-animation;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  filter: blur(5px);
+}
+
+@keyframes gradient-animation {
+  from {
+    left: 0%;
+  }
+
+  to {
+    left: 100%;
+  }
+}
+
+
+
+#gradient-text-login {
+  background: linear-gradient(103deg, #0F52BA 23.51%, #8225AF 72.05%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.custom-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.close-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}

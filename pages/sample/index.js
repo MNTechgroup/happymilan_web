@@ -1,35 +1,45 @@
-import React, { useRef, useState } from 'react';
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
+import React, { useState, useEffect } from 'react';
 
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
+function ModalWithScrollLock() {
+  const [showModal, setShowModal] = useState(false);
 
-// import required modules
-import { Pagination } from 'swiper';
+  // Lock the body scroll when the modal is shown
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
 
-export default function App() {
-  const pagination = {
-    clickable: true,
-    renderBullet: function (index, className) {
-      return '<span class="' + className + '">' + (index + 1) + '</span>';
-    },
+    // Cleanup function to restore the original overflow style
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [showModal]);
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
   };
 
   return (
-    <>
-      <Swiper
-        pagination={pagination}
-        modules={[Pagination]}
-        className="mySwiper w-[500px] h-[500px]"
-      >
-        <SwiperSlide>Slide 1</SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
-        <SwiperSlide>Slide 5</SwiperSlide>
-      </Swiper>
-    </>
+    <div>
+      <h1>Modal with Scroll Lock Example</h1>
+      <button onClick={toggleModal}>Toggle Modal</button>
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <div className="modal-header">
+              <h2>Modal Title</h2>
+              <button onClick={toggleModal}>Close</button>
+            </div>
+            <div className="modal-content">
+              <p>This is the modal content.</p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
+
+export default ModalWithScrollLock;

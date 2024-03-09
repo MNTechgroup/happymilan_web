@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 function SignUp() {
     const TextStyle = {
         textAlign: "center",
@@ -21,7 +23,7 @@ function SignUp() {
         fontWeight: "400",
         lineHeight: "normal",
     }
-
+ 
 
     return (
         <>
@@ -38,7 +40,7 @@ function SignUp() {
                             className='outline-none focus:border-[1px] focus:border-[#000] pl-[50px] w-[300px] h-[50px] 2xl:h-[50px] xl:h-[40px] rounded-[8px] bg-[#FFF] border-[1px] border-[#E6E6E6]'
                         />
 
-                        <img
+                        <Image width={20} height={20}
                             src='/assests/common/profile-icon.svg'
                             className='w-[20px] h-[20px] absolute left-4 2xl:top-[40px] xl:top-[36px] top-[35px] transform -translate-y-1/2'
                             alt='Email Icon'
@@ -49,7 +51,7 @@ function SignUp() {
                             type='email'
                             className='outline-none focus:border-[1px] mt-[10px] focus:border-[#000] pl-[50px] w-[300px] h-[50px] 2xl:h-[50px] xl:h-[40px] rounded-[8px] bg-[#FFF] border-[1px] border-[#E6E6E6]'
                         />
-                        <img
+                        <Image width={20} height={20}
                             src='/assests/Blue/Message.svg'
                             className='w-[20px] h-[20px] absolute left-4 2xl:top-[100px] xl:top-[85px] top-[35px] transform -translate-y-1/2'
                             alt='Email Icon'
@@ -62,7 +64,7 @@ function SignUp() {
                         <h1 className='' style={TextStyle}>By signing up, I accept the Happy Milan <span className='text-[#0F52BA]'>Term of Services</span> and acknowledge the <span className='text-[#0F52BA]'>Privacy Policy</span></h1>
                     </div>
                     <div>
-                        <button style={BtnText} className='w-[300px] h-[50px] 2xl:w-[300px] 2xl:h-[50px] xl:w-[300px] xl:h-[45px]  bg-[#0F52BA] rounded-[10px] text-[#FFF]'>Send Code <img className='inline relative left-[60px]' src='/vector.svg' /></button>
+                        <button style={BtnText} className='w-[300px] h-[50px] 2xl:w-[300px] 2xl:h-[50px] xl:w-[300px] xl:h-[45px]  bg-[#0F52BA] rounded-[10px] text-[#FFF]'>Send Code <Image width={18} height={20} className='inline relative left-[60px]' src='/vector.svg' /></button>
                     </div>
 
                 
@@ -79,10 +81,10 @@ function SignUp() {
 
                 <div className='flex items-center justify-center gap-x-[30px]'>
                     <div className="xl:w-[40px] xl:h-[40px] 2xl:w-[50px] 2xl:h-[50px]">
-                        <img src='/assests/social/google-icon-btn.svg' />
+                        <Image width={50} height={50} src='/assests/social/google-icon-btn.svg' />
                     </div>
                     <div className="xl:w-[40px] xl:h-[40px] 2xl:w-[50px] 2xl:h-[50px]">
-                        <img src='/assests/social/facebook-icon-btn.svg' />
+                        <Image width={50} height={50} src='/assests/social/facebook-icon-btn.svg' />
                     </div>
                     <div className="xl:w-[40px] h-[30px] xl:h-[40px] h-[50px] w-[50px] 2xl:w-[50px] 2xl:h-[50px]">
                             <div  className="2xl:w-[50px]  h-[50px] w-[50px] 2xl:h-[50px] xl:w-[40px] xl:h-[40px] border-[1px] rounded-[50px] border-[#D4D4D4] grid place-items-center">

@@ -123,7 +123,6 @@ function HobbySection() {
         }
 
     };
-
     return (
         <>
                 <div className='pt-[33px] gap-y-[30px] flex flex-col'>
