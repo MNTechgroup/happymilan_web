@@ -1,26 +1,10 @@
 "use client";
+import React from "react";
+// import Comp from "./Comp";
+import dynamic from "next/dynamic";
 
-import React,{ useState } from "react";
-import { useRouter } from 'next/router';
-import Comp from "./Comp";
-
-
+const Comp = dynamic(()=> import('./Comp'))
 function Home() {
-
-    const router = useRouter();
-
-    const [activebtn, setActivebtn] = useState(0);
-
-    const ContinueBtn = () => {
-
-        if (activebtn === 1) {
-            router.push("/register")
-        }
-        else {
-            // router.push("/newuser")
-            router.push("/dating")
-        }
-    }
 
     return (
         <>

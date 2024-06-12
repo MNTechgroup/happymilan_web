@@ -1,4 +1,7 @@
+import dynamic from "next/dynamic";
 import Image from "next/image";
+
+const  GoogleLoginButton  = dynamic(()=> import("../components/Buttons/GoogleLoginButton"));
 
 function SignUp() {
     const TextStyle = {
@@ -80,9 +83,7 @@ function SignUp() {
                 </div>
 
                 <div className='flex items-center justify-center gap-x-[30px]'>
-                    <div className="xl:w-[40px] xl:h-[40px] 2xl:w-[50px] 2xl:h-[50px]">
-                        <Image width={50} height={50} src='/assests/social/google-icon-btn.svg' />
-                    </div>
+                    <GoogleLoginButton/>
                     <div className="xl:w-[40px] xl:h-[40px] 2xl:w-[50px] 2xl:h-[50px]">
                         <Image width={50} height={50} src='/assests/social/facebook-icon-btn.svg' />
                     </div>

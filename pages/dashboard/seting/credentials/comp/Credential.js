@@ -1,42 +1,916 @@
-import React from "react";
+
 import { Input } from "@material-tailwind/react";
+import React, { useEffect, useRef, useState } from "react";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import { Box } from "@mui/system";
 import Image from "next/image";
 
 function Credentials() {
+  const [open, setOpen] = React.useState(false);
+
+
+
+  const [activeTab, setActiveTab] = useState(1);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setActiveTab(1)
+  };
+
+
+  const [Email, setEmail] = useState(null)
+  const [MobileNumberOfUser, setMobileNumberOfUser] = useState(null)
+
+
+  const renderTabContent = () => {
+
+    const [Loading, setLoading] = useState(false);
+
+    const [otp, setOtp] = useState(new Array(4).fill(''));
+    const [otp2, setOtp2] = useState();
+    const inputRefs = useRef([]);
+
+    const handleChange = (index, value) => {
+      const newOtp = [...otp];
+      newOtp[index] = value;
+      setOtp(newOtp);
+      setOtp2(newOtp);
+      if (value && inputRefs.current[index + 1]) {
+        inputRefs.current[index + 1].focus();
+      }
+    };
+
+    const handleKeyDown = (index, e) => {
+      if (e.key === 'Backspace' && !otp[index] && inputRefs.current[index - 1]) {
+        inputRefs.current[index - 1].focus();
+      }
+    };
+
+
+
+    const [Email2, setEmail2] = useState(null)
+    const [ChnagedEmail, SetChangedEmail] = useState({
+      currentEmail: "",
+      NewEmail: ""
+    })
+
+
+    useEffect(() => {
+      // Get the data from local storage
+      const localStorageData = localStorage.getItem('email');
+
+      if (localStorageData) {
+        // Parse the JSON string to convert it into an object
+        // const userData = JSON.parse(localStorageData);
+
+        // Extract the user email from the userData object
+        // const userEmail = userData?.user;
+        SetChangedEmail((prev) => ({
+          ...prev,
+          currentEmail: localStorageData
+        }))
+
+        if (localStorageData) {
+          // Split the email address into username and domain parts
+          const [username, domain] = localStorageData.split('@');
+          const [username2, domain2] = ChnagedEmail.currentEmail.split('@');
+
+          // Get the first three characters of the username
+          const truncatedUsername = username.substring(0, 3);
+          const truncatedUsername2 = username2.substring(0, 3);
+
+          // Construct the masked email address
+          const maskedEmail = `${truncatedUsername}*****@${domain}`;
+          const maskedEmail2 = `${truncatedUsername2}*****@${domain2}`;
+
+          // Update the state with the masked email
+          setEmail(maskedEmail);
+          setEmail2(maskedEmail2);
+        }
+      }
+    }, [activeTab, setActiveTab, SetChangedEmail]);
+
+
+
+    const handleEmailChange = (e) => {
+      SetChangedEmail((prev) => ({
+        ...prev,
+        NewEmail: e.target.value
+      }))
+    }
+
+
+    const HandleTabclick = () => {
+      if (activeTab == 1) {
+        console.log(ChnagedEmail)
+        setLoading(true)
+
+        const axios = require('axios');
+        let data = JSON.stringify({
+          "email": ChnagedEmail.currentEmail
+        });
+
+        let config = {
+          method: 'post',
+          maxBodyLength: Infinity,
+          url: 'https://happymilan.tech/api/v1/user/auth/forgot-password',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: data
+        };
+
+        axios.request(config)
+          .then((response) => {
+            console.log(JSON.stringify(response.data));
+            setLoading(false)
+            setActiveTab(activeTab + 1);
+          })
+          .catch((error) => {
+            setLoading(false)
+            console.log(error);
+          });
+
+
+      } else if (activeTab == 2) {
+        const otpNumber = parseInt(otp2.join(''), 10);
+        console.log(otpNumber)
+        setLoading(true)
+
+        const axios = require('axios');
+        let data = JSON.stringify({
+          "email": ChnagedEmail.currentEmail,
+          "newMail": ChnagedEmail.NewEmail,
+          "otp": otpNumber
+        });
+
+        let config = {
+          method: 'post',
+          maxBodyLength: Infinity,
+          url: 'https://happymilan.tech/api/v1/user/auth/reset-password',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: data
+        };
+
+        axios.request(config)
+          .then((response) => {
+            console.log(JSON.stringify(response.data));
+            setLoading(false)
+            localStorage.setItem("user", ChnagedEmail.NewEmail)
+            localStorage.setItem("email", ChnagedEmail.NewEmail)
+            setActiveTab(activeTab + 1)
+          })
+          .catch((error) => {
+            setLoading(false)
+            console.log(error);
+          });
+
+
+      }
+
+      console.log(ChnagedEmail)
+      // setActiveTab(activeTab + 1);
+    };
+
+
+    switch (activeTab) {
+      case 1:
+        return <>
+          <div className="">
+            <h1 className="text-[13px] lg:text-[16px] xl:text-[20px]  text-center" >Update Email</h1>
+
+          </div>
+          <h1 className="text-[10px] xl:text-[12px] mt-[30px] lg:mt-[35px] xl:mt-[40px] font-medium">Current Email</h1>
+          <div className="flex place-items-center w-[100%]  h-[37px] lg:h-[43px] xl:h-[50px] mt-[1%]  border-[1px] border-[#E6E6E6] rounded-[8px] px-[15px] ">
+            <input className="outline-none text-[12px] lg:text-[14px]  xl:text-[16px] placeholder:text-[black]"
+              // placeholder="jit*****@gmail.com" 
+              value={Email}
+            />
+          </div>
+          <h1 className="text-[10px] xl:text-[12px] mt-[20px] lg:mt-[25px] xl:mt-[30px] font-medium">New Email</h1>
+          <div className="flex place-items-center w-[100%]  h-[37px] lg:h-[43px] xl:h-[50px] mt-[1%]  border-[1px] border-[#E6E6E6] rounded-[8px] px-[15px] ">
+            <input type="email" onChange={handleEmailChange} className=" w-full h-full outline-none text-[12px] lg:text-[14px]  xl:text-[16px] " />
+          </div>
+
+          <div className="flex gap-x-[5%] mt-[15px] lg:mt-[25px] xl:mt-[30px] ">
+            <button
+              onClick={handleClose}
+              className="text-[12px] lg:text-[14px] xl:text-[16px] w-[100%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px] border-[1px] border-[#0F52BA]"
+            >
+              Not Now
+            </button>
+            <button
+              id="grad-button"
+              onClick={HandleTabclick}
+              className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white] w-[100%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px]"
+            >
+              {Loading ? <>
+                <Image loading="lazy" alt="loader" width={25} height={25} className='animate-spin inline ' src='/assests/animation/loaderIcon.svg' />
+              </> : "Continue"}
+            </button>
+          </div>
+        </>
+      case 2:
+        return <>
+          <div className="px-[10%] lg:px-[5%] 2xl:px-[10%]">
+            <div className="">
+              <h1 className="text-[13px] lg:text-[16px] xl:text-[20px]  text-center" >Verification Code</h1>
+              <div className=" mt-[10px]  ">
+                <h1 className="  text-[10px] lg:text-[11px] xl:text-[12px] text-center   font-medium">Verification code sent {Email2}</h1>
+
+              </div>
+            </div>
+            <div className="text-[black] flex gap-[2%] w-[100%] mt-[62px] md:mt-[67px] lg:mt-[82px] xl:mt-[92px]">
+
+              {otp.map((digit, index) => {
+
+                return (
+                  <>
+                    <input
+                      key={index}
+                      ref={(el) => (inputRefs.current[index] = el)}
+                      type="text"
+                      className="border-b-[1px] border-b-[#000] text-[#000] outline-none  w-full  text-center"
+                      maxLength={1}
+                      value={digit}  // Change this line
+                      onChange={(e) => handleChange(index, e.target.value)}
+                      onKeyDown={(e) => handleKeyDown(index, e)}
+                    />
+                  </>
+                )
+              })}
+
+
+            </div>
+
+
+            <div className="flex justify-center mt-[20px] md:mt-[25px] lg:mt-[40px] xl:mt-[50px]">
+              <h1 className=" text-[10px] lg:text-[13px] xl:text-[14px] text-center md:w-[300px] text-[#0F52BA] font-medium">Resend in 57 sec </h1>
+            </div>
+            <div className="flex justify-center mt-[27px] md:mt-[30px] lg:mt-[45px] xl:mt-[50px]">
+              <button
+                id="grad-button"
+                onClick={HandleTabclick}
+                className="w-[45%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px] text-[12px] lg:text-[14px] xl:text-[16px] text-[white]"
+              >
+                {Loading ? <>
+                  <Image loading="lazy" alt="loader" width={25} height={25} className='animate-spin inline ' src='/assests/animation/loaderIcon.svg' />
+                </> : "Confirm"}
+
+              </button>
+            </div>
+          </div>
+        </>
+      case 3:
+        return <>
+          <div className="px-[10%]">
+            <div className="">
+              <h1 className="text-[13px] lg:text-[16px] xl:text-[20px]  text-center" ></h1>
+              <div className="flex justify-center mt-[20px] xl:mt-[30px]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" viewBox="0 0 44 44" className="w-[40px] lg:w-[44px] h-[44px]" fill="none">
+                  <path d="M18.4838 31.5522L34.1188 15.9171L32.3889 14.1872L18.4838 28.0923L11.5171 21.1256L9.78719 22.8556L18.4838 31.5522ZM22.0082 44C18.966 44 16.1058 43.4227 13.4276 42.2682C10.7494 41.1136 8.41975 39.5466 6.43861 37.5674C4.45751 35.5881 2.88913 33.2607 1.73348 30.585C0.577826 27.9093 0 25.0504 0 22.0082C0 18.966 0.577276 16.1058 1.73183 13.4276C2.88642 10.7494 4.45335 8.41975 6.43262 6.43861C8.41188 4.45751 10.7393 2.88913 13.415 1.73348C16.0907 0.577828 18.9496 0 21.9918 0C25.034 0 27.8942 0.577275 30.5724 1.73183C33.2506 2.88642 35.5803 4.45335 37.5614 6.43262C39.5425 8.41188 41.1109 10.7393 42.2665 13.415C43.4222 16.0907 44 18.9496 44 21.9918C44 25.034 43.4227 27.8942 42.2682 30.5724C41.1136 33.2506 39.5466 35.5803 37.5674 37.5614C35.5881 39.5425 33.2607 41.1109 30.585 42.2665C27.9093 43.4222 25.0504 44 22.0082 44ZM22 41.5556C27.4593 41.5556 32.0833 39.6611 35.8722 35.8722C39.6611 32.0833 41.5556 27.4593 41.5556 22C41.5556 16.5407 39.6611 11.9167 35.8722 8.12778C32.0833 4.33889 27.4593 2.44444 22 2.44444C16.5407 2.44444 11.9167 4.33889 8.12778 8.12778C4.33889 11.9167 2.44444 16.5407 2.44444 22C2.44444 27.4593 4.33889 32.0833 8.12778 35.8722C11.9167 39.6611 16.5407 41.5556 22 41.5556Z" fill="#0F52BA" />
+                </svg>
+
+              </div>
+            </div>
+            <div className="flex justify-center mt-[47px] md:mt-[45px] lg:mt-[65px] xl:mt-[70px]">
+              <h1 className="text-[12px] lg:text-[16px] xl:text-[18px] font-medium">Email has been updarted</h1>
+            </div>
+
+
+            <div className="flex justify-center mt-[47px] md:mt-[45px] lg:mt-[60px] xl:mt-[70px] mb-[27px] xl:mb-[33px]">
+              <button
+                id="grad-button"
+                onClick={handleClose}
+                className="w-[30%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px]"
+              >
+                <h1 className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white]">OK</h1>
+              </button>
+            </div>
+          </div>
+        </>
+    }
+  }
+
+  const [openModal, setOpenModal] = React.useState(false);
+
+  const handleClickOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setActiveTab2(1)
+  };
+
+  const [activeTab2, setActiveTab2] = useState(1);
+
+
+
+  const renderTabContent2 = () => {
+
+    const [Loading, setLoading] = useState(false);
+
+
+    const [userPassword, SetusersPassword] = useState({
+      currentPassword: "",
+      NewPassword: "",
+      confirmPassword: ""
+    })
+
+    const HandlePasswordChange = (e) => {
+      const { value, name } = e.target;
+      SetusersPassword((prev) => {
+        return { ...prev, [name]: value };
+      });
+    };
+
+
+
+    const [otp, setOtp] = useState(new Array(4).fill(''));
+    const [otp2, setOtp2] = useState();
+    const inputRefs = useRef([]);
+
+    const handleChange = (index, value) => {
+      const newOtp = [...otp];
+      newOtp[index] = value;
+      setOtp(newOtp);
+      setOtp2(newOtp);
+      if (value && inputRefs.current[index + 1]) {
+        inputRefs.current[index + 1].focus();
+      }
+    };
+
+    const handleKeyDown = (index, e) => {
+      if (e.key === 'Backspace' && !otp[index] && inputRefs.current[index - 1]) {
+        inputRefs.current[index - 1].focus();
+      }
+    };
+
+
+
+
+
+
+
+
+    const HandleActiveTab2 = () => {
+
+      if (activeTab2 == 1) {
+        // console.log(ChnagedEmail)
+        setLoading(true)
+
+        const axios = require('axios');
+        const currentEmail = localStorage.getItem("email")
+        let data = JSON.stringify({
+          "email": currentEmail
+        });
+
+        let config = {
+          method: 'post',
+          maxBodyLength: Infinity,
+          url: 'https://happymilan.tech/api/v1/user/auth/forgot-password',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: data
+        };
+
+        axios.request(config)
+          .then((response) => {
+            console.log(JSON.stringify(response.data));
+            setLoading(false)
+            setActiveTab2(activeTab2 + 1);
+          })
+          .catch((error) => {
+            setLoading(false)
+            console.log(error);
+          });
+
+
+      } else if (activeTab2 == 2) {
+        const otpNumber = parseInt(otp2.join(''), 10);
+        // console.log(otpNumber)
+        setLoading(true)
+
+
+        const axios = require('axios');
+        const currentEmail = localStorage.getItem("email")
+        let data = JSON.stringify({
+          "email": currentEmail,
+          "password": userPassword.NewPassword,
+          "otp": otpNumber
+        });
+        console.log("🚀 ~ HandleActiveTab2 ~ data:", data)
+
+        let config = {
+          method: 'post',
+          maxBodyLength: Infinity,
+          url: 'https://happymilan.tech/api/v1/user/auth/reset-password',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: data
+        };
+
+        axios.request(config)
+          .then((response) => {
+            console.log(JSON.stringify(response.data));
+            setLoading(false)
+            console.log("Password Done with this body : ", data)
+            setActiveTab2(activeTab2 + 1)
+          })
+          .catch((error) => {
+            setLoading(false)
+            console.log(error);
+          });
+
+
+      }
+
+      // console.log(ChnagedEmail)
+      // setActiveTab(activeTab + 1)
+
+
+
+      // console.log(userPassword)
+      // setActiveTab2(activeTab2 + 1)
+    }
+
+    switch (activeTab2) {
+      case 1:
+        return <>
+          <div className="h-[]">
+            <h1 className="text-[13px] lg:text-[16px] xl:text-[20px]  text-center" >Update Password</h1>
+
+          </div>
+          <h1 className="text-[10px] xl:text-[12px] mt-[20px] lg:mt-[25px] xl:mt-[30px] font-medium">Enter Current Password</h1>
+          <div className="flex place-items-center w-[100%]  h-[37px] lg:h-[43px] xl:h-[50px] mt-[1%]  border-[1px] border-[#E6E6E6] rounded-[8px] px-[15px] ">
+            <input name="currentPassword" value={userPassword.currentPassword} onChange={HandlePasswordChange} type="password" className=" w-full h-full outline-none text-[12px] lg:text-[14px]  xl:text-[16px] " />
+          </div>
+          <h1 className="text-[10px] xl:text-[12px] mt-[10px] lg:mt-[15px] xl:mt-[20px] font-medium">New Password</h1>
+          <div className="flex place-items-center w-[100%]  h-[37px] lg:h-[43px] xl:h-[50px] mt-[1%]  border-[1px] border-[#E6E6E6] rounded-[8px] px-[15px] ">
+            <input name="NewPassword" value={userPassword.NewPassword} onChange={HandlePasswordChange} type="password" className=" w-full h-full outline-none text-[12px] lg:text-[14px]  xl:text-[16px] " />
+          </div>
+          <h1 className="text-[10px] xl:text-[12px] mt-[10px] lg:mt-[15px] xl:mt-[20px] font-medium">Confirm Password</h1>
+          <div className="flex place-items-center w-[100%]  h-[37px] lg:h-[43px] xl:h-[50px] mt-[1%]  border-[1px] border-[#E6E6E6] rounded-[8px] px-[15px] ">
+            <input name="confirmPassword" value={userPassword.confirmPassword} onChange={HandlePasswordChange} type="password" className=" w-full h-full outline-none text-[12px] lg:text-[14px]  xl:text-[16px] " />
+          </div>
+
+          <div className="flex gap-x-[5%] mt-[15px] lg:mt-[20px] xl:mt-[30px] ">
+            <button
+
+              onClick={handleCloseModal}
+              className="w-[100%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px] border-[1px] border-[#0F52BA]"
+            >
+              <h1 className="text-[12px] lg:text-[14px] xl:text-[16px] ">Not Now</h1>
+            </button>
+            <button
+              id="grad-button"
+              onClick={HandleActiveTab2}
+              className="w-[100%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px]"
+            >
+              <h1 className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white]">Continue</h1>
+            </button>
+          </div>
+        </>
+      case 2:
+        return (
+          <>
+
+            <div className="px-[10%] lg:px-[5%] 2xl:px-[10%]">
+              <div className="">
+                <h1 className="text-[13px] lg:text-[16px] xl:text-[20px]  text-center" >Verification Code</h1>
+                <div className=" mt-[10px]  ">
+                  <h1 className="  text-[10px] lg:text-[11px] xl:text-[12px] text-center   font-medium">Verification code sent {Email}</h1>
+
+                </div>
+              </div>
+              <div className="text-[black] flex gap-[2%] w-[100%] mt-[62px] md:mt-[67px] lg:mt-[82px] xl:mt-[92px]">
+
+                {otp.map((digit, index) => {
+
+                  return (
+                    <>
+                      <input
+                        key={index}
+                        ref={(el) => (inputRefs.current[index] = el)}
+                        type="text"
+                        className="border-b-[1px] border-b-[#000] text-[#000] outline-none  w-full  text-center"
+                        maxLength={1}
+                        value={digit}  // Change this line
+                        onChange={(e) => handleChange(index, e.target.value)}
+                        onKeyDown={(e) => handleKeyDown(index, e)}
+                      />
+                    </>
+                  )
+                })}
+
+
+              </div>
+
+
+              <div className="flex justify-center mt-[20px] md:mt-[25px] lg:mt-[40px] xl:mt-[50px]">
+                <h1 className=" text-[10px] lg:text-[13px] xl:text-[14px] text-center md:w-[300px] text-[#0F52BA] font-medium">Resend in 57 sec </h1>
+              </div>
+              <div className="flex justify-center mt-[27px] md:mt-[30px] lg:mt-[45px] xl:mt-[50px]">
+                <button
+                  id="grad-button"
+                  onClick={HandleActiveTab2}
+                  className="w-[45%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px] text-[12px] lg:text-[14px] xl:text-[16px] text-[white]"
+                >
+                  {Loading ? <>
+                    <Image loading="lazy" alt="loader" width={25} height={25} className='animate-spin inline ' src='/assests/animation/loaderIcon.svg' />
+                  </> : "Confirm"}
+
+                </button>
+              </div>
+            </div>
+
+          </>
+        )
+      case 3:
+        return <>
+          <div className="px-[10%]">
+            <div className="">
+              <h1 className="text-[13px] lg:text-[16px] xl:text-[20px]  text-center" ></h1>
+              <div className="flex justify-center mt-[40px] xl:mt-[60px]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" viewBox="0 0 44 44" className="w-[40px] lg:w-[44px] h-[44px]" fill="none">
+                  <path d="M18.4838 31.5522L34.1188 15.9171L32.3889 14.1872L18.4838 28.0923L11.5171 21.1256L9.78719 22.8556L18.4838 31.5522ZM22.0082 44C18.966 44 16.1058 43.4227 13.4276 42.2682C10.7494 41.1136 8.41975 39.5466 6.43861 37.5674C4.45751 35.5881 2.88913 33.2607 1.73348 30.585C0.577826 27.9093 0 25.0504 0 22.0082C0 18.966 0.577276 16.1058 1.73183 13.4276C2.88642 10.7494 4.45335 8.41975 6.43262 6.43861C8.41188 4.45751 10.7393 2.88913 13.415 1.73348C16.0907 0.577828 18.9496 0 21.9918 0C25.034 0 27.8942 0.577275 30.5724 1.73183C33.2506 2.88642 35.5803 4.45335 37.5614 6.43262C39.5425 8.41188 41.1109 10.7393 42.2665 13.415C43.4222 16.0907 44 18.9496 44 21.9918C44 25.034 43.4227 27.8942 42.2682 30.5724C41.1136 33.2506 39.5466 35.5803 37.5674 37.5614C35.5881 39.5425 33.2607 41.1109 30.585 42.2665C27.9093 43.4222 25.0504 44 22.0082 44ZM22 41.5556C27.4593 41.5556 32.0833 39.6611 35.8722 35.8722C39.6611 32.0833 41.5556 27.4593 41.5556 22C41.5556 16.5407 39.6611 11.9167 35.8722 8.12778C32.0833 4.33889 27.4593 2.44444 22 2.44444C16.5407 2.44444 11.9167 4.33889 8.12778 8.12778C4.33889 11.9167 2.44444 16.5407 2.44444 22C2.44444 27.4593 4.33889 32.0833 8.12778 35.8722C11.9167 39.6611 16.5407 41.5556 22 41.5556Z" fill="#0F52BA" />
+                </svg>
+
+              </div>
+            </div>
+            <div className="flex justify-center mt-[47px] md:mt-[45px] lg:mt-[63px] xl:mt-[80px]">
+              <h1 className="text-[12px] lg:text-[16px] xl:text-[18px] font-medium">Password has been changed</h1>
+            </div>
+            <div className="flex justify-center ">
+              <h1 className="text-[9px] lg:text-[11px] xl:text-[12px] font-medium">please login again to confirm the credentials</h1>
+            </div>
+
+            <div className="flex justify-center mt-[47px] md:mt-[45px] lg:mt-[63px] xl:mt-[80px] mb-[32px] xl:mb-[37px]">
+              <button
+                id="grad-button"
+                onClick={handleCloseModal}
+                className="w-[30%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px]"
+              >
+                <h1 className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white]">OK</h1>
+              </button>
+            </div>
+          </div>
+        </>
+    }
+  }
+
+  const [modelOpen, setModelOpen] = React.useState(false);
+
+  const handleClickShow = () => {
+    setModelOpen(true);
+  };
+
+  const handleHideModel = () => {
+    setModelOpen(false);
+    setActiveTab3(1)
+  };
+
+  const [activeTab3, setActiveTab3] = useState(1);
+
+  const HandleTabclick3 = () => {
+    setActiveTab3(activeTab + 1);
+  };
+
+  const renderTabContent3 = () => {
+
+    const [Loading, setLoading] = useState(false);
+
+    const [otp, setOtp] = useState(new Array(4).fill(''));
+    const [otp2, setOtp2] = useState();
+    const inputRefs = useRef([]);
+
+    const handleChange = (index, value) => {
+      const newOtp = [...otp];
+      newOtp[index] = value;
+      setOtp(newOtp);
+      setOtp2(newOtp);
+      if (value && inputRefs.current[index + 1]) {
+        inputRefs.current[index + 1].focus();
+      }
+    };
+
+    const handleKeyDown = (index, e) => {
+      if (e.key === 'Backspace' && !otp[index] && inputRefs.current[index - 1]) {
+        inputRefs.current[index - 1].focus();
+      }
+    };
+
+
+
+    const [Email2, setEmail2] = useState(null)
+    const [ChnagedEmail, SetChangedEmail] = useState({
+      currentEmail: "",
+      mobileNumber: "",
+      currentMobileNumber: ""
+    })
+
+
+    useEffect(() => {
+      const localStorageData = localStorage.getItem('email');
+      const currentMobileNumberOfuser = localStorage.getItem('mobilenumber');
+      setMobileNumberOfUser(currentMobileNumberOfuser)
+
+      if (localStorageData) {
+
+        SetChangedEmail((prev) => ({
+          ...prev,
+          currentEmail: localStorageData,
+          currentMobileNumber: currentMobileNumberOfuser
+        })
+        )
+      }
+    }, [activeTab, setActiveTab, SetChangedEmail]);
+
+
+
+    const HandleNumberInput = (e) => {
+      SetChangedEmail((prev) => ({
+        ...prev,
+        mobileNumber: e.target.value
+      }))
+    }
+
+
+    const HandleTabclick3 = () => {
+      if (activeTab3 == 1) {
+        console.log(ChnagedEmail)
+        setLoading(true)
+
+        const axios = require('axios');
+        let data = JSON.stringify({
+          "email": ChnagedEmail.currentEmail
+        });
+
+        let config = {
+          method: 'post',
+          maxBodyLength: Infinity,
+          url: 'https://happymilan.tech/api/v1/user/auth/forgot-password',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: data
+        };
+
+        axios.request(config)
+          .then((response) => {
+            console.log(JSON.stringify(response.data));
+            setLoading(false)
+            setActiveTab3(activeTab3 + 1);
+          })
+          .catch((error) => {
+            setLoading(false)
+            console.log(error);
+          });
+
+
+      } else if (activeTab3 == 2) {
+        const otpNumber = parseInt(otp2.join(''), 10);
+        console.log(otpNumber)
+        setLoading(true)
+
+        const axios = require('axios');
+        let data = JSON.stringify({
+          "email": ChnagedEmail.currentEmail,
+          "mobileNumber": ChnagedEmail.mobileNumber,
+          "otp": otpNumber
+        });
+
+        let config = {
+          method: 'post',
+          maxBodyLength: Infinity,
+          url: 'https://happymilan.tech/api/v1/user/auth/reset-password',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: data
+        };
+
+        axios.request(config)
+          .then((response) => {
+            console.log(JSON.stringify(response.data));
+            setLoading(false)
+            setActiveTab3(activeTab3 + 1)
+          })
+          .catch((error) => {
+            setLoading(false)
+            console.log(error);
+          });
+
+
+      }
+
+      console.log(ChnagedEmail)
+      // setActiveTab(activeTab + 1);
+    };
+
+
+    switch (activeTab3) {
+      case 1:
+        return <>
+          <div className="h-[]">
+            <h1 className="text-[13px] lg:text-[16px] xl:text-[20px]  text-center" >Update Mobile Number</h1>
+
+          </div>
+          <h1 className="text-[10px] xl:text-[12px] mt-[30px] lg:mt-[35px] xl:mt-[40px] font-medium">Current Mobile Number</h1>
+          <div className="flex place-items-center w-[100%]  h-[37px] lg:h-[43px] xl:h-[50px] mt-[1%]  border-[1px] border-[#E6E6E6] rounded-[8px] px-[15px] ">
+            <input value={ChnagedEmail.currentMobileNumber} className="outline-none text-[12px] lg:text-[14px]  xl:text-[16px] placeholder:text-[black]" placeholder="********92" />
+          </div>
+          <h1 className="text-[10px] xl:text-[12px] mt-[20px] lg:mt-[25px] xl:mt-[30px] font-medium">New Mobile Number</h1>
+          <div className="flex place-items-center w-[100%]  h-[37px] lg:h-[43px] xl:h-[50px] mt-[1%]  border-[1px] border-[#E6E6E6] rounded-[8px] px-[15px] ">
+            <input name="mobileNumber" onChange={HandleNumberInput} className="outline-none text-[12px] lg:text-[14px]  xl:text-[16px] " />
+          </div>
+
+          <div className="flex gap-x-[5%] mt-[15px] lg:mt-[25px] xl:mt-[30px] ">
+            <button
+
+              onClick={handleHideModel}
+              className="w-[100%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px] border-[1px] border-[#0F52BA]"
+            >
+              <h1 className="text-[12px] lg:text-[14px] xl:text-[16px] ">Not Now</h1>
+            </button>
+            <button
+              id="grad-button"
+              onClick={HandleTabclick3}
+              className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white] w-[100%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px]"
+            >
+              {/* <h1 className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white]">Submit</h1> */}
+              {Loading ? <>
+                <Image loading="lazy" alt="loader" width={25} height={25} className='animate-spin inline ' src='/assests/animation/loaderIcon.svg' />
+              </> : "Submit"}
+            </button>
+          </div>
+        </>
+      case 2:
+        return <>
+          <div className="px-[10%] lg:px-[5%] 2xl:px-[10%]">
+            <div className="">
+              <h1 className="text-[13px] lg:text-[16px] xl:text-[20px]  text-center" >Verification Code</h1>
+              <div className=" mt-[10px]  ">
+                <h1 className="  text-[10px] lg:text-[11px] xl:text-[12px] text-center   font-medium">Verification code sent roh******tel@gmail.com</h1>
+
+              </div>
+            </div>
+            <div className="text-[black] flex gap-[2%] w-[100%] mt-[62px] md:mt-[67px] lg:mt-[82px] xl:mt-[92px]">
+
+              {otp.map((digit, index) => {
+
+                return (
+                  <>
+                    <input
+                      key={index}
+                      ref={(el) => (inputRefs.current[index] = el)}
+                      type="text"
+                      className="border-b-[1px] border-b-[#000] text-[#000] outline-none  w-full  text-center"
+                      maxLength={1}
+                      value={digit}  // Change this line
+                      onChange={(e) => handleChange(index, e.target.value)}
+                      onKeyDown={(e) => handleKeyDown(index, e)}
+                    />
+                  </>
+                )
+              })}
+
+
+            </div>
+
+            <div className="flex justify-center mt-[20px] md:mt-[25px] lg:mt-[40px] xl:mt-[50px]">
+              <h1 className=" text-[10px] lg:text-[13px] xl:text-[14px] text-center md:w-[300px] text-[#0F52BA] font-medium">Resend in 57 sec </h1>
+            </div>
+            <div className="flex justify-center mt-[27px] md:mt-[30px] lg:mt-[45px] xl:mt-[50px]">
+              <button
+                id="grad-button"
+                onClick={HandleTabclick3}
+                className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white] w-[45%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px]"
+              >
+                {/* <h1 className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white]">Confirm</h1> */}
+                {Loading ? <>
+                  <Image loading="lazy" alt="loader" width={25} height={25} className='animate-spin inline ' src='/assests/animation/loaderIcon.svg' />
+                </> : "Confirm"}
+              </button>
+            </div>
+          </div>
+        </>
+      case 3:
+        return <>
+          <div className="px-[10%]">
+            <div className="">
+              <h1 className="text-[13px] lg:text-[16px] xl:text-[20px]  text-center" ></h1>
+              <div className="flex justify-center mt-[20px] xl:mt-[30px]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" viewBox="0 0 44 44" className="w-[40px] lg:w-[44px] h-[44px]" fill="none">
+                  <path d="M18.4838 31.5522L34.1188 15.9171L32.3889 14.1872L18.4838 28.0923L11.5171 21.1256L9.78719 22.8556L18.4838 31.5522ZM22.0082 44C18.966 44 16.1058 43.4227 13.4276 42.2682C10.7494 41.1136 8.41975 39.5466 6.43861 37.5674C4.45751 35.5881 2.88913 33.2607 1.73348 30.585C0.577826 27.9093 0 25.0504 0 22.0082C0 18.966 0.577276 16.1058 1.73183 13.4276C2.88642 10.7494 4.45335 8.41975 6.43262 6.43861C8.41188 4.45751 10.7393 2.88913 13.415 1.73348C16.0907 0.577828 18.9496 0 21.9918 0C25.034 0 27.8942 0.577275 30.5724 1.73183C33.2506 2.88642 35.5803 4.45335 37.5614 6.43262C39.5425 8.41188 41.1109 10.7393 42.2665 13.415C43.4222 16.0907 44 18.9496 44 21.9918C44 25.034 43.4227 27.8942 42.2682 30.5724C41.1136 33.2506 39.5466 35.5803 37.5674 37.5614C35.5881 39.5425 33.2607 41.1109 30.585 42.2665C27.9093 43.4222 25.0504 44 22.0082 44ZM22 41.5556C27.4593 41.5556 32.0833 39.6611 35.8722 35.8722C39.6611 32.0833 41.5556 27.4593 41.5556 22C41.5556 16.5407 39.6611 11.9167 35.8722 8.12778C32.0833 4.33889 27.4593 2.44444 22 2.44444C16.5407 2.44444 11.9167 4.33889 8.12778 8.12778C4.33889 11.9167 2.44444 16.5407 2.44444 22C2.44444 27.4593 4.33889 32.0833 8.12778 35.8722C11.9167 39.6611 16.5407 41.5556 22 41.5556Z" fill="#0F52BA" />
+                </svg>
+
+              </div>
+            </div>
+            <div className="flex justify-center mt-[47px] md:mt-[45px] lg:mt-[65px] xl:mt-[70px]">
+              <h1 className="text-[12px] lg:text-[16px] xl:text-[18px] font-medium">Mobile number has been updated</h1>
+            </div>
+
+
+            <div className="flex justify-center mt-[47px] md:mt-[45px] lg:mt-[60px] xl:mt-[70px] mb-[27px] xl:mb-[33px]">
+              <button
+                id="grad-button"
+                onClick={handleHideModel}
+                className="w-[30%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px]"
+              >
+                <h1 className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white]">OK</h1>
+              </button>
+            </div>
+          </div>
+        </>
+    }
+  }
+
+  const TextHeading = {
+    color: "#6A6A6A",
+    fontFamily: "Poppins",
+    fontSize: "12px",
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: "normal",
+  }
+
   return (
     <>
       <div className="">
         <div className="flex mt-[-17px]">
-          <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path id="Vector" d="M7.09638 5.82178C6.30995 5.82178 5.64996 5.5471 5.11641 4.99772C4.58286 4.44835 4.31608 3.75274 4.31608 2.91089C4.31608 2.08752 4.58286 1.39653 5.11641 0.83792C5.64996 0.279306 6.30995 0 7.09638 0C7.8828 0 8.54279 0.279306 9.07634 0.83792C9.6099 1.39653 9.87667 2.08752 9.87667 2.91089C9.87667 3.75274 9.6099 4.44835 9.07634 4.99772C8.54279 5.5471 7.8828 5.82178 7.09638 5.82178ZM0 13.6119V12.3089C0 11.8284 0.114742 11.431 0.344227 11.1168C0.573712 10.8026 0.909113 10.5347 1.35043 10.3129C2.32133 9.85083 3.22161 9.49967 4.05129 9.25941C4.88097 9.01914 5.89599 8.89901 7.09638 8.89901H7.29497C7.35675 8.89901 7.42295 8.88977 7.49356 8.87129C7.45826 9.00066 7.43178 9.11155 7.41412 9.20396C7.39647 9.29637 7.37882 9.39802 7.36117 9.50891H7.09638C5.98426 9.50891 5.01336 9.60594 4.18368 9.8C3.35401 9.99406 2.50668 10.3406 1.6417 10.8396C1.21803 11.0614 0.935592 11.2878 0.79437 11.5188C0.653149 11.7498 0.582538 12.0132 0.582538 12.3089V13.002H7.38765C7.4053 13.0944 7.43178 13.196 7.46708 13.3069C7.50239 13.4178 7.53769 13.5195 7.573 13.6119H0ZM13.9544 14L13.875 12.7802C13.522 12.7248 13.1865 12.6046 12.8688 12.4198C12.5511 12.235 12.2863 12.004 12.0744 11.7267L11.0682 12.1426L10.9094 11.8931L11.8096 11.1723C11.6861 10.8766 11.6243 10.5347 11.6243 10.1465C11.6243 9.75842 11.6861 9.40726 11.8096 9.09307L10.9358 8.34455L11.0947 8.09505L12.0744 8.53861C12.2686 8.2429 12.529 8.00726 12.8556 7.83168C13.1821 7.65611 13.522 7.54059 13.875 7.48515L13.9544 6.26535H14.2722L14.3516 7.48515C14.687 7.54059 15.018 7.65611 15.3446 7.83168C15.6712 8.00726 15.9404 8.23366 16.1522 8.51089L17.1319 8.09505L17.2643 8.31683L16.3905 9.06535C16.5317 9.40386 16.6023 9.7611 16.6023 10.1371C16.6023 10.513 16.5317 10.8581 16.3905 11.1723L17.2908 11.8931L17.1584 12.1426L16.1522 11.7267C15.9227 12.004 15.6491 12.235 15.3313 12.4198C15.0136 12.6046 14.687 12.7248 14.3516 12.7802L14.2722 14H13.9544ZM14.0892 12.0871C14.6349 12.0871 15.0798 11.9015 15.424 11.5302C15.7683 11.1589 15.9404 10.6969 15.9404 10.1441C15.9404 9.57277 15.7675 9.10693 15.4217 8.74653C15.0759 8.38614 14.6302 8.20594 14.0845 8.20594C13.5565 8.20594 13.1159 8.38696 12.7629 8.749C12.4098 9.11102 12.2333 9.57769 12.2333 10.149C12.2333 10.7018 12.4106 11.163 12.7652 11.5327C13.1198 11.9023 13.5612 12.0871 14.0892 12.0871ZM7.09638 5.21188C7.71422 5.21188 8.23497 4.99472 8.65864 4.5604C9.0823 4.12607 9.29413 3.57624 9.29413 2.91089C9.29413 2.26403 9.0823 1.71881 8.65864 1.27525C8.23497 0.831683 7.71422 0.609901 7.09638 0.609901C6.47853 0.609901 5.95778 0.831683 5.53411 1.27525C5.11045 1.71881 4.89862 2.26403 4.89862 2.91089C4.89862 3.57624 5.11045 4.12607 5.53411 4.5604C5.95778 4.99472 6.47853 5.21188 7.09638 5.21188Z" fill="#000" />
-          </svg>
-          <h1 className="text-[15px] xl:text-[16px] font-medium ml-[15px]">Credentials</h1>
+
+          <h1 id="setting-text-grad" className="text-[15px] xl:text-[16px]  ml-[0px]">Login Details</h1>
         </div>
-        <h1 className="w-[580px] lg:w-[650px] xl:w-[700px] text-[11px] xl:text-[12px] text-[#484848] font-medium mt-[20px]">
-          See information about your account, download an archive of your data, or
-          learn about your account deactivation options
+        <div className="w-[500px] lg:w-[640px] xl:w-[700px]">
+        <h1 style={TextHeading} className=" mt-[20px]">
+          This menu enables users to update and manage authentication info, ensuring secure access to the account or system
         </h1>
-        <div className=" mt-[20px] xl:mt-[25px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
+        </div>
+        <div className=" mt-[20px] xl:mt-[25px] w-[500px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
         {/* Email */}
         <div>
           <div className="mt-[15px] xl:mt-[20px] flex  ">
             <h1 className="text-[15px] xl:text-[16px] mb-[5px] w-[550px] lg:w-[620px] xl:w-[680px] font-medium">Email</h1>
-            <Image width={20} height={20} src="/assests/dashboard/icon/edit-details-icon.svg" />
+            <Image alt="edit" loading="lazy" className="cursor-pointer" onClick={handleClickOpen} width={20} height={20} src="/assests/dashboard/icon/edit-details-icon.svg" />
           </div>
+          <Modal
+            className="focus:outline-none"
+            BackdropProps={{ style: { opacity: 1 } }}
+            open={open}
+            onClose={handleClose}
+          >
+            <Box>
+              <Typography
+                id="boxshadow"
+                className="bg-[white] py-[1%] xl:py-[2%] px-[1%] xl:px-[2.5%] 2xl:px-[3%] w-[80%] md:w-[30%]  rounded-[6px] absolute right-[10%] md:right-[33%] top-[45%] md:top-[22%] lg:top-[22%]"
+              >
+                {renderTabContent()}
+              </Typography>
+            </Box>
+          </Modal>
           <div className="flex ">
-            <Input className="focus:outline-none border-none  text-[14px] w-[550px] lg:w-[620px] xl:w-[680px]" type="email" variant="static" placeholder="jit*****@gmail.com" />
-            <img className="hidden absolute mt-[5px] ml-[175px]" src="/images/sucess.svg"></img>
+            <Input className="focus:outline-none border-none  text-[14px] w-[550px] lg:w-[620px] xl:w-[680px]" variant="static"
+              // placeholder={Email} 
+              value={Email}
+            />
+            <img className="absolute mt-[20px] ml-[175px]" src="/assests/dashboard/seting/Verified-icon.svg"></img>
           </div>
+
         </div>
         <div className=" mt-[15px] xl:mt-[20px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
         <div>
           {/* Password */}
           <div className="mt-[20px] flex  ">
             <h1 className="text-[15px] xl:text-[16px] mb-[5px] w-[550px] lg:w-[620px] xl:w-[680px] font-medium">Password</h1>
-            <Image width={20} height={20} src="/assests/dashboard/icon/edit-details-icon.svg" />
+            <Image alt="icon" loading="lazy" onClick={handleClickOpenModal} width={20} height={20} src="/assests/dashboard/icon/edit-details-icon.svg" />
           </div>
-
-          <Input className="focus:outline-none border-none text-[14px] w-[550px] lg:w-[620px] xl:w-[680px]" type="passwoed" variant="static" placeholder="*****" />
+          <Modal
+            className="focus:outline-none "
+            BackdropProps={{ style: { opacity: 1 } }}
+            open={openModal}
+            onClose={handleCloseModal}
+          >
+            <Box>
+              <Typography
+                id="boxshadow"
+                className="bg-[white] py-[1%] xl:py-[2%] px-[1%] xl:px-[2.5%] 2xl:px-[3%] w-[80%] md:w-[30%]  rounded-[6px] absolute right-[10%] md:right-[33%] top-[45%] md:top-[22%] lg:top-[22%]"
+              >
+                {renderTabContent2()}
+              </Typography>
+            </Box>
+          </Modal>
+          <Input type="password" className="focus:outline-none border-none text-[14px] w-[550px] lg:w-[620px] xl:w-[680px]" variant="static" placeholder="*****" />
 
 
         </div>
@@ -45,11 +919,28 @@ function Credentials() {
         <div>
           <div className="mt-[20px] flex  ">
             <h1 className="text-[15px] xl:text-[16px] mb-[5px] w-[550px] lg:w-[620px] xl:w-[680px] font-medium">Mobile Number</h1>
-            <Image width={20} height={20} src="/assests/dashboard/icon/edit-details-icon.svg" />
+            <Image alt="icon" loading="lazy" onClick={handleClickShow} width={20} height={20} src="/assests/dashboard/icon/edit-details-icon.svg" />
           </div>
+          <Modal
+            className="focus:outline-none "
+            BackdropProps={{ style: { opacity: 1 } }}
+            open={modelOpen}
+            onClose={handleHideModel}
+          >
+            <Box>
+              <Typography
+                id="boxshadow"
+                className="bg-[white] py-[1%] xl:py-[2%] px-[1%] xl:px-[2.5%] 2xl:px-[3%] w-[80%] md:w-[30%]  rounded-[6px] absolute right-[10%] md:right-[33%] top-[45%] md:top-[22%] lg:top-[22%]"
+              >
+                {renderTabContent3()}
+              </Typography>
+            </Box>
+          </Modal>
           <div className="flex ">
-            <Input className="border-none text-[14px] w-[550px] focus:outline-none  lg:w-[620px] xl:w-[680px]" type="contact number" variant="static" placeholder="********902" />
-            <img className="hidden absolute mt-[5px] ml-[110px]" src="/images/sucess.svg"></img>
+            <Input className="border-none text-[14px] w-[550px] focus:outline-none  lg:w-[620px] xl:w-[680px]" variant="static" value={MobileNumberOfUser} />
+            {MobileNumberOfUser ? (
+              <img className="absolute mt-[18px] ml-[170px]" src="/assests/dashboard/seting/Verified-icon.svg" alt="Verified Icon" />
+            ) : null}
           </div>
         </div>
         <div className=" mt-[15px] xl:mt-[20px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>

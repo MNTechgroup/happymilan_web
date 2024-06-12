@@ -76,7 +76,7 @@ function index() {
           <div className="w-full lg:w-[750px]">
             <div className=" h-[10px]"></div>
 
-            <Accordion className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
+            <Accordion style={{borderRadius:"18px"}} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1-content"
@@ -122,7 +122,7 @@ function index() {
                 </ul>
               </AccordionDetails>
             </Accordion>
-            <Accordion className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
+            <Accordion style={{borderRadius:"18px"}} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1-content"
@@ -141,7 +141,7 @@ function index() {
                 </ul>
               </AccordionDetails>
             </Accordion>
-            <Accordion className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
+            <Accordion style={{borderRadius:"18px"}} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1-content"
@@ -173,7 +173,7 @@ function index() {
                 </ul>
               </AccordionDetails>
             </Accordion>
-            <Accordion className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
+            <Accordion style={{borderRadius:"18px"}} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1-content"
@@ -209,7 +209,7 @@ function index() {
                 </ul>
               </AccordionDetails>
             </Accordion>
-            <Accordion className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
+            <Accordion style={{borderRadius:"18px"}} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1-content"
@@ -237,7 +237,7 @@ function index() {
                 </ul>
               </AccordionDetails>
             </Accordion>
-            <Accordion className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
+            <Accordion style={{borderRadius:"18px"}} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1-content"
@@ -254,16 +254,16 @@ function index() {
                   </li>
                   <li className="mt-[21px]">
                     <span className="text-[#0F52BA]">Email:</span>{" "}
-                    support@happymilan.com
+                    contact@mntechgroup.com
                   </li>
                   <li >
                     <span className="text-[#0F52BA]">Support:</span>{" "}
-                    +91 00000 10000
+                    +91 91048 14072
                   </li>
                 </ul>
               </AccordionDetails>
             </Accordion>
-            <Accordion className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
+            <Accordion style={{borderRadius:"18px"}} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1-content"
@@ -275,7 +275,7 @@ function index() {
               <AccordionDetails>
                 <ul style={AccordingBody}>
                   <li>
-                  HappyMilan is very strict about fake profiles, and we have implemented multiple authentication steps for users to verify their profiles
+                    HappyMilan is very strict about fake profiles, and we have implemented multiple authentication steps for users to verify their profiles
                   </li>
                   <li className="mt-[21px]">
                     <span className="text-[#0F52BA]">Email :</span>{" "}
@@ -291,13 +291,13 @@ function index() {
                   </li>
 
                   <li className="mt-[21px]">
-                  If the provided information does not match your profile, your account may be terminated after a deadline warning.
+                    If the provided information does not match your profile, your account may be terminated after a deadline warning.
                   </li>
 
                 </ul>
               </AccordionDetails>
             </Accordion>
-            <Accordion className="shadow-none  border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
+            <Accordion style={{borderRadius:"18px"}} className="shadow-none  border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1-content"
@@ -309,19 +309,19 @@ function index() {
               <AccordionDetails>
                 <ul style={AccordingBody}>
                   <li>
-                  You can terminate your membership anytime by deleting your profile or contacting HappyMilan.com. No refunds for unused subscription fees unless expressly guaranteed in writing
+                    You can terminate your membership anytime by deleting your profile or contacting HappyMilan.com. No refunds for unused subscription fees unless expressly guaranteed in writing
                   </li>
                   <li className="mt-[21px]">
-                  If the business is disrupted, the Company will reimburse you with 50% of the unused membership fees you've paid.
+                    If the business is disrupted, the Company will reimburse you with 50% of the unused membership fees you've paid.
                   </li>
                   <li className="mt-[21px]">
-                  HappyMilan.com may terminate your access or membership for reasons like violating terms, commercial use, prohibited communication, or inappropriate activity. Termination notice will be sent to your provided email, and no refund of subscription fees will be granted for breaches of the agreement.
+                    HappyMilan.com may terminate your access or membership for reasons like violating terms, commercial use, prohibited communication, or inappropriate activity. Termination notice will be sent to your provided email, and no refund of subscription fees will be granted for breaches of the agreement.
                   </li>
-                  
+
                 </ul>
               </AccordionDetails>
             </Accordion>
-            <Accordion className="shadow-none  border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
+            <Accordion style={{borderRadius:"18px"}} className="shadow-none  border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1-content"
@@ -333,14 +333,14 @@ function index() {
               <AccordionDetails>
                 <ul style={AccordingBody}>
                   <li>
-                  Yes, subscription plans are changeable. Members only need to pay an additional amount for add-ons
+                    Yes, subscription plans are changeable. Members only need to pay an additional amount for add-ons
                   </li>
-                  
-                  
+
+
                 </ul>
               </AccordionDetails>
             </Accordion>
-            <Accordion className="shadow-none  border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
+            <Accordion style={{borderRadius:"18px"}} className="shadow-none  border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1-content"
@@ -352,28 +352,28 @@ function index() {
               <AccordionDetails>
                 <ul style={AccordingBody}>
                   <li>
-                  HappyMilan users can delete or hide their profile after finding a match or determining that this platform is not compatible.
+                    HappyMilan users can delete or hide their profile after finding a match or determining that this platform is not compatible.
                   </li>
                   <li className="mt-[21px]">
-                  To do so, you can email us with your member ID at support@happymilan.com.
+                    To do so, you can email us with your member ID at support@happymilan.com.
                   </li>
                   <li className="mt-[21px]">
-                  Follow these steps:
+                    Follow these steps:
                   </li>
                   <li >
-                  Step 1: Go to your profile and click on <span className="text-[#0F52BA]">“Account Settings.”</span>
+                    Step 1: Go to your profile and click on <span className="text-[#0F52BA]">“Account Settings.”</span>
                   </li>
                   <li >
-                  Step 2: Select<span className="text-[#0F52BA]"> “Hide or Delete.”</span>
+                    Step 2: Select<span className="text-[#0F52BA]"> “Hide or Delete.”</span>
                   </li>
                   <li >
-                  Step 3: Click on <span className="text-[#0F52BA]">“Delete my profile.”</span>
+                    Step 3: Click on <span className="text-[#0F52BA]">“Delete my profile.”</span>
                   </li>
-                  
+
                 </ul>
               </AccordionDetails>
             </Accordion>
-            <Accordion className="shadow-none  border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
+            <Accordion style={{borderRadius:"18px"}} className="shadow-none  border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1-content"
@@ -385,29 +385,29 @@ function index() {
               <AccordionDetails>
                 <ul style={AccordingBody}>
                   <li>
-                  Yes, HappyMilan users can change their login details by following these steps:
+                    Yes, HappyMilan users can change their login details by following these steps:
                   </li>
                   <li className="mt-[21px]" >
-                  Step 1: Go to your profile and click on <span className="text-[#0F52BA]">“Account Settings.”</span>
+                    Step 1: Go to your profile and click on <span className="text-[#0F52BA]">“Account Settings.”</span>
                   </li>
                   <li >
-                  Step 2: Select<span className="text-[#0F52BA]"> “Credentials.”</span>
+                    Step 2: Select<span className="text-[#0F52BA]"> “Credentials.”</span>
                   </li>
                   <li className="flex gap-[1%]" >
-                  Step 3: Click on <span className="mt-[3px]"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" viewBox="0 0 13 12" fill="none">
-  <path d="M1.06412 10.9904H1.84447L9.70123 3.75601L8.92087 3.03747L1.06412 10.2719V10.9904ZM11.9536 3.0538L9.68349 0.963498L10.4284 0.277618C10.6294 0.0925393 10.8777 0 11.1733 0C11.4688 0 11.7171 0.0925393 11.9181 0.277618L12.6985 0.996159C12.8995 1.18124 13 1.40986 13 1.68204C13 1.95421 12.8995 2.18284 12.6985 2.36792L11.9536 3.0538ZM11.2087 3.73968L2.27012 11.9702H0V9.87994L8.93861 1.64938L11.2087 3.73968ZM9.31105 3.39674L8.92087 3.03747L9.70123 3.75601L9.31105 3.39674Z" fill="black"/>
-</svg></span>
+                    Step 3: Click on <span className="mt-[3px]"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" viewBox="0 0 13 12" fill="none">
+                      <path d="M1.06412 10.9904H1.84447L9.70123 3.75601L8.92087 3.03747L1.06412 10.2719V10.9904ZM11.9536 3.0538L9.68349 0.963498L10.4284 0.277618C10.6294 0.0925393 10.8777 0 11.1733 0C11.4688 0 11.7171 0.0925393 11.9181 0.277618L12.6985 0.996159C12.8995 1.18124 13 1.40986 13 1.68204C13 1.95421 12.8995 2.18284 12.6985 2.36792L11.9536 3.0538ZM11.2087 3.73968L2.27012 11.9702H0V9.87994L8.93861 1.64938L11.2087 3.73968ZM9.31105 3.39674L8.92087 3.03747L9.70123 3.75601L9.31105 3.39674Z" fill="black" />
+                    </svg></span>
                   </li>
-                  
+
                 </ul>
               </AccordionDetails>
             </Accordion>
-            
+
             <div className=" h-[10px]"></div>
           </div>
         </div>
 
-       
+
 
         <div className="md:pl-0 md:pr-0 md:pb-0 pb-[20px] pl-[25px] pr-[25px]">
           <div
@@ -418,6 +418,8 @@ function index() {
               <Image
                 width={121}
                 height={47}
+                alt="img"
+                loading="lazy"
                 src="/assests/common/group-rounded.svg"
               />
             </div>
@@ -434,11 +436,13 @@ function index() {
                 <Image
                   width={16}
                   height={16}
+                  alt="img"
+                  loading="lazy"
                   className="inline mr-[14px]"
                   src="/assests/common/contact-icon.svg"
                 />
                 <h1 className="inline" style={Textstyle}>
-                  +079 000322321
+                  +91 91048 14072
                 </h1>
               </div>
 
@@ -448,11 +452,13 @@ function index() {
                 <Image
                   width={21}
                   height={16}
+                  alt="img"
+                  loading="lazy"
                   className="inline mr-[14px]"
                   src="/assests/common/email-icon.svg"
                 />
                 <h1 className="inline" style={Textstyle}>
-                  support@happymilan.com
+                  contact@mntechgroup.com
                 </h1>
               </div>
 
@@ -462,6 +468,8 @@ function index() {
                 <Image
                   width={17}
                   height={16}
+                  alt="img"
+                  loading="lazy"
                   className="inline mr-[14px]"
                   src="/assests/common/message-icon.svg"
                 />

@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getCookie } from "cookies-next";
 import { UploadImages3, updateAddressData, updateEducationData, updateGeneralInfo, updateProffessionalData, updateURLs } from "../actions/registerUser";
 import { STATUSES } from "./MyProfile";
 import { ADD_NEW_SHORTLIST, MARK_SHORTLISTS_AS_SEEN } from "../actions/GetingAlluser";
+import { UPDATE_HOBBIES_VALUES, UPDATE_PARTNER_PREF } from "../type";
 
 
 
@@ -28,6 +28,7 @@ const initialState = {
       firstName: "",
       lastName: "",
       motherTongue: "",
+      maritalStatus: "",
       gender: "",
       dateOfBirth: "",
       birthTime: "",
@@ -36,7 +37,7 @@ const initialState = {
       // currentcity: "",
       // countryofliving: "",
       writeBoutYourSelf: "",
-     
+
     },
     address: {
       currentResidenceAddress: "",
@@ -72,11 +73,34 @@ const initialState = {
 
     },
     allhobbies: {
-      hobbies: [],
+      hobbies: [
+        {
+          "category": "Creative",
+          "values": []
+        },
+        {
+          "category": "Fun",
+          "values": []
+        },
+        {
+          "category": "Fitness",
+          "values": []
+        }
+      ],
     },
     upload: {
       images: [],
-      bufferdata : []
+      bufferdata: []
+    },
+    uploadStory: {
+      imagesdata: {},
+      bufferdata: "",
+      CaptionText: "",
+    },
+    uploadChatImage: {
+      imagesdata: {},
+      bufferdata: "",
+      CaptionText: "",
     },
     partnerpref: {
       age: {
@@ -87,13 +111,17 @@ const initialState = {
         min: "",
         max: ""
       },
-      country: "",
-      state: "",
-      city: "",
+      country: [],
+      state: [],
+      city: [],
       income: "",
-      creative: "",
-      fun: "",
-      diet: ""
+      creative: [],
+      fun: [],
+      diet: []
+    },
+    userProfile: {
+      images: [],
+      bufferdata: []
     },
     isFormValid: true
   },
@@ -118,6 +146,36 @@ export const formReducer = (state = initialState, action) => {
           ...action.payload,
         },
       };
+    case UPDATE_HOBBIES_VALUES:
+      return {
+        ...state,
+        formData: {
+          ...state.formData,
+          allhobbies: {
+            ...state.formData.allhobbies,
+            hobbies: state.formData.allhobbies.hobbies.map(hobby =>
+              hobby.category?.toLowerCase() === action.payload.category?.toLowerCase()
+                ? { ...hobby, values: [...new Set([...hobby.values, ...action.payload.values])] }
+                : hobby
+            ),
+          }
+        }
+      };
+    case UPDATE_PARTNER_PREF:
+      const { key, values } = action.payload;
+
+      return {
+        ...state,
+        formData: {
+          ...state.formData,
+          partnerpref: {
+            ...state.formData.partnerpref,
+            [key]: Array.isArray(state.formData.partnerpref[key])
+              ? [...new Set([...state.formData.partnerpref[key], ...values])]
+              : values,
+          },
+        },
+      };
     default:
       return state;
   }
@@ -133,7 +191,11 @@ export const FormSlice = createSlice({
     setFormValidation: (state, action) => {
       state.isFormValid = action.payload;
     },
-   
+    setUploadUIVisibility(state, action) {
+      const { userId, isVisible } = action.payload;
+      state[userId] = isVisible;
+    },
+
   },
   extraReducers: (builder) => {
     builder
@@ -198,9 +260,10 @@ export const FormSlice = createSlice({
     builder.addCase(MARK_SHORTLISTS_AS_SEEN, (state) => {
       state.newShortlists = 0;
     });
-    builder.addCase(updateURLs.fulfilled, (state,action)=>{
+    builder.addCase(updateURLs.fulfilled, (state, action) => {
       state.formData.upload.bufferdata = action.payload
     })
+
 
   }
 })
@@ -285,4 +348,4 @@ export const uploadImageToS3 = async (theimageData) => {
 
 
 
-export const { setFormValidation } = FormSlice.actions;
+export const { setFormValidation, setUploadUIVisibility } = FormSlice.actions;

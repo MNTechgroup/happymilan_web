@@ -1,23 +1,31 @@
-import React, { useState } from 'react'
+'use client';
+
+import React, { useCallback, useEffect, useState } from 'react'
 import Drawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import Image from 'next/image';
+import ProfileImage from '../../components/Maincomp/ProfileImage';
+import { getCookie } from 'cookies-next';
+import Modal from './storyUploadcomp/components/Modal';
+import { useDropzone } from 'react-dropzone';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { updateFormData } from '../../../store/actions/registerUser'
+import { Getallstatus, Uploadmystory, Uploadmystorymodal } from '../../../store/actions/UsersAction';
+import ViewStory from './StoryModals/ViewStory';
+import { Skeleton } from '@mui/material';
+import EmojiPicker from 'emoji-picker-react';
 
-function UserStory() {
+
+function UserStory({ formData, updateFormData }) {
+
+
+    const [EmojiData, setEmojiData] = useState([])
     const Text3 = {
         fontFamily: "Poppins",
-        fontSize: "14px",
+        fontSize: "20px",
         fontStyle: "normal",
-        fontWeight: "400",
-        lineHeight: "normal"
-    }
-    const Text4 = {
-        fontFamily: "Poppins",
-        fontSize: "18px",
-        fontStyle: "normal",
-        fontWeight: "400",
+        fontWeight: "500",
         lineHeight: "normal"
     }
 
@@ -49,7 +57,45 @@ function UserStory() {
         lineHeight: "32px"
     }
 
-   
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch('https://cdn.jsdelivr.net/npm/@emoji-mart/data');
+            const data = await response.json();
+            setEmojiData(data);
+        };
+
+        fetchData();
+    }, []);
+
+
+    const { loading, data, mystory } = useSelector((state) => state.usersact.UsersStorydata)
+
+    const [showPicker, setShowPicker] = useState(false);
+
+    const hanldeEmojiInput = (emoji) => {
+
+        SetStoryCaption((prev) => {
+            return prev + emoji.emoji
+        })
+
+
+        // setShowPicker(false);
+    };
+
+
+
+
+    useEffect(() => {
+        dispatch(Getallstatus())
+    }, [])
+
+    const [Storyimagesrc, SetStoryimagesrc] = useState({
+        storyViewType: "",
+        Data: null
+    });
+
     const [notification, setNotification] = React.useState({
         right: false, // Initialize only the 'right' anchor to be closed
     });
@@ -60,113 +106,165 @@ function UserStory() {
         setNotification({ ...notification, [anchor]: open });
     };
 
+    const HandleStoryOpen = (e, res) => {
+        console.log("🚀 ~ HandleStoryOpen ~ res:", res)
+        const name = e.currentTarget.getAttribute('name'); // Use currentTarget instead of target
+        console.log(name);
+        SetStoryimagesrc({
+            storyViewType: name,
+            Data: res
+        })
+
+        setNotification({ ...notification, 'right': true });
+    }
+
     const NotificationList = (anchor) => (
-        <Box
-            sx={{ backgroundColor: 'black' }}
-            className="w-[full] h-full lg:h-auto 2xl:w-[799px] xl:w-[699px]"
 
-        >
-            <div className='bg-[black] w-full 2xl:h-[100vh] xl:h-[565px] space-y-[20px]'>
-
-                <div className='flex justify-between pt-[20px]'>
-                    <div className='pl-[40px] flex items-center space-x-[20px]'>
-                        <Image alt='request' width={47} height={47} className="w-[47px] h-[47px]" src="/assests/dashboard/request/req-3.svg" />
-
-                        <div className='text-left text-[#FFF]'>
-                            <h1 style={Username} className='text-[14px]'>Rishikesh Shah</h1>
-                            <p style={Activity}>27, Designer</p>
-                        </div>
-                    </div>
-
-                    <div className='flex items-center pr-[40px]'>
-                        <Image alt='cross-icon' width={20} height={20} className='cursor-pointer' onClick={toggleNotification('right', false)} src='/assests/dashboard/story/cross-icon.svg' />
-                    </div>
-                </div>
-
-                <div className='flex justify-center space-x-[90px] pt-[20px]'>
-
-                    <div className=' flex items-center'>
-                        <Image alt='img' width={48} height={48} src='/assests/dashboard/story/arrow-left.svg' />
-                    </div>
-                    <div className=''>
-                        <Image alt='img' width={346} height={450} className='h-full lg:h-[450px] 2xl:w-auto 2xl:h-[450px] xl:h-[350px]' src='/assests/dashboard/story/story-pic.svg' />
-                    </div>
-                    <div className=' flex items-center'>
-                        <Image alt='img' width={48} height={48} src='/assests/dashboard/story/arrow-right.svg' />
-                    </div>
-
-                </div>
-
-                <div className='text-center text-[white]'>
-                    <h1 style={Text4}>My Latest Click ❤️</h1>
-                </div>
-
-            </div>
-        </Box>
+        <ViewStory CloseBtn={toggleNotification('right', false)} Storyimagesrc={Storyimagesrc} />
     );
 
     //For Notification
+
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
         setOpen(true);
     };
 
+    const [imagesrc, setImagesrc] = useState();
+    const [ActiveTab, SetActiveTab] = useState(1);
+
+
     const handleClose = () => {
         setOpen(false);
         SetActiveTab(1);
     };
 
-    const UploadSection = () => {
-        return (
-            <>
-                <div className='md:pb-[20px] lg:pb-0 flex flex-col justify-center items-center space-y-[20px] w-full h-full   md:w-[350px] md:h-[150px] lg:w-[426px] lg:h-[230px] 2xl:w-[526px] 2xl:h-[330px] xl:w-[526px] xl:h-[330px] bg-[#F5F5F5] rounded-[10px]'>
-                    <div className='mt-[10%] lg:mt-0 md:w-[60px] md:h-[60px] lg:w-auto lg:h-auto 2xl:w-auto 2xl:h-auto xl:w-auto xl:h-auto'>
-                        <Image alt="drag-drop" width={63} height={44}  src='/loginassests/register-icons/Drag-Drop.svg' />
-                    </div>
-                    <div className='text-center'>
-                        <h1 style={Text1} className='2xl:text-[24px] xl:text-[24px] lg:text-[24px] md:text-[18px]'>Select Photos</h1>
-                        <p style={Text2}>Or drag and drop a file</p>
-                    </div>
-                </div>
-            </>
-        )
+
+    const StoryModal = useSelector((state) => state.usersact.StoryUpload)
+
+
+
+    if (StoryModal.modalClose) {
+        setOpen(false)
+        SetActiveTab(1);
+        dispatch(Uploadmystorymodal())
     }
 
-    const PublishSection = () => {
-        return (
-            <>
-                <div className='flex flex-col justify-center items-center space-y-[20px]  md:w-[350px] md:h-[150px] lg:w-[426px] lg:h-[230px] 2xl:w-[526px] xl:w-[526px] 2xl:h-[330px] xl:h-[330px]'>
-                    <div className='flex items-center'>
-                        <div className=' md:w-[120px] md:h-[120px] lg:h-auto lg:w-[150px] 2xl:w-auto 2xl:h-auto xl:w-auto xl:h-auto'>
-                            <Image alt='upload' width={190} height={241} src='/assests/dashboard/story/Upload-storypic.svg' />
-                        </div>
-                        <div className='relative left-[10%] md:left-[100px] lg:left-[120px] 2xl:left-[150px] xl:left-[150px]'>
-                            <Image alt='delete-icon' width={19.695} height={22.17} className='w-[19.695px] h-[22.17px]' src='/assests/Black/Delete.svg' />
-                        </div>
-                    </div>
-                    <div className='w-full'>
-                    <input placeholder='Caption..' type='text' className='lg:mt-0 mt-[20px] pl-[20px] w-full h-[40px] 2xl:h-[50px] md:h-[30px] xl:h-[50px] lg:h-[40px] rounded-[10px] border-[1px] border-[#D8D8D8] focus:outline-none focus:border-[1px] focus:border-[black]' />
-                    </div>
-                </div>
-            </>
-        )
-    }
-    const [ActiveTab, SetActiveTab] = useState(1);
-    const RenderComponent = () => {
 
-        switch (ActiveTab) {
-            case 1: return <UploadSection />;
-            case 2: return <PublishSection />;
-            default: ""
+    const thedata = useSelector((state) => state.form.formData.uploadStory)
+
+    const [blobData, SetBlobdata] = useState({
+        size: null,
+        type: null,
+        blob: null
+    })
+
+    const [BtnText, SetBtnText] = useState("Publish")
+
+
+
+
+    const [Uname, setUname] = useState("")
+    const [token, settoken] = useState("")
+
+    useEffect(() => {
+        setUname(getCookie("userName"))
+        settoken(getCookie('authtoken'))
+    }, [])
+
+    const [modalOpen, setModalOpen] = useState(false)
+
+    const [StoryCaption, SetStoryCaption] = useState("")
+
+    const handleInputChange = (e) => {
+        SetStoryCaption(e.target.value)
+    }
+
+    const onDrop = useCallback((acceptedFiles) => {
+        if (acceptedFiles.length > 1) {
+            alert("Please select only one image");
+            return;
         }
 
+        const selectedImage = acceptedFiles[0];
+
+        const imageData = {
+            id: selectedImage.name,
+            key: selectedImage.name,
+            contentType: selectedImage.type,
+            data: URL.createObjectURL(selectedImage),
+            isProfile: false
+        };
+
+        SetBlobdata({
+            size: selectedImage.size,
+            type: selectedImage.type,
+            blob: URL.createObjectURL(selectedImage)
+        })
+
+        setImagesrc(imageData.data)
+        SetActiveTab(2)
+        updateFormData({
+            ...formData,
+            uploadStory: {
+                ...formData.uploadStory,
+                imagesdata: imageData,
+                bufferdata: URL.createObjectURL(selectedImage)
+            }
+        });
+    }, []);
+
+    const HandleNext = () => {
+
+        if (ActiveTab === 2) {
+            // console.log(StoryCaption)
+            console.log("Done")
+            dispatch(Uploadmystory(thedata, imagesrc, blobData, StoryCaption))
+        } else { SetActiveTab(ActiveTab + 1) }
     }
+
+
+    const HandleDeleteClick = () => {
+        SetActiveTab(1)
+        SetStoryCaption("")
+        setShowPicker(false)
+    }
+
+
+    const { getRootProps, getInputProps } = useDropzone({ onDrop, maxFiles: 1 });
+
+
     return (
         <>
-            <div id='story-section-center' className='pb-[20px] w-full lg:w-auto lg:pb-[0px] z-10 lg:z-0 bg-[white] mt-[-20px] lg:mt-0 lg:bg-none p-[5px] fixed  lg:relative left-[0px] 2xl:left-[50px] lg:left-[50px] xl:left-[60px] flex space-x-[15px]'>
-                <div className='w-[47px] h-[47px] bg-[#FFF] rounded-full grid place-items-center'>
-                    <Image alt='add-icon' width={47} height={47} onClick={handleClickOpen} src='/assests/dashboard/user/add-story.svg' /></div>
+            <div id='story-section-center' className=' pb-[20px] w-full lg:w-auto lg:pb-[0px] z-10 lg:z-0 bg-[white] mt-[-20px] lg:mt-0 lg:bg-none dark:bg-[#18191a] p-[5px] fixed  lg:relative left-[0px] 2xl:left-[50px] lg:left-[50px] xl:left-[60px] flex space-x-[15px]'>
+
+                <>
+                    {loading ? (
+                        <Skeleton variant="circular" width={47} height={47} />
+                    ) : (
+                        <>
+                            {mystory?.length > 0 ? (
+                                mystory.map((res) => (
+                                    <div name="currentUser" onClick={(e) => HandleStoryOpen(e, res)} style={{ boxSizing: 'content-box' }} className='w-[47px] h-[47px] cursor-pointer bg-[#FFF] rounded-full grid place-items-center border-[2px] border-[blue]' id='story-gradient-border'><Image alt='user-1' width={47} height={47} style={{ objectFit: "cover", borderRadius: "50%", width: "47px", height: "47px", border: '2px solid transparent', }} src={res?.userId?.profilePic ? res?.userId?.profilePic : '/assests/dashboard/user/1.svg'} /></div>
+
+                                ))
+                            ) : (
+                                <div className='w-[47px] h-[47px] bg-[#FFF] rounded-full grid place-items-center'>
+                                    <div className='cursor-pointer'>
+                                        <ProfileImage size={47} />
+                                        <div className='relative left-[34px] top-[-17px]'>
+                                            <Image loading='lazy' alt='add-icon' width={18} height={18} onClick={handleClickOpen} src='/assests/stories/Add-story-icon.svg' />
+                                        </div>
+                                    </div>
+                                    {/* <Image alt='add-icon' width={47} height={47} onClick={handleClickOpen} src='/assests/dashboard/user/add-story.svg' /> */}
+                                </div>
+                            )}
+                        </>
+                    )}
+                </>
+
+
                 <Dialog
                     open={open}
                     onClose={handleClose}
@@ -174,37 +272,115 @@ function UserStory() {
 
                 >
 
-                    <DialogContent className=''>
+
+
+                    <DialogContent className='dark:bg-[#18191a]'>
+
                         <div className='space-y-[20px]'>
                             <div className='lg:pb-0 pb-[20px] flex items-center justify-between space-x-[20px]'>
-                                <div className='flex items-center space-x-[20px]'>
-                                <Image alt='profile-pic' width={47} height={47} className="lg:w-[47px] lg:h-[47px] md:w-[40px] md:h-[40px]" src="/assests/dashboard/user/userProfile.svg" />
-                                <div className='text-[#000]'>
-                                    <h1 style={Username} className='text-[10px] md:text-[12px] lg:text-[14px]'>Riya M Shah</h1>
-                                    <p style={Activity}>27, Designer</p>
+                                <div>
+                                    <h1 style={Text3}>Add Story</h1>
                                 </div>
-                                </div>
-                               
+
+
                             </div>
 
                             <div className=''>
 
-                                {RenderComponent()}
+                                {
+                                    ActiveTab == 1 ? (
+                                        <>
 
-                                <div className='pt-[20px] md:pt-[30px] lg:pt-[20px] flex space-x-[28px] justify-center'>
-                                    <button style={Text3} onClick={handleClose} className='w-[126px] h-[44px] md:w-[100px] md:h-[35px] lg:w-[126px] lg:h-[44px] xl:w-[126px] xl:h-[44px] 2xl:w-[126px] 2xl:h-[44px] rounded-[8px] bg-[#FFF] border-[1px] border-[#0F52BA] text-[#000]'>Close</button>
-                                    <button id='grad-btn' style={Text3} onClick={ActiveTab === 2 ? handleClose : () => SetActiveTab(ActiveTab + 1)} className='w-[126px] h-[44px] md:w-[100px] md:h-[35px] lg:w-[126px] lg:h-[44px] xl:w-[126px] xl:h-[44px] 2xl:w-[126px] 2xl:h-[44px] rounded-[8px] bg-[#0F52BA] border-[1px] border-[#0F52BA] text-[#FFF]'>Publish</button>
-                                </div>
+                                            <div className='md:pb-[20px] lg:pb-0 flex flex-col justify-center items-center space-y-[20px] w-full h-full   md:w-[350px] md:h-[150px] lg:w-[426px] lg:h-[257px] 2xl:w-[526px] 2xl:h-[450px] xl:w-[526px] xl:h-[357px] dark:bg-[#242526] bg-[#F5F5F5] rounded-[10px]'>
+                                                <div {...getRootProps()} className='mt-[10%] lg:mt-0 md:w-[60px] md:h-[60px] lg:w-auto lg:h-auto 2xl:w-auto 2xl:h-auto xl:w-auto xl:h-auto'>
+                                                    <input {...getInputProps()} className="hidden" />
+                                                    <Image loading='lazy' alt="drag-drop" width={63} height={44} src='/loginassests/register-icons/Drag-Drop.svg' />
+                                                </div>
+                                                <div className='text-center'>
+                                                    <h1 style={Text1} className='dark:text-[#FFF] 2xl:text-[24px] xl:text-[24px] lg:text-[24px] md:text-[18px]'>Select Photos</h1>
+                                                    <p className='dark:text-[#FFF]' style={Text2}>Or drag and drop a file</p>
+                                                </div>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+
+
+                                            <div className='dark:bg-[#242526] flex flex-col justify-center items-center space-y-[90px]  md:w-[350px] md:h-[150px] lg:w-[426px] lg:h-[257px] 2xl:w-[526px] 2xl:h-[450px] xl:w-[526px] xl:h-[357px]'>
+                                                <div className='flex-col items-center flex items-center'>
+                                                    <div className=' grid place-items-center md:w-[120px] md:h-[120px] lg:h-auto lg:w-[150px] 2xl:w-[190px] 2xl:h-[241px] xl:w-[190px] xl:h-[241px]'>
+                                                        <Image style={{ objectFit: "cover", borderRadius: "10px" }} loading='lazy' alt='upload' width={190} height={241} src={imagesrc} />
+                                                    </div>
+                                                    {/* <div {...getRootProps()} className='relative left-[10%] md:left-[100px] lg:left-[120px] 2xl:left-[150px] xl:left-[150px]'> */}
+                                                    <div onClick={HandleDeleteClick} className='relative top-[50px]'>
+                                                        {/* <input {...getInputProps()} className="hidden" /> */}
+                                                        <Image loading='lazy' alt='delete-icon' width={19.695} height={22.17} className='w-[19.695px] h-[22.17px]' src='/assests/Black/Delete.svg' />
+                                                    </div>
+                                                </div>
+                                                <div className='w-full'>
+
+                                                    <div onClick={() => setShowPicker(!showPicker)} className={`absolute left-[35px] bottom-[55px]  cursor-pointer`}>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z" />
+                                                        </svg>
+                                                    </div>
+                                                    <div className='flex mt-[5px]'>
+                                                        <div className='w-full'>
+                                                            <input name='caption' value={StoryCaption} onChange={handleInputChange} placeholder='Caption..' type='text' className='lg:mt-0 mt-[20px] pl-[50px] w-full h-[40px] 2xl:h-[50px] md:h-[30px] xl:h-[50px] lg:h-[40px] rounded-[25px] border-[1px] border-[#DADADA] focus:outline-none focus:border-[1px] focus:border-[black]' />
+                                                        </div>
+                                                        <div className='w-[90px] grid place-items-center'>
+                                                            <div className='hover:bg-[#F2F7FF]  p-[12px] rounded-full'>
+                                                                <button disabled={StoryModal.loading} onClick={HandleNext}>
+                                                                    <Image width={26} height={26} alt='send' src="/assests/chat/Send-Icon.svg" />
+                                                                    {/* <Image loading='lazy' alt="loader" width={25} height={25} className='animate-spin inline' src='/assests/animation/loaderIcon.svg' /> */}
+                                                                </button>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {/* mt-[-37px]  */}
+
+                                                    <div>
+
+                                                        {showPicker ?
+                                                            <div className='absolute z-[110] left-[30px] h-[300px] top-[0px]'>
+                                                                {/* <EmojiPicker data={EmojiData} emojiSize={20}
+                                                                    emojiButtonSize={28} onEmojiSelect={hanldeEmojiInput} /> */}
+                                                                    <EmojiPicker onEmojiClick={hanldeEmojiInput} />
+                                                            </div>
+                                                            : null}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </>
+
+                                    )}
+
                             </div>
                         </div>
                     </DialogContent>
 
                 </Dialog>
-                <div onClick={toggleNotification('right', true)} className='w-[47px] h-[47px] cursor-pointer bg-[#FFF] rounded-full grid place-items-center'><Image alt='user-1' width={47} height={47} src='/assests/dashboard/user/1.svg' /></div>
-                <div onClick={toggleNotification('right', true)} className='w-[47px] h-[47px] cursor-pointer bg-[#FFF] rounded-full grid place-items-center'><Image alt='user-2' width={47} height={47} src='/assests/dashboard/user/2.svg' /></div>
-                <div onClick={toggleNotification('right', true)} className='w-[47px] h-[47px] cursor-pointer bg-[#FFF] rounded-full grid place-items-center'><Image alt='user-3' width={47} height={47} src='/assests/dashboard/user/3.svg' /></div>
-                <div onClick={toggleNotification('right', true)} className='w-[47px] h-[47px] cursor-pointer bg-[#FFF] rounded-full grid place-items-center'><Image alt='user-4' width={47} height={47} src='/assests/dashboard/user/4.svg' /></div>
-                <div onClick={toggleNotification('right', true)} className='w-[47px] h-[47px] cursor-pointer bg-[#FFF] rounded-full grid place-items-center'><Image alt='user-5' width={47} height={47} src='/assests/dashboard/user/5.svg' /></div>
+                {
+                    loading ? <>
+                        {/* <Skeleton width={47} height={47} className='w-[47px] h-[47px] cursor-pointer bg-[#FFF] rounded-full grid place-items-center' variant='circuler'/> */}
+                        <Skeleton variant="circular" width={47} height={47} />
+                    </> : <>
+
+                        {
+                            data?.map((items) => {
+                                return (
+                                    <>
+                                        <div name="users-story" onClick={(e) => HandleStoryOpen(e, items)} style={{ boxSizing: 'content-box' }} className='duration-100 hover:scale-90 w-[47px] h-[47px] cursor-pointer bg-[#FFF] rounded-full grid place-items-center border-[2px] border-[blue]'><Image alt='user-1' width={47} height={47} style={{ objectFit: "cover", borderRadius: "50%", width: "47px", height: "47px", border: '2px solid transparent', }} src={items?.userId?.profilePic ? items?.userId?.profilePic : '/assests/dashboard/user/1.svg'} /></div>
+
+                                    </>
+                                )
+                            })
+                        }
+                    </>
+                }
             </div>
 
             <Drawer
@@ -215,8 +391,16 @@ function UserStory() {
             >
                 {NotificationList('right')}
             </Drawer>
+
+            {modalOpen && (
+                <Modal
+                    setModalOpen={setModalOpen}
+                    closeModal={() => setModalOpen(false)}
+                />
+            )}
         </>
     )
 }
 
-export default UserStory
+
+export default connect((state) => ({ formData: state.form.formData }), { updateFormData })(UserStory);

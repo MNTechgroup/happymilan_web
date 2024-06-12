@@ -6,8 +6,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/css';
-import 'swiper/css/navigation';
-
 import 'swiper/css/pagination';
 
 
@@ -170,7 +168,7 @@ function DeletedProfile() {
         fontWeight: "400",
         lineHeight: "normal"
     }
-    
+
     const [openURLModal, setOpenURLModal] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -226,15 +224,42 @@ function DeletedProfile() {
                                                         <h1 style={statusText} className={res.Activestatus ? `text-[#17C270]` : `text-[#7A7A7A]`}>{res.Activestatus ? "Online now" : "Offline"}</h1>
                                                     </div>
                                                     <div className='pr-[8px]'>
-                                                        <ul className='flex justify-evenly space-x-[20px] pr-[10px] pt-[10px]'>
-                                                            <li className='relative left-[10px]'><Image width={17} height={14} src='/assests/Black/Couple2.svg' /></li>
-                                                            <li className='text-[10px]' style={Text4}>You & Her</li>
-                                                            <li><Image width={15} height={14} src='/assests/Black/Stars-2.svg' /></li>
+                                                        <ul className='flex justify-evenly space-x-[10px] pr-[10px] pt-[10px]'>
+                                                            <li className="cursor-pointer hover:bg-[#F2F7FF] items-center rounded-[17px] p-[10px] flex space-x-[10px] top-[-12px] relative left-[5px]">
+                                                                <div>
+                                                                    <Image
+                                                                        loading="lazy"
+                                                                        alt="couple-icon"
+                                                                        width={17}
+                                                                        height={14}
+                                                                        src="/assests/Black/Couple2.svg"
+
+                                                                    />
+                                                                </div>
+                                                                <div className="">
+                                                                    <span className="relative top-[-2px] text-[10px] text-[#000] dark:text-[#FFF]"
+                                                                        style={Text4}>
+                                                                        Match Score
+                                                                    </span>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div className="cursor-pointer hover:bg-[#F2F7FF] p-[5px] rounded-[50%] relative top-[-5px]">
+                                                                    <Image
+                                                                        loading="lazy"
+                                                                        width={15}
+                                                                        height={14}
+                                                                        alt="star"
+                                                                        src={"/assests/Black/Stars-2.svg"}
+                                                                    />
+                                                                </div>
+                                                            </li>
                                                             <li>
 
+                                                                <div onClick={(event) => handleClick(event, res)} className="grid place-items-center cursor-pointer hover:bg-[#F2F7FF] relative top-[-8px] rounded-[10px] h-[30px] w-[16px]">
 
-                                                                <Image width={3} height={14} alt='more' src='/assests/Black/3Dots.svg' className='cursor-pointer' aria-describedby={id} variant="contained" onClick={handleClick} />
-                                                                <Popover
+                                                                    <Image loading='lazy' width={3} height={14} alt='more' src='/assests/Black/3Dots.svg' className='cursor-pointer' aria-describedby={id} variant="contained" onClick={(event) => handleClick(event, res)} />
+                                                                </div><Popover
                                                                     id={id}
                                                                     open={open}
                                                                     anchorEl={anchorEl}

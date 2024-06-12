@@ -1,124 +1,93 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Swiper, SwiperSlide } from 'swiper/react';
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-// import required modules
-import { Pagination } from 'swiper';
-// import required modules
-import { Navigation } from 'swiper';
-import Popover from '@mui/material/Popover';
-import Image from 'next/image';
-import ShareModal from '../../components/Models/ShareModal';
-import RegisterAlertModal from '../../components/Models/RegisterAlertModal';
-import { Dialog } from '@mui/material';
-import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
-import { addToShortlist, fetchAllUsers } from '../../../store/actions/GetingAlluser';
-import { fetchMyProfileData } from '../../../store/reducers/MyProfile';
-import { Sentblockrequest, sendRequest } from '../../../store/actions/UsersAction';
-import UserprofileSkeleton from '../../components/Loader/UserprofileSkeleton';
+import React, { useEffect, useRef, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Pagination } from "swiper";
+import { Navigation } from "swiper";
+import Image from "next/image";
+import { Dialog } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    addToShortlist,
+} from "../../../store/actions/GetingAlluser";
+import {
+    Getlikeduserdata,
+    Postrecentuserprofile,
+    sendRequest,
+} from "../../../store/actions/UsersAction";
+import UserprofileSkeleton from "../../components/Loader/UserprofileSkeleton";
+import { useRouter } from "next/router";
+import LikeUser from "../../components/Buttons/LikeUser";
+import SendRequestBtn from "../../components/Buttons/SendRequestBtn";
+import { useDarkMode } from "../../../ContextProvider/DarkModeContext";
+import dynamic from "next/dynamic";
+import ProfileMenu from "../../components/popover/MenuPop";
+import BlockUserModal from "../../components/Models/BlockModal";
+import MatchScoreModal from "../../components/UserModal/MatchScoreModal";
+import ShowMore from "../../components/Maincomp/UserBio";
+import { capitalizeFirstLetter } from "../../../utils/form/Captitelize";
 
 
+// Dynamically imported components
+const ShareModal = dynamic(() => import("../../components/Models/ShareModal"));
+const RegisterAlertModal = dynamic(() => import("../../components/Models/RegisterAlertModal"));
+const ReportModal = dynamic(() => import("../../components/Models/ReportModal"));
 
-function SampleUserProfile() {
-    const { users, loading } = useSelector((state) => state.alluser)
 
-    const [fetchuser, Setfetchuser] = useState([])
+function SampleUserProfile({ users }) {
 
-    useEffect(() => {
-        Setfetchuser(users)
-    }, [Setfetchuser, fetchuser, users])
-    const [ActiveLike, setActiveLike] = useState(false)
+    const { darkMode, toggleDarkMode } = useDarkMode();
+    const { loading } = useSelector((state) => state.alluser);
+    const [ActiveLike, setActiveLike] = useState(false);
 
-    const BoldText = {
-        color: "#000",
-        fontFamily: "Poppins",
-        fontStyle: "normal",
-        fontWeight: "500",
-        lineHeight: "normal"
-    }
     const ProfileName = {
-        color: "#000",
         fontFamily: "Poppins",
         fontStyle: "normal",
         fontWeight: "600",
-        lineHeight: "normal"
-    }
+        lineHeight: "normal",
+    };
     const statusText = {
-
         fontFamily: "Poppins",
         fontSize: "8px",
         fontStyle: "normal",
         fontWeight: "400",
-        lineHeight: "12px"
-    }
+        lineHeight: "12px",
+    };
     const Text3 = {
         fontFamily: "Poppins",
         fontStyle: "normal",
         fontWeight: "400",
-        lineHeight: "normal"
-    }
+        lineHeight: "normal",
+    };
 
     const ListText = {
-        color: "#000",
         fontFamily: "Poppins",
         fontStyle: "normal",
         fontWeight: "400",
-        lineHeight: "24px" /* 171.429% */
-    }
-
-    const Text4 = {
-        color: "#000",
-        fontFamily: "Poppins",
-        fontStyle: "normal",
-        fontWeight: "400",
-        lineHeight: "12px"
-    }
+        lineHeight: "24px" /* 171.429% */,
+    };
 
     const Box = {
         borderRadius: "10px",
-        background: "#FFF",
-        boxShadow: "0px 0px 14px 0px rgba(0, 0, 0, 0.07)"
-    }
-
-    const imageStyle = {
-        objectFit: "cover"
-    }
-
-
-
-
+        boxShadow: "0px 0px 14px 0px rgba(0, 0, 0, 0.07)",
+    };
 
     const [sentrequest, setsentRequest] = useState({});
-
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [CurrentUserID, SetCurrentUserID] = useState("");
-
-    const handleClick = (event, res) => {
-        setAnchorEl(event.currentTarget);
-        SetCurrentUserID(res.id)
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    const [CurrURL, SetCurURL] = useState("");
 
 
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
 
-
-    const [blockprofile, setblockprofile] = useState(false);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isRegisterModalOpen, setisRegisterModalOpen] = useState(false);
+    const [isReportModalOpen, setisReportModalOpen] = useState(false);
+    const [isBlockModalOpen, setisBlockModalOpen] = useState(false);
     const [Data, setData] = useState("");
 
-    const openModal = () => {
+    const openModal = (e) => {
         setIsModalOpen(true);
-        handleClose();
+
     };
 
     const closeModal = () => {
@@ -126,13 +95,26 @@ function SampleUserProfile() {
     };
 
     const OpenRegisterModal = (res) => {
-        setData(res)
+        setData(res);
         setisRegisterModalOpen(true);
-
     };
 
     const CloseRegisterModal = () => {
         setisRegisterModalOpen(false);
+    };
+
+    const openBlockModal = () => {
+        setisBlockModalOpen(true);
+    }
+    const closeBlockModal = () => { setisBlockModalOpen(false) }
+
+    const OpenReportModal = () => {
+        setisReportModalOpen(true);
+
+    };
+
+    const CloseReportModal = () => {
+        setisReportModalOpen(false);
     };
 
     const Urlmodaltext = {
@@ -140,42 +122,20 @@ function SampleUserProfile() {
         fontFamily: "Poppins",
         fontStyle: "normal",
         fontWeight: "400",
-        lineHeight: "normal"
-    }
-
-    const [openURLModal, setOpenURLModal] = React.useState(false);
-
-    const handleClickOpen = () => {
-
-
-        const userId = CurrentUserID;
-        const currentUrl = window.location.href;
-        const urlWithUserId = `${currentUrl}/${userId}`;
-
-        navigator.clipboard.writeText(urlWithUserId)
-            .then(() => {
-                setOpenURLModal(true);
-                handleClose() // Reset copied state after 2 seconds
-            })
-            .catch(error => console.error('Failed to copy URL: ', error));
-
-
-        setTimeout(() => {
-            setOpenURLModal(false);
-
-        }, 800);
+        lineHeight: "normal",
     };
 
+    const likeloading = useSelector(
+        (state) => state.usersact.LikedUsersData.likeloading
+    );
 
     const dispatch = useDispatch();
 
-
+    useEffect(() => {
+        dispatch(Getlikeduserdata())
+    }, [])
 
     useEffect(() => {
-
-        dispatch(fetchAllUsers())
-        dispatch(fetchMyProfileData())
-
         const handleKeyDown = (event) => {
             // Check if the left arrow key is pressed
             if (event.keyCode === 37) {
@@ -188,97 +148,58 @@ function SampleUserProfile() {
         };
 
         // Add event listener for keydown
-        document.addEventListener('keydown', handleKeyDown);
+        document.addEventListener("keydown", handleKeyDown);
 
         // Remove event listener when component is unmounted
         return () => {
-            document.removeEventListener('keydown', handleKeyDown);
+            document.removeEventListener("keydown", handleKeyDown);
         };
+    }, []);
 
-    }, [dispatch])
-
-    const [openShortlistModal, setopenShortlistModal] = React.useState(false)
+    const [openShortlistModal, setopenShortlistModal] = React.useState(false);
 
     const [shortlistText, setshortlistText] = useState();
 
     const swiperRef = useRef(null);
 
-
     const HandleShortlist = (id) => {
-        // console.log(id)
-        // Setfetchuser((prev) => {
-        //     return prev.map((res) => {
-        //         if (res.id === id) {
-        //             return { ...res, userProfileCompleted: !res.userProfileCompleted }
-        //         } else { return res; }
-        //     })
-        // })
-
         dispatch(addToShortlist(id)); // Dispatch the action with the shortlist ID
 
-        setshortlistText("Profile has been shortlisted")
-        setopenShortlistModal(true)
+        setshortlistText("Profile has been shortlisted");
+        setopenShortlistModal(true);
         setTimeout(() => {
             setopenShortlistModal(false);
-
         }, 800);
 
         swiperRef.current.swiper.slideNext();
+    };
 
-    }
-
-    const data = useSelector((state) => state.myprofile)
-
-
+    const data = useSelector((state) => state.myprofile);
 
     const HandleRequestModal = (res) => {
-        if (data.data.userProfileCompleted) {
-            dispatch(sendRequest(res.id))
+        if (data?.data?.userProfileCompleted) {
+            dispatch(sendRequest(res.id));
 
-            setsentRequest(prevState => ({
+            setsentRequest((prevState) => ({
                 ...prevState,
-                [res.id]: !prevState[res.id] // Update the sentRequests state for the specific user ID
+                [res.id]: !prevState[res.id], // Update the sentRequests state for the specific user ID
             }));
 
             if (!sentrequest[res.id]) {
-                setshortlistText("Request Sent..")
-                setopenShortlistModal(true)
-
+                setshortlistText("Request Sent..");
+                setopenShortlistModal(true);
             } else {
-
-                setshortlistText("Request Removed..")
-                setopenShortlistModal(true)
+                setshortlistText("Request Removed..");
+                setopenShortlistModal(true);
             }
 
             setTimeout(() => {
                 setopenShortlistModal(false);
-
             }, 800);
-
         } else {
             OpenRegisterModal();
         }
-
-    }
-
-    const HandleBlockUser = (res) => {
-
-
-        const isConfirmed = window.confirm('Are you sure you want to block this user?');
-
-        // Check if user confirmed
-        if (isConfirmed) {
-            // Perform blocking action
-            // Add your logic here to block the user
-            console.log('User blocked successfully');
-            setAnchorEl(null);
-            dispatch(Sentblockrequest(res))
-            // console.log(res.id)
-        } else {
-            // User canceled the action
-            console.log('Blocking action canceled');
-        }
-    }
+    };
 
     const imageFoundText = {
         color: "#B3CBF1",
@@ -287,221 +208,338 @@ function SampleUserProfile() {
         fontSize: "12px",
         fontStyle: "normal",
         fontWeight: "500",
-        lineHeight: "normal"
+        lineHeight: "normal",
+    };
+
+    const router = useRouter();
+    const HandlePushUser = (res) => {
+        router.push(`/dashboard/${res}`);
+        dispatch(Postrecentuserprofile(res));
+    };
+
+    const MAX_CHARACTERS = 100; // Define your maximum character limit
+
+    const handleTextOverflow = (text) => {
+        if (text.length > MAX_CHARACTERS) {
+            return text.slice(0, MAX_CHARACTERS) + "..."; // Truncate the text if it exceeds the limit
+        } else {
+            return text; // Return the original text if it doesn't exceed the limit
+        }
+    };
+
+
+    if (loading) {
+        return <UserprofileSkeleton />;
     }
 
     return (
         <>
-            <div className=''>
-
-                <div className='flex'>
-
-                    <div className=' grid place-items-center w-[10px] lg:w-[40px] 2xl:w-[40px] xl:w-[40px] h-[294px]'>
-
-                        <button id='custom-prev-button' className=' relative left-[20px] 2xl:left-0 xl:left-[20px] w-[35px] h-[70px]'><Image width={55} height={91} alt='prev' src='/assests/dashboard/icon/prev-card-btn.svg' /></button>
+            <div className="">
+                <div className="flex">
+                    <div className=" grid place-items-center w-[10px] lg:w-[40px] 2xl:w-[40px] xl:w-[40px] h-[294px]">
+                        <button
+                            id="custom-prev-button"
+                            className=" relative left-[20px] 2xl:left-0 xl:left-[20px] w-[35px] h-[70px]"
+                        >
+                            <Image
+                                loading="lazy"
+                                width={55}
+                                height={91}
+                                alt="prev"
+                                quality={25}
+                                src={darkMode ? "/assests/dashboard/icon/prev-card-btn-white.svg" : "/assests/dashboard/icon/prev-card-btn.svg"}
+                            />
+                        </button>
                     </div>
-                    {
-                        loading ?
-                            <>
-                                <div className='relative 2xl:left-[-50px] xl:left-[-30px]'>
-                                    <UserprofileSkeleton />
-                                </div>
-                            </> : <>
-                                <Swiper ref={swiperRef} modules={[Navigation]} className=' w-[600px] relative 2xl:left-0 xl:left-[10px] 2xl:w-[650px] 2xl:h-full xl:w-[560px]  xl:h-full' navigation={{
-                                    prevEl: '#custom-prev-button',
-                                    nextEl: '#custom-next-button',
-                                }}>
 
-                                    {
-
-                                        fetchuser.map((res, index) => {
-
-                                            return (
-                                                <>
-
-                                                    <SwiperSlide key={index} className=''>
-                                                        <div className="">
-                                                            <div style={Box} className={`relative left-[-4px]  xl:left-[-3px] 2xl:left-[-3px]  flex m-[10px] lg:w-[590px]  2xl:w-[631px] 2xl:h-[294px] xl:w-[540px] xl:h-[284px] bg-[#FFF]`}>
-                                                                <div className='w-[350px]'>
-                                                                    <div className='p-[15px] w-full '>
-
-
-
-
-                                                                        {res.userProfilePic && res.userProfilePic.length > 0 ? (
-                                                                            <Swiper
-
-                                                                                pagination={{ clickable: true }}
-                                                                                modules={[Pagination]}
-                                                                                className="mySwiper relative 2xl:w-[197px] xl:w-[187px] w-[185px] h-[260px]"
-                                                                            >
-                                                                                {res.userProfilePic.slice(0, 3).map((Imageres, theindex) => (
-
-                                                                                    <SwiperSlide key={theindex}>
-                                                                                        <Image  placeholder="blur" blurDataURL="data:..." alt={`img${theindex + 1}`} width={197} height={258} style={{ width: "197px", height: "258px", borderRadius: "10px" , objectFit:"cover" }} className='w-[197px] h-[258px]' src={Imageres.url} loading="lazy" />
-                                                                                    </SwiperSlide>
-
-                                                                                ))}
-
-                                                                            </Swiper>
-
-
-                                                                        ) : (
-                                                                            <div>
-                                                                                <div style={{ backgroundColor: "#F8FBFF", width: "197px", height: "258px", display: "flex", justifyContent: "center", alignItems: "center" }} >
-                                                                                    <div className='grid place-items-center space-y-[5px]'>
-                                                                                        <Image alt='not-Found' width={34} height={34} src={"/assests/dashboard/icon/NotFound-img.svg"} />
-                                                                                        <h1 className='inline' style={imageFoundText}>No Image</h1>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        )}
-                                                                    </div>
-                                                                </div>
-                                                                <div className='w-full pt-[15px] 2xl:pt-[15px] xl:pt-[20px]'>
-                                                                    <div className='flex justify-between  h-[50px]'>
-                                                                        <div>
-                                                                            <Link href={`/dashboard/${res.id}`}><h1 className='2xl:text-[20px] xl:text-[15px] text-[15px]' style={ProfileName}>{res.name}</h1></Link>
-                                                                            <h1 style={statusText} className={`text-[#17C270]`}>{"Online now"}</h1>
-                                                                        </div>
-                                                                        <div className='pr-[8px]'>
-                                                                            <ul className='flex justify-evenly space-x-[20px] pr-[10px] pt-[10px]'>
-                                                                                <li className='relative left-[10px]'><Image alt='couple-icon' width={17} height={14} src='/assests/Black/Couple2.svg' /></li>
-                                                                                <li onClick={() => console.log(res)} className='text-[10px]' style={Text4}>You & Her</li>
-                                                                                <li className='cursor-pointer' onClick={() => HandleShortlist(res.id)}><Image width={15} height={14} alt='star' src={'/assests/Black/Stars-2.svg'} /></li>
-                                                                                <li>
-
-                                                                                    <Image width={3} height={14} alt='more' src='/assests/Black/3Dots.svg' className='cursor-pointer' aria-describedby={id} variant="contained" onClick={(event) => handleClick(event, res)} />
-                                                                                    <Popover
-                                                                                        id={id}
-                                                                                        open={open}
-                                                                                        anchorEl={anchorEl}
-                                                                                        onClose={handleClose}
-                                                                                        anchorOrigin={{
-                                                                                            vertical: 'top',
-                                                                                            horizontal: 'left',
-                                                                                        }}
-                                                                                        transformOrigin={{
-                                                                                            vertical: 'top',
-                                                                                            horizontal: 'right',
-                                                                                        }}
-                                                                                        PaperProps={{
-                                                                                            style: { border: "1px solid black", boxShadow: 'none', borderRadius: "10px", marginLeft: "-10px" } // Add this to remove the shadow
-                                                                                        }}
-                                                                                    >
-                                                                                        <div className='bg-[#FFF] rounded-[10px] w-[128px] h-[150px]'>
-
-                                                                                            <ul className='flex flex-col justify-center space-y-[12px] ml-[12px] '>
-                                                                                                <li style={Text3} onClick={openModal} className='cursor-pointer flex  items-center space-x-[12px] text-[14px] mt-[15px]'> <Image alt='icon' width={13} height={14} src='/assests/dashboard/icon/share-icon.svg' /> <p>Share</p></li>
-                                                                                                <li style={Text3} onClick={() => HandleBlockUser(res)} className='cursor-pointer flex  items-center space-x-[12px] text-[14px]'> {blockprofile ? <> <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                                                    <path id="Vector" d="M7 14C6.03167 14 5.12167 13.8162 4.27 13.4488C3.41833 13.0813 2.6775 12.5825 2.0475 11.9525C1.4175 11.3225 0.91875 10.5817 0.55125 9.73C0.18375 8.87833 0 7.96833 0 7C0 6.03167 0.18375 5.12167 0.55125 4.27C0.91875 3.41833 1.4175 2.6775 2.0475 2.0475C2.6775 1.4175 3.41833 0.91875 4.27 0.55125C5.12167 0.18375 6.03167 0 7 0C7.96833 0 8.87833 0.18375 9.73 0.55125C10.5817 0.91875 11.3225 1.4175 11.9525 2.0475C12.5825 2.6775 13.0813 3.41833 13.4488 4.27C13.8162 5.12167 14 6.03167 14 7C14 7.96833 13.8162 8.87833 13.4488 9.73C13.0813 10.5817 12.5825 11.3225 11.9525 11.9525C11.3225 12.5825 10.5817 13.0813 9.73 13.4488C8.87833 13.8162 7.96833 14 7 14ZM7 12.95C8.66104 12.95 10.068 12.3736 11.2208 11.2208C12.3736 10.068 12.95 8.66104 12.95 7C12.95 6.29228 12.8275 5.61076 12.5825 4.95546C12.3375 4.30015 11.9933 3.70417 11.55 3.1675L3.1675 11.55C3.6925 12.005 4.28454 12.3521 4.94363 12.5913C5.60272 12.8304 6.28818 12.95 7 12.95ZM2.4675 10.8325L10.8325 2.4675C10.2958 2.0125 9.69985 1.6625 9.04454 1.4175C8.38924 1.1725 7.70772 1.05 7 1.05C5.33896 1.05 3.93203 1.6264 2.77921 2.77921C1.6264 3.93203 1.05 5.33896 1.05 7C1.05 7.71182 1.17833 8.39727 1.435 9.05637C1.69167 9.71546 2.03583 10.3075 2.4675 10.8325Z"
-                                                                                                        fill="red" />
-                                                                                                </svg>
-                                                                                                    <p className='text-[red]'>Unblock</p> </> : <> <Image alt='icon' width={14} height={14} src='/assests/dashboard/icon/block-icon.svg' /><p>Block</p> </>} </li>
-                                                                                                <li style={Text3} className='cursor-pointer flex  items-center space-x-[12px] text-[14px]'> <Image alt='icon' width={14} height={14} src='/assests/dashboard/icon/report-icon.svg' /><p> Report</p></li>
-                                                                                                <li onClick={handleClickOpen} style={Text3} className='cursor-pointer flex  items-center space-x-[12px] text-[14px]'> <Image alt='icon' width={12} height={14} src='/assests/dashboard/icon/copy-icon.svg' /> <p>Copy URL</p></li>
-                                                                                            </ul>
-
-                                                                                        </div>
-                                                                                    </Popover>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className='mt-[10px] 2xl:mt-[10px] xl:mt-[5px] pl-[2px]'>
-                                                                        <div id="user-card">
-                                                                            <ul id="user-card-grid">
-                                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{`'32,5'3`}</li>
-                                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{`${res.religion ? res.religion : 'NA'}, ${res.cast ? res.cast : 'NA'}`}</li>
-                                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{`${res.motherTongue ? res.motherTongue : "NA , NA"}  `}</li>
-                                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{res.maritalStatus ? res.maritalStatus : "NA , NA"}</li>
-                                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{`${res.address ? res.address.currentCity : "NA"} , ${res.address ? res.address.currentCountry : "NA"}`}</li>
-                                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{res.userProfessional ? res.userProfessional.currentDesignation : "NA , NA"}</li>
-                                                                            </ul>
-                                                                        </div>
-                                                                        <div className='mt-[20px] 2xl:mt-[20px] xl:mt-[15px]'>
-                                                                            <p style={Text3} className='text-[#979797] text-[14px] 2xl:text-[12px] xl:text-[12px] '>{res.writeBoutYourSelf ? res.writeBoutYourSelf : "NA"}<span className='text-[#0F52BA]'> more </span></p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className='flex justify-end items-center mt-[20px] 2xl:mt-[20px] lg:mt-0 xl:mt-[20px] mr-[20px] space-x-[10px]'>
-                                                                        <h1 className='text-[16px] 2xl:text-[16px] xl:text-[14px]' style={BoldText}>{sentrequest[res.id] ? "Wait for his response" : "Are you impressed?"}</h1>
-                                                                        <button id={!sentrequest[res.id] ? "grad-btn" : "req-sent"} className={`w-[134px] h-[40px] rounded-[10px] ${sentrequest[res.id] ? "bg-[#EDEDED] text-[black]" : " text-[white]"}  text-[#FFF]`} onClick={() => HandleRequestModal(res)}>{sentrequest[res.id] ? "Sent" : "Send Request"} </button>
+                    <Swiper
+                        ref={swiperRef}
+                        modules={[Navigation]}
+                        className=" w-[600px] relative 2xl:left-[0px] xl:left-[10px] 2xl:w-[650px] 2xl:h-full xl:w-[560px]  xl:h-full"
+                        navigation={{
+                            prevEl: "#custom-prev-button",
+                            nextEl: "#custom-next-button",
+                        }}
+                    >
+                        {users?.map((res, index) => {
+                            return (
+                                <>
+                                    <SwiperSlide key={index} className="">
+                                        <div className="">
+                                            <div
+                                                style={Box}
+                                                className={`bg-[#FFF] dark:bg-[#242526] relative left-[-4px]  xl:left-[-3px] 2xl:left-[-3px]  flex m-[10px] lg:w-[590px]  2xl:w-[631px] 2xl:h-[294px] xl:w-[540px] xl:h-[284px] bg-[#FFF]`}
+                                            >
+                                                <div className="w-[350px]">
+                                                    <div className="p-[15px] w-full ">
+                                                        {res.userProfilePic &&
+                                                            res.userProfilePic.length > 0 ? (
+                                                            <Swiper
+                                                                pagination={{ clickable: true }}
+                                                                modules={[Pagination]}
+                                                                className="mySwiper relative 2xl:w-[197px] xl:w-[187px] w-[185px] h-[260px]"
+                                                            >
+                                                                {res.userProfilePic
+                                                                    .slice(0, 3)
+                                                                    .map((Imageres, theindex) => (
+                                                                        <SwiperSlide key={theindex}>
+                                                                            <Image
+                                                                                placeholder="blur"
+                                                                                blurDataURL="data:..."
+                                                                                alt={`img${theindex + 1}`}
+                                                                                width={197}
+                                                                                height={258}
+                                                                                style={{
+                                                                                    width: "197px",
+                                                                                    height: "258px",
+                                                                                    borderRadius: "10px",
+                                                                                    objectFit: "cover",
+                                                                                }}
+                                                                                className="w-[197px] h-[258px]"
+                                                                                src={Imageres.url}
+                                                                                loading="lazy"
+                                                                                quality={45}
+                                                                            />
+                                                                        </SwiperSlide>
+                                                                    ))}
+                                                            </Swiper>
+                                                        ) : (
+                                                            <div>
+                                                                <div
+                                                                    style={{
+                                                                        backgroundColor: "#F8FBFF",
+                                                                        width: "197px",
+                                                                        height: "258px",
+                                                                        display: "flex",
+                                                                        justifyContent: "center",
+                                                                        alignItems: "center",
+                                                                        borderRadius: "10px"
+                                                                    }}
+                                                                >
+                                                                    <div className="grid place-items-center space-y-[5px]">
+                                                                        <Image
+                                                                            alt="not-Found"
+                                                                            width={34}
+                                                                            height={34}
+                                                                            loading="lazy"
+                                                                            quality={25}
+                                                                            src={"/assests/dashboard/icon/NotFound-img.svg"}
+                                                                        />
+                                                                        <h1
+                                                                            className="inline"
+                                                                            style={imageFoundText}
+                                                                        >
+                                                                            No Image
+                                                                        </h1>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div className='flex pb-[20px] space-x-[20px] justify-center pt-[10px]'>
-
-                                                                <svg width="50" height="50" viewBox="0 0 40 40" id='ignore-hover' xmlns="http://www.w3.org/2000/svg">
-                                                                    <g id="Group 1509">
-                                                                        <circle id="Ellipse 53" cx="20" cy="20" r="19.5" stroke="url(#paint0_linear_4122_346)" />
-                                                                        <path id="Vector" d="M22.6134 11.3336H14.9334C14.2251 11.3336 13.6193 11.7603 13.3633 12.3747L10.7862 18.3907C10.7094 18.587 10.6667 18.7918 10.6667 19.0136V20.7203C10.6667 21.659 11.4347 22.427 12.3734 22.427H17.7579L16.9473 26.3267L16.9217 26.5998C16.9217 26.9496 17.0667 27.2739 17.2971 27.5043L18.2017 28.4003L23.8251 22.7768C24.1323 22.4696 24.3201 22.043 24.3201 21.5736V13.0403C24.3201 12.1016 23.5521 11.3336 22.6134 11.3336ZM22.6134 21.5736L18.9099 25.2771L20.0534 20.7203H12.3734V19.0136L14.9334 13.0403H22.6134V21.5736ZM26.0267 11.3336H29.4401V21.5736H26.0267V11.3336Z" fill="url(#paint1_linear_4122_346)" />
-                                                                    </g>
-                                                                    <defs>
-                                                                        <linearGradient id="paint0_linear_4122_346" x1="2.5" y1="-3.5" x2="40" y2="43.5" gradientUnits="userSpaceOnUse">
-                                                                            <stop stopColor="#0F52BA" />
-                                                                            <stop offset="0.979167" stopColor="#8225AF" />
-                                                                        </linearGradient>
-                                                                        <linearGradient id="paint1_linear_4122_346" x1="12" y1="9" x2="26" y2="31.5" gradientUnits="userSpaceOnUse">
-                                                                            <stop stopColor="#0F52BA" />
-                                                                            <stop offset="1" stopColor="#8126AF" />
-                                                                        </linearGradient>
-                                                                    </defs>
-                                                                </svg>
-
-                                                                <div className=''>
-                                                                    {
-                                                                        ActiveLike ?
-                                                                            <Image width={51} height={50} alt='like' className='cursor-pointer' onClick={() => setActiveLike(false)} src='/assests/animation/After-Like.svg' />
-                                                                            :
-                                                                            <Image width={51} height={50} alt='like' className='cursor-pointer' onClick={() => setActiveLike(true)} src='/assests/animation/before-Like.svg' />
-
-                                                                    }
-                                                                </div>
-
-                                                            </div>
-
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <div className="w-full pt-[15px] 2xl:pt-[15px] xl:pt-[20px]">
+                                                    <div className="flex justify-between  h-[50px]">
+                                                        <div>
+                                                            <h1
+                                                                onClick={() => HandlePushUser(res.id)}
+                                                                className="2xl:text-[20px] xl:text-[15px] text-[15px] cursor-pointer text-[#000] dark:text-[#FFF]"
+                                                                style={ProfileName}
+                                                            >
+                                                                {capitalizeFirstLetter(res.name)}
+                                                            </h1>
+                                                            <h1
+                                                                style={statusText}
+                                                                className={`text-[#17C270]`}
+                                                            >
+                                                                {"Online now"}
+                                                            </h1>
                                                         </div>
+                                                        <div className="pr-[8px]">
+                                                            {/* <ul className="flex justify-evenly space-x-[20px] pr-[10px] pt-[10px]"> */}
+                                                            <ul className='flex justify-evenly space-x-[10px] pr-[10px] pt-[10px]'>
 
-                                                    </SwiperSlide>
+                                                                <li className="cursor-pointer hover:bg-[#F2F7FF] items-center rounded-[17px] p-[10px] flex space-x-[10px] top-[-12px] relative left-[5px]">
 
-                                                </>
-                                            )
-                                        })
+                                                                    <MatchScoreModal user={res} />
+                                                                    
+                                                                </li>
 
-                                    }
-                                </Swiper>
-                            </>
-                    }
 
-                    <div className='z-5 relative  right-[20px] xl:right-[10px] 2xl:right-[10px]  grid place-items-center w-[10px] lg:w-[40px] h-[294px]'>
-                        <button id='custom-next-button' className='w-[35px] h-[70px]'><Image alt='next-icon' width={55} height={91} src='/assests/dashboard/icon/next-card-btn.svg' /></button>
+                                                                <li
+                                                                    className="cursor-pointer"
+                                                                    onClick={() => HandleShortlist(res.id)}
+                                                                >
+                                                                    <div className="cursor-pointer hover:bg-[#F2F7FF] p-[5px] rounded-[50%] relative top-[-5px]">
+                                                                        <Image
+                                                                            loading="lazy"
+                                                                            width={15}
+                                                                            height={14}
+                                                                            alt="star"
+                                                                            src={"/assests/Black/Stars-2.svg"}
+                                                                        />
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <ProfileMenu SetCurURL={SetCurURL} openBlockModal={openBlockModal} OpenReportModal={OpenReportModal} openModal={openModal} res={res} />
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div className="mt-[10px] 2xl:mt-[10px] xl:mt-[5px] pl-[2px]">
+                                                        <div id="user-card">
+                                                            <ul id="user-card-grid">
+                                                                <li
+                                                                    className="text-[14px] 2xl:text-[14px] xl:text-[13px] text-[#000] dark:text-[#FFF]"
+                                                                    style={ListText}
+                                                                >
+                                                                    <Image
+                                                                        loading="lazy"
+                                                                        alt="mark"
+                                                                        width={15}
+                                                                        height={14}
+                                                                        src={darkMode ? "/assests/Black/RightTickWhite.svg" : "/assests/Black/RightTick.svg"}
+                                                                        className="inline pr-[5px]"
+                                                                    />
+                                                                    {`'32,5'3`}
+                                                                </li>
+                                                                <li
+                                                                    className="text-[14px] 2xl:text-[14px] xl:text-[13px] text-[#000] dark:text-[#FFF]"
+                                                                    style={ListText}
+                                                                >
+                                                                    <Image
+                                                                        loading="lazy"
+                                                                        alt="mark"
+                                                                        width={15}
+                                                                        height={14}
+                                                                        src={darkMode ? "/assests/Black/RightTickWhite.svg" : "/assests/Black/RightTick.svg"}
+                                                                        className="inline pr-[5px]"
+                                                                    />
+                                                                    {res.maritalStatus ? capitalizeFirstLetter(res.maritalStatus) : "NA , NA"}
+                                                                </li>
+                                                                <li
+                                                                    className="text-[14px] 2xl:text-[14px] xl:text-[13px] text-[#000] dark:text-[#FFF]"
+                                                                    style={ListText}
+                                                                >
+                                                                    <Image
+                                                                        loading="lazy"
+                                                                        alt="mark"
+                                                                        width={15}
+                                                                        height={14}
+                                                                        src={darkMode ? "/assests/Black/RightTickWhite.svg" : "/assests/Black/RightTick.svg"}
+                                                                        className="inline pr-[5px]"
+                                                                    />
+                                                                    {`${res.religion ? capitalizeFirstLetter(res.religion) : "NA"}, ${res.cast ? capitalizeFirstLetter(res.cast) : "NA"}`}
+                                                                </li>
+                                                                <li
+                                                                    className="text-[14px] 2xl:text-[14px] xl:text-[13px] text-[#000] dark:text-[#FFF]"
+                                                                    style={ListText}
+                                                                >
+                                                                    <Image
+                                                                        loading="lazy"
+                                                                        alt="mark"
+                                                                        width={15}
+                                                                        height={14}
+                                                                        src={darkMode ? "/assests/Black/RightTickWhite.svg" : "/assests/Black/RightTick.svg"}
+                                                                        className="inline pr-[5px]"
+                                                                    />
+                                                                    {`${res.address ? capitalizeFirstLetter(res.address.currentCity) : "NA"} , ${res.address ? capitalizeFirstLetter(res.address.currentCountry) : "NA"}`}
+                                                                </li>
+                                                                <li
+                                                                    className="text-[14px] 2xl:text-[14px] xl:text-[13px] text-[#000] dark:text-[#FFF]"
+                                                                    style={ListText}
+                                                                >
+                                                                    <Image
+                                                                        loading="lazy"
+                                                                        alt="mark"
+                                                                        width={15}
+                                                                        height={14}
+                                                                        src={darkMode ? "/assests/Black/RightTickWhite.svg" : "/assests/Black/RightTick.svg"}
+                                                                        className="inline pr-[5px]"
+                                                                    />
+                                                                    {`${res.motherTongue ? capitalizeFirstLetter(res.motherTongue) : "NA , NA"}  `}
+                                                                </li>
+
+                                                                <li
+                                                                    className="text-[14px] 2xl:text-[14px] xl:text-[13px] text-[#000] dark:text-[#FFF]"
+                                                                    style={ListText}
+                                                                >
+                                                                    <Image
+                                                                        loading="lazy"
+                                                                        alt="mark"
+                                                                        width={15}
+                                                                        height={14}
+                                                                        src={darkMode ? "/assests/Black/RightTickWhite.svg" : "/assests/Black/RightTick.svg"}
+                                                                        className="inline pr-[5px]"
+                                                                    />
+                                                                    {res.userProfessional ? capitalizeFirstLetter(res.userProfessional.jobTitle) : "NA , NA"}
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div className="mt-[20px] 2xl:mt-[20px] xl:mt-[15px] h-[45px]">
+                                                            <p
+                                                                style={Text3}
+                                                                className="text-[#979797] text-[14px] 2xl:text-[12px] xl:text-[12px] pr-[10px]"
+                                                            >
+                                                               
+
+                                                                <ShowMore userid={res?.id} text={res?.writeBoutYourSelf} maxLength={100} />
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="absolute right-0 mt-[-10px]">
+                                                        <SendRequestBtn
+                                                            RequestId={sentrequest[res.id]}
+                                                            HandleRequestModal={() => HandleRequestModal(res)}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {likeloading ? <></> : <>
+
+                                                <LikeUser
+                                                    ActiveLike={ActiveLike}
+                                                    setActiveLike={setActiveLike}
+                                                    userId={res.id}
+                                                />
+                                            </>}
+                                        </div>
+                                    </SwiperSlide>
+                                </>
+                            );
+                        })}
+                    </Swiper>
+
+                    <div className="z-5 relative  right-[20px] xl:right-[10px] 2xl:right-[10px]  grid place-items-center w-[10px] lg:w-[40px] h-[294px]">
+                        <button id="custom-next-button" className="w-[35px] h-[70px]">
+                            <Image
+                                loading="lazy"
+                                alt="next-icon"
+                                width={55}
+                                height={91}
+                                src={darkMode ? "/assests/dashboard/icon/next-card-btn-white.svg" : "/assests/dashboard/icon/next-card-btn.svg"}
+                            />
+                        </button>
                     </div>
                 </div>
             </div>
-            <ShareModal isOpen={isModalOpen} onClose={closeModal} />
-            <RegisterAlertModal title={Data} isOpen={isRegisterModalOpen} onClose={CloseRegisterModal} />
+            <ShareModal isOpen={isModalOpen} onClose={closeModal} data={CurrURL} />
+            <RegisterAlertModal
+                title={Data}
+                isOpen={isRegisterModalOpen}
+                onClose={CloseRegisterModal}
+            />
+            <ReportModal
+                title={"helo"}
+                isOpen={isReportModalOpen}
+                onClose={CloseReportModal}
+            />
 
-            <React.Fragment>
-                <Dialog
-                    open={openURLModal}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                    PaperProps={{
-                        style: {
-                            backgroundColor: 'transparent', // or 'none' if you prefer
-                            boxShadow: 'none',
-                        }
-                    }}
-                    BackdropProps={{ style: { opacity: 0, backgroundColor: "none", boxShadow: "none" } }}
-
-                >
-                    <div style={{ padding: "17px 19px 17px 20px" }} className='bg-[#333333] w-[249px] rounded-[100px] text-center grid place-items-center'>
-                        <div className='text-[14px]' style={Urlmodaltext}>
-                            <spa className="text-[#fff]"> URL has been copied</spa>
-                        </div>
-                    </div>
-                </Dialog>
-            </React.Fragment>
+            <BlockUserModal
+                isOpen={isBlockModalOpen}
+                onClose={closeBlockModal}
+            />
             <React.Fragment>
                 <Dialog
                     open={openShortlistModal}
@@ -509,21 +547,27 @@ function SampleUserProfile() {
                     aria-describedby="alert-dialog-description"
                     PaperProps={{
                         style: {
-                            backgroundColor: 'transparent', // or 'none' if you prefer
-                            boxShadow: 'none',
-                        }
+                            backgroundColor: "transparent", // or 'none' if you prefer
+                            boxShadow: "none",
+                        },
                     }}
-                    BackdropProps={{ style: { opacity: 0, backgroundColor: "none", boxShadow: "none" } }}
+                    BackdropProps={{
+                        style: { opacity: 0, backgroundColor: "none", boxShadow: "none" },
+                    }}
                 >
-                    <div style={{ padding: "17px 19px 17px 20px" }} className='bg-[#333333] w-[249px] rounded-[100px] text-center grid place-items-center'>
-                        <div className='text-[14px]' style={Urlmodaltext}>
+                    <div
+                        style={{ padding: "17px 19px 17px 20px" }}
+                        className="bg-[#333333] w-[249px] rounded-[100px] text-center grid place-items-center"
+                    >
+                        <div className="text-[14px]" style={Urlmodaltext}>
                             <span className="text-[#fff]"> {shortlistText}</span>
                         </div>
                     </div>
                 </Dialog>
             </React.Fragment>
+
         </>
-    )
+    );
 }
 
-export default SampleUserProfile
+export default SampleUserProfile;

@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import dynamic from "next/dynamic";
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
-import { updateFormData } from "../../../store/actions/registerUser";
-import { connect } from "react-redux"
+import { updateFormData, updatePartnerPref } from "../../../store/actions/registerUser";
+import { connect, useDispatch } from "react-redux"
 
 //Style for Select Box
 const customStyle2 = {
@@ -93,34 +93,71 @@ function PartnerPreference({ formData, updateFormData }) {
         { value: 19, label: '19' },
         { value: 20, label: '20' }
     ];
-    
-    const currentcityOption = [
-        { value: "ahmedabad", label: "Ahmedabad" },
-        { value: "surat", label: "Surat" },
-        { value: "toronto", label: "Toronto" },
-        // Add more cities as needed
-      ];
-
-      const countryoflivingOptions = [
-        { value: "india", label: "India" },
-        { value: "us", label: "United States" },
-        { value: "canada", label: "Canada" },
-        { value: "mexico", label: "Mexico" },
-        // Add more countries as needed
-      ];
 
     const Country = [
         { value: "india", label: "India" },
         { value: "us", label: "United States" },
         { value: "canada", label: "Canada" },
-        { value: "mexico", label: "Mexico" },
+        { value: "china", label: "China" },
+        { value: "myanmar", label: "Myanmar" },
+        { value: "nepal", label: "Nepal" },
+        { value: "sri-lanka", label: "Sri-lanka" },
+        { value: "pakistan", label: "Pakistan" },
+        { value: "afghanistan", label: "Afghanistan" },
     ];
 
 
     const states = [
         { value: 'gujarat', label: 'Gujarat' },
-        { value: 'otava', label: 'Otava' },
-        { value: 'Assam', label: 'Assam' },
+        { value: 'assam', label: 'Assam' },
+        { value: 'andhra-pradesh', label: 'Andhra Pradesh' },
+        { value: 'arunachal-pradesh', label: 'Arunachal Pradesh' },
+        { value: 'bihar', label: 'Bihar' },
+        { value: 'chhattisgarh', label: 'Chhattisgarh' },
+        { value: 'goa', label: 'Goa' },
+        { value: 'haryana', label: 'Haryana' },
+        { value: 'himachal-pradesh', label: 'Himachal Pradesh' },
+        { value: 'jharkhand', label: 'Jharkhand' },
+        { value: 'karnataka', label: 'Karnataka' },
+        { value: 'kerala', label: 'Kerala' },
+        { value: 'madhya-pradesh', label: 'Madhya Pradesh' },
+        { value: 'maharashtra', label: 'Maharashtra' },
+        { value: 'manipur', label: 'Manipur' },
+        { value: 'meghalaya', label: 'Meghalaya' },
+        { value: 'mizoram', label: 'Mizoram' },
+        { value: 'nagaland', label: 'Nagaland' },
+        { value: 'odisha', label: 'Odisha' },
+        { value: 'punjab', label: 'Punjab' },
+        { value: 'rajasthan', label: 'Rajasthan' },
+        { value: 'sikkim', label: 'Sikkim' },
+        { value: 'tamil-nadu', label: 'Tamil Nadu' },
+        { value: 'telangana', label: 'Telangana' },
+        { value: 'uttar-pradesh', label: 'Uttar Pradesh' },
+        { value: 'uttarakhand', label: 'Uttarakhand' },
+        { value: 'west-bengal', label: 'West Bengal' },
+        { value: 'alberta', label: 'Alberta' },
+        { value: 'british-columbia', label: 'British Columbia' },
+        { value: 'manitoba', label: 'Manitoba' },
+        { value: 'new-brunswick', label: 'New Brunswick' },
+        { value: 'newfound-land', label: 'Newfound Land' },
+        { value: 'nova-scotia', label: 'Nova Scotia' },
+        { value: 'ontario', label: 'Ontario' },
+        { value: 'prince-edward-island', label: 'Prince Edward Island' },
+        { value: 'quebec', label: 'Quebec' },
+        { value: 'saskatchewan', label: 'Saskatchewan' },
+        { value: 'alabama', label: 'Alabama' },
+        { value: 'alaska', label: 'Alaska' },
+        { value: 'arizona', label: 'Arizona' },
+        { value: 'arkansas', label: 'Arkansas' },
+        { value: 'california', label: 'California' },
+        { value: 'colorado', label: 'Colorado' },
+        { value: 'connecticut', label: 'Connecticut' },
+        { value: 'delaware', label: 'Delaware' },
+        { value: 'florida', label: 'Florida' },
+        { value: 'georgia', label: 'Georgia' },
+        { value: 'hawaii', label: 'Hawaii' },
+        { value: 'idaho', label: 'Idaho' },
+        { value: 'illinois', label: 'Illinois' }
     ];
 
 
@@ -147,25 +184,22 @@ function PartnerPreference({ formData, updateFormData }) {
         // Add more diet options as needed
     ];
 
-
-
     const creativeOption = [
-        { value: "Writing", label: "Writing" },
-        { value: "PlayInstrument", label: "Play Instrument" },
-        { value: "Poetry", label: "Poetry" }
+        { value: "writing", label: "writing" },
+        { value: "painting", label: "Painting" }
     ]
 
     const FunOptions =
         [
-            { value: "Movie", label: "Movie" },
-            { value: "Sports", label: "Sports" },
-            { value: "Biking", label: "Biking" },
-            { value: "Music", label: "Music" },
-            { value: "SocialMedia", label: "Social Media" }
+            { value: "movie", label: "Movie" },
+            { value: "sports", label: "Sports" },
+            { value: "biking", label: "Biking" },
+            { value: "music", label: "Music" },
+            { value: "socialMedia", label: "Social Media" }
         ]
 
 
-
+    const dispatch = useDispatch()
 
     const handleInputChange = (event) => {
         const name = event.target.name;
@@ -217,12 +251,19 @@ function PartnerPreference({ formData, updateFormData }) {
             })
 
         }
-        else {
-
-
+        else if (name == "income") {
             updateFormData({
                 partnerpref: { ...formData.partnerpref, [name]: value }
             });
+        }
+        else {
+
+
+            // const isArrayField = ['country', 'state', 'city', 'creative', 'fun', 'diet'].includes(name);
+            const values = value?.map(item => item.value);
+            console.log("🚀 ~ handleInputChange ~ values:", values)
+
+            dispatch(updatePartnerPref(name, values));
         }
     }
     return (
@@ -288,8 +329,9 @@ function PartnerPreference({ formData, updateFormData }) {
                     <DynamicSelect options={Country}
                         placeholder="Select.."
                         styles={customStyle}
-                        onChange={(selectedOption) => handleInputChange({ target: { name: "country", value: selectedOption?.value } })}
+                        onChange={(selectedOption) => handleInputChange({ target: { name: "country", value: selectedOption } })}
                         isSearchable={true}
+                        isMulti
                     />
 
                 </div>
@@ -299,9 +341,9 @@ function PartnerPreference({ formData, updateFormData }) {
                     <DynamicSelect options={states}
                         placeholder="Select.."
                         styles={customStyle}
-                        onChange={(selectedOption) => handleInputChange({ target: { name: "state", value: selectedOption?.value } })}
-
+                        onChange={(selectedOption) => handleInputChange({ target: { name: "state", value: selectedOption } })}
                         isSearchable={true}
+                        isMulti
                     />
 
                 </div>
@@ -311,9 +353,9 @@ function PartnerPreference({ formData, updateFormData }) {
                     <DynamicSelect options={city}
                         placeholder="Select.."
                         styles={customStyle}
-                        onChange={(selectedOption) => handleInputChange({ target: { name: "city", value: selectedOption?.value } })}
-
+                        onChange={(selectedOption) => handleInputChange({ target: { name: "city", value: selectedOption } })}
                         isSearchable={true}
+                        isMulti
                     />
 
                 </div>
@@ -325,7 +367,6 @@ function PartnerPreference({ formData, updateFormData }) {
                         placeholder="Select.."
                         styles={customStyle}
                         onChange={(selectedOption) => handleInputChange({ target: { name: "income", value: selectedOption?.value } })}
-
                         isSearchable={true}
                     />
 
@@ -337,8 +378,9 @@ function PartnerPreference({ formData, updateFormData }) {
                         options={creativeOption}
                         placeholder="Select.."
                         styles={customStyle}
-                        onChange={(selectedOption) => handleInputChange({ target: { name: "creative", value: selectedOption?.value } })}
+                        onChange={(selectedOption) => handleInputChange({ target: { name: "creative", value: selectedOption } })}
                         isSearchable={true}
+                        isMulti
                     />
 
                 </div>
@@ -349,9 +391,9 @@ function PartnerPreference({ formData, updateFormData }) {
                         options={FunOptions}
                         placeholder="Select.."
                         styles={customStyle}
-                        onChange={(selectedOption) => handleInputChange({ target: { name: "fun", value: selectedOption?.value } })}
-
+                        onChange={(selectedOption) => handleInputChange({ target: { name: "fun", value: selectedOption } })}
                         isSearchable={true}
+                        isMulti
                     />
 
                 </div>
@@ -362,9 +404,9 @@ function PartnerPreference({ formData, updateFormData }) {
                         options={dietOptions}
                         placeholder="Select.."
                         styles={customStyle}
-                        onChange={(selectedOption) => handleInputChange({ target: { name: "diet", value: selectedOption?.value } })}
-
+                        onChange={(selectedOption) => handleInputChange({ target: { name: "diet", value: selectedOption } })}
                         isSearchable={true}
+                        isMulti
                     />
 
                 </div>

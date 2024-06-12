@@ -1,17 +1,13 @@
 import React, { useState } from 'react'
 import NavBar from '../NavBar'
-import {
-    Tabs,
-    TabsHeader,
-    TabsBody,
-    Tab,
-    TabPanel,
-} from "@material-tailwind/react";
-import PricingBox from './comp/PricingBox';
 import { useRouter } from 'next/router';
-import PricingBox2 from './comp/PricingBox2';
 import Image from 'next/image';
 import ProtectedRoutes from '../../routes/ProtectedRoutes';
+import dynamic from 'next/dynamic';
+
+const PricingBox = dynamic(() => import('./comp/PricingBox'));
+const PricingBox2 = dynamic(() => import('./comp/PricingBox2'));
+
 
 
 function index() {
@@ -31,37 +27,45 @@ function index() {
         lineHeight: "normal"
     }
 
-    const Text1 = {
-        fontFamily: "Poppins",
-        fontSize: "18px",
-        fontStyle: "normal",
-        fontWeight: "600",
-        lineHeight: "normal"
-    }
-    const Text2 = {
-        fontFamily: "Poppins",
-        fontSize: "18px",
-        fontStyle: "normal",
-        fontWeight: "400",
-        lineHeight: "normal"
-    }
-    const Text3 = {
-        fontFamily: "Poppins",
-        fontSize: "34px",
-        fontStyle: "normal",
-        fontWeight: "600",
-        lineHeight: "normal"
-    }
-    const Text4 = {
-        fontFamily: "Poppins",
-        fontSize: "14px",
-        fontStyle: "normal",
-        fontWeight: "400",
-        lineHeight: "28px"
-    }
+
     const [currentTab, setCurrentTab] = useState(1)
 
     const router = useRouter();
+
+
+    const HandleCheckout = async (e) => {
+        console.log("🚀 ~ HandleCheckout ~ e:", e)
+        router.push("/dashboard/upgrade/1")
+
+        // try {
+        //     const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/razorpay/order`, { amount: 200 });
+        //     console.log("🚀 ~ HandleCheckout ~ response:", response)
+
+        //     // Handle successful response (e.g., initiate Razorpay checkout)
+        //     var options = {
+        //         "key": "rzp_test_Dv5ALfzUvZ12UN",
+        //         "name": "Acme Corp",
+        //         "description": "Test Transaction",
+        //         "image": "https://example.com/your_logo",
+        //         "order_id": response.data.id,
+        //         "callback_url": "/is-order-complete",
+        //         "theme": {
+        //             "color": "#3399cc"
+        //         }
+        //     };
+        //     var rzp1 = new Razorpay(options);
+
+        //     rzp1.open();
+        //     e.preventDefault();
+
+        // } catch (error) {
+        //     // Handle error
+        // }
+
+
+
+    }
+
 
     const data = [
         {
@@ -69,7 +73,7 @@ function index() {
             value: "dashboard",
             curval: "dashboard",
 
-            desc: <PricingBox />,
+            desc: <PricingBox HandleCheckout={HandleCheckout} />,
         },
         {
             label: "Gold",
@@ -88,20 +92,29 @@ function index() {
 
     ];
 
+
+
+
+    const handleSearch = (searchTerm) => { }
+
     return (
         <>
-        <ProtectedRoutes/>
-            <NavBar />
+            <ProtectedRoutes />
+            <NavBar handleSearch={handleSearch} />
             <div id='PriceBox'>
                 <div className='gradient-div grid place-items-center w-full h-full'>
                     <div className='text-center bg-[#FFF]'>
                         <div className='flex flex-col justify-center items-center relative top-[90px] 2xl:top-[90px] xl:top-[90px] lg:top-[80px]  z-[10]  w-full h-full '>
                             <div className='flex justify-between'>
                                 <div>
-                                <h1 style={UserText} className='2xl:text-[20px] xl:text-[18px] text-[#000]'>Hi Riya, Upgrade Your Profile</h1>
+                                    <h1 style={UserText} className='2xl:text-[20px] xl:text-[18px] text-[#000]'>Hi Riya, Upgrade Your Profile</h1>
                                 </div>
                                 <div>
-                                    <p id='doItText' style={TabsText} className='cursor-pointer text-[#0F52BA] absolute 2xl:right-[-210px] xl:right-[-180px] lg:right-[-140px] right-[0px] text-[14px]' onClick={() => router.back()}>I’ll do it later</p>
+
+                                    <div style={TabsText} id='doItText' className=' cursor-pointer text-[black] absolute 2xl:right-[-210px] xl:right-[-180px] lg:right-[-140px] right-[0px]'>
+                                        <button id='Gradient-btn' onClick={() => router.back()} className='w-[95px] h-[27px] '>
+                                            <span className='text-[12px] w-[72px] h-[18px]'>I’ll do it later</span>
+                                        </button></div>
                                 </div>
                             </div>
                             <div className='pt-[40px] 2xl:pt-[40px] xl:pt-[30px] lg:pt-[20px]'>

@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { loginAsync } from '../../../store/reducers/loginReducer';
-import { signIn } from 'next-auth/react';
+import { loginAsync, resetError } from '../../../store/reducers/loginReducer';
 import Image from 'next/image';
 import axios from 'axios';
 import ResetPasswordSuccess from '../../components/Models/ResetPasswordSuccess';
 import { Alert, Snackbar } from '@mui/material';
+import GoogleLoginButton from '../../components/Buttons/GoogleLoginButton'
+import { STATUSES } from '../../../store/reducers/MyProfile';
+import toast, { Toaster } from 'react-hot-toast';
+import { validateEmail, validatePassword } from '../../../utils/form/validationRules';
 
 
 function LoginWithEmail({ rendercomponent, setrendercomponent }) {
@@ -32,10 +35,6 @@ function LoginWithEmail({ rendercomponent, setrendercomponent }) {
         updatedOTP[index] = text;
         setOTP(updatedOTP);
     };
-    const isOtpFilled = () => {
-        return otp.every((digit) => digit !== '');
-    };
-
 
     const [countdown, setCountdown] = useState(60);
     const [isCounting, setIsCounting] = useState(false);
@@ -82,7 +81,7 @@ function LoginWithEmail({ rendercomponent, setrendercomponent }) {
                 let config = {
                     method: 'post',
                     maxBodyLength: Infinity,
-                    url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/user/auth/forgot-password`,
+                    url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/auth/forgot-password`,
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -116,6 +115,7 @@ function LoginWithEmail({ rendercomponent, setrendercomponent }) {
     }
 
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isLoading, SetisLoading] = useState(false)
 
     const closeModal = () => {
         setIsModalOpen(false)
@@ -123,6 +123,7 @@ function LoginWithEmail({ rendercomponent, setrendercomponent }) {
 
     const ChangeStep = () => {
         if (theStep === 1) {
+            SetisLoading(true)
             let data = JSON.stringify({
                 "email": ResetPasswordData.email
             });
@@ -130,7 +131,7 @@ function LoginWithEmail({ rendercomponent, setrendercomponent }) {
             let config = {
                 method: 'post',
                 maxBodyLength: Infinity,
-                url: `https://happymilan.tech/api/v1/user/auth/forgot-password`,
+                url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/auth/forgot-password`,
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -140,6 +141,7 @@ function LoginWithEmail({ rendercomponent, setrendercomponent }) {
             axios.request(config)
                 .then((response) => {
                     console.log(JSON.stringify(response.data));
+                    SetisLoading(false)
                     SetTheStep(theStep + 1)
                 })
                 .catch((error) => {
@@ -159,7 +161,7 @@ function LoginWithEmail({ rendercomponent, setrendercomponent }) {
             let config = {
                 method: 'post',
                 maxBodyLength: Infinity,
-                url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/user/auth/verify-reset-otp`,
+                url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/auth/verify-reset-otp`,
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -178,6 +180,7 @@ function LoginWithEmail({ rendercomponent, setrendercomponent }) {
 
         } else if (theStep === 3) {
 
+            // console.log(otp.join(''))
             const axios = require('axios');
             let data = JSON.stringify({
                 "password": ResetPasswordData.password,
@@ -188,7 +191,7 @@ function LoginWithEmail({ rendercomponent, setrendercomponent }) {
             let config = {
                 method: 'post',
                 maxBodyLength: Infinity,
-                url: `https://happymilan.tech/api/v1/user/auth/reset-password`,
+                url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/auth/reset-password`,
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -261,13 +264,13 @@ function LoginWithEmail({ rendercomponent, setrendercomponent }) {
     }
 
 
-    const Data = useSelector(state => state.login);
+    const { status, error, handleError } = useSelector(state => state.login);
 
 
 
     const [openOTPModal, setOpenOTPModal] = React.useState(false);
     const [AlertMessage, SetAlertMessage] = useState('');
-    const [isModal, setisModal] = useState('');
+    const [isModal, setisModal] = useState(false);
 
     const handleCloseOTPAlert = (event, reason) => {
         if (reason === 'clickaway') {
@@ -275,37 +278,70 @@ function LoginWithEmail({ rendercomponent, setrendercomponent }) {
         }
 
         setOpenOTPModal(false);
+
     };
+    { error && toast.error(error) }
+
+    const [Erros, SetErrors] = useState({
+        setEmailError: "",
+        setPasswordError: ""
+    })
 
     const LoginButton = async (e) => {
-        e.preventDefault()
-        if (credentials.email === "") {
-            alert('Please enter a valid email address.');
+        e.preventDefault();
+    
+        const { email, password } = credentials;
+    
+        if (!email.trim() && !password.trim()) {
+            // Handle empty fields case if needed
             return;
         }
-        await dispatch(loginAsync(credentials));
-
-        if (Data.status == "error") {
-            setisModal("error")
-            SetAlertMessage("Login failed. Please check your credentials and try again. If you continue to experience issues, contact support.")
-            setOpenOTPModal(true)
+    
+        if (!email.trim()) {
+            SetErrors((prev) => ({ ...prev, setEmailError: "Please enter a valid email address." }));
+            return;
         }
+    
+        if (!validateEmail(email)) {
+            SetErrors((prev) => ({ ...prev, setEmailError: "Please enter a valid email address." }));
+            return;
+        }
+    
+        SetErrors((prev) => ({ ...prev, setEmailError: "" }));
+    
+        if (!validatePassword(password)) {
+            SetErrors((prev) => ({ ...prev, setPasswordError: "Password should be at least 6 characters long." }));
+            return;
+        }
+    
+        SetErrors((prev) => ({ ...prev, setPasswordError: "" }));
+    
+        // All validations passed, proceed with login
+        await dispatch(loginAsync(credentials));
+    
+        setTimeout(() => {
+            dispatch(resetError());
+        }, 1000);
+    };
 
-    }
+
+    useEffect(() => {
+        dispatch(resetError());
+    }, []);
+
+
+
     const [theResetPassword, settheResetPassword] = useState(false);
-
-    const handleGoogleLogin = async () => {
-        await signIn('google');
-    }
 
     const [showPassword, setshowPassword] = useState(false)
     const [showSecondPassword, setshowSecondPassword] = useState(false)
+
 
     return (
 
         <>
             <div>
-                <Image alt='arrow-icon' width={0} height={0} style={{ height: "auto", width: "auto" }} className="absolute p-[20px]" onClick={() => setrendercomponent(0)} src="/assests/common/Back-Arow.svg" />
+                <Image loading='lazy' alt='arrow-icon' width={0} height={0} style={{ height: "auto", width: "auto" }} className="absolute p-[20px]" onClick={() => setrendercomponent(0)} src="/assests/common/Back-Arow.svg" />
             </div>
             {!theResetPassword ? <>
                 <div className='w-full h-full grid place-items-center'>
@@ -313,21 +349,32 @@ function LoginWithEmail({ rendercomponent, setrendercomponent }) {
                     <div className='relative top-[10px] 2xl:top-[20px] xl:top-[10px] flex flex-col 2xl:gap-y-[10px] xl:gap-y-[10px] gap-y-[10px] 2xl:my-[10%] xl:my-[50px]'>
                         <h1 style={TextStyle} className='mb-[30px]'>Sign in via Email</h1>
                         <div>
-                            <input type='email' name='email' value={credentials.email} placeholder='Enter Email' className='focus:border-[1px] focus:border-[black] outline-none border-[1px] pl-[50px] border-[#E6E6E6] rounded-[8px] w-[300px] 2xl:h-[50px] h-[50px] xl:h-[45px]' onChange={(e) => setCredentials({ ...credentials, email: e.target.value })} />
-                            <Image alt='message-icon' width={20.776} height={16} className='w-[20.776px] h-[16px] absolute mt-[-34px] 2xl:mt-[-35px] xl:mt-[-33px] ml-[18px]' src='/assests/Blue/Message.svg' />
+                            <input type='email' name='email' value={credentials.email} placeholder='Enter Email' className='hover:border-[#000] focus:border-[1px] focus:border-[black] outline-none border-[1px] pl-[50px] border-[#E6E6E6] rounded-[8px] w-[300px] 2xl:h-[50px] h-[50px] xl:h-[45px]' onChange={(e) => setCredentials({ ...credentials, email: e.target.value })} />
+                            <Image loading="lazy" alt='message-icon' width={20.776} height={16} className='w-[20.776px] h-[16px] absolute mt-[-34px] 2xl:mt-[-35px] xl:mt-[-33px] ml-[18px]' src='/assests/Blue/Message.svg' />
 
                         </div>
+                        {<p  style={{ display: Erros.setEmailError == "" ? "none" : "" , color: "red", fontSize: "12px" }}>{Erros.setEmailError}</p>}
                         <div>
-                            <input type={showPassword ? "text" : "password"} name='password' value={credentials.password} placeholder='Enter Password' className='pr-[45px] focus:border-[1px] focus:border-[black] outline-none border-[1px] pl-[50px] border-[#E6E6E6] rounded-[8px] w-[300px] 2xl:h-[50px] h-[50px] xl:h-[45px]' onChange={(e) => setCredentials({ ...credentials, password: e.target.value })} />
-                            <Image alt='password-icon' width={14.023} height={18} className='w-[14.023px] h-[18px] absolute mt-[-36px] 2xl:mt-[-35px] xl:mt-[-33px] ml-[20px]' src='/loginassests/lock-icon.svg' />
-                            <Image alt='show-password' onClick={() => setshowPassword(!showPassword)} width={20.776} height={16} className="cursor-pointer absolute right-[15px] mt-[-35px]" src={showPassword ? "/assests/Blue/pass-view.png" : "/assests/Blue/pass-hide.png"} />
+                            <input type={showPassword ? "text" : "password"} name='password' value={credentials.password} placeholder='Enter Password' className='hover:border-[#000] pr-[45px] focus:border-[1px] focus:border-[black] outline-none border-[1px] pl-[50px] border-[#E6E6E6] rounded-[8px] w-[300px] 2xl:h-[50px] h-[50px] xl:h-[45px]' onChange={(e) => setCredentials({ ...credentials, password: e.target.value })} />
+                            <Image loading="lazy" alt='password-icon' width={14.023} height={18} className='w-[14.023px] h-[18px] absolute mt-[-36px] 2xl:mt-[-35px] xl:mt-[-33px] ml-[20px]' src='/loginassests/lock-icon.svg' />
+                            {/* <div className='absolute right-[11px]  mt-[-40px] w-[30px] h-[30px] rounded-full bg-[#F3F8FF]'></div> */}
+                            <Image loading="lazy" alt='show-password' onClick={() => setshowPassword(!showPassword)} width={20.776} height={16} className="hover:bg-[#F3F8FF] p-[2px] rounded-full  cursor-pointer absolute right-[15px] mt-[-35px]" src={showPassword ? "/assests/Blue/pass-view.png" : "/assests/Blue/pass-hide.png"} />
 
                         </div>
+                        {<p style={{ display: Erros.setPasswordError == "" ? "none" : "" , color: "red", fontSize: "12px" }}>{Erros.setPasswordError}</p>}
                         <div>
                             <h1 className='cursor-pointer' style={ResetPassword} onClick={() => settheResetPassword(true)}>Reset Password</h1>
                         </div>
                         <div>
-                            <button id='grad-btn' onClick={LoginButton} className='w-[300px] 2xl:h-[50px] xl:h-[45px] h-[50px] rounded-[8px] bg-[#0F52BA] text-[#FFF] hover:opacity-[0.95]'>Login</button>
+                            <button id='grad-btn' onClick={LoginButton} className='w-[300px] 2xl:h-[50px] xl:h-[45px] h-[50px] rounded-[8px] bg-[#0F52BA] text-[#FFF] hover:opacity-[0.95]'>
+                                {status == STATUSES.LOADING
+                                    ? <>
+                                        <Image loading="lazy" alt="loader" width={25} height={25} className='animate-spin inline relative left-[0px]' src='/assests/animation/loaderIcon.svg' />
+
+                                    </>
+                                    :
+                                    "Login"}
+                            </button>
                         </div>
                     </div>
                     <div className='flex items-center justify-center 2xl:mt-[-16px]  xl:mt-[-59px]'>
@@ -340,11 +387,9 @@ function LoginWithEmail({ rendercomponent, setrendercomponent }) {
                     </div>
 
                     <div className='flex items-center justify-center gap-x-[30px] mt-[-10px] relative 2xl:top-[-9px] xl:top-[-7px]'>
+                        <GoogleLoginButton />
                         <div className="xl:w-[45px] xl:h-[45px] 2xl:w-[50px] 2xl:h-[50px]">
-                            <Image alt='google-icon' width={50} height={50} onClick={handleGoogleLogin} className='cursor-pointer' src='/assests/social/google-icon-btn.svg' />
-                        </div>
-                        <div className="xl:w-[45px] xl:h-[45px] 2xl:w-[50px] 2xl:h-[50px]">
-                            <Image alt="fb-icon" width={50} height={50} src='/assests/social/facebook-icon-btn.svg' />
+                            <Image loading="lazy" alt="fb-icon" width={50} height={50} src='/assests/social/facebook-icon-btn.svg' />
                         </div>
                         <div className="cursor-pointer xl:w-[45px] xl:h-[45px] 2xl:w-[50px] 2xl:h-[50px]">
                             {rendercomponent != 1 ?
@@ -389,15 +434,20 @@ function LoginWithEmail({ rendercomponent, setrendercomponent }) {
                     </div>
                 </div>
 
+                <Toaster
+                    position="top-center"
+                    reverseOrder={false}
+                />
+
                 {
-                    isModal === "error" && (
+                    isModal ? (
 
                         <Snackbar open={openOTPModal} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={6000} onClose={handleCloseOTPAlert}>
                             <Alert onClose={handleCloseOTPAlert} severity={"error"} sx={{ width: '100%' }}>
                                 {AlertMessage}
                             </Alert>
                         </Snackbar>
-                    )
+                    ) : ""
                 }
             </>
                 :
@@ -412,11 +462,22 @@ function LoginWithEmail({ rendercomponent, setrendercomponent }) {
                                 <div className='space-y-[20px]'>
                                     <div>
                                         <input type='email' name='email' value={ResetPasswordData.email} onChange={handleInputChange} placeholder='Enter Your Email' className='focus:outline-none focus:border-[black] pl-[50px] w-[300px] h-[50px] rounded-[8px] border-[1px] border-[#E6E6E6]' />
-                                        <Image alt='message-icon' width={20.776} height={16} className='w-[20.776px] h-[16px] absolute mt-[-34px] 2xl:mt-[-35px] xl:mt-[-33px] ml-[18px]' src='/assests/Blue/Message.svg' />
+                                        <Image loading="lazy" alt='message-icon' width={20.776} height={16} className='w-[20.776px] h-[16px] absolute mt-[-34px] 2xl:mt-[-35px] xl:mt-[-33px] ml-[18px]' src='/assests/Blue/Message.svg' />
 
                                     </div>
                                     <div>
-                                        <button id='grad-button' className='w-[300px] h-[50px] rounded-[10px]' onClick={ChangeStep}>Send OTP</button>
+                                        <button id='grad-button' className='w-[300px] h-[50px] rounded-[10px]' onClick={ChangeStep}>
+                                            Send OTP
+                                            <div className='inline'>
+                                                {isLoading ? (
+                                                    <Image loading="lazy" alt="loader" width={25} height={25} className='animate-spin inline relative left-[60px]' src='/assests/animation/loaderIcon.svg' />
+                                                ) : (
+
+                                                    <Image loading="lazy" alt="arrow" width={18} height={20} className='inline relative left-[60px]' src='/vector.svg' />
+                                                )}
+                                            </div>
+
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -467,12 +528,12 @@ function LoginWithEmail({ rendercomponent, setrendercomponent }) {
                                 <h1 onClick={Submit} style={TextStyle} className='mb-[30px]'>Change Password</h1>
                                 <div>
                                     <input type={showPassword ? "text" : 'password'} name='password' onChange={handleInputChange} placeholder='Enter New Password' className='pr-[45px] focus:border-[1px] focus:border-[black] outline-none border-[1px] pl-[20px] border-[#E6E6E6] rounded-[8px] w-[300px] 2xl:h-[50px] h-[50px] xl:h-[45px]' />
-                                    <Image alt='show-password' onClick={() => setshowPassword(!showPassword)} width={20.776} height={16} className="cursor-pointer absolute right-[15px] mt-[-35px]" src={showPassword ? "/assests/Blue/pass-view.png" : "/assests/Blue/pass-hide.png"} />
+                                    <Image loading="lazy" alt='show-password' onClick={() => setshowPassword(!showPassword)} width={20.776} height={16} className="cursor-pointer absolute right-[15px] mt-[-35px]" src={showPassword ? "/assests/Blue/pass-view.png" : "/assests/Blue/pass-hide.png"} />
 
                                 </div>
                                 <div>
                                     <input type={showSecondPassword ? "text" : 'password'} name='conpassword' placeholder='Enter Confirm Password' className='pr-[45px] focus:border-[1px] focus:border-[black] outline-none border-[1px] pl-[20px] border-[#E6E6E6] rounded-[8px] w-[300px] 2xl:h-[50px] h-[50px] xl:h-[45px]' />
-                                    <Image alt='show-password' onClick={() => setshowSecondPassword(!showSecondPassword)} width={20.776} height={16} className="cursor-pointer absolute right-[15px] mt-[-35px]" src={showSecondPassword ? "/assests/Blue/pass-view.png" : "/assests/Blue/pass-hide.png"} />
+                                    <Image loading="lazy" alt='show-password' onClick={() => setshowSecondPassword(!showSecondPassword)} width={20.776} height={16} className="cursor-pointer absolute right-[15px] mt-[-35px]" src={showSecondPassword ? "/assests/Blue/pass-view.png" : "/assests/Blue/pass-hide.png"} />
                                 </div>
                                 <div>
                                     <button id='grad-btn' className='w-[300px] 2xl:h-[50px] xl:h-[45px] h-[50px] rounded-[8px] bg-[#0F52BA] text-[#FFF] hover:opacity-[0.95]' onClick={ChangeStep}>Change Password</button>
@@ -481,7 +542,7 @@ function LoginWithEmail({ rendercomponent, setrendercomponent }) {
                         )}
                     </div>
 
-                    <ResetPasswordSuccess isOpen={isModalOpen} onClose={closeModal} HandleExlopre={HandleExlopre}  />
+                    <ResetPasswordSuccess isOpen={isModalOpen} onClose={closeModal} HandleExlopre={HandleExlopre} />
 
                 </>}
         </>

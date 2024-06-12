@@ -187,16 +187,6 @@ function GridphotoSec({ formData, updateFormData, }) {
                                 );
                             })}
 
-                            {/* {images.map((image, index) => (
-                               
-                              
-                                <img key={index} src={getImageBlobUrl(image)} alt={image.key} />
-                            
-
-                               // <img key={index} src={URL.createObjectURL(image.key)} alt={`Image ${index}`} />
-                            
-                            ))} */}
-
                             <label htmlFor="dropzone-file">
 
                                 <div className="w-[150px] h-[150px] lg:w-[200px] lg:h-[200px] rounded-[10px] flex flex-col cursor-pointer justify-center items-center  bg-[#F1F1F1]">
@@ -222,29 +212,6 @@ function GridphotoSec({ formData, updateFormData, }) {
             </div>
         </div >
 
-        {/* <Dialog
-                open={open}
-                handler={handleOpen}
-                animate={{
-                    mount: { scale: 1, y: 0 },
-                    unmount: { scale: 0.9, y: -200 },
-                }}
-            >
-                <DialogBody className="p-1 h-[680px]">
-                    <div
-                        className="h-full w-full"
-                        style={{
-                            backgroundImage: `url(https://s3-alpha-sig.figma.com/img/27df/ce21/8380d4d8757222b906a67275927a4c49?Expires=1693785600&Signature=SkiPD7F5Bp7U80hqxzim7CkTkK3Pzb8u8O0ALXPZAmkgGlW2UID63X58b-gAbvFgUUNRIG8b-boSSWdEMbD2Pi-pIg7p5dM4mdBfs-QgDyDXuEgDxKCUd8BQX~nu4ukJLh1fsU1tsMAUWaZ2TiXEBHNe-7CPq6rv6CcnIGOujQhQszX0nz6iSnXBu10Kb9WekUkdxbDyWIOjuIvPBC8b~Ho0Dtu0sjDVfsZeP9KSN0IFmj9xkw3vU1LYuMFcxIDRp04ZBL7D2vx6XWzbeEez2Jqs91RIDuHrFVkdE0rrPJ6ZQ0VSBKMMRsOTX1G6c3rRGrfr173kWvIMzybSdaiWzA__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4)`,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                        }}
-                    >
-                        <div className="grid place-items-center w-full my-auto h-[90%]">
-                            <img src="/assests/common/videoPlay-icon.svg" />
-                        </div>
-                    </div>
-                </DialogBody>
-            </Dialog> */}
         </>
     );
 }

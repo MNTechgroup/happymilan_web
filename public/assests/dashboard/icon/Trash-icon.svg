@@ -1,0 +1,20 @@
+<svg
+ className=" cursor-pointer absolute left-[12px] top-[-8px] ml-[80%] lg:ml-[85%] mt-[5%]"
+ xmlns="http://www.w3.org/2000/svg"
+ width="24"
+ height="24"
+ viewBox="0 0 24 24"
+ fill="none"
+  >
+ <circle
+     cx="12"
+     cy="12"
+     r="12"
+     fill="black"
+     fill-opacity="0.4"
+ />
+ <path
+     d="M14.1111 10.3333V15.8889H9.66667V10.3333H14.1111ZM13.2778 7H10.5L9.94444 7.55556H8V8.66667H15.7778V7.55556H13.8333L13.2778 7ZM15.2222 9.22222H8.55556V15.8889C8.55556 16.5 9.05556 17 9.66667 17H14.1111C14.7222 17 15.2222 16.5 15.2222 15.8889V9.22222Z"
+     fill="white"
+ />
+  </svg>

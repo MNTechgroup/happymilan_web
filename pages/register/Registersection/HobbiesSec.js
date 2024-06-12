@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
-import { updateFormData } from "../../../store/actions/registerUser";
-import { connect } from 'react-redux';
+import { updateFormData, updateHobbies } from "../../../store/actions/registerUser";
+import { connect, useDispatch } from 'react-redux';
 
 const Text1 = {
   color: "#000",
@@ -10,24 +10,6 @@ const Text1 = {
   fontSize: "16px",
   fontStyle: "normal",
   lineHeight: "normal",
-};
-
-const TitleText = {
-  color: "#000",
-  fontFamily: "Poppins",
-  fontSize: "16px",
-  fontStyle: "normal",
-  fontWeight: "400",
-  lineHeight: "normal"
-}
-
-const btnText = {
-  fontFamily: "Poppins",
-  fontSize: "14px",
-  fontStyle: "normal",
-  fontWeight: "400",
-  lineHeight: "normal",
-  border: "1px solid #E8E8E8",
 };
 
 const doItlater = {
@@ -38,58 +20,10 @@ const doItlater = {
   lineHeight: "normal"
 }
 
-const sections = [
-  {
-    hobbies: [
-      "Writing",
-      "Play Instrument",
-      "Poetry",
-      "Cooking",
-      "Painting",
-      "Gardening",
-      "Singing",
-      "DIY crafts",
-      "Blogging",
-      "Photography",
-      "Dancing",
-      "Content Creation",
-    ],
-  },
-  {
-    title: "Fun",
-    hobbies: [
-      "Movie",
-      "Sports",
-      "Biking",
-      "Music",
-      "Social Media",
-      "Clubbing",
-      "Travelling",
-      "Shopping",
-      "Gaming",
-      "Reading",
-      "Binge-Watching",
-      "Theater & Events",
-    ],
-  },
-  {
-    title: "Fitness",
-    hobbies: [
-      "Running",
-      "Cycling",
-      "Yoga",
-      "Walking",
-      "Working Out",
-      "Trekking",
-      "Aerobics/Zumba",
-      "Swimming",
-    ],
-  },
-];
 
 
 
-function HobbiesSec({ formData, updateFormData , HandleTabclick, activeTab }) {
+function HobbiesSec({ formData, updateFormData, HandleTabclick, activeTab }) {
   const [selectedHobbies, setSelectedHobbies] = useState([]);
   const [selectedCreative, setSelectedCreative] = useState();
   const [selectedFun, setSelectedFun] = useState();
@@ -111,14 +45,7 @@ function HobbiesSec({ formData, updateFormData , HandleTabclick, activeTab }) {
     { value: "PlayInstrument", label: "Play Instrument" },
     { value: "Poetry", label: "Poetry" }
   ]
-  const ReligionOptions = [
-    { value: 1, label: "Hinduism" },
-    { value: 2, label: "Judaism" },
-    { value: 3, label: "Christianity" },
-    { value: 4, label: "Buddhism" },
-    { value: 5, label: "Islam" },
-    // Add more religions as needed
-  ];
+
 
   const FunOptions =
     [
@@ -151,69 +78,81 @@ function HobbiesSec({ formData, updateFormData , HandleTabclick, activeTab }) {
     }),
   };
 
-  const handleReligion = (data) => {
-    setSelectedReligion(data)
-  }
+  const [allData, SetallData] = useState([
+    {
+      category: "Creative",
+      value: [],
+    },
+    {
+      category: "Fun",
+      value: [],
+    },
+    {
+      category: "Fitness",
+      value: [],
+    },
+  ])
 
-  const [allData,SetallData] = useState({
-    creative :"",
-    fun : "",
-    fitness : ""
-  })
-  const handleInputChange = (e) => {
 
-    const value = e.target.value;
-    const name = e.target.name;
+  const [alldata, SetallarrayData] = useState([])
 
+  const dispatch = useDispatch();
+
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    const name = event.target.name
+
+    const values = value.map(item => item.value);
+
+    SetallData(prevData =>
+      prevData.map(data =>
+        data.category.toLowerCase() === name.toLowerCase()
+          ? { ...data, value: [...new Set([...data.value, ...values])] }
+          : data
+      )
+    );
+
+    dispatch(updateHobbies(name, values));
+
+    // const values = Array.from(new Set(value.map(item => item.value)));
+
+    // Merging previous data with new data
+    // const updatedHobbies = {
+    //   ...formData.allhobbies,
+    //   hobbies: [...new Set([...formData.allhobbies.hobbies, ...values])],
+    // };
+
+    // Updating formData state
+    // updateFormData({
+    //   allhobbies: updatedHobbies,
+    // });
+
+
+    console.log("name", name)
     if (name == "creative") {
 
-      
-      const  funData = creativeOption.find((option) => option.value === value);
-      setSelectedFun(funData)
-      SetallData(prev=>{ return {...prev , creative : funData}})
-      // SetallData(prev=>{return {...prev , creative : actdata}})
+      const values = value.map(item => item.value);
+      console.log("value", values)
+      SetallarrayData(prev => [...prev, ...values]);
 
-
-    } else if (name == "fun") {
-      const  funData = FunOptions.find((option) => option.value === value);
-      setSelectedFun(funData)
-      SetallData(prev=>{ return {...prev , fun : funData}})
+    }
+    else if (name == "fun") {
+      const values = value.map(item => item.value);
+      console.log("value", values)
+      SetallarrayData(prev => [...prev, ...values]);
     }
     else if (name == "fitness") {
-      const  fitData = FitnessDataoption.find((option => option.value === value))
-      setSelectedFitness(fitData)
-      SetallData(prev=>{return {...prev,fitness:fitData}})
-     }
-    SetallData((prev)=>{
-      
-        return { ...prev ,[name]: value}
-    })
+      const values = value.map(item => item.value);
+      console.log("value", values)
+      SetallarrayData(prev => [...prev, ...values]);
+    }
 
-    const dataArray = Object.entries(allData).map(([value, label]) => ({ value, label }));
 
-    const labelValuesArray = dataArray.flatMap(item => {
-      // Extract the value property from each object in the label array
-      const labelValues = item.label.map(labelItem => labelItem.value);
-      return labelValues;
-    });
-    updateFormData({
-      allhobbies: { ...formData.allhobbies, hobbies: labelValuesArray },
-    });
   }
 
-  const Subdata = () =>{
-    const dataArray = Object.entries(allData).map(([value, label]) => ({ value, label }));
 
-    const labelValuesArray = dataArray.flatMap(item => {
-      // Extract the value property from each object in the label array
-      const labelValues = item.label.map(labelItem => labelItem.value);
-      return labelValues;
-    });
+  const Subdata = () => {
 
-    updateFormData({
-      allhobbies: { ...formData.allhobbies, hobbies: labelValuesArray },
-    });
-   
   }
 
   return (
@@ -240,7 +179,7 @@ function HobbiesSec({ formData, updateFormData , HandleTabclick, activeTab }) {
           <h1 className="font-semibold" style={Text1}>Creative</h1>
           <h1 className="md:mr-[-55px] lg:mr-[0px] 2xl:ml-[0px] xl-mr-[0px]" style={Text1}>
             Selected :{" "}
-            <span className="w-full font-bold">{selectedHobbies.length}/5</span>
+            <span onClick={()=>console.log(allData)} className="w-full font-bold">{selectedHobbies.length}/5</span>
           </h1>
         </div>
 
@@ -270,7 +209,7 @@ function HobbiesSec({ formData, updateFormData , HandleTabclick, activeTab }) {
                   placeholder="Select.."
                   styles={customStyle}
                   value={selectedFun}
-                  onChange={(selectedOption) => handleInputChange({ target: { name: "fun" ,value: selectedOption }})}
+                  onChange={(selectedOption) => handleInputChange({ target: { name: "fun", value: selectedOption } })}
                   isSearchable={true}
                   isMulti />
               </div>

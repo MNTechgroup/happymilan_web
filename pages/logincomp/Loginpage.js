@@ -10,9 +10,6 @@ const LoginPage = ({ setrendercomponent, rendercomponent }) => {
         console.log(googleSignin)
     };
 
-
-
-
     const TextStyle = {
         textAlign: "center",
         fontFamily: "Poppins",
@@ -30,10 +27,7 @@ const LoginPage = ({ setrendercomponent, rendercomponent }) => {
         lineHeight: "normal",
     }
 
-    const [icon, seticon] = useState(false);
-
     const HandleSignInEmail = () => {
-        seticon(true)
         setrendercomponent(1)
     }
     const ToolTipContent = () => {

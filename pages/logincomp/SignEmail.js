@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { getCookie, setCookie } from 'cookies-next'
 import Image from "next/image";
+import { validatePassword } from "../../utils/form/validationRules";
 
 const SignInEmail = () => {
     const router = useRouter();
@@ -65,7 +66,7 @@ const SignInEmail = () => {
             }, 1000);
         } else if (countdown === 0) {
             setIsCounting(false);
-            // Handle what happens when the countdown reaches 0
+            // Handle what happens when the countdown reaches 0 
         }
 
         return () => clearTimeout(timer);
@@ -132,18 +133,24 @@ const SignInEmail = () => {
             }
 
             const emailOfUser = localStorage.getItem("email");
+            const DeviceToken = getCookie("fcmToken")
 
 
             if (!emailOfUser) {
                 throw new Error('Email not found');
             }
 
+            const DataPost = {
+                email: emailOfUser,
+                otp: otp.join(""),
+                deviceToken: DeviceToken
+            }
+            console.log("🚀 ~ handleOTPSubmit ~ DataPost:", DataPost)
+
+
             const response = await axios.post(
                 "https://happymilan.tech/api/v1/user/auth/verify-otp-email",
-                {
-                    email: emailOfUser,
-                    otp: otp.join(""), // Join the OTP digits into a single string
-                }
+                DataPost
             );
 
             const theData = response.data.data;
@@ -169,13 +176,6 @@ const SignInEmail = () => {
 
     const [isValid, setValid] = useState(true);
 
-    const validatePassword = (password) => {
-        const lengthRegex = /^.{6,8}$/;
-        const alphanumericRegex = /^(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
-
-        return lengthRegex.test(password) && alphanumericRegex.test(password);
-    };
-
     const [userpassword, setuserpassword] = useState({
         p1: "",
         p2: ""
@@ -189,7 +189,12 @@ const SignInEmail = () => {
             return { ...prev, [name]: value }
         })
 
-        setValid(validatePassword(userpassword.p1));
+        if (userpassword.p1 != "") {
+            if (name === "p1") {
+                validatePassword(value) ? setValid(true) : setValid(false)
+            }
+        }
+
     }
 
     const SubmitPassword = async () => {
@@ -197,19 +202,13 @@ const SignInEmail = () => {
             // Display an inline error message or prevent submission if passwords are not filled
             alert("Please fill in both password fields");
             return;
-        } else if (userpassword.p1 !== userpassword.p2) {
+        } else if (userpassword.p1 != userpassword.p2) {
             // Display an inline error message if passwords don't match
             alert("Passwords do not match. Please re-enter.");
             return;
         }
 
         try {
-            if (!isValid) {
-                // Display an inline error message if password is not valid
-                alert('Password is not valid');
-                console.log('Password is not valid');
-                return;
-            }
 
             // Prepare request body
             const requestBody = {
@@ -268,7 +267,7 @@ const SignInEmail = () => {
 
                                     <Image alt="show-password" onClick={() => setshowPassword(!showPassword)} width={20.776} height={16} className="absolute right-[90px] mt-[-35px]" src={showPassword ? "/assests/Blue/pass-view.png" : "/assests/Blue/pass-hide.png"} />
                                     <div>
-                                        <h1 className={`w-[300px] pt-[5px] ${!isValid ? "text-[red]" : "text-[green]"} text-[#AEAEAE]`} style={Text3}>Must be at least 6-8 characters in length and may contain both number s and letters</h1>
+                                        <h1 className={` w-[300px] pt-[5px] ${!isValid ? "text-[red]" : "text-[green]"}  ${userpassword.p1 != "" ? "" : "text-[#AEAEAE]"}`} style={Text3}>Must be at least 6 - 8 characters in length and may contain both number s and letters</h1>
                                     </div>
                                 </div>
                                 <div>

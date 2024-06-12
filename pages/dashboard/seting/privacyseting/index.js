@@ -1,218 +1,51 @@
-import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
+import NavBar from "../../NavBar";
+import SideBar from "../comp/Sidebar";
+import { useDispatch } from "react-redux";
+import { Getprivacyquestions } from "../../../../store/actions/UserSettingAction";
+import dynamic from "next/dynamic";
+const BackButton = dynamic(() => import("../comp/BackButton"));
+const PrivacySeting = dynamic(() => import("./comp/PrivacySeting"));
+const Sidebar2 = dynamic(() => import("../comp/Sidebar2"));
 
-function PrivacySeting() {
+
+function index() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(Getprivacyquestions())
+  }, [])
+
+  const handleSearch = (searchTerm) => { }
+
   return (
     <>
 
-      <div className="mb-[80px]">
-        <div className="flex mt-[-17px]">
-          <Image width={14} height={14} src='/assests/dashboard/seting/email-alert.svg' />
+      <SideBar />
+      <div className='w-full h-full grid place-items-center'>
 
-          <h1 className="text-[15px] xl:text-[16px] font-medium ml-[15px]">
-            Privacy Setting
-          </h1>
-        </div>
-        <h1 className="w-[580px] lg:w-[650px] xl:w-[700px] text-[11px] xl:text-[12px] text-[#484848] font-medium mt-[20px]">
-          See information about your account, download an archive of your data,
-          or learn about your account deactivation options
-        </h1>
-        <div className=" mt-[20px] xl:mt-[25px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
-        <div className="mt-[20px]">
-          <h1 className="text-[15px] xl:text-[16px] font-medium mb-[5px]">
-            Select Display Name
-          </h1>
-          <div className="flex mt-[20px]">
-            <div className=" flex justify-center items-center">
-              <input
-                className="w-[15.5px]  xl:w-[16px] h-[15.5px] xl:h-[16px]"
-                type="radio"
-                id="Rihan Gajjar"
-                name="os"
-              ></input>
-              <label
-                for="Rihan Gajjar"
-                className="ml-[10px] text-[13px] xl:text-[14px]  "
-              >
-                Rihan Gajjar
-              </label>
-            </div>
-            <div className="ml-[200px]  flex justify-center items-center">
-              <input
-                className="w-[15.5px]  xl:w-[16px] h-[15.5px] xl:h-[16px]"
-                type="radio"
-                id="Rihan G"
-                name="os"
-              ></input>
-              <label
-                for="Rihan G"
-                className="ml-[10px] text-[13px] xl:text-[14px]  "
-              >
-                R Gajjar
-              </label>
-            </div>
+        <div className='hidden md:block w-[90%] mt-[120px] '>
+
+          <h1 className='fixed left-10 text-[16px] text-[#716969] font-medium'>Account Setting</h1>
+          <div className='fixed right-10'>
+            <BackButton />
           </div>
-          <div className="flex mt-[10px]">
-            <div className=" flex justify-center items-center">
-              <input
-                className="w-[15.5px]  xl:w-[16px] h-[15.5px] xl:h-[16px]"
-                type="radio"
-                id="R Gajjar"
-                name="os"
-              ></input>
-              <label
-                for="R Gajjar"
-                className="ml-[10px] text-[13px] xl:text-[14px]  "
-              >
-                Rihan G
-              </label>
-            </div>
-            <div className="ml-[229px] xl:ml-[227px]  flex justify-center items-center">
-              <input
-                className="w-[15.5px]  xl:w-[16px] h-[15.5px] xl:h-[16px]"
-                type="radio"
-                id="Profile ID"
-                name="os"
-              ></input>
-              <label
-                for="Profile ID"
-                className="ml-[10px] text-[13px] xl:text-[14px]  "
-              >
-                Profile ID: SH00289943
-              </label>
-            </div>
-          </div>
+          <div className='flex mt-[20px]'>
 
-        </div>
-        <div className=" mt-[20px] xl:mt-[25px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
+            <div className='fixed w-[1px] ml-[20%] lg:ml-[18%] xl:ml-[250px] mt-[-17px] h-[185px] bg-[#ECECEC]'></div>
 
-        <div className="mt-[20px]">
-          <h1 className="text-[15px] xl:text-[16px] font-medium mb-[5px]">
-            Who can see your mobile Number?
-          </h1>
-          <div className="mt-[20px] flex">
-            <div className="flex justify-center items-center">
-              <input
-                className="w-[15.5px]  xl:w-[16px] h-[15.5px] xl:h-[16px]"
-                type="radio"
-                id="mobile1"
-                name="mobile number"
-              ></input>
-              <label
-                for="Profile"
-                className="ml-[10px] text-[13px] xl:text-[14px]  "
-              >
-                Visible to all
 
-              </label>
-            </div>
-          </div>
-          <div className="mt-[10px] flex">
-            <div className="flex justify-center items-center">
-              <input
-                className="w-[15.5px]  xl:w-[16px] h-[15.5px] xl:h-[16px]"
-                type="radio"
-                id=" mobile2"
-                name="mobile number"
-              ></input>
-              <label
-                for=" Privacy"
-                className="ml-[10px] text-[13px] xl:text-[14px]  "
-              >
-                Only visible to registered Members
-              </label>
-            </div>
+            <main className=' absolute ml-[25%] lg:ml-[23%] xl:ml-[330px]'><PrivacySeting /></main>
           </div>
         </div>
 
-        <div className=" mt-[20px] xl:mt-[25px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
-
-        <div className="mt-[20px]">
-          <h1 className="text-[15px] xl:text-[16px] font-medium mb-[5px]">
-            Who can see your email address?
-          </h1>
-          <div className="mt-[20px] flex">
-            <div className="flex justify-center items-center">
-              <input
-                className="w-[15.5px]  xl:w-[16px] h-[15.5px] xl:h-[16px]"
-                type="radio"
-                id="email1"
-                name="email address"
-              ></input>
-              <label
-                for="Profile"
-                className="ml-[10px] text-[13px] xl:text-[14px]  "
-              >
-                Visible to all
-
-              </label>
-            </div>
-          </div>
-          <div className="mt-[10px] flex">
-            <div className="flex justify-center items-center">
-              <input
-                className="w-[15.5px]  xl:w-[16px] h-[15.5px] xl:h-[16px]"
-                type="radio"
-                id=" email2"
-                name="email address"
-              ></input>
-              <label
-                for=" Privacy"
-                className="ml-[10px] text-[13px] xl:text-[14px]  "
-              >
-                Only visible to registered Members
-              </label>
-            </div>
-          </div>
+        <div className='block md:hidden w-[90% mt-[120px]'>
+          <Sidebar2 />
         </div>
 
-        <div className=" mt-[20px] xl:mt-[25px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
-
-        <div className="mt-[20px]">
-          <h1 className="text-[15px] xl:text-[16px] font-medium mb-[5px]">
-            Profile Privacy
-          </h1>
-          <div className="mt-[10px] flex">
-            <div className="flex justify-center items-center">
-              <input
-                className="w-[15.5px]  xl:w-[16px] h-[15.5px] xl:h-[16px]"
-                type="radio"
-                id="Profile"
-                name="profile privacy"
-              ></input>
-              <label
-                for="Profile"
-                className="ml-[10px] text-[13px] xl:text-[14px] mt-[12px] "
-              >
-                Visible to all, including unregistered visitors{" "}
-                <p className="text-[10px]">
-                  (Photo and Name will not be visible on Profile)
-                </p>
-              </label>
-            </div>
-          </div>
-          <div className="mt-[10px] flex">
-            <div className="flex justify-center items-center">
-              <input
-                className="w-[15.5px]  xl:w-[16px] h-[15.5px] xl:h-[16px]"
-                type="radio"
-                id=" Privacy"
-                name="profile privacy"
-              ></input>
-              <label
-                for=" Privacy"
-                className="ml-[10px] text-[13px] xl:text-[14px]  "
-              >
-                Only visible to registered Members
-              </label>
-            </div>
-          </div>
-        </div>
       </div>
-
 
     </>
   );
 }
 
-export default PrivacySeting;
+export default index;

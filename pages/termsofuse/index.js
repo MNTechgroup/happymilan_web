@@ -157,13 +157,13 @@ function index() {
             </h1>
             <ul style={ContentText}>
               <li>
-              You are responsible for safeguarding your <span className="text-[#0F52BA]"> HappyMilan login credentials.</span> Ensure limited access to your device to prevent unauthorized account entry. Do not share your password, as the company does not request it. 
+                You are responsible for safeguarding your <span className="text-[#0F52BA]"> HappyMilan login credentials.</span> Ensure limited access to your device to prevent unauthorized account entry. Do not share your password, as the company does not request it.
               </li>
               <li className="mt-[21px]">
-              You are responsible for maintaining the confidentiality of your account login credentials.
+                You are responsible for maintaining the confidentiality of your account login credentials.
               </li>
               <li className="mt-[21px]">
-              You are solely responsible for any activity that occurs under your account
+                You are solely responsible for any activity that occurs under your account
               </li>
             </ul>
           </div>
@@ -174,13 +174,13 @@ function index() {
             </h1>
             <ul style={ContentText}>
               <li>
-              You agree not to engage in any unlawful or prohibited activities while using our services.
+                You agree not to engage in any unlawful or prohibited activities while using our services.
               </li>
               <li className="mt-[21px]">
-              You will not post content that is offensive, defamatory, or violates the rights of others.
+                You will not post content that is offensive, defamatory, or violates the rights of others.
               </li>
               <li className="mt-[21px]">
-              You will not use the website for any commercial purposes without our prior written consent.
+                You will not use the website for any commercial purposes without our prior written consent.
               </li>
             </ul>
           </div>
@@ -191,11 +191,11 @@ function index() {
             </h1>
             <ul style={ContentText}>
               <li>
-              You consent to the collection, use, and disclosure of your personal information in accordance with our Privacy Policy.
+                You consent to the collection, use, and disclosure of your personal information in accordance with our Privacy Policy.
               </li>
-             
+
               <li className="mt-[21px]">
-              You acknowledge that your profile information may be shared with other users based on your privacy settings
+                You acknowledge that your profile information may be shared with other users based on your privacy settings
               </li>
             </ul>
           </div>
@@ -206,9 +206,9 @@ function index() {
             </h1>
             <ul style={ContentText}>
               <li>
-              We reserve the right to modify, update, or change the terms of this Agreement at any time without prior notice. Your continued use of the services after such modifications constitutes acceptance of the updated terms.
+                We reserve the right to modify, update, or change the terms of this Agreement at any time without prior notice. Your continued use of the services after such modifications constitutes acceptance of the updated terms.
               </li>
-             
+
             </ul>
           </div>
           <div className="w-[100%] h-[1px] bg-[#CCC] mt-[20px]"></div>
@@ -218,154 +218,177 @@ function index() {
             </h1>
             <ul style={ContentText}>
               <li>
-              We reserve the right to terminate or suspend your account, at our discretion, without notice, for any conduct that we believe violates this Agreement or is harmful to other users or us.
-              </li>
-             
+              We reserve the right to terminate or suspend your account, at our discretion, without notice, for any conduct that we believe violates this Agreement or is harmful to other users or us. After termination, the user will no longer be able to access or use the HappyMilan website or app.
+              </li>         
+            </ul>
+            <div className="mt-[21px]">
+            <span>Under what circumstances we may terminate your account: </span>
+            </div>
+            <ul className="mt-[21px] space-y-[8px]">
+              <li>- Providing incorrect information on the HappyMilan website/app. </li>
+              <li>- Committing any fraud, unlawful, or illegal act through our website/app.  </li>
+              <li>- Violating our terms and conditions.</li>
+              <li>- Using another HappyMilan member's email, name, photo, or personal information.</li>
             </ul>
           </div>
           <div className="w-[100%] h-[1px] bg-[#CCC] mt-[20px]"></div>
           <div>
             <h1 style={Textstyle} className="pb-[20px] pt-[20px]">
-              7.Refund and Cancellation
+              7.Refund, Cancellation and Transfer Membership
             </h1>
             <ul style={ContentText}>
               <li>
-              You can terminate your membership anytime by deleting your profile or contacting HappyMilan.com. No refunds for unused subscription fees unless expressly guaranteed in writing
+                You can terminate your membership anytime by deleting your profile or contacting HappyMilan.com. No refunds for unused subscription fees unless expressly guaranteed in writing
               </li>
               <li className="mt-[21px]">
-              If the business is disrupted, the Company will reimburse you with 50% of the unused membership fees you've paid.
+                If the business is disrupted, the Company will reimburse you with 50% of the unused membership fees you've paid and HappyMilan will initiate the refund within 5-6 working days and will contact you for further clarification.
               </li>
               <li className="mt-[21px]">
-              HappyMilan.com may terminate your access or membership for reasons like violating terms, commercial use, prohibited communication, or inappropriate activity. Termination notice will be sent to your provided email, and no refund of subscription fees will be granted for breaches of the agreement.
-              </li>
-            </ul>
-          </div>
-          <div className="w-[100%] h-[1px] bg-[#CCC] mt-[20px]"></div>
-          <div>
-            <h1 style={Textstyle} className="pb-[20px] pt-[20px]">
-              8. Dispute Resolution
-            </h1>
-            <ul style={ContentText}>
-              <li>
-               
-Any disputes arising out of or relating to this Agreement will be resolved through binding arbitration in accordance with the Arbitration and Conciliation Act, 1996, and the venue for arbitration shall be Ahmedabad, India
-              </li>
-             
-            </ul>
-          </div>
-          <div className="w-[100%] h-[1px] bg-[#CCC] mt-[20px]"></div>
-          <div>
-            <h1 style={Textstyle} className="pb-[20px] pt-[20px]">
-              9. Compliance with Information Technology Act, 2000
-            </h1>
-            <ul style={ContentText}>
-              <li>
-              This Agreement complies with the provisions of the Information Technology Act, 2000, and its amendments
+                HappyMilan.com may terminate your access or membership for reasons like violating terms, commercial use, prohibited communication, or inappropriate activity. Termination notice will be sent to your provided email, and no refund of subscription fees will be granted for breaches of the agreement.
               </li>
               <li className="mt-[21px]">
-              Electronic records generated by [Matrimony Website Name] are considered legally valid under the Information Technology Act, 2000.
+                The fees paid for HappyMilan membership, renewal, or auto-renewal are non-refundable. HappyMilan memberships are non-transferable to another person or entity, as this is against the terms and conditions
               </li>
-             
             </ul>
           </div>
           <div className="w-[100%] h-[1px] bg-[#CCC] mt-[20px]"></div>
           <div>
             <h1 style={Textstyle} className="pb-[20px] pt-[20px]">
-              10. Governing Law
+              8. Mode of Payment
             </h1>
             <ul style={ContentText}>
               <li>
-              This Agreement is governed by the laws of the Republic of India.
+              All payments are in accordance with the guideines provided by the RBI, including cash, cheque, net banking, debit card, credit card, PayPal, RTGS, NEFT, etc. HappyMilan uses a third-party payment gateway, and you agree to provide us with your PAN/Form 60/61 of the Income Tax Act. 
               </li>
-             
+
             </ul>
           </div>
           <div className="w-[100%] h-[1px] bg-[#CCC] mt-[20px]"></div>
           <div>
             <h1 style={Textstyle} className="pb-[20px] pt-[20px]">
-              11.Indemnity
+              9. Dispute Resolution
             </h1>
             <ul style={ContentText}>
               <li>
-              Using our HappyMilan services, you agree to protect, indemnify, and hold HappyMilan and its affiliates harmless from any loss, damage, liability, claim, or demand, including reasonable attorney's fees, due to improper service use. This obligation will persist indefinitely
+
+                Any disputes arising out of or relating to this Agreement will be resolved through binding arbitration in accordance with the Arbitration and Conciliation Act, 1996, and the venue for arbitration shall be Ahmedabad, India
               </li>
-             
+
             </ul>
           </div>
           <div className="w-[100%] h-[1px] bg-[#CCC] mt-[20px]"></div>
           <div>
             <h1 style={Textstyle} className="pb-[20px] pt-[20px]">
-              12.Jurisdiction
+              10. Compliance with Information Technology Act, 2000
             </h1>
             <ul style={ContentText}>
               <li>
-              In any dispute related to the Site or Service, using the Site implies your unequivocal agreement that Indian laws will govern, and the exclusive jurisdiction will be with the Competent Courts in Mumbai, India
-              </li>
-             
-            </ul>
-          </div>
-          <div className="w-[100%] h-[1px] bg-[#CCC] mt-[20px]"></div>
-          <div>
-            <h1 style={Textstyle} className="pb-[20px] pt-[20px]">
-              13.Limitation on Liability
-            </h1>
-            <ul style={ContentText}>
-              <li>
-              We aim to offer a secure and enjoyable matrimony and dating platform in India. While we strive for a positive experience, our liability is limited by law. Users are urged to engage responsibly, and the platform assumes no responsibility for consequential damages or disputes. Use of our services implies agreement with the outlined limitations in our terms and conditions.
-              </li>
-             
-            </ul>
-          </div>
-          <div className="w-[100%] h-[1px] bg-[#CCC] mt-[20px]"></div>
-          <div>
-            <h1 style={Textstyle} className="pb-[20px] pt-[20px]">
-            Contact Information
-            </h1>
-            <ul style={ContentText}>
-              <li>
-              For any questions or concerns regarding this Agreement, please contact us at;
+                This Agreement complies with the provisions of the Information Technology Act, 2000, and its amendments
               </li>
               <li className="mt-[21px]">
-              <span className="text-[#0F52BA]">Email:</span> grievanceofficer@happymilan.com
+                Electronic records generated by [Matrimony Website Name] are considered legally valid under the Information Technology Act, 2000.
+              </li>
+
+            </ul>
+          </div>
+          <div className="w-[100%] h-[1px] bg-[#CCC] mt-[20px]"></div>
+          <div>
+            <h1 style={Textstyle} className="pb-[20px] pt-[20px]">
+              11. Governing Law
+            </h1>
+            <ul style={ContentText}>
+              <li>
+                This Agreement is governed by the laws of the Republic of India.
+              </li>
+
+            </ul>
+          </div>
+          <div className="w-[100%] h-[1px] bg-[#CCC] mt-[20px]"></div>
+          <div>
+            <h1 style={Textstyle} className="pb-[20px] pt-[20px]">
+              12.Indemnity
+            </h1>
+            <ul style={ContentText}>
+              <li>
+                Using our HappyMilan services, you agree to protect, indemnify, and hold HappyMilan and its affiliates harmless from any loss, damage, liability, claim, or demand, including reasonable attorney's fees, due to improper service use. This obligation will persist indefinitely
+              </li>
+
+            </ul>
+          </div>
+          <div className="w-[100%] h-[1px] bg-[#CCC] mt-[20px]"></div>
+          <div>
+            <h1 style={Textstyle} className="pb-[20px] pt-[20px]">
+              13.Jurisdiction
+            </h1>
+            <ul style={ContentText}>
+              <li>
+                In any dispute related to the Site or Service, using the Site implies your unequivocal agreement that Indian laws will govern, and the exclusive jurisdiction will be with the Competent Courts in Mumbai, India
+              </li>
+
+            </ul>
+          </div>
+          <div className="w-[100%] h-[1px] bg-[#CCC] mt-[20px]"></div>
+          <div>
+            <h1 style={Textstyle} className="pb-[20px] pt-[20px]">
+              14.Limitation on Liability
+            </h1>
+            <ul style={ContentText}>
+              <li>
+                We aim to offer a secure and enjoyable matrimony and dating platform in India. While we strive for a positive experience, our liability is limited by law. Users are urged to engage responsibly, and the platform assumes no responsibility for consequential damages or disputes. Use of our services implies agreement with the outlined limitations in our terms and conditions.
+              </li>
+
+            </ul>
+          </div>
+          <div className="w-[100%] h-[1px] bg-[#CCC] mt-[20px]"></div>
+          <div>
+            <h1 style={Textstyle} className="pb-[20px] pt-[20px]">
+              Contact Information
+            </h1>
+            <ul style={ContentText}>
+              <li>
+                For any questions or concerns regarding this Agreement, please contact us at;
+              </li>
+              <li className="mt-[21px]">
+                <span className="text-[#0F52BA]">Email:</span> contact@mntechgroup.com
               </li>
               <li className="mt-[5px]">
-              <span className="text-[#0F52BA]">Support:</span> +91 00000 10000
+                <span className="text-[#0F52BA]">Support:</span> +91 91048 14072
               </li>
               <li className="mt-[21px]">
-              By clicking "I Accept" or by using our services, you acknowledge that you have read, understood, and agree to be bound by the terms and conditions of this Agreement in accordance with the Information Technology Act, 2000.
+                By clicking "I Accept" or by using our services, you acknowledge that you have read, understood, and agree to be bound by the terms and conditions of this Agreement in accordance with the Information Technology Act, 2000.
               </li>
               <li className="mt-[21px]">
-              This Agreement becomes effective on the date of your registration
+                This Agreement becomes effective on the date of your registration
               </li>
-             
+
             </ul>
           </div>
           <div className="w-[100%] h-[1px] bg-[#CCC] mt-[20px]"></div>
           <div>
             <h1 style={Textstyle2} className="pb-[20px] pt-[20px]">
-            Complaints
+             If Any Complaints
             </h1>
             <ul style={ContentText}>
               <li>
-              For complaints or disputes, kindly reach out to our customer support through written correspondence or email, including a digital signature, at:
+                For complaints or disputes, kindly reach out to our customer support through written correspondence or email, including a digital signature, at:
               </li>
               <li className="mt-[21px]">
-              <span className="text-[#0F52BA]">Email:</span> grievanceofficer@happymilan.com
+                <span className="text-[#0F52BA]">Email:</span> contact@mntechgroup.com
               </li>
               <li className="mt-[5px]">
-              <span className="text-[#0F52BA]">Grievance Officer:</span> Jit Shrimali
+                <span className="text-[#0F52BA]">Grievance Officer:</span> Jit Shrimali
               </li>
               <li className="mt-[5px]">
-              <span className="text-[#0F52BA]">Availability :</span>  10am to 6pm IST, Mon-Fri (Sat & Sun Public Holiday)
+                <span className="text-[#0F52BA]">Availability :</span>  10am to 6pm IST, Mon-Fri (Sat & Sun Public Holiday)
               </li>
-              
+
             </ul>
           </div>
           <div className="w-[100%] h-[1px] bg-[#CCC] mt-[20px]"></div>
           <div className=" pt-[20px]">
             <h1 style={ContentText2} >This Agreement, an electronic document under the Information Technology Act, 2000, and related rules, is computer-generated and does not require physical or digital signatures</h1>
           </div>
-          
+
         </div >
 
         {/* <!-- Footer Section Started --> */}

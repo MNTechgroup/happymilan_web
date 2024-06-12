@@ -4,6 +4,7 @@ import { Dialog, DialogContent } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import PhotoGrid from './PhotoGrid';
 import Image from 'next/image';
+import { useSelector } from 'react-redux';
 
 function UploadSection() {
     const [ActiveSection, SetActiveSection] = useState(1);
@@ -11,7 +12,9 @@ function UploadSection() {
     //For Notification
     const [open, setOpen] = React.useState(false);
 
-    const handleClickOpen = () => {
+    const handleClickOpen = (res,index) => {
+        SetcurrentSelectedImage(index)
+        SetshowImage(res.url)
         setOpen(true);
     };
 
@@ -32,58 +35,17 @@ function UploadSection() {
 
 
 
-    const Gridlayout = [
-        { id: 1, image: "/assests/pic/Rectangle379.svg", type: "image" },
-        { id: 2, image: "/assests/pic/Rectangle384.svg", type: "image" },
-        { id: 3, image: "/assests/pic/Rectangle381.svg", type: "image" },
-        { id: 4, image: "/assests/pic/Rectangle382.svg", type: "image" },
-        { id: 5, image: "/assests/pic/Rectangle383.svg", type: "image" },
-        { id: 6, image: "/assests/pic/Rectangle380.svg", type: "image" },
-        { id: 7, image: "/assests/common/Rectangle385.svg", type: "video" },
-    ];
-
-
     const [toggleTab, setToggleTab] = useState(0)
-
-    const userData = [
-        {
-            id: 1,
-            image: "/assests/pic/rohan-patel-img.svg"
-        },
-        {
-            id: 2,
-            image: "/assests/pic/RecentlyViewedPicSize.svg"
-        },
-        {
-            id: 3,
-            image: "/assests/pic/Rahulverma-1.svg"
-        },
-        {
-            id: 4,
-            image: "/assests/pic/PraveenK-1.svg"
-        },
-        {
-            id: 5,
-            image: "/assests/dashboard/request/accepted/accepted-1.svg"
-        },
-    ]
-    const userVideo = [
-        {
-            id: 1,
-            image: "/assests/pic/RecentlyViewedPicSize.svg"
-        },
-    ]
-
-    const [TheData, SetTheData] = useState(userData);
-
-    useEffect(() => {
-        toggleTab === 0 ?
-            SetTheData(userData)
-            :
-            SetTheData(userVideo);
-    }, [toggleTab, SetTheData, TheData])
-
+    const { user, loading } = useSelector((state) => state.userById)
     const [currentSelectedImage, SetcurrentSelectedImage] = useState(2)
+    const [showImage, SetshowImage] = useState("")
+
+
+    const HandleImageClick = (res, index) => {
+        SetcurrentSelectedImage(index)
+        SetshowImage(res.url)
+
+    }
 
 
     return (
@@ -92,37 +54,18 @@ function UploadSection() {
             <div>
                 <div className='w-[300px] 2xl:w-[300px] xl:w-[250px]'>
                     <div>
-                        <svg
-                            className="z-[5] cursor-pointer absolute left-[12px] top-[-8px] ml-[80%] lg:ml-[85%] mt-[5%]"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                        >
-                            <circle
-                                cx="12"
-                                cy="12"
-                                r="12"
-                                fill="black"
-                                fill-opacity="0.4"
-                            />
-                            <path
-                                d="M14.1111 10.3333V15.8889H9.66667V10.3333H14.1111ZM13.2778 7H10.5L9.94444 7.55556H8V8.66667H15.7778V7.55556H13.8333L13.2778 7ZM15.2222 9.22222H8.55556V15.8889C8.55556 16.5 9.05556 17 9.66667 17H14.1111C14.7222 17 15.2222 16.5 15.2222 15.8889V9.22222Z"
-                                fill="white"
-                            />
-                        </svg>
+                       
 
                         {ActiveSection === 1 ? <>
                             <div>
 
-                               <PhotoGrid handleClickOpen={handleClickOpen}/>
+                                <PhotoGrid handleClickOpen={handleClickOpen} />
                             </div>
                         </>
                             :
                             <>
                                 <div>
-                                    <Image alt="img" width={300} height={381} onClick={handleClickOpen} className='w-[300px] h-[381px] cursor-pointer' src='/assests/pic/rohan-patel-img.svg' />
+                                    <Image loading='lazy' alt="img" width={300} height={381} onClick={handleClickOpen} className='w-[300px] h-[381px] cursor-pointer' src='/assests/pic/rohan-patel-img.svg' />
                                 </div>
 
                             </>}
@@ -159,25 +102,26 @@ function UploadSection() {
                                         <div className='mt-[12px]'>
                                             <ul className='flex  flex-col space-y-[20px] 2xl:space-y-[20px] xl:space-y-[20px]'>
 
-
                                                 {
-                                                    TheData.map((res) => {
-                                                        return (
-                                                            <>
-                                                                <li onClick={() => SetcurrentSelectedImage(res.id)}><Image alt="img" width={74} height={74} className={`cursor-pointer w-[74px] h-[74px] 2xl:w-[74px] 2xl:h-[74px] xl:w-[60px] xl:h-[60px] rounded-[10px] ${currentSelectedImage === res.id ? "" : "opacity-20"}`} src={res.image} /></li>
+                                                    user?.userProfilePic && user?.userProfilePic ? (
+                                                        user?.userProfilePic.slice(0, 5).map((res, index) => (
+                                                            <li onClick={() => HandleImageClick(res, index)}><Image width={74} height={74} style={{ objectFit: "cover" }} className={`cursor-pointer w-[74px] h-[74px] 2xl:w-[74px] 2xl:h-[74px] xl:w-[60px] xl:h-[60px] rounded-[10px] ${currentSelectedImage === index ? "" : "opacity-20"}`} src={res.url} /></li>
 
-                                                            </>
-                                                        )
-                                                    })
+                                                        ))
+                                                    ) : (
+                                                        <div className='h-[381px] w-[300px] grid place-items-center'>
+                                                            <div className='grid place-items-center'>No Image</div>
+                                                        </div>
+                                                    )
                                                 }
                                             </ul>
                                         </div>
                                         <div>
                                             <div>
-                                                <Image alt='img' width={20} height={20} src='/assests/dashboard/icon/zoom-icon.svg' className='absolute right-[80px] 2xl:right-[80px] xl:right-[90px] mt-[35px] 2xl:mt-[35px] xl:mt-[35px]' />
+                                                <Image loading='lazy' alt='img' width={20} height={20} src='/assests/dashboard/icon/zoom-icon.svg' className='absolute right-[80px] 2xl:right-[80px] xl:right-[90px] mt-[35px] 2xl:mt-[35px] xl:mt-[35px]' />
                                             </div>
 
-                                            <Image alt='img' width={350} height={470} className='w-[350px] h-[480px] 2xl:w-[350px] 2xl:h-[470px] xl:w-[300px] xl:h-[420px]' src='/assests/pic/rohan-patel-img.svg' />
+                                            <Image loading='lazy' alt='img' width={350} height={470} className='w-[350px] h-[480px] 2xl:w-[350px] 2xl:h-[470px] xl:w-[300px] xl:h-[420px]' style={{objectFit:"cover",borderRadius:"10px"}} src={showImage} />
 
                                         </div>
                                     </div>
@@ -216,7 +160,7 @@ function UploadSection() {
                             }
 
                         </div>
-                        
+
                     </div>
                 </div>
             </div>

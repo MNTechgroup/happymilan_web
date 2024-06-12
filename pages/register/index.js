@@ -2,20 +2,26 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
-import GeneralSection from "./Registersection/GeneralSec";
-import ContactSection from "./Registersection/ContactSec";
-import AddressSection from "./Registersection/AddressSec";
-import EducationSec from "./Registersection/EducationSec";
-import ProfessionalSec from "./Registersection/ProfessionalSec";
-import HobbiesSec from "./Registersection/HobbiesSec";
-import UploadSec from "./Registersection/UploadSec";
-import GridphotoSec from "./Registersection/GridphotoSec";
 import Navbar from "../components/Navbar";
-import PartnerPreference from "./Registersection/PartnerPreference";
 import { useDispatch, useSelector } from "react-redux";
-import { UploadImages3, updateAddressData, updateEducationData, updateGeneralInfo, updatePartnerPrefData, updateProffessionalData, updatehobbiesData } from "../../store/actions/registerUser";
-import { setFormValidation, uploadImageToS3 } from "../../store/reducers/registerReducer";
+import { updateAddressData, updateEducationData, updateGeneralInfo, updatePartnerPrefData, updateProffessionalData, updatehobbiesData } from "../../store/actions/registerUser";
+import { setFormValidation } from "../../store/reducers/registerReducer";
 import { ImageUpload } from "../../store/actions/ImageUpload";
+import dynamic from "next/dynamic";
+
+const GeneralSection = dynamic(() => import("./Registersection/GeneralSec"));
+const ContactSection = dynamic(() => import("./Registersection/ContactSec"));
+const AddressSection = dynamic(() => import("./Registersection/AddressSec"));
+const EducationSec = dynamic(() => import("./Registersection/EducationSec"));
+const ProfessionalSec = dynamic(() => import("./Registersection/ProfessionalSec"));
+const HobbiesSec = dynamic(() => import("./Registersection/HobbiesSec"));
+const UploadSec = dynamic(() => import("./Registersection/UploadSec"));
+const GridphotoSec = dynamic(() => import("./Registersection/GridphotoSec"));
+const PartnerPreference = dynamic(() => import("./Registersection/PartnerPreference"));
+
+
+
+
 const btnstyle = {
     fontFamily: "Poppins",
     fontSize: "14px",
@@ -27,9 +33,6 @@ const btnstyle = {
 function Home() {
 
     const [FormOpen, setFormOpen] = useState(true);
-
-
-
 
     useEffect(() => {
         if (!FormOpen) {
@@ -60,7 +63,7 @@ function Home() {
                 // Display error message or prevent navigation to the next page
                 dispatch(setFormValidation(false))
 
-
+                alert("Please Complete General Details");
 
 
             }
@@ -92,6 +95,8 @@ function Home() {
                     homeMobileNumber: contact.homeCode + contact.homeMobileNumber
 
                 }))
+
+                localStorage.setItem('mobilenumber', contact.mobileCode + contact.mobileNumber)
                 if (status == "idle") {
                     setActiveTab(4)
                 }
@@ -136,6 +141,8 @@ function Home() {
 
             }
             setActiveTab(id)
+
+            // console.log("Hobby",allhobbies)
         }
         else if (activeTab === 7) {
             setActiveTab(id)
@@ -148,7 +155,7 @@ function Home() {
             if (!upload.images.length == 0) {
                 // dispatch(UploadImages3(upload))
                 dispatch(ImageUpload(upload))
-            }else{
+            } else {
                 console.log("Null")
             }
             setActiveTab(id)
@@ -177,12 +184,9 @@ function Home() {
         if (activeTab >= 9) {
             router.push("/dashboard")
 
-        } else {
-
-            setActiveTab(id)
         }
 
-
+        setActiveTab(id);
         setFormOpen(true)
     };
 
@@ -191,7 +195,6 @@ function Home() {
         switch (activeTab) {
             case 1:
                 return <GeneralSection setTheValidation={setTheValidation} TheValidation={TheValidation} activeTab={activeTab} />;
-
             case 2:
                 return <AddressSection HandleTabclick={HandleTabclick} activeTab={activeTab} />;
             case 3:
@@ -208,10 +211,7 @@ function Home() {
     };
 
 
-    <img
-        src="/assests/pic/StoryPhotosSize.svg"
-        className="relative  lg:max-h-[340px] xl:max-h-[310px]  2xl:max-h-[365.5px]   top-[100px] lg:top-0"
-    />
+    
     const router = useRouter();
 
     const Text1 = {
@@ -254,7 +254,7 @@ function Home() {
                                                 <div
                                                     onClick={() => HandleTabclick(1)}
                                                     id={activeTab === 1 ? "active-reg-tab" : ""}
-                                                    className={` rounded-[10px] w-[54px] h-[54px] grid place-items-center bg-[#0F52BA] ${activeTab === 2 ||
+                                                    className={` rounded-[50%] w-[54px] h-[54px] grid place-items-center bg-[#0F52BA] ${activeTab === 2 ||
                                                         activeTab === 3 ||
                                                         activeTab === 4 ||
                                                         activeTab === 5 ||
@@ -268,7 +268,7 @@ function Home() {
                                                 <div
                                                     onClick={() => HandleTabclick(2)}
                                                     id={activeTab === 2 ? "active-reg-tab" : ""}
-                                                    className={` ${activeTab === 1 ? "bg-[#EAEAEA]" : ""} rounded-[10px] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 3 ||
+                                                    className={` ${activeTab === 1 ? "bg-[#EAEAEA]" : ""} rounded-[50%] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 3 ||
                                                         activeTab === 4 ||
                                                         activeTab === 5 ||
                                                         activeTab === 6
@@ -293,7 +293,7 @@ function Home() {
                                                 <div
                                                     onClick={() => HandleTabclick(3)}
                                                     id={activeTab === 3 ? "active-reg-tab" : ""}
-                                                    className={`${activeTab === 1 || activeTab === 2 ? "bg-[#EAEAEA]" : ""} rounded-[10px] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 4 || activeTab === 5 || activeTab === 6
+                                                    className={`${activeTab === 1 || activeTab === 2 ? "bg-[#EAEAEA]" : ""} rounded-[50%] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 4 || activeTab === 5 || activeTab === 6
                                                         ? "bg-green-500"
                                                         : ""
                                                         }   ${activeTab === 3 ? "bg-[#0F52BA]" : ""}`}
@@ -313,7 +313,7 @@ function Home() {
                                                 <div
                                                     onClick={() => HandleTabclick(4)}
                                                     id={activeTab === 4 ? "active-reg-tab" : ""}
-                                                    className={`${activeTab === 4 || activeTab === 5 || activeTab === 6 ? "" : "bg-[#EAEAEA]"} rounded-[10px] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 5 || activeTab === 6 ? "bg-green-500" : ""
+                                                    className={`${activeTab === 4 || activeTab === 5 || activeTab === 6 ? "" : "bg-[#EAEAEA]"} rounded-[50%] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 5 || activeTab === 6 ? "bg-green-500" : ""
                                                         }  ${activeTab === 4 ? "bg-[#0F52BA]" : ""}`}
                                                 >
                                                     {
@@ -332,7 +332,7 @@ function Home() {
                                                 <div
                                                     onClick={() => HandleTabclick(5)}
                                                     id={activeTab === 5 ? "active-reg-tab" : ""}
-                                                    className={`${activeTab === 5 || activeTab === 6 ? "" : "bg-[#EAEAEA]"} rounded-[10px] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 6 ? "bg-green-500" : ""
+                                                    className={`${activeTab === 5 || activeTab === 6 ? "" : "bg-[#EAEAEA]"} rounded-[50%] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 6 ? "bg-green-500" : ""
                                                         }  ${activeTab === 5 ? "bg-[#0F52BA]" : ""}`}
                                                 >
                                                     {
@@ -350,7 +350,7 @@ function Home() {
                                                 <div
                                                     onClick={() => HandleTabclick(6)}
                                                     id={activeTab === 6 ? "active-reg-tab" : ""}
-                                                    className={`${activeTab === 6 ? "" : "bg-[#EAEAEA]"} rounded-[10px] w-[54px] h-[54px] flex items-center justify-center   ${activeTab === 6 ? "bg-[#0F52BA]" : ""
+                                                    className={`${activeTab === 6 ? "" : "bg-[#EAEAEA]"} rounded-[50%] w-[54px] h-[54px] flex items-center justify-center   ${activeTab === 6 ? "bg-[#0F52BA]" : ""
                                                         }`}
                                                 >
                                                     {
@@ -399,7 +399,7 @@ function Home() {
                                 <>
                                     <button
                                         style={btnstyle}
-                                        className="text-[#FFF] bg-[#0F52BA] rounded-[10px] w-[130px] md:w-[100px] relative right-[20px] lg:left-[0px]   lg:w-[125px] h-[49px]"
+                                        className="text-[#FFF] bg-[#0F52BA] rounded-[22px] w-[130px] md:w-[100px] relative right-[20px] lg:left-[0px]   lg:w-[125px] h-[49px]"
                                         onClick={() => HandleTabclick(activeTab + 1)}
                                     >
                                         Continue
@@ -410,8 +410,8 @@ function Home() {
                                     <div className="flex lg:gap-5 ">
                                         <button
                                             style={btnstyle}
-                                            onClick={() => activeTab === 1 ? router.push("/login/1") : HandleTabclick(activeTab - 1)}
-                                            className="text-[#000]  relative lg:right-[8px] right-[14%] mr-[5%] lg:mr-0 border-[1px] border-[#000] rounded-[10px] w-[120px] sm:w-[120px] md:w-[120px] lg:w-[120px] h-[49px]"
+                                            onClick={() => HandleTabclick(activeTab - 1)}
+                                            className={`${activeTab === 1 ? "hidden" : ""} text-[#000] hover:bg-[#F2F7FF] relative lg:right-[8px] right-[14%] mr-[5%] lg:mr-0 border-[1px] border-[#000] rounded-[22px] w-[120px] sm:w-[120px] md:w-[120px] lg:w-[120px] h-[49px]`}
                                         >
                                             Back
                                         </button>
@@ -419,7 +419,7 @@ function Home() {
                                             style={btnstyle}
                                             id="grad-btn"
                                             onClick={() => HandleTabclick(activeTab + 1)}
-                                            className="text-[#FFF] bg-[#0F52BA] rounded-[10px] w-[130px] md:w-[100px]  relative right-[20px] lg:left-[0px]
+                                            className="text-[#FFF] bg-[#0F52BA] rounded-[22px]  w-[130px] md:w-[100px]  relative right-[20px] lg:left-[0px]
                                                lg:w-[125px] h-[49px]"
                                         >
                                             {activeTab === 8 ? "Explore Now" : "Continue"}

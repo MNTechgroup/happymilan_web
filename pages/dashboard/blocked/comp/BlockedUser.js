@@ -4,15 +4,14 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/css';
-import 'swiper/css/navigation';
-
 import 'swiper/css/pagination';
 
 
 // import required modules
 import { Pagination } from 'swiper';
 import Image from 'next/image';
-import ShareModal from '../../../components/Models/ShareModal';
+import dynamic from 'next/dynamic';
+const ShareModal = dynamic(()=> import('../../../components/Models/ShareModal'))
 import Popover from '@mui/material/Popover';
 import { Dialog, DialogContent } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,9 +29,6 @@ function BlockedUser() {
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
-
-    const [blockprofile, setblockprofile] = useState(false);
-
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => {
@@ -43,72 +39,6 @@ function BlockedUser() {
     const closeModal = () => {
         setIsModalOpen(false);
     };
-
-    const userData = [
-        {
-            id: 1,
-            userName: "Brijesh Patel",
-            profilePic: "/assests/dashboard/block/blocked-1.svg",
-            Activestatus: true,
-            personal: {
-                height: "32, 5’3”",
-                marriagestatus: "Never Married",
-                cast: "Hindu, Patel",
-                location: "Ahmedabad, Gujarat",
-                language: "Gujarati, Hindi",
-                profession: "Software Engineer"
-            },
-            description: "I'd describe myself as someone who's reliable, trendy, smart and someone who always has a smile",
-            images: {
-                image1: "/assests/dashboard/block/blocked-1.svg",
-                image2: "/assests/dashboard/block/blocked-2.svg",
-                image3: "/assests/dashboard/block/blocked-3.svg",
-                image4: ""
-            }
-        },
-        {
-            id: 2,
-            userName: "Kiran Patel",
-            profilePic: "/assests/dashboard/block/blocked-2.svg",
-            Activestatus: false,
-            personal: {
-                height: "32, 5’3”",
-                marriagestatus: "Never Married",
-                cast: "Hindu, Patel",
-                location: "Ahmedabad, Gujarat",
-                language: "Gujarati, Hindi",
-                profession: "Software Engineer"
-            },
-            description: "I'd describe myself as someone who's reliable, trendy, smart and someone who always has a smile",
-            images: {
-                image1: "/assests/dashboard/block/blocked-2.svg",
-                image2: "/assests/dashboard/block/blocked-3.svg",
-                image3: "/assests/dashboard/block/blocked-1.svg",
-                image4: ""
-            }
-        },
-        {
-            id: 3,
-            userName: "Aarav Sharma",
-            profilePic: "/assests/dashboard/block/blocked-3.svg",
-            Activestatus: false,
-            personal: {
-                height: "32, 5’3”",
-                marriagestatus: "Never Married",
-                cast: "Hindu, Patel",
-                location: "Ahmedabad, Gujarat",
-                language: "Gujarati, Hindi",
-                profession: "Software Engineer"
-            },
-            description: "I'd describe myself as someone who's reliable, trendy, smart and someone who always has a smile",
-            images: {
-                image1: "/assests/dashboard/block/blocked-3.svg",
-                image2: "/assests/dashboard/block/blocked-2.svg",
-                image3: "/assests/dashboard/block/blocked-1.svg",
-                image4: ""
-            }
-        }
-    ]
 
     const BoldText = {
         color: "#000",
@@ -300,13 +230,13 @@ function BlockedUser() {
                                                         </div>
                                                         <div className='pr-[8px]'>
                                                             <ul className='flex justify-evenly space-x-[20px] pr-[10px] pt-[10px]'>
-                                                                <li className='relative left-[10px]'><Image alt='couple-icon' width={17} height={14} src='/assests/Black/Couple2.svg' /></li>
+                                                                <li className='relative left-[10px]'><Image loading="lazy" alt='couple-icon' width={17} height={14} src='/assests/Black/Couple2.svg' /></li>
                                                                 <li className='text-[10px]' style={Text4}>You & Her</li>
-                                                                <li><Image alt='star-icon' width={15} height={14} src='/assests/Black/Stars-2.svg' /></li>
+                                                                <li><Image loading="lazy" alt='star-icon' width={15} height={14} src='/assests/Black/Stars-2.svg' /></li>
                                                                 <li>
 
 
-                                                                    <Image width={3} height={14} alt='more' src='/assests/Black/3Dots.svg' className='cursor-pointer' aria-describedby={id} variant="contained" onClick={(event) => handleClick(event, res)} />
+                                                                    <Image loading="lazy" width={3} height={14} alt='more' src='/assests/Black/3Dots.svg' className='cursor-pointer' aria-describedby={id} variant="contained" onClick={(event) => handleClick(event, res)} />
                                                                     <Popover
                                                                         id={id}
                                                                         open={open}
@@ -327,14 +257,14 @@ function BlockedUser() {
                                                                         <div className='bg-[#FFF] rounded-[10px] w-[128px] h-[150px]'>
 
                                                                             <ul className='flex flex-col justify-center space-y-[12px] ml-[12px] '>
-                                                                                <li style={Text3} onClick={openModal} className='cursor-pointer flex  items-center space-x-[12px] text-[14px] mt-[15px]'> <Image alt='share-icon' width={13} height={14} src='/assests/dashboard/icon/share-icon.svg' /> <p>Share</p></li>
+                                                                                <li style={Text3} onClick={openModal} className='cursor-pointer flex  items-center space-x-[12px] text-[14px] mt-[15px]'> <Image loading="lazy" alt='share-icon' width={13} height={14} src='/assests/dashboard/icon/share-icon.svg' /> <p>Share</p></li>
                                                                                 <li style={Text3} onClick={() => HandleUnblockUser(res)} className='cursor-pointer flex  items-center space-x-[12px] text-[14px]'><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                                     <path id="Vector" d="M7 14C6.03167 14 5.12167 13.8162 4.27 13.4488C3.41833 13.0813 2.6775 12.5825 2.0475 11.9525C1.4175 11.3225 0.91875 10.5817 0.55125 9.73C0.18375 8.87833 0 7.96833 0 7C0 6.03167 0.18375 5.12167 0.55125 4.27C0.91875 3.41833 1.4175 2.6775 2.0475 2.0475C2.6775 1.4175 3.41833 0.91875 4.27 0.55125C5.12167 0.18375 6.03167 0 7 0C7.96833 0 8.87833 0.18375 9.73 0.55125C10.5817 0.91875 11.3225 1.4175 11.9525 2.0475C12.5825 2.6775 13.0813 3.41833 13.4488 4.27C13.8162 5.12167 14 6.03167 14 7C14 7.96833 13.8162 8.87833 13.4488 9.73C13.0813 10.5817 12.5825 11.3225 11.9525 11.9525C11.3225 12.5825 10.5817 13.0813 9.73 13.4488C8.87833 13.8162 7.96833 14 7 14ZM7 12.95C8.66104 12.95 10.068 12.3736 11.2208 11.2208C12.3736 10.068 12.95 8.66104 12.95 7C12.95 6.29228 12.8275 5.61076 12.5825 4.95546C12.3375 4.30015 11.9933 3.70417 11.55 3.1675L3.1675 11.55C3.6925 12.005 4.28454 12.3521 4.94363 12.5913C5.60272 12.8304 6.28818 12.95 7 12.95ZM2.4675 10.8325L10.8325 2.4675C10.2958 2.0125 9.69985 1.6625 9.04454 1.4175C8.38924 1.1725 7.70772 1.05 7 1.05C5.33896 1.05 3.93203 1.6264 2.77921 2.77921C1.6264 3.93203 1.05 5.33896 1.05 7C1.05 7.71182 1.17833 8.39727 1.435 9.05637C1.69167 9.71546 2.03583 10.3075 2.4675 10.8325Z"
                                                                                         fill="red" />
                                                                                 </svg>
                                                                                     <p className='text-[red]'>Unblock</p> </li>
-                                                                                <li style={Text3} className='cursor-pointer flex  items-center space-x-[12px] text-[14px]'> <Image alt="report" width={14} height={14} src='/assests/dashboard/icon/report-icon.svg' /><p> Report</p></li>
-                                                                                <li onClick={handleClickOpen} style={Text3} className='cursor-pointer flex  items-center space-x-[12px] text-[14px]'> <Image alt="copy-icon" width={12} height={14} src='/assests/dashboard/icon/copy-icon.svg' /> <p>Copy URL</p></li>
+                                                                                <li style={Text3} className='cursor-pointer flex  items-center space-x-[12px] text-[14px]'> <Image loading="lazy" alt="report" width={14} height={14} src='/assests/dashboard/icon/report-icon.svg' /><p> Report</p></li>
+                                                                                <li onClick={handleClickOpen} style={Text3} className='cursor-pointer flex  items-center space-x-[12px] text-[14px]'> <Image loading="lazy" alt="copy-icon" width={12} height={14} src='/assests/dashboard/icon/copy-icon.svg' /> <p>Copy URL</p></li>
                                                                             </ul>
 
                                                                         </div>
@@ -346,12 +276,12 @@ function BlockedUser() {
                                                     <div className='mt-[10px] 2xl:mt-[10px] xl:mt-[5px] pl-[2px]'>
                                                         <div id="user-card">
                                                             <ul id="user-card-grid">
-                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{`'32,5'3`}</li>
-                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{`${res.religion ? res.religion : 'NA'}, ${res.cast ? res.cast : 'NA'}`}</li>
-                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{`${res.motherTongue ? res.motherTongue : "NA , NA"}  `}</li>
-                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{res.maritalStatus ? res.maritalStatus : "NA , NA"}</li>
-                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{`${res.address ? res.address.currentCity : "NA"} , ${res.address ? res.address.currentCountry : "NA"}`}</li>
-                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{res.userProfessional ? res.userProfessional.currentDesignation : "NA , NA"}</li>
+                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image loading="lazy" alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{`'32,5'3`}</li>
+                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image loading="lazy" alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{`${res.religion ? res.religion : 'NA'}, ${res.cast ? res.cast : 'NA'}`}</li>
+                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image loading="lazy" alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{`${res.motherTongue ? res.motherTongue : "NA , NA"}  `}</li>
+                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image loading="lazy" alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{res.maritalStatus ? res.maritalStatus : "NA , NA"}</li>
+                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image loading="lazy" alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{`${res.address ? res.address.currentCity : "NA"} , ${res.address ? res.address.currentCountry : "NA"}`}</li>
+                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image loading="lazy" alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{res.userProfessional ? res.userProfessional.currentDesignation : "NA , NA"}</li>
                                                             </ul>
                                                         </div>
                                                         <div className='mt-[20px] 2xl:mt-[20px] xl:mt-[15px]'>
@@ -362,7 +292,7 @@ function BlockedUser() {
                                                         <ul className='flex space-x-[10px]'>
                                                             <li><h1 className='text-[16px] 2xl:text-[16px] xl:text-[14px]' style={BoldText}>Blocked by You</h1></li>
                                                             <li>
-                                                                <Image alt="block" width={23} height={23} src='/assests/Black/block-2.svg' />
+                                                                <Image loading="lazy" alt="block" width={23} height={23} src='/assests/Black/block-2.svg' />
 
                                                             </li>
                                                         </ul>
@@ -409,7 +339,7 @@ function BlockedUser() {
                 :
                 <> <div className='h-[500px] grid place-items-center'>
                     <div className='grid place-items-center space-y-[5px]'>
-                        <Image alt='not-found' width={34} height={34} src={"/assests/dashboard/icon/NotFound-img.svg"} />
+                        <Image loading="lazy" alt='not-found' width={34} height={34} src={"/assests/dashboard/icon/NotFound-img.svg"} />
                         <h1 className='inline' style={ImageNotFoundText}>No Profiles Found</h1>
                     </div>
                 </div></>}

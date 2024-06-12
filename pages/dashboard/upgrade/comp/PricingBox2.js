@@ -3,10 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/css';
-import 'swiper/css/navigation';
-
 import 'swiper/css/pagination';
-
 
 // import required modules
 import { Pagination } from 'swiper';
@@ -250,23 +247,6 @@ function PricingBox2() {
 
 
                         </div>
-
-                        {/* Price Box 1 End  */}
-
-                        {/* Price Box 2 Start  */}
-
-
-
-
-                        {/* Price Box 2 End  */}
-
-                        {/* Price Box 3 Start  */}
-
-
-
-                        {/* Price Box 3 End  */}
-
-
                     </div>
                     <div className='w-full text-center'>
                         <p id='doItText' style={TabsText} className='cursor-pointer text-[#0F52BA]  text-[14px]' onClick={() => router.back()}>I’ll do it later</p>

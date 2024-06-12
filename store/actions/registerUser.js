@@ -1,10 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getCookie } from "cookies-next";
+import { UPDATE_HOBBIES_VALUES, UPDATE_PARTNER_PREF } from "../type";
 
 export const updateFormData = (data) => ({
   type: 'UPDATE_FORM_DATA',
   payload: data,
 });
+
+// /v1/user/auth/update-user
 
 export const REGISTER_USER = 'REGISTER_USER';
 export const VERIFY_OTP = 'VERIFY_OTP';
@@ -34,7 +37,7 @@ export const updateGeneralInfo = createAsyncThunk(
         body: JSON.stringify(updatedGeneralData)
       };
 
-      const response = await fetch('https://happymilan.tech/api/v1/user/auth/update-user', requestOptions);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/auth/update-user`, requestOptions);
 
       if (!response.ok) {
         if (response.status === 401) {
@@ -74,7 +77,7 @@ export const updateAddressData = createAsyncThunk(
         body: JSON.stringify(addressData)
       };
 
-      const response = await fetch('https://happymilan.tech/api/v1/user/address', requestOptions);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/address`, requestOptions);
 
       if (!response.ok) {
         if (response.status === 401) {
@@ -113,7 +116,7 @@ export const updateEducationData = createAsyncThunk(
         body: JSON.stringify(edducationdata)
       };
 
-      const response = await fetch('https://happymilan.tech/api/v1/user/userEducation', requestOptions);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/userEducation`, requestOptions);
 
       if (!response.ok) {
         if (response.status === 401) {
@@ -125,6 +128,7 @@ export const updateEducationData = createAsyncThunk(
       }
 
       const result = await response.json();
+      // console.log("🚀 ~ result after env:", result)
       return result.data;
 
     } catch (error) {
@@ -152,7 +156,7 @@ export const updateProffessionalData = createAsyncThunk(
         body: JSON.stringify(proffesionaldata)
       };
 
-      const response = await fetch('https://happymilan.tech/api/v1/user/userProfessionalDetail', requestOptions);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/userProfessionalDetail`, requestOptions);
 
       if (!response.ok) {
         if (response.status === 401) {
@@ -191,7 +195,7 @@ export const updatePartnerPrefData = createAsyncThunk(
         body: JSON.stringify(partnerpref)
       };
 
-      const response = await fetch('https://happymilan.tech/api/v1/user/partner', requestOptions);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/partner`, requestOptions);
 
       if (!response.ok) {
         if (response.status === 401) {
@@ -221,7 +225,7 @@ export const updatehobbiesData = createAsyncThunk(
     let config = {
       method: 'put',
       maxBodyLength: Infinity,
-      url: 'https://happymilan.tech/api/v1/user/auth/update-user',
+      url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/auth/update-user`,
       headers: {
         'Authorization': `Bearer ${authToken}`,
         'Content-Type': 'application/json'
@@ -231,10 +235,10 @@ export const updatehobbiesData = createAsyncThunk(
 
     axios.request(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
+        // console.log(JSON.stringify(response.data));
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
 
   }
@@ -252,10 +256,6 @@ export const UploadImages3 = createAsyncThunk(
     // Iterate through the imageDataArray and make POST requests for each image
     theimageData.images.forEach(imageData => {
 
-      console.log('=== image data ===>', imageData);
-      //  console.log(imageData)
-      // console.log(JSON.stringify(theimageData))
-
       const authToken = getCookie("authtoken");
 
 
@@ -265,16 +265,6 @@ export const UploadImages3 = createAsyncThunk(
         "contentType": imageData.contentType,
         "isProfilePic": imageData.isProfile
       }
-
-
-      const profileImages = theimageData.images.filter(imageData => imageData.isProfilePic);
-      
-      console.log("🚀 ~ profileImages:", profileImages)
-
-
-
-
-      console.log('=== data ===>', data);
 
       // Construct the fetch options
       const options = {
@@ -287,7 +277,7 @@ export const UploadImages3 = createAsyncThunk(
       };
 
       // Make the fetch request
-      fetch('https://happymilan.tech/api/v1/s3/presignedurl/', options)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/s3/presignedurl/`, options)
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -295,12 +285,9 @@ export const UploadImages3 = createAsyncThunk(
           return response.json();
         })
         .then(data => {
-          console.log(JSON.stringify(data));
-
+    
           if (data.status === "Success") {
-            console.log("After Success", data.data.url);
-            console.log("Buffer data : ", theimageData.bufferdata);
-
+    
             const token = getCookie("authtoken");
 
             // Fetch the image data from the Blob URL
@@ -309,16 +296,11 @@ export const UploadImages3 = createAsyncThunk(
               .then(response => response.blob())
               .then(blobData => {
 
-                // console.log("<== blobdata => ",blobData)
-                // console.log("<== images data => ",imageData.data)
-
                 // Now you have the binary image data in `blobData`
                 // You can proceed to send it in your request
                 const formData = new FormData();
                 formData.append('image', blobData);
 
-
-             
                 // Make your request with Axios
                 const axios = require('axios');
                 let config = {
@@ -334,10 +316,10 @@ export const UploadImages3 = createAsyncThunk(
 
                 axios.request(config)
                   .then((response) => {
-                    console.log(JSON.stringify(response.data));
+                    // console.log(JSON.stringify(response.data));
                   })
                   .catch((error) => {
-                    console.log(error);
+                    // console.log(error);
                   });
               })
               .catch(error => {
@@ -345,7 +327,7 @@ export const UploadImages3 = createAsyncThunk(
               });
             // })
           } else {
-            console.log("ERROR");
+            // console.log("ERROR");
           }
         })
         .catch(error => {
@@ -354,7 +336,17 @@ export const UploadImages3 = createAsyncThunk(
 
     });
 
-    console.log("Waiting for images...")
+    // console.log("Waiting for images...")
 
   }
 );
+
+export const updateHobbies = (category, values) => ({
+  type: UPDATE_HOBBIES_VALUES,
+  payload: { category, values },
+});
+
+export const updatePartnerPref = (key, values) => ({
+  type: UPDATE_PARTNER_PREF,
+  payload: { key, values },
+});

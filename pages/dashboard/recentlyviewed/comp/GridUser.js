@@ -177,21 +177,21 @@ function GridUser() {
                                         <div className='flex justify-between pt-[10px]'>
                                             <ul className='pl-[10px] flex space-x-[10px]'>
                                                 <li>
-                                                    <Image width={17} height={14} src='/assests/Black/Couple2.svg' />
+                                                    <Image loading='lazy' alt='img' width={17} height={14} src='/assests/Black/Couple2.svg' />
                                                 </li>
                                                 <li className='text-[10px]' style={Text4}>You & Her </li>
                                             </ul>
                                             <ul className='pr-[10px] flex space-x-[30px]'>
                                                 <li>
-                                                    <Image width={15} height={14} src='/assests/Black/Stars-2.svg' />
+                                                    <Image loading='lazy' alt='img' width={15} height={14} src='/assests/Black/Stars-2.svg' />
                                                 </li>
                                                 <li>
-                                                    <Image width={3} height={14} src='/assests/Black/3Dots.svg' />
+                                                    <Image loading='lazy' alt='img' width={3} height={14} src='/assests/Black/3Dots.svg' />
                                                 </li>
                                             </ul>
                                         </div>
                                         <div className='flex justify-center '>
-                                            <Image width={102} height={102} className='w-[102px] h-[102px] rounded-[50%]' src={item.profilePic} />
+                                            <Image loading='lazy' alt='profile-pic' width={102} height={102} className='w-[102px] h-[102px] rounded-[50%]' src={item.profilePic} />
                                         </div>
                                         <div className='text-center'>
                                             <h1 style={ProfileName} className='text-[18px]'>Rohan Patel</h1>
@@ -201,9 +201,9 @@ function GridUser() {
                                         </div>
 
                                         <div className='flex space-x-[15px] justify-center'>
-                                            <div><Image width={40} height={40} className='w-[40px] h-[40px]' src='/assests/dashboard/icon/ignore-icon-2.svg' /></div>
-                                            <div><Image width={40} height={40} className='w-[40px] h-[40px]' src='/assests/dashboard/icon/heart-icon-2.svg' /></div>
-                                            <div><Image width={40} height={40} className='w-[40px] h-[40px]' src='/assests/dashboard/icon/send-icon-2.svg' /></div>
+                                            <div><Image loading='lazy' alt='img' width={40} height={40} className='w-[40px] h-[40px]' src='/assests/dashboard/icon/ignore-icon-2.svg' /></div>
+                                            <div><Image loading='lazy' alt='img' width={40} height={40} className='w-[40px] h-[40px]' src='/assests/dashboard/icon/heart-icon-2.svg' /></div>
+                                            <div><Image loading='lazy' alt='img' width={40} height={40} className='w-[40px] h-[40px]' src='/assests/dashboard/icon/send-icon-2.svg' /></div>
                                         </div>
                                     </div>
                                 </>

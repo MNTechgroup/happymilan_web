@@ -14,7 +14,7 @@ body {
   border-width: 0;
 }
 
-/* heart-bg */
+/* heart-bg Gradient-btn active-no sec-2-explore-story sec-3-content grad-button grad-button Grad-btn grad-btn Gradient-btn Seting-menu-notgrad Gradient-btn Add-details-btn*/
 :root {
   --blue: #0f52ba;
   --white: #ffffff;
@@ -22,7 +22,82 @@ body {
   --gradient-color-2: #BA0FA9;
 }
 
-#bg-grad-color-faq{
+
+#PlansDiv {
+  border-radius: 14px 14px 0 0;
+  background: linear-gradient(90deg, rgba(15, 82, 186, 0.10) 0%, rgba(130, 37, 175, 0.10) 100%);
+}
+
+
+
+
+
+
+#seting-plans-gradient-text {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  background: linear-gradient(91deg, #2B3990 5.69%, #8225AF 93.8%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#setting-text-grad {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  background: linear-gradient(90deg, #0F52BA -1.12%, #8225AF 20.06%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#sidebar-navlink-grad {
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  background: linear-gradient(91deg, #0F52BA 0%, #8225AF 97.8%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#Seting-menu-grad {
+  background: linear-gradient(90deg, #0F52BA 0%, #8225AF 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+#Seting-menu-grad-before {
+  background: black;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+#Arrow-bottom {
+  transform: rotate(45deg);
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+
+}
+
+#bg-grad-color-faq {
   background: linear-gradient(103deg, rgba(15, 82, 186, 0.1) -25.03%, rgba(186, 15, 169, 0.1) 137.92%);
 
 }
@@ -31,16 +106,84 @@ body {
   background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
 }
 
-#grad-button{
+#grad-button {
   background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
   color: white;
 }
-#grad-bg{
+
+#grad-button:hover {
+  opacity: 0.9;
+}
+
+
+
+#profile-background-grad {
   background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
 
 }
 
-#grad-text{
+
+#profile-save-details-btn {
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+  color: white;
+}
+
+#profile-save-details-btn:hover {
+  opacity: 0.9;
+  transition: 0.3s;
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+  color: white;
+}
+
+
+
+#Add-details-btn:hover::before {
+  content: "";
+  position: absolute;
+  left: 0.8px;
+  right: 1px;
+  top: 1px;
+  bottom: 0.7px;
+  border-radius: 23px;
+  background-color: #F3F8FF;
+  z-index: -1;
+  transition: 200ms;
+}
+
+
+
+#Add-details-btn {
+  border: none;
+  outline: none;
+  position: relative;
+  z-index: 1;
+  border-radius: 23px;
+  /* background: linear-gradient(to right, #00FFA3, #DC1FFF); */
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+  cursor: pointer;
+}
+
+#Add-details-btn::before {
+  content: "";
+  position: absolute;
+  left: 0.8px;
+  right: 1px;
+  top: 1px;
+  bottom: 0.7px;
+  border-radius: 23px;
+  background-color: white;
+  z-index: -1;
+  transition: 200ms
+}
+
+
+
+#grad-bg {
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+
+}
+
+#grad-text {
   color: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
 }
 
@@ -62,9 +205,18 @@ body {
   background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
 }
 
+#grad-btn:hover {
+  opacity: 0.9;
+}
+
 #active-no {
   background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
   color: white;
+}
+
+#grid-active-btn {
+  background-color: #F3F8FF;
+  color: black;
 }
 
 #pagination-count {
@@ -72,11 +224,50 @@ body {
   color: black;
 }
 
+#DarkPagination {
+  background: #18191a;
+  border: 1px solid white;
+  color: white;
+}
 
+
+
+#DarkPagination:hover {
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+  border: none;
+  color: white;
+}
 
 #pagination-count:hover {
+  /* background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+  color: white; */
+  background-color: #F3F8FF;
+  color: black;
+}
+
+
+#Gradient-logout-btn-2 {
+  border: none;
+  outline: none;
+  position: relative;
+  z-index: 1;
+  border-radius: 10px;
+  /* background: linear-gradient(to right, #00FFA3, #DC1FFF); */
   background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
-  color: white;
+  cursor: pointer;
+}
+
+#Gradient-logout-btn-2::before {
+  content: "";
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  top: 1px;
+  bottom: 0.7px;
+  border-radius: 10px;
+  background-color: #141516;
+  z-index: -1;
+  transition: 200ms
 }
 
 #req-sent {
@@ -166,23 +357,7 @@ body {
   line-height: normal;
 }
 
-#sec-2-explore-story {
-  width: 199px;
-  height: 60px;
-  flex-shrink: 0;
-  border-radius: 10px;
-  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
-}
 
-#sec-2-explore-story span {
-  color: #FFF;
-  text-align: center;
-  font-family: Poppins;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
 
 #profile-section {
   flex-shrink: 0;
@@ -221,23 +396,6 @@ body {
   line-height: normal;
 }
 
-#sec-3-content button {
-  width: 199px;
-  height: 60px;
-  flex-shrink: 0;
-  border-radius: 10px;
-  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
-}
-
-#sec-3-content span {
-  color: #FFF;
-  text-align: center;
-  font-family: Poppins;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
 
 #section-4-title {
   height: 98px;
@@ -258,11 +416,6 @@ body {
   font-weight: 400;
   line-height: normal;
 }
-
-/* #footer-section footer {
-  background: #E9E9E9;
-  ::we
-} */
 
 #footer-links {
   padding-top: 10px;
@@ -483,16 +636,71 @@ body {
 
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
+#sidebarScroll::-webkit-scrollbar {
+  display: none;
+}
+
+#Chat-scroll-bar::-webkit-scrollbar {
+  display: none;
+}
+
+/* #Custom-Scroll-Chat::-webkit-scrollbar {
+  display: none; chat-room
+} */
+.chat-scroll-bar-menu::-webkit-scrollbar {
+  display: none;
+}
+
+#Custom-Scroll-Chat::-webkit-scrollbar {
+  width: 2px;
+  padding-top: 100px;
+}
+
+#Custom-Scroll-Chat::-webkit-scrollbar-thumb {
+  margin-top: 20px;
+  background-color: #ccc;
+  /* Color of the scrollbar thumb */
+  border-radius: 10px;
+  padding-top: 100px;
+  /* Rounded corners of the scrollbar thumb */
+}
+
+#chat-scroll-bar {
+  overflow-x: hidden;
+}
+
+#chat-scroll-bar::-webkit-scrollbar {
+  width: 2px;
+
+}
+
+/* Track */
+#chat-scroll-bar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+#chat-scroll-bar::-webkit-scrollbar-thumb {
+  background: rgb(67, 66, 66);
+  border-radius: 10px;
+  position: relative;
+  left: 20px;
+}
+
 /* ::-webkit-scrollbar {
   display: none;
 } */
 
-::-webkit-scrollbar {
-  display: none;
-}
+/* .chatSidebar::-webkit-scrollbar {
+  display: none; 
+} */
 
-/* Show scrollbar for .req-slide */
-
+/* Styles for scrollbar within the specified section */
 
 
 
@@ -577,11 +785,6 @@ body {
 
 }
 
-
-.heart-bg:hover {
-  /* background: rgba(255, 192, 200, 0.7); */
-  /* background: #0F52BA; */
-}
 
 .likes-amount {
   font-size: 20px;
@@ -725,9 +928,7 @@ body {
 
 /* Define the breakpoint for medium screens */
 @media (max-width: 768px) {
-  .expanded-sidebar {
-    /* Style for expanded sidebar on medium screens */
-  }
+
 
   .collapsed-sidebar {
     /* Style for collapsed sidebar on medium screens */
@@ -854,7 +1055,7 @@ body {
     position: absolute;
     left: 20.70%;
   }
-  
+
 }
 
 @media screen and (min-width: 1501px) and (max-width: 1525px) {
@@ -943,50 +1144,6 @@ body {
 
 }
 
-.user-card.skeleton {
-  background: #e2e2e2;
-  color: transparent;
-  position: relative;
-  overflow: hidden;
-}
-
-.user-card.skeleton::before {
-  content: "";
-  position: absolute;
-  left: 0%;
-  top: 0;
-  height: 100%;
-  width: 50px;
-  background: linear-gradient(to right, #e2e2e2 25%, #d5d5d5 50%, #e2e2e2 100%);
-  animation-name: gradient-animation;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  filter: blur(5px);
-}
-
-.user-card.skeleton .hide-text::before {
-  content: "";
-  position: absolute;
-  left: 0%;
-  top: 0;
-  height: 100%;
-  width: 50px;
-  background: linear-gradient(to right, #e2e2e2 25%, #d5d5d5 50%, #e2e2e2 100%);
-  animation-name: gradient-animation;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  filter: blur(5px);
-}
-
-@keyframes gradient-animation {
-  from {
-    left: 0%;
-  }
-
-  to {
-    left: 100%;
-  }
-}
 
 
 
@@ -1024,4 +1181,398 @@ body {
   right: 10px;
   font-size: 20px;
   cursor: pointer;
+}
+
+#Gradient-border-btn {
+  border: none;
+  outline: none;
+  position: relative;
+  z-index: 1;
+  border-radius: 23px;
+  /* background: linear-gradient(to right, #00FFA3, #DC1FFF); */
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+  cursor: pointer;
+}
+
+#Gradient-border-btn::before {
+  content: "";
+  position: absolute;
+  left: 1px;
+  right: 0.7px;
+  top: 1px;
+  bottom: 0.5px;
+  border-radius: 20px;
+
+  background-color: white;
+  z-index: -1;
+  transition: 200ms
+}
+
+#Gradient-border-btn:hover:before {
+  background-color: #F3F8FF;
+}
+
+#Gradient-btn {
+  border: none;
+  outline: none;
+  position: relative;
+  z-index: 1;
+  border-radius: 20px;
+  /* background: linear-gradient(to right, #00FFA3, #DC1FFF); */
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+  cursor: pointer;
+}
+
+#Gradient-btn::before {
+  content: "";
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  top: 1px;
+  bottom: 0.7px;
+  border-radius: 23px;
+  background-color: white;
+  z-index: -1;
+  transition: 200ms
+}
+
+#Gradient-cancel-btn {
+  border: none;
+  outline: none;
+  position: relative;
+  z-index: 1;
+  border-radius: 23px;
+  /* background: linear-gradient(to right, #00FFA3, #DC1FFF); */
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+  cursor: pointer;
+  width: 137px;
+  height: 50px;
+
+}
+
+#Gradient-cancel-btn::before {
+  content: "";
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  top: 1px;
+  bottom: 1.2px;
+  border-radius: 22px;
+  background-color: white;
+  z-index: -1;
+  transition: 200ms;
+}
+
+#Gradient-cancel-btn:hover::before {
+  background-color: #F3F8FF;
+}
+
+#Gradient-btn-2 {
+  border: none;
+  outline: none;
+  position: relative;
+  z-index: 1;
+  border-radius: 22px;
+  /* background: linear-gradient(to right, #00FFA3, #DC1FFF); */
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+  cursor: pointer;
+}
+
+
+#Gradient-btn-2::before {
+  content: "";
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  top: 1px;
+  bottom: 0.7px;
+  border-radius: 23px;
+  background-color: #141516;
+  z-index: -1;
+  transition: 200ms
+}
+
+
+
+.switch {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #73C0FC;
+  transition: .4s;
+  border-radius: 30px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  border-radius: 20px;
+  left: 4px;
+  bottom: 2px;
+  z-index: 2;
+  /* background-color: #e8e8e8; */
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+  transition: .4s;
+}
+
+.toggle-sun svg {
+  position: absolute;
+  top: 5px;
+  left: 32px;
+  z-index: 1;
+  width: 15px;
+  height: 15px;
+}
+
+.toggle-moon svg {
+  fill: #73C0FC;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 1;
+  width: 15px;
+  height: 15px;
+}
+
+/* .switch:hover */
+.toggle-sun svg {
+  animation: rotate 15s linear infinite;
+}
+
+@keyframes rotate {
+
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* .switch:hover */
+.toggle-moon svg {
+  animation: tilt 5s linear infinite;
+}
+
+@keyframes tilt {
+
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(-10deg);
+  }
+
+  75% {
+    transform: rotate(10deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.input:checked+.slider {
+  background-color: #183153;
+}
+
+.input:focus+.slider {
+  box-shadow: 0 0 1px #183153;
+}
+
+.input:checked+.slider:before {
+  transform: translateX(25px);
+}
+
+/* Gradient-btn */
+
+.active-users {
+  margin-bottom: 20px;
+}
+
+.active-users-list {
+  display: flex;
+}
+
+.active-user-item {
+  margin: 5px;
+  border: 1px solid #ccc;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+/* Adjust width to fit 5 users per row */
+.active-user-item {
+  width: calc(20% - 10px);
+  /* 10px margin between items */
+}
+
+/* Add scrollbar for overflow */
+.active-users-list {
+  overflow-y: auto;
+  max-height: 150px;
+  /* Adjust height as needed */
+}
+
+/* For Image Not Select  */
+
+
+
+
+
+
+/* For audio message  */
+
+
+
+.player-card {
+  width: 261px;
+  height: 53px;
+  border-radius: 10px;
+  display: flex;
+  place-items: center;
+  justify-content: space-between;
+  padding: 5px;
+
+}
+
+#audio-img {
+  margin-left: 10px;
+
+}
+
+input[type="range"] {
+  width: 150px;
+  height: 3px;
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+  accent-color: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+  outline: none;
+}
+
+.track-duration {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.track-duration>p {
+  font-size: 10px;
+  font-weight: 500;
+  color: #18181F;
+  margin: 0;
+  margin-right: 10px;
+}
+
+
+/* Modify Search  */
+
+#Save-Search-Box {
+  border-radius: 10px;
+  background: #FFF;
+  box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.07);
+  width: 280px;
+  height: 248px;
+  flex-shrink: 0;
+}
+
+
+
+
+#success-story-btn-style {
+  border: none;
+  outline: none;
+  position: relative;
+  z-index: 1;
+  border-radius: 23px;
+  /* background: linear-gradient(to right, #00FFA3, #DC1FFF); */
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+  cursor: pointer;
+}
+
+#success-story-btn-style::before {
+  content: "";
+  position: absolute;
+  left: 0.8px;
+  right: 1px;
+  top: 1px;
+  bottom: 0.7px;
+  border-radius: 23px;
+  background-color: white;
+  z-index: -1;
+  transition: 200ms
+}
+
+#success-story-btn-style:hover::before {
+  background-color: #F3F8FF;
+}
+
+#Publish-stry-button:hover::before {
+  background-color: #F3F8FF;
+}
+
+/* success-story-btn-style */
+
+#Publish-stry-button {
+  border: none;
+  outline: none;
+  position: relative;
+  z-index: 1;
+  border-radius: 10px;
+  /* background: linear-gradient(to right, #00FFA3, #DC1FFF); */
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+  cursor: pointer;
+}
+
+#Publish-stry-button::before {
+  content: "";
+  position: absolute;
+  left: 1.8px;
+  right: 1.5px;
+  top: 1.8px;
+  bottom: 1.5px;
+  border-radius: 10px;
+  background-color: white;
+  z-index: -1;
+  transition: 200ms
+}
+
+
+#Search-Member-Box {
+  border-radius: 10px;
+  background: #FFF;
+  box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.07);
+}
+
+#chat-image:fullscreen,
+#chat-image:-webkit-full-screen,
+#chat-image:-moz-full-screen,
+#chat-image:-ms-fullscreen {
+  object-fit: cover; /* Ensures the image covers the entire screen */
+  width: 100vw;
+  height: 100vh;
+  display: block; /* Ensures the image is displayed as a block element */
+  margin: 0; /* Removes any default margin */
 }

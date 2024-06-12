@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import dynamic from 'next/dynamic';
 import { updateFormData } from "../../../store/actions/registerUser";
 import { connect, useSelector } from "react-redux";
+import { validateFirstName, validateLastName } from "../../../utils/form/validationRules";
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
 const motherTongueOption = [
@@ -11,16 +12,12 @@ const motherTongueOption = [
     { value: "gujarati", label: "Gujarati" }
 ];
 
-
 const religionOptions = [
     { value: "hindu", label: "Hinduism" },
     { value: "muslim", label: "Islam" },
     { value: "sikh", label: "Sikhism" },
     // Add more options as needed
 ];
-
-
-
 
 
 const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) => {
@@ -39,30 +36,6 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
 
     }
 
-
-
-    const customStyles = {
-        control: (provided, state) => ({
-            ...provided,
-            paddingRight: '10px',
-            paddingLeft: "8px",
-            width: "300px",
-            height: "50px",
-            borderRadius: "8px",
-            borderColor: state.isFocused ? 'black' : "",
-            '&:hover': {
-                borderColor: 'black',
-            },
-            boxShadow: state.isFocused ? 'none' : provided.boxShadow, // Add padding on the right side
-        }),
-
-        indicatorSeparator: (provided) => ({
-            ...provided,
-            display: 'none',
-            paddingRight: "20px"
-            // Hide the vertical line behind the arrow
-        }),
-    };
 
 
 
@@ -89,22 +62,25 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
         fontWeight: "400",
         lineHeight: "normal"
     }
-    // MY_SELF: 'mySelf',
-    // MY_SON: 'mySon',
-    // MY_DAUGHTER: 'myDaughter',
-    // MY_BROTHER: 'myBrother',
-    // MY_FRIEND: 'myFriend',
 
     const profileOptions = [
-        { id: 1, label: 'My Self' , value : 'mySelf' },
-        { id: 2, label: 'My Son'  , value : 'mySon' },
-        { id: 3, label: 'My Daughter' , value : 'myDaughter' },
-        { id: 4, label: 'My Brother' , value : 'myBrother'},
-        { id: 5, label: 'My Friend' , value :  'myFriend'},
+        { id: 1, label: 'My Self', value: 'mySelf' },
+        { id: 2, label: 'My Son', value: 'mySon' },
+        { id: 3, label: 'My Daughter', value: 'myDaughter' },
+        { id: 4, label: 'My Brother', value: 'myBrother' },
+        { id: 5, label: 'My Friend', value: 'myFriend' },
     ];
+
+
+    const MaritalOptions = [
+        { label: 'Single', value: 'single' },
+        { label: 'Never Married', value: 'never-married' },
+        { label: 'Married', value: 'married' },
+    ]
 
     const [selectedProfile, setselectedProfile] = useState(0)
     const HandleSelectProfile = (val) => {
+        console.log("🚀 ~ HandleSelectProfile ~ val:", val.id)
         // Update local state
         setselectedProfile(val.id);
 
@@ -122,9 +98,10 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
         religion: "",
         currentcity: "",
         countryofliving: "",
+        maritalStatus: "",
         cast: "",
         timeData: "",
-        selectedTime : ""
+        selectedTime: ""
     })
 
     const [nullFields, setNullFields] = useState([]);
@@ -134,6 +111,9 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
     };
 
     //   console.log(isFormValid)
+
+    const [FNError,SetFNError] = useState("")
+    const [LNError,SetLNError] = useState("")
 
     const handleInputChange = (event) => {
         const name = event.target.name;
@@ -171,6 +151,13 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
             });
 
         }
+        else if (name === 'maritalStatus') {
+            const selectedReligion = MaritalOptions.find((option) => option.value === value);
+            setselectBoxData({
+                maritalStatus: selectedReligion
+            });
+
+        }
 
         else if (name === 'dateOfBirth') {
             const selectedDate = new Date(value);
@@ -181,7 +168,7 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
             if (selectedDate > currentDate) {
                 alert('Please select a date that is not in the future.');
                 // Optionally, you can reset the date input here
-                value =null;
+                value = null;
 
             } // Check if user is at least 18 years old
             if (eighteenYearsAgo < selectedDate) {
@@ -197,7 +184,7 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
         else if (name === 'birthTime') {
             // Assuming value is in 'hh:mm' format
 
-            setselectBoxData(prevState => ({...prevState , selectedTime : value}))
+            setselectBoxData(prevState => ({ ...prevState, selectedTime: value }))
 
             setselectBoxData(prevState => ({ ...prevState, timeData: value }));
             const [time, period] = value.split(' ');
@@ -207,36 +194,56 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
             date.setHours(period === 'PM' ? parseInt(hours) + 12 : hours);
             date.setMinutes(minutes);
             // Format the time as desired (you can adjust the format as needed)
-        
+
             updateFormData({
                 ...formData,
                 general: {
                     ...formData.general,
-                    birthTime : date.toISOString()
+                    birthTime: date.toISOString()
                 }
             });
 
-            
 
 
 
-            
+
+
+        }else if(name == "firstName"){
+            SetFNError(validateFirstName(value))
+
+            updateFormData({
+                ...formData,
+                general: {
+                    ...formData.general,
+                    firstName: value
+                }
+            });
+
         }
+        else if(name == "lastName"){
+            SetLNError(validateLastName(value))
 
-       
-        if(name === 'birthTime')
-        {}else{
+            updateFormData({
+                ...formData,
+                general: {
+                    ...formData.general,
+                    lastName: value
+                }
+            });
 
-        // Update the form data in Redux store
-        updateFormData({
-            ...formData,
-            general: {
-                ...formData.general,
-                [name]: value,
-                
-            }
-        });
-    }
+        }
+        else {
+
+            // Update the form data in Redux store
+            updateFormData({
+                ...formData,
+                general: {
+                    ...formData.general,
+                    [name]: value,
+
+                }
+            });
+        }
 
     };
 
@@ -264,20 +271,24 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
                     <h1 className="" style={Text2}>Creating Profile for</h1>
                     <div className="inline-block  2xl:flex xl:flex lg:flex  2xl:mt-0 xl:mt-0 lg:mt-0 mt-[10px] 2xl:ml-0 xl:ml-0 lg:ml-0 ml-[-10px] 2xl:space-x-[32px] lg:space-x-[32px] xl:space-x-[32px]  pt-[10px]">
                         {profileOptions.map((options) => {
-                            return (<button id={formData?.general.creatingProfileFor === options.label ? "active-no" : ""} style={btnstyle} onClick={() => HandleSelectProfile(options)} className={`2xl:mt-0 xl:mt-0 lg:mt-0 mt-[10px] 2xl:ml-0 xl:ml-0 lg:ml-0 ml-[10px] h-[50px] ${options.id === 3 ? "2xl:w-[128px] xl:w-[128px] lg:w-[128px] w-[100px]" : "w-[100px] 2xl:w-[102px] xl:w-[102px] lg:w-[102px]"} ${selectedProfile === options.id ? "bg-[#0F52BA] text-[white]" : "bg-[white]"}  rounded-[8px] border-[1px] border-[#e6e6e6]`} key={options.id}>{options.label}</button>)
+                            return (<button id={selectedProfile === options.id ? "active-no" : ""} style={btnstyle} onClick={() => HandleSelectProfile(options)} className={`2xl:mt-0 xl:mt-0 lg:mt-0 mt-[10px] 2xl:ml-0 xl:ml-0 lg:ml-0 ml-[10px] h-[50px] ${options.id === 3 ? "2xl:w-[128px] xl:w-[128px] lg:w-[128px] w-[100px]" : "w-[100px] 2xl:w-[102px] xl:w-[102px] lg:w-[102px]"}  rounded-[8px] border-[1px] border-[#e6e6e6]`} key={options.id}>{options.label}</button>)
                         })}
                     </div>
                 </div>
                 <div>
                     <h1 className='text-[#000] pb-[10px]' style={Text2}>First Name <span className={`text-[10px] text-${nullFields.includes('firstName') ? "[red]" : "[black]"}`}>*</span></h1>
-                    <input name="firstName" value={formData?.general.firstName} onChange={handleInputChange} type='text' placeholder='First Name' className={`outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[300px] border-[1px] border-${'[#e6e6e6]'} pl-[10px] rounded-[8px]`} />
-                    {isFieldNull("firstName") ? <><span className="block text-[red]">required</span></> : ""}
+                    <input name="firstName" style={{ border : "1px solid #e6e6e6"}} value={formData?.general.firstName} onChange={handleInputChange} type='text' placeholder='First Name' className={`hover:border-[black] outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[300px] border-[1px] border-${'[#e6e6e6]'} pl-[10px] rounded-[8px]`} />
+                    <span className="block relative text-[10px] text-[red] left-[5px] top-[5px]">{FNError}</span>
+                    {/* <input name="firstName" style={{border:isFieldNull("firstName") ? "1px solid red" : "1px solid #e6e6e6"}} value={formData?.general.firstName} onChange={handleInputChange} type='text' placeholder='First Name' className={`hover:border-[black] outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[300px] border-[1px] border-${'[#e6e6e6]'} pl-[10px] rounded-[8px]`} /> */}
+                    {/* {isFieldNull("firstName") ? <><span className="block text-[red]">required</span></> : ""} */}
                 </div>
 
                 <div>
                     <h1 className='text-[#000] pb-[10px]' style={Text2}>Last Name</h1>
-                    <input name="lastName" value={formData?.general.lastName} onChange={handleInputChange} type='text' placeholder="Last Name" className={`outline-none focus:border-[1px] focus:border-[black] pr-[10px] h-[50px] w-[300px] border-[1px] border-${'[#e6e6e6]'} pl-[10px] rounded-[8px] `} required />
-                    {isFieldNull("lastName") ? <><span className="block text-[red]">required</span></> : ""}
+                    <input name="lastName" style={{ border: "1px solid #e6e6e6" }} value={formData?.general.lastName} onChange={handleInputChange} type='text' placeholder="Last Name" className={`hover:border-[black] outline-none focus:border-[1px] focus:border-[black] pr-[10px] h-[50px] w-[300px] border-[1px] border-${'[#e6e6e6]'} pl-[10px] rounded-[8px] `} required />
+                    <span className="block relative text-[10px] text-[red] left-[5px] top-[5px]">{LNError}</span>
+                    {/* <input name="lastName" style={{ border: isFieldNull("lastName") ? "1px solid red" : "1px solid #e6e6e6" }} value={formData?.general.lastName} onChange={handleInputChange} type='text' placeholder="Last Name" className={`hover:border-[black] outline-none focus:border-[1px] focus:border-[black] pr-[10px] h-[50px] w-[300px] border-[1px] border-${'[#e6e6e6]'} pl-[10px] rounded-[8px] `} required /> */}
+                    {/* {isFieldNull("lastName") ? <><span className="block text-[red]">required</span></> : ""} */}
 
                 </div>
 
@@ -285,12 +296,35 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
                     <h1 className='text-[#000] pb-[10px]' style={Text2}>Mother Tongue</h1>
                     <DynamicSelect
                         className={`h-[50px] w-[300px] flex justify-end border-${isFieldNull("motherTongue") ? "[red]" : "[#e6e6e6"}`}
-                        styles={customStyles}
+                        // styles={customStyles}
+                        styles={{
+                            control: (provided, state) => ({
+                                ...provided,
+                                paddingRight: '10px',
+                                paddingLeft: "8px",
+                                width: "300px",
+                                height: "50px",
+                                borderRadius: "8px",
+                                borderColor: "red",
+                                borderColor: isFieldNull("motherTongue") ? "red" : "",
+                                '&:hover': {
+                                    borderColor: isFieldNull("motherTongue") ? "red" : "black",
+                                },
+                                boxShadow: state.isFocused ? 'none' : provided.boxShadow, // Add padding on the right side
+                            }),
+
+                            indicatorSeparator: (provided) => ({
+                                ...provided,
+                                display: 'none',
+                                paddingRight: "20px"
+                                // Hide the vertical line behind the arrow
+                            }),
+                        }}
                         options={motherTongueOption}
                         defaultValue={formData?.general.motherTongue}
+                        placeholder={formData?.general.motherTongue ? formData?.general.motherTongue : "Select.."}
                         onChange={(selectedOption) => handleInputChange({ target: { name: "motherTongue", value: selectedOption?.value } })}
                     />
-                    {isFieldNull("motherTongue") ? <><span className="block text-[red]">required</span></> : ""}
 
                 </div>
 
@@ -312,16 +346,14 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
                 </div>
 
                 <div>
-                    <h1 className='text-[#000] pb-[10px]' style={Text2}>Date of Birth</h1>
-                    <input name="dateOfBirth" value={formData?.general.dateOfBirth} onChange={handleInputChange} type='date' className={`outline-none focus:border-[1px] focus:border-[black] pr-[10px] h-[50px] w-[300px] border-[1px] border-${'[#e6e6e6]'}  pl-[10px] rounded-[8px]`} />
-                    {isFieldNull("dateOfBirth") ? <><span className="block text-[red]">required</span></> : ""}
+                    <h1 onClick={() => console.log(formData.general)} className='text-[#000] pb-[10px]' style={Text2}>Date of Birth</h1>
+                    <input name="dateOfBirth" style={{ border: isFieldNull("dateOfBirth") ? "1px solid red" : "1px solid #e6e6e6" }} value={formData?.general.dateOfBirth} onChange={handleInputChange} type='date' className={`hover:border-[black] outline-none focus:border-[1px] focus:border-[black] pr-[10px] h-[50px] w-[300px] border-[1px] border-${'[#e6e6e6]'}  pl-[10px] rounded-[8px]`} />
 
                 </div>
 
                 <div>
                     <h1 className='text-[#000] pb-[10px]' style={Text2}>Time of Birth</h1>
-                    <input name="birthTime" value={selectBoxData.selectedTime} onChange={handleInputChange} type='time' className={`outline-none focus:border-[1px] focus:border-[black] pr-[10px] h-[50px] w-[300px] border-[1px] border-${'[#e6e6e6]'}  pl-[10px] rounded-[8px]`} />
-                    {isFieldNull("birthTime") ? <><span className="block text-[red]">required</span></> : ""}
+                    <input name="birthTime" style={{ border: isFieldNull("birthTime") ? "1px solid red" : "1px solid #e6e6e6" }} value={selectBoxData.selectedTime} onChange={handleInputChange} type='time' className={`hover:border-[black] outline-none focus:border-[1px] focus:border-[black] pr-[10px] h-[50px] w-[300px] border-[1px] border-${'[#e6e6e6]'}  pl-[10px] rounded-[8px]`} />
 
                 </div>
 
@@ -332,29 +364,86 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
                     <div class="space-x-2">
                         <DynamicSelect
                             className={`h-[50px] w-[300px] flex justify-end border-${"[#e6e6e6]"}`}
-                            styles={customStyles}
+                            styles={{
+                                control: (provided, state) => ({
+                                    ...provided,
+                                    paddingRight: '10px',
+                                    paddingLeft: "8px",
+                                    width: "300px",
+                                    height: "50px",
+                                    borderRadius: "8px",
+                                    borderColor: "red",
+                                    borderColor: isFieldNull("religion") ? "red" : "",
+                                    '&:hover': {
+                                        borderColor: isFieldNull("religion") ? "red" : "black",
+                                    },
+                                    boxShadow: state.isFocused ? 'none' : provided.boxShadow, // Add padding on the right side
+                                }),
+
+                                indicatorSeparator: (provided) => ({
+                                    ...provided,
+                                    display: 'none',
+                                    paddingRight: "20px"
+                                    // Hide the vertical line behind the arrow
+                                }),
+                            }}
                             options={religionOptions}
                             defaultValue={selectBoxData.religion}
+                            placeholder={formData?.general.religion ? formData?.general.religion : "Select Your Religion.."}
                             onChange={(selectedOption) => handleInputChange({ target: { name: "religion", value: selectedOption?.value } })}
 
                         />
-                        {isFieldNull("religion") ? <><span className="block text-[red]">required</span></> : ""}
 
                     </div>
                 </div>
 
                 <div>
                     <h1 className='text-[#000] pb-[10px]' style={Text2}>Caste / Sub Caste</h1>
-                    <input name="cast" value={formData?.general.cast} onChange={handleInputChange} type='text' className={`outline-none focus:border-[1px] focus:border-[black] pr-[10px] h-[50px] w-[300px] border-[1px] border-${'[#e6e6e6]'}  pl-[10px] rounded-[8px]`} />
-                    {isFieldNull("cast") ? <><span className="block text-[red]">required</span></> : ""}
-                
+                    <input name="cast" style={{ border: isFieldNull("cast") ? "1px solid red" : "1px solid #e6e6e6" }} value={formData?.general.cast} onChange={handleInputChange} type='text' className={`hover:border-[black] outline-none focus:border-[1px] focus:border-[black] pr-[10px] h-[50px] w-[300px] border-[1px] border-${'[#e6e6e6]'}  pl-[10px] rounded-[8px]`} />
+
+                </div>
+
+                <div>
+                    <h1 className='text-[#000] pb-[10px]' style={Text2}>MaritalStatus</h1>
+                    <div class="space-x-2">
+                        <DynamicSelect
+                            styles={{
+                                control: (provided, state) => ({
+                                    ...provided,
+                                    paddingRight: '10px',
+                                    paddingLeft: "8px",
+                                    width: "300px",
+                                    height: "50px",
+                                    borderRadius: "8px",
+                                    borderColor: "red",
+                                    borderColor: isFieldNull("maritalStatus") ? "red" : "",
+                                    '&:hover': {
+                                        borderColor: 'black',
+                                    },
+                                    boxShadow: state.isFocused ? 'none' : provided.boxShadow, // Add padding on the right side
+                                }),
+
+                                indicatorSeparator: (provided) => ({
+                                    ...provided,
+                                    display: 'none',
+                                    paddingRight: "20px"
+                                    // Hide the vertical line behind the arrow
+                                }),
+                            }}
+                            className={`h-[50px] w-[300px] flex justify-end `}
+                            options={MaritalOptions}
+                            defaultValue={selectBoxData.maritalStatus}
+                            placeholder={formData?.general.maritalStatus ? formData?.general.maritalStatus : "Select..."}
+                            onChange={(selectedOption) => handleInputChange({ target: { name: "maritalStatus", value: selectedOption?.value } })}
+
+                        />
+                    </div>
                 </div>
 
                 <div className='w-full 2xl:w-[665px] xl:w-[665px] md:w-full lg:w-full'>
 
                     <h1 style={Text2} className="pb-[10px]">Write About Yourself</h1>
-                    <textarea name="writeBoutYourSelf" value={formData?.general.writeBoutYourSelf} onChange={handleInputChange} type='text' className={`pt-[5px] outline-none focus:border-[1px] focus:border-[black] h-50 2xl:h-[76px] xl:h-[76px] w-[100%] border-[1px] border-${'[#e6e6e6]'} pl-[10px] rounded-[8px]`} />
-                    {isFieldNull("writeBoutYourSelf") ? <><span className="block text-[red]">required</span></> : ""}
+                    <textarea style={{ border: isFieldNull("writeBoutYourSelf") ? "1px solid red" : "1px solid #e6e6e6" }} name="writeBoutYourSelf" value={formData?.general.writeBoutYourSelf} onChange={handleInputChange} type='text' className={`hover:border-[black] pt-[5px] outline-none focus:border-[1px] focus:border-[black] h-50 2xl:h-[76px] xl:h-[76px] w-[100%] border-[1px] border-${'[#e6e6e6]'} pl-[10px] rounded-[8px]`} />
 
                 </div>
 

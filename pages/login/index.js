@@ -1,13 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import LoginPage from "../logincomp/Loginpage";
-import SignInEmail from "../logincomp/SignEmail";
 import { useRouter } from "next/router";
-import PhoneSignUp from "./SignUpSec/PhoneSignup";
 import dynamic from "next/dynamic";
-import LoginWithEmail from "./LoginSec/LoginWithEmail";
-import LoginWithPhone from "./LoginSec/LoginWithPhone";
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -15,6 +10,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { Alert, Snackbar } from "@mui/material";
 import { getCookie } from 'cookies-next'
+import { validateEmail } from "../../utils/form/validationRules";
+
+const GoogleLoginButton = dynamic(() => import("../components/Buttons/GoogleLoginButton"));
+const LoginWithEmail = dynamic(() => import("./LoginSec/LoginWithEmail"));
+const LoginWithPhone = dynamic(() => import("./LoginSec/LoginWithPhone"));
+const PhoneSignUp = dynamic(() => import("./SignUpSec/PhoneSignup"));
+const LoginPage = dynamic(() => import("../logincomp/Loginpage"));
+const SignInEmail = dynamic(() => import("../logincomp/SignEmail"));
+
 
 //Style for Select Box
 const customStyle2 = {
@@ -126,7 +130,8 @@ const Logintoggle = {
     flexShrink: "0",
     borderRadius: "10px",
     // background: "linear-gradient(199deg, #EF4136 0%, #2B3990 100%)",
-    background: "#0F52BA",
+    // background: "#0F52BA",
+    background: "linear-gradient(265deg, #0F52BA -6.89%, #8225AF 97.49%)"
 };
 const NotActiveLogintoggle = {
     width: "147px",
@@ -232,48 +237,67 @@ function login() {
         }
 
 
+        const [credentials, setCredentials] = useState({
+            UserFirstName: "",
+            UserEmail: ""
+        })
 
 
-        const [firstName, setFirstName] = useState('');
-        const [email, setEmail] = useState('');
-        const [isValidEmail, setIsValidEmail] = useState(true);
-        const handleFirstNameChange = (event) => {
-            setFirstName(event.target.value);
-        };
+        const HandleChange = (e) => {
 
-        const handleEmailChange = (event) => {
-            const newEmail = event.target.value;
-            setEmail(newEmail);
-            validateEmail(newEmail);
-        };
+            const name = e.target.name;
+            const value = e.target.value;
+            setCredentials((prevValue) => ({ ...prevValue, [name]: value }))
+        }
 
-        const validateEmail = (inputEmail) => {
-            // Regular expression for basic email validation
-            const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-            setIsValidEmail(emailRegex.test(inputEmail));
-        };
+        const [isLoading, setIsLoading] = React.useState(false)
 
 
+        const [Erros, SetErrors] = useState({
+            setEmailError: "",
+            setPasswordError: ""
+        })
 
 
         const handleSubmit = async (event) => {
             event.preventDefault();
+           
 
-            if (firstName === "" || email === "") {
 
+            const { UserEmail, UserFirstName } = credentials;
+
+
+            if (!UserFirstName && !UserEmail) {
+                // Handle empty fields case if needed
+               
+                return;
+            } if (!UserEmail) {
+               
+
+                SetErrors((prev) => ({ ...prev, setEmailError: "Please enter a valid email address" }));
             }
-            else {
-                // Check if the email is valid before making the POST request
-                if (!isValidEmail) {
-                    alert('Please enter a valid email address.');
-                    return;
-                }
+            if (!validateEmail(UserEmail)) {
+               
+
+                SetErrors((prev) => ({ ...prev, setEmailError: "Please enter a valid email address" }));
+                setIsLoading(false);
+                return;
+            }
+            else if (validateEmail(UserEmail)) {
+
+                if (event.key === 'Enter') {
+               
+                SetErrors((prev) => ({ ...prev, setEmailError: "" }));
+                setIsLoading(true);
+               
+
                 try {
+                    console.log("Calling API")
                     const response = await axios.post(
-                        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/user/auth/register`,
+                        `${process.env.NEXT_PUBLIC_API_URL}/v1/user/auth/register`,
                         {
-                            email: email,
-                            name: firstName,
+                            email: UserEmail,
+                            name: UserFirstName,
                         },
                         {
                             headers: {
@@ -282,25 +306,70 @@ function login() {
                         }
                     );
 
-                  
                     const thedata = response.data.data;
                     if (thedata.success) {
-                        localStorage.setItem("email", email)
-                        SetAlertMessage(" OTP sent successfully! Check your email for the verification code.")
-                        setOpenOTPModal(true)
-                        setisModal("success")
+                        localStorage.setItem("email", UserEmail);
+                        SetAlertMessage("OTP sent successfully! Check your email for the verification code.");
+                        setOpenOTPModal(true);
+                        setisModal("success");
                     }
-             
-                    setElement(true)
+
+                    setElement(true);
                 } catch (error) {
-                   setisModal("error")
-                    SetAlertMessage("Login failed. Please check your credentials and try again. If you continue to experience issues, contact support.")
-                    setOpenOTPModal(true)
+                    setisModal("error");
+                    SetAlertMessage("Registration failed. Please check your credentials and try again. If you continue to experience issues, contact support.");
+                    setOpenOTPModal(true);
                     console.error('Registration failed:', error);
+                } finally {
+                    setIsLoading(false);
+                    console.log("call 6")
+
+                }
+            }else{
+                SetErrors((prev) => ({ ...prev, setEmailError: "" }));
+                setIsLoading(true);
+               
+
+                try {
+                    console.log("Calling API")
+                    const response = await axios.post(
+                        `${process.env.NEXT_PUBLIC_API_URL}/v1/user/auth/register`,
+                        {
+                            email: UserEmail,
+                            name: UserFirstName,
+                        },
+                        {
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                        }
+                    );
+
+                    const thedata = response.data.data;
+                    if (thedata.success) {
+                        localStorage.setItem("email", UserEmail);
+                        SetAlertMessage("OTP sent successfully! Check your email for the verification code.");
+                        setOpenOTPModal(true);
+                        setisModal("success");
+                    }
+
+                    setElement(true);
+                } catch (error) {
+                    setisModal("error");
+                    SetAlertMessage("Registration failed. Please check your credentials and try again. If you continue to experience issues, contact support.");
+                    setOpenOTPModal(true);
+                    console.error('Registration failed:', error);
+                } finally {
+                    setIsLoading(false);
+                    console.log("call 6")
+
                 }
             }
+        }
+        }
 
-             }
+
+
         return (
             <>
 
@@ -313,8 +382,9 @@ function login() {
                             <input
                                 placeholder='First Name'
                                 type='text'
-                                value={firstName}
-                                onChange={handleFirstNameChange}
+                                name="UserFirstName"
+                                value={credentials.UserFirstName}
+                                onChange={HandleChange}
                                 className='outline-none focus:border-[1px] focus:border-[#000] pl-[50px] w-[300px] h-[50px] 2xl:h-[50px] xl:h-[40px] rounded-[8px] bg-[#FFF] border-[1px] border-[#E6E6E6]'
                             />
 
@@ -327,8 +397,9 @@ function login() {
                             <input
                                 placeholder='Enter Your Email'
                                 type='email'
-                                value={email}
-                                onChange={handleEmailChange}
+                                name="UserEmail"
+                                value={credentials.UserEmail}
+                                onChange={HandleChange}
                                 className='outline-none focus:border-[1px] mt-[10px] focus:border-[#000] pl-[50px] w-[300px] h-[50px] 2xl:h-[50px] xl:h-[40px] rounded-[8px] bg-[#FFF] border-[1px] border-[#E6E6E6]'
                             />
                             <Image width={20} height={20}
@@ -337,9 +408,9 @@ function login() {
                                 alt='Email Icon'
                             />
 
-                            {!isValidEmail && (
-                                <p className="text-red-500">Please enter a valid email address.</p>
-                            )}
+                            {<p style={{ display: Erros.setEmailError == "" ? "none" : "", color: "red", fontSize: "12px" }}>{Erros.setEmailError}</p>}
+
+
 
 
 
@@ -348,7 +419,13 @@ function login() {
                             <h1 className='2xl:text-[10px] xl:text-[10px] text-[8px]' style={TextStyle}>By creating account, I Agee to Happy Milan <span className='text-[#0F52BA]'>Privacy Policy</span> and <span className='text-[#0F52BA]'> T&C</span></h1>
                         </div>
                         <div>
-                            <button id="grad-btn" onClick={handleSubmit} style={BtnText} className='w-[300px] h-[50px] 2xl:w-[300px] 2xl:h-[50px] xl:w-[300px] xl:h-[45px]  bg-[#0F52BA] rounded-[10px] text-[#FFF] hover:opacity-[0.95]'>Send Code <Image alt="arrow" width={18} height={20} className='inline relative left-[60px]' src='/vector.svg' /></button>
+                            <button id="grad-btn" onClick={handleSubmit} style={BtnText} className='w-[300px] h-[50px] 2xl:w-[300px] 2xl:h-[50px] xl:w-[300px] xl:h-[45px]  bg-[#0F52BA] rounded-[10px] text-[#FFF] hover:opacity-[0.95]'>Send Code
+                                {isLoading ? (
+                                    <Image alt="loader" width={25} height={25} className='animate-spin inline relative left-[60px]' src='/assests/animation/loaderIcon.svg' />
+                                ) : (
+                                    <Image alt="arrow" width={18} height={20} className='inline relative left-[60px]' src='/vector.svg' />
+                                )}
+                            </button>
                         </div>
 
                     </>
@@ -415,9 +492,7 @@ function login() {
                     </div>
 
                     <div className='flex items-center justify-center gap-x-[30px] 2xl:mt-[-15px] xl:mt-0 lg:mt-[10px]'>
-                        <div className="xl:w-[45px] xl:h-[45px] 2xl:w-[50px] 2xl:h-[50px]">
-                            <Image alt="google-icon" width={50} height={50} src='/assests/social/google-icon-btn.svg' />
-                        </div>
+                        <GoogleLoginButton />
                         <div className="xl:w-[45px] xl:h-[45px] 2xl:w-[50px] 2xl:h-[50px]">
                             <Image alt="fb-icon" width={50} height={50} src='/assests/social/facebook-icon-btn.svg' />
                         </div>
@@ -487,19 +562,19 @@ function login() {
                                     </div>
                                     <div className="relative top-[20px] left-[5px] w-[557px]">
                                         <ul className="flex justify-between">
-                                            <li className="flex space-x-[10px]">
+                                            <li className="flex items-center space-x-[10px]">
                                                 <span><Image alt="icon-1" width={14} height={18} src="/loginassests/List-icon-1.svg" /></span>
                                                 <span style={ListText}>100% Privacy</span>
                                             </li>
-                                            <li className="flex space-x-[10px]">
+                                            <li className="flex items-center space-x-[10px]">
                                                 <span><Image alt="icon-2" width={14} height={14} src="/loginassests/List-icon-2.svg" /></span>
                                                 <span style={ListText}>0% Fake Profile</span>
                                             </li>
-                                            <li className="flex space-x-[10px]">
+                                            <li className="flex items-center space-x-[10px]">
                                                 <span><Image alt="icon-3" width={14} height={18} src="/loginassests/List-icon-3.svg" /></span>
                                                 <span style={ListText}>Fully Secured</span>
                                             </li>
-                                            <li className="flex space-x-[10px]">
+                                            <li className="flex items-center space-x-[10px]">
                                                 <span><Image alt="icon-4" width={20} height={19} src="/loginassests/List-icon-4.svg" /></span>
                                                 <span style={ListText}>Verified Profiles</span>
                                             </li>
@@ -510,7 +585,7 @@ function login() {
                                         <h1 style={ListText}>Get the App Today</h1>
                                         <div className="flex space-x-[22px] pt-[13px]">
                                             <div>
-                                                <Image alt="play-store" width={128} height={38} src='/image-1@2x.png' />
+                                                <Image alt="play-store" width={140} height={38} src='/image-1@2x.png' />
                                             </div>
                                             <div>
                                                 <Image alt="app-store" width={128} height={38} src='/image-2@2x.png' />
@@ -575,16 +650,16 @@ function login() {
                             {
                                 isModal === "error" && (
 
-                                <Snackbar open={openOTPModal} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={6000} onClose={handleCloseOTPAlert}>
-                                    <Alert onClose={handleCloseOTPAlert} severity={"error"} sx={{ width: '100%' }}>
-                                        {AlertMessage}
-                                    </Alert>
-                                </Snackbar>
+                                    <Snackbar open={openOTPModal} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={6000} onClose={handleCloseOTPAlert}>
+                                        <Alert onClose={handleCloseOTPAlert} severity={"error"} sx={{ width: '100%' }}>
+                                            {AlertMessage}
+                                        </Alert>
+                                    </Snackbar>
                                 )
                             }
 
                             {isModal === "success" && (
-                            
+
                                 <Snackbar open={openOTPModal} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={6000} onClose={handleCloseOTPAlert}>
                                     <Alert onClose={handleCloseOTPAlert} severity={"success"} sx={{ width: '100%' }}>
                                         {AlertMessage}

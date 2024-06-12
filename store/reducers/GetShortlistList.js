@@ -26,14 +26,14 @@ const ShortlistData = createSlice({
             .addCase(fetchshortlistdata.rejected, (state, action) => {
                 state.status = STATUSES.ERROR;
             })
-            .addCase(RemoveShortlist.pending,(state,action)=>{
+            .addCase(RemoveShortlist.pending, (state, action) => {
                 state.status = STATUSES.LOADING
             })
-            .addCase(RemoveShortlist.fulfilled,(state,action)=>{
+            .addCase(RemoveShortlist.fulfilled, (state, action) => {
                 state.status = STATUSES.IDLE
-                
+
             })
-            .addCase(RemoveShortlist.rejected,(state,action)=>{
+            .addCase(RemoveShortlist.rejected, (state, action) => {
                 state.status = STATUSES.ERROR
             })
 
@@ -43,49 +43,90 @@ const ShortlistData = createSlice({
 
 //Thunk 
 export const fetchshortlistdata = createAsyncThunk('shortlist/fetchData', async () => {
+    // try {
+    //     const token = localStorage.getItem('refoken');
+    //     const currentuser = getCookie('userid')
+    //     if (token) {
+    //         const myHeaders = new Headers();
+    //         myHeaders.append('Authorization', `Bearer ${token}`);
+
+    //         const requestOptions = {
+    //             method: 'GET',
+    //             headers: myHeaders,
+    //             redirect: 'follow',
+    //         };
+
+    //         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/shortlist/get-short-list`, requestOptions);
+
+    //         if (response.ok) {
+    //             const result = await response.json();
+    //             console.log("🚀 ~ fetchshortlistdata ~ result:", result)
+
+    //             const filterUsers = result.data.filter(user => user.userId == currentuser)
+
+    //             const fetchPromises = filterUsers.map(element => FetchshortlistdatausingID(element.shortlistId));
+
+    //             // Use Promise.all() to wait for all promises to resolve
+    //             const userDataArray = await Promise.all(fetchPromises);
+
+    //             console.log("data array : ", userDataArray)
+
+    //             return { userDataArray, filterUsers };
+    //         } else if (response.status === 401) {
+    //             // Handle token expiration or invalid token here
+    //             // You may need to refresh the token using the refresh token
+    //             throw new Error('Unauthorized');
+    //         } else {
+    //             console.error('API request failed:', response.statusText);
+    //             throw new Error('API request failed');
+    //         }
+    //     } else {
+    //         throw new Error('Token not found');
+    //     }
+    // } catch (error) {
+    //     console.error('Error fetching data:', error);
+    //     throw error;
+    // }
+
     try {
-        const token = localStorage.getItem('refoken');
-        const currentuser = getCookie('userid')
-        if (token) {
-            const myHeaders = new Headers();
-            myHeaders.append('Authorization', `Bearer ${token}`);
+        const token = getCookie("authtoken");
+        const axios = require('axios');
+        const currentuser = getCookie("userid")
 
-            const requestOptions = {
-                method: 'GET',
-                headers: myHeaders,
-                redirect: 'follow',
-            };
-
-            const response = await fetch(`https://happymilan.tech/api/v1/user/shortlist/get-short-list`, requestOptions);
-
-            if (response.ok) {
-                const result = await response.json();
-
-                const filterUsers = result.data.filter(user => user.userId == currentuser)
-
-                const fetchPromises = filterUsers.map(element => FetchshortlistdatausingID(element.shortlistId));
-
-                // Use Promise.all() to wait for all promises to resolve
-                const userDataArray = await Promise.all(fetchPromises);
-
-                console.log("data array : ", userDataArray)
-           
-                return { userDataArray, filterUsers };
-            } else if (response.status === 401) {
-                // Handle token expiration or invalid token here
-                // You may need to refresh the token using the refresh token
-                throw new Error('Unauthorized');
-            } else {
-                console.error('API request failed:', response.statusText);
-                throw new Error('API request failed');
+        const config = {
+            method: 'get',
+            maxBodyLength: Infinity,
+            url: `https://happymilan.tech/api/v1/user/shortlist/get-short-list/${currentuser}`,
+            headers: {
+                'Authorization': `Bearer ${token}`
             }
-        } else {
-            throw new Error('Token not found');
-        }
+        };
+
+        const response = await axios(config);
+        const result = response.data;
+
+        console.log("🚀 ~ fetchshortlistdata ~ result:", result);
+
+        const filterUsers = result.data.filter(user => user?.userId == currentuser);
+        console.log("🚀 ~ fetchshortlistdata ~ filterUsers:", filterUsers)
+
+        const fetchPromises = result?.data?.map(element => FetchshortlistdatausingID(element?.shortlistId));
+        console.log("🚀 ~ fetchshortlistdata ~ fetchPromises:", fetchPromises)
+
+        // Use Promise.all() to wait for all promises to resolve
+        const userDataArray = await Promise.all(fetchPromises);
+
+        console.log("data array : ", userDataArray);
+
+        // return { response };
+        return { userDataArray, filterUsers };
     } catch (error) {
-        console.error('Error fetching data:', error);
+        console.log(error);
         throw error;
     }
+
+
+
 });
 
 
@@ -108,10 +149,11 @@ export const FetchshortlistdatausingID = async (userId) => {
             redirect: 'follow',
         };
 
-        const response = await fetch(`https://happymilan.tech/api/v1/user/user/${userId}`, requestOptions);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/user/${userId}`, requestOptions);
 
         if (response.ok) {
             const result = await response.json();
+            console.log("🚀 ~ FetchshortlistdatausingID ~ result:", result)
             return result.data;
         } else if (response.status === 401) {
             // Handle unauthorized access (e.g., redirect to login page or refresh token)

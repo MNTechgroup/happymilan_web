@@ -1,12 +1,14 @@
-import React, { useState } from "react";
-import dynamic from 'next/dynamic';
-const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
-import Dialog from '@mui/material/Dialog';
+import React, { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+const DynamicSelect = dynamic(() => import("react-select"), { ssr: false });
 import Image from "next/image";
-
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import { Box } from "@mui/system";
+import { useDispatch, useSelector } from "react-redux";
+import { Hidemyprofile, Hidemyprofileclosemodel } from "../../../../../store/actions/UserSettingAction";
 
 function DeleteProfile() {
-
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -17,180 +19,297 @@ function DeleteProfile() {
     setOpen(false);
   };
 
-
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
-      paddingRight: '10px',
+      paddingRight: "10px",
       paddingLeft: "8px",
       width: "300px",
       height: "50px",
       borderRadius: "8px", // Add padding on the right side
       border: "1px solid #e6e6e6",
-      borderColor: state.isFocused ? 'black' : provided.borderColor,
-      '&:hover': {
-        borderColor: 'black',
+      borderColor: state.isFocused ? "black" : provided.borderColor,
+      "&:hover": {
+        borderColor: "black",
       },
-      boxShadow: state.isFocused ? 'none' : provided.boxShadow,
+      boxShadow: state.isFocused ? "none" : provided.boxShadow,
     }),
     indicatorSeparator: (provided) => ({
       ...provided,
-      display: 'none',
-      paddingRight: "20px"
+      display: "none",
+      paddingRight: "20px",
       // Hide the vertical line behind the arrow
     }),
   };
 
-
-  const options = [
-    { value: 'option1', label: 'Option 1' },
-    { value: 'option2', label: 'Option 2' },
-    { value: 'option3', label: 'Option 3' },
+  const options1 = [
+    { value: "oneWeek", label: "1 Week" },
+    { value: "twoWeek", label: "2 Week" },
+    { value: "oneMonth", label: "1 Week" },
+    { value: "threeMonth", label: "3 Week" },
+    { value: "sixMonth", label: "6 Week" },
+  ];
+  const options2 = [
+    { value: "found-my-match", label: "Found My Match" },
+    { value: "wants-to-take-break", label: "Wants to take a break" },
+    { value: "not-satisfied-by-matches", label: "Not Satisfied by matches" },
+    { value: "other-reason", label: "Other Reason" },
   ];
 
-  const [toggle, settoggle] = useState("hide")
-  const [deleteToggle, setdeleteToggle] = useState(false)
 
-  const Text1 = {
-    color: "#000",
-    textAlign: "center",
-    fontFamily: "Poppins",
-    fontSize: "24px",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "normal"
+  const [openModel, setOpenModel] = useState(false);
+  const handleModelOpen = () => {
+    setOpenModel(true);
+  };
+  const handleModelClose = () => {
+    setOpenModel(false);
+  };
+
+  const [modelShow, setModelShow] = useState(false);
+  const handleModelShow = () => {
+    setModelShow(true);
+  };
+  const handleModelHide = () => {
+    setModelShow(false);
+  };
+
+
+  const dispatch = useDispatch();
+
+  const { loading, data, closemodal } = useSelector((state) => state.userseting.Profilehide)
+
+  useEffect(() => {
+    if (closemodal) {
+      setOpenModel(false);
+      setModelShow(false);
+      dispatch(Hidemyprofileclosemodel());
+      // console.log("Calling....")
+    }
+  }, [closemodal])
+
+
+  const [SelectHideDuration, SetselectHideduration] = useState({
+    isProfileHide: true,
+    timeForProfileHide: "",
+  })
+
+  const HandleSelectHideDuration = (data) => {
+    SetselectHideduration((prev) => ({
+      ...prev,
+      timeForProfileHide: data.value
+    }))
   }
 
-  const Text2 = {
-    color: "#000",
-    textAlign: "center",
+  const HanldeHideProfile = () => {
+
+    dispatch(Hidemyprofile(SelectHideDuration))
+    console.log(SelectHideDuration)
+
+  }
+
+
+  const [SelectDeleteReason, SetselectDeleteReason] = useState({
+    isProfileDelete: true,
+    reasonForProfileDelete: ""
+  })
+
+  const HanldeSelectDeleteReason = (data) => {
+    SetselectDeleteReason((prev) => ({
+      ...prev,
+      reasonForProfileDelete: data.value
+    }))
+  }
+
+  const HanldeDeleteProfile = () => {
+    dispatch(Hidemyprofile(SelectDeleteReason))
+    console.log(SelectDeleteReason)
+  }
+  const TextHeading = {
+    color: "#6A6A6A",
     fontFamily: "Poppins",
-    fontSize: "16px",
+    fontSize: "12px",
     fontStyle: "normal",
     fontWeight: "400",
-    lineHeight: "normal"
+    lineHeight: "normal",
   }
 
   return (
     <>
       <div className="flex mt-[-17px]">
-        <Image width={22} height={14} src='/assests/dashboard/seting/delete-profile-icon.svg' />
-        <h1 className="text-[15px] xl:text-[16px] font-medium ml-[15px]">Hide/Delete Profile</h1>
+        <h1 id="setting-text-grad" className="text-[15px] xl:text-[16px]  ml-[0px]">Profile Setting</h1>
       </div>
-      <h1 className="w-[580px] lg:w-[650px] xl:w-[700px] text-[11px] xl:text-[12px] text-[#484848] font-medium mt-[20px]">
-        See information about your account, download an archive of your data, or
-        learn about your account deactivation options
-      </h1>
+      <div className="w-[500px] lg:w-[640px] xl:w-[700px]">
+        <h1 style={TextHeading} className=" mt-[20px]">
+          This menu enables users to conceal or delete their profile from public visibility
+        </h1>
+      </div>
+
       <div className="mt-[20px] xl:mt-[25px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
       <div className="">
         <div className="mt-[20px]">
-          <h1 className="text-[15px] xl:text-[16px] font-medium mb-[5px]">Hide Profile</h1>
-          <h1 className="text-[14px] xl:text-[14px] font-medium">
-            Your Profile is currently{" "}
-            <span className="text-[#0F52BA]">Visible</span>
+          <h1 className="text-[15px] xl:text-[16px] font-medium mb-[5px]">
+            Hide Profile
           </h1>
-        </div>
-        <div className="mt-[20px]">
-
-          <div className="h-[32px] lg:h-[45px] xl:h-[50px] rounded-full absolute right-2 xl:right-[80px] mt-[-70px]" >
-            <div className='relative flex left-[80px]'>
-              <button onClick={() => settoggle("hide")} className={`${toggle === "hide" ? "bg-[#0F52BA] text-[white]" : "bg-[#F9F9F9] text-[black]"}  w-[100px] h-[50px] rounded-[8px] `}>Hide</button>
-              <button onClick={() => settoggle("show")} className={`${toggle === "show" ? "bg-[#0F52BA] text-[white]" : "bg-[#F9F9F9] text-[black]"} w-[100px] h-[50px] rounded-[8px] `}>Show</button>
+          <h1 className="text-[12px] xl:text-[14px] text-[#7C7878] font-medium mt-[1.5%]">
+            Taking this action makes your profile temporarily invisible. Invites
+            or chats are inaccessible
+          </h1>
+          <div className="flex mt-[5%] justify-between place-items-center">
+            <div className="w-[300px]">
+              <DynamicSelect
+                className="w-[100%] h-[40px] xl:h-[50px]  mt-[10px]  text-[16px] placeholder:text-[black]"
+                styles={customStyles}
+                placeholder=" Select Duration"
+                options={options1}
+                onChange={HandleSelectHideDuration}
+              />
             </div>
-          </div>
-        </div>
-
-      </div>
-      {toggle == "hide" ?
-        <div className="mt-[50px]">
-
-          <h1 className="text-[14px] xl:text-[16px]  font-medium">
-            How long would you like to hide your Profile for?
-          </h1>
-          <p className="w-[580px] lg:w-[640px] xl:w-[698px] mt-[10px] text-[12px] font-medium text-[#949494]">
-            Hiding your Profile will make it invisible temporarily. Other
-            members will not be able to send you Invitations or Messages or
-            chat.
-          </p>
-          <div className="mt-[10px] w-[340px] h-[50px]">
-
-          <DynamicSelect
-              className="bg-[#F9F9F9] h-[50px] w-[300px] flex justify-end"
-              styles={customStyles}
-              Label="S"
-               options={options}
-            />
-
-          </div>
-        </div>
-        : ""}
-      <div className=" mt-[30px] xl:mt-[40px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
-      <div className="mt-[20px] flex place-items-center mb-[300px]">
-
-        <h1 className="text-[15px] xl:text-[16px] font-medium mb-[5px] ">Hide Profile</h1>
-        <div className="absolute right-2 xl:right-0">
-
-
-          <button onClick={() => setdeleteToggle(!deleteToggle)} className={`text-[14px] xl:text-[16px] font-medium w-[160px] xl:w-[190px] h-[50px] mt-[5px]  rounded-[10px] ${!deleteToggle ? "bg-[#D90202] text-[#FFF]" : "bg-[#F9F9F9] text-[#000]"}`}>
-            Delete My Profile</button>
-        </div>
-        <div className="absolute mt-[200px] ">
-          {
-
-            deleteToggle ? <div> <p className="text-[13px] xl:text-[14px] font-medium"> Let us know why you wish to delete your Profile? </p>
-
-
-              <select
-                className="select mt-[25px] relative  px-[20px] focus:outline-none border-1 bg-[#F9F9F9]  border-[#CDCDCD] w-[570px] lg:w-[640px] xl:w-[700px]  h-[50px] rounded-[8px]"
-                variant="static"
-                Label="Select"
+            <div>
+              <button
+                onClick={handleModelOpen}
+                id="grad-button"
+                className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white] w-[120px] h-[40px] xl:h-[50px] rounded-[25px]"
               >
-                <option>Found my Match on RishtaForever.com</option>
-              </select>
-              <div className=" mt-[20px] xl:mt-[30px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
-              <div className="absolute  right-0">
-                <button onClick={handleClickOpen} className=" w-[160px] xl:w-[190px] h-[50px] mt-[30px] rounded-[10px] bg-[#0F52BA]">
-
-                  <h1 className=" text-[14px] xl:text-[16px] font-medium text-[#fff]">
-                    Proceed to Delete
-
-                  </h1>
+                
+                  Hide
                 </button>
-                <Dialog
-                  open={open}
-                  onClose={handleClose}
-                  aria-labelledby="alert-dialog-title"
-                  aria-describedby="alert-dialog-description"
+              <Modal
+                className=""
+                BackdropProps={{ style: { opacity: 1 } }}
+                open={openModel}
+                onClose={() => handleModelOpen(false)}
+              >
+                <Box
+                  position="absolute"
+                  className=" focus:outline-none"
+                  top="32%"
+                  left="38%"
                 >
+                  <Typography className="bg-[#fff]    w-[370px] h-[264px] rounded-[10px] border-[1px] border-[#DDD]">
+                    <div className="w-[100%] h-[100%] ">
+                      <div className="text-center p-[50px]">
+                        <div className="mt-[10px]">
+                          <h1 className="text-[20px]">Are you sure want</h1>
+                          <p className="text-[14px]">Hide Your Profile?</p>
+                        </div>
+                        <div className="flex gap-[15px] mt-[40px]">
+                          <button
+                            onClick={handleModelClose}
+                            className="w-[126px] h-[40px] xl:h-[50px] border-[1px] border-[#0F52BA] rounded-[8px]"
+                          >
+                            <h1 className="text-[16px]">Not Now</h1>
+                          </button>
+                          <button
+                            id="grad-button"
+                            onClick={HanldeHideProfile}
+                            className="w-[126px] h-[40px] xl:h-[50px]  rounded-[8px]"
+                          >
+                            {loading ?
+                              <>
+                                <Image alt="loader" width={25} height={25} className='animate-spin inline ' src='/assests/animation/loaderIcon.svg' />
 
-
-                  <div className="flex flex-col space-y-[40px] justify-center w-[370px] h-[264px] rounded-[10px] border-[1px] border-[#DDD] bg-[#FFF]">
-                    <div>
-                      <h1 style={Text1}>Are you sure want</h1>
-                      <p style={Text2}>Delete Your Profile?</p>
-                    </div>
-                    <div className="text-center space-x-[20px]"> 
-                      <button className="bg-[#F0F0F0] w-[126px] h-[50px] rounded-[8px]" onClick={handleClose}>Not Now</button>
-                      <button className="bg-[#0F52BA] w-[126px] h-[50px] text-[#FFF] rounded-[8px]" onClick={handleClose}>Yes, Delete </button>
+                              </>
+                              :
+                              <>
+                                <h1 className="text-[16px] text-[#fff]">
+                                  Yes, Hide{" "}
+                                </h1>
+                              </>}
+                          </button>
+                        </div>
                       </div>
-                  </div>
-
-
-
-
-                </Dialog>
-              </div>
+                    </div>
+                  </Typography>
+                </Box>
+              </Modal>
             </div>
-
-              : null
-
-          }
-
+          </div>
         </div>
-
       </div>
 
+      <div className=" mt-[30px] xl:mt-[40px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
+      <div className="">
+        <div className="mt-[20px]">
+          <h1 className="text-[15px] xl:text-[16px] font-medium mb-[5px]">
+            Delete your profile
+          </h1>
+          <h1 className="text-[12px] xl:text-[14px] text-[#7C7878] font-medium mt-[1.5%]">
+            You'll lose all profile details, Match interactions, and paid
+            memberships permanently.
+          </h1>
+          <div className="flex mt-[5%] justify-between place-items-center">
+            <div className="w-[300px]">
+              <DynamicSelect
+                className="w-[100%] h-[40px] xl:h-[50px]  mt-[10px]  text-[16px] placeholder:text-[black]"
+                styles={customStyles}
+                placeholder=" Select Reason"
+                options={options2}
+                onChange={HanldeSelectDeleteReason}
+              />
+            </div>
+            <div>
+              <button
+                onClick={handleModelShow}
+                id="grad-button"
+                className="w-[120px] h-[40px] xl:h-[50px] rounded-[25px]"
+              >
+                <h1 className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white]">
+                  Delete
+                </h1>
+              </button>
+              <Modal
+                className=""
+                BackdropProps={{ style: { opacity: 1 } }}
+                open={modelShow}
+                onClose={() => handleModelShow(false)}
+              >
+                <Box
+                  position="absolute"
+                  className=" focus:outline-none"
+                  top="32%"
+                  left="38%"
+                >
+                  <Typography className="bg-[#fff]    w-[370px] h-[264px] rounded-[10px] border-[1px] border-[#DDD]">
+                    <div className="w-[100%] h-[100%] ">
+                      <div className="text-center p-[50px]">
+                        <div className="mt-[10px]">
+                          <h1 className="text-[20px]">Are you sure want</h1>
+                          <p className="text-[14px]">Delete Your Profile?</p>
+                        </div>
+                        <div className="flex gap-[15px] mt-[40px]">
+                          <button
+                            onClick={handleModelHide}
+                            className="w-[126px] h-[40px] xl:h-[50px] border-[1px] border-[#0F52BA] rounded-[8px]"
+                          >
+                            <h1 className="text-[16px]">Not Now</h1>
+                          </button>
+                          <button
+                            id="grad-button"
+                            onClick={HanldeDeleteProfile}
+                            className="w-[126px] h-[40px] xl:h-[50px]  rounded-[8px]"
+                          >{loading ?
+                            <>
+                              <Image alt="loader" width={25} height={25} className='animate-spin inline ' src='/assests/animation/loaderIcon.svg' />
 
+                            </>
+                            :
+                            <>
+                              <h1 className="text-[16px] text-[#fff]">
+                                Yes, Delete{" "}
+                              </h1>
+                            </>
+                            }
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </Typography>
+                </Box>
+              </Modal>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

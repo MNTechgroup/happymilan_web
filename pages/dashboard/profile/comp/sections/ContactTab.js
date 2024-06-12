@@ -8,6 +8,7 @@ const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
 const ContactTab = ({ data }) => {
 
+
     const Text2 = {
         fontFamily: "Poppins",
         fontStyle: "normal",
@@ -71,18 +72,53 @@ const ContactTab = ({ data }) => {
     const [formdata, setformdata] = useState({
         email: data?.email && data.email,
     })
+
+    const [ShowPhoneNumber, SetShowPhoneNumber] = useState(null)
+    const [showMobileNumber, SetShowMobileNumber] = useState(null)
+
+    let phoneNumber;
+    let mobileNumber;
+
+
+    useEffect(() => {
+        if (data?.mobileNumber) {
+            phoneNumber = data?.mobileNumber.toString();
+
+            // Insert a space after the country code (e.g., "91")
+            phoneNumber = phoneNumber.replace(/^(\d{2})/, '$1 ');
+
+            SetShowPhoneNumber(phoneNumber)
+        } else {
+            SetShowPhoneNumber(null)
+        }
+
+        if (data?.mobileNumber) {
+            mobileNumber = data?.mobileNumber.toString();
+
+            // Insert a space after the country code (e.g., "91")
+            mobileNumber = mobileNumber.replace(/^(\d{2})/, '$1 ');
+            SetShowMobileNumber(mobileNumber)
+        } else {
+            SetShowMobileNumber(null)
+        }
+
+
+
+    }, [])
+
     return (
         <>
-            <div className='w-full h-[270px] lg:h-[369px]  border-[1px] border-[#F1F1F1] rounded-[10px] 2xl:space-y-[20px] xl:space-y-[20px] lg:space-y-[20px] md:space-y-[20px] space-y-[10px]'>
+            <div className={`w-full h-[270px] lg:h-${showForm ? "[450px]" : "[369px]"}  border-[1px] border-[#F1F1F1] rounded-[10px] 2xl:space-y-[20px] xl:space-y-[20px] lg:space-y-[20px] md:space-y-[20px] space-y-[10px]`}>
                 <div className='pt-[10px] grid place-items-center'>
                     <ul className='w-[90%] flex justify-between items-center m-[10px]'>
                         <li><h1 style={Text2} className='2xl:text-[16px] xl:text-[16px] lg:text-[16px] md:text-[16px] text-[14px]'>Contact Details</h1></li>
                         <li>
-                            <div className='cursor-pointer w-[37px] h-[37px] bg-[#F0F9FF] rounded-[5px] flex items-center justify-center'>
+                            <div className='cursor-pointer w-[37px] h-[37px] hover:bg-[#F0F9FF] rounded-[50%] flex items-center justify-center'>
                                 {!showForm ?
                                     <Image alt='editIcon' width={20} height={20} onClick={handleEditClick} src={'/assests/dashboard/icon/edit-details-icon.svg'} />
                                     :
-                                    <Image alt='modifyIcon' width={37} height={37} onClick={handleEditClick} src={'/assests/dashboard/icon/modify-icon.svg'} />
+                                    <Image loading='lazy' alt='modifyIcon' width={15} height={15} onClick={handleEditClick} src={'/assests/profile/cross-edit-icon.svg'} />
+
                                 }
                             </div>
                         </li>
@@ -94,7 +130,7 @@ const ContactTab = ({ data }) => {
                         <div className='flex flex-col items-center justify-center'>
 
                             <div className='w-[90%]'>
-                                <h1 className='text-[#000] pb-[10px]' style={labelText}>Mobile Numberrrrrr</h1>
+                                <h1 className='text-[#000] pb-[10px]' style={labelText}>Mobile Number</h1>
                                 <div className='flex justify-between'>
                                     <div>
 
@@ -135,9 +171,9 @@ const ContactTab = ({ data }) => {
                                 </div>
                             </div>
 
-                            <div className='w-[90%] flex justify-end pb-[10px] mt-[10px]'>
+                            <div className='w-[90%] flex justify-end pb-[10px] mt-[20px]'>
 
-                                <button id='grad-btn' className='rounded-[10px] text-[white] w-[80px] h-[40px]' >Save</button>
+                                <button id='profile-save-details-btn' className='rounded-[10px] text-[white] w-[80px] h-[40px]' >Save</button>
 
                             </div>
                         </div>
@@ -152,18 +188,21 @@ const ContactTab = ({ data }) => {
                             <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
                                 <div>
                                     <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Mobile Number</p>
-                                    <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>+91 90001 01021</h1>
+                                    {/* <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>+{data?.mobileNumber ? data.mobileNumber : 'NA'}</h1> */}
+                                    <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>+{ShowPhoneNumber ? ShowPhoneNumber : 'NA'}</h1>
                                 </div>
                                 <div>
                                     <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Home Number</p>
-                                    <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.homeMobileNumber && data.homeMobileNumber}</h1>
+                                    {/* <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.homeMobileNumber ? data.homeMobileNumber : "NA"}</h1> */}
+                                    <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>+{showMobileNumber ? showMobileNumber : "NA"}</h1>
                                 </div>
-                                <div>
+                                <div className='col-span-2'>
                                     <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Email Address</p>
-                                    <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.email && data.email}</h1>
+                                    <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.email ? data.email : "NA"}</h1>
                                 </div>
 
                             </div>
+
                         </div>
                     </>}
 

@@ -11,7 +11,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { getCookie } from "cookies-next";
-import Avatar from "react-avatar";
 import ProfileImage from "./Maincomp/ProfileImage";
 
 
@@ -20,6 +19,24 @@ function CommonNavbar() {
     const isBlogActive = router.pathname.startsWith('/blog');
     const isSuccessActive = router.pathname.startsWith('/successstories');
     const isLoginActive = router.pathname.startsWith('/login');
+
+
+    const befText = {
+        color: "#000",
+        fontFamily: "Poppins",
+        fontSize: "14px",
+        fontStyle: "normal",
+        fontWeight: "400",
+        lineHeight: "normal",
+    }
+    const aftText = {
+        color: "#000",
+        fontFamily: "Poppins",
+        fontSize: "14px",
+        fontStyle: "normal",
+        fontWeight: "500",
+        lineHeight: "normal",
+    }
 
 
     const [openNav, setOpenNav] = React.useState(false);
@@ -97,7 +114,7 @@ function CommonNavbar() {
                 >
                     Member Login{" "}
                     {!isLoginActive ?
-                        <Image width={16} height={16}
+                        <Image loading="lazy" width={16} height={16}
                             alt="icon"
                             src="/assests/Black/Vector.svg"
                             className="mr-4  relative left-[15px]"
@@ -115,10 +132,10 @@ function CommonNavbar() {
     );
 
 
-    const [Uname,setUname] = useState();
-    useEffect(()=>{
+    const [Uname, setUname] = useState();
+    useEffect(() => {
         setUname(getCookie('userName'))
-    },[])
+    }, [])
 
     const navList = (
         <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
@@ -127,13 +144,12 @@ function CommonNavbar() {
                 as="li"
                 variant="small"
                 color="blue-gray"
-                className="p-1 lg:w-[151px] lg:grid place-items-center lg:h-[30px]  font-normal poppins rounded-[10px]"
-                style={{ color: `${router.pathname === "/aboutus" ? "#0F52BA" : ""}`, backgroundColor: `${router.pathname === "/aboutus" ? "rgba(15, 82, 186, 0.05)" : ""}`, fontFamily: "Poppins", fontSize: "14px", fontStyle: "normal", fontWeight: "400", lineHeight: "normal", }}
-
-
+                className="hover:bg-[#F2F7FF] p-1 lg:w-[151px] lg:grid place-items-center lg:h-[30px]  font-normal poppins rounded-[17px]"
+                // style={{ color: `${router.pathname === "/aboutus" ? "#0F52BA" : ""}`, backgroundColor: `${router.pathname === "/aboutus" ? "rgba(15, 82, 186, 0.05)" : ""}`, fontFamily: "Poppins", fontSize: "14px", fontStyle: "normal", fontWeight: "400", lineHeight: "normal", }}
+                // style={ router.pathname == "/aboutus" ?  aftText : befText ,  {fontFamily: "Poppins", fontSize: "14px", fontStyle: "normal",  lineHeight: "normal", }}
             >
 
-                <Link style={{ color: `${router.pathname === "/aboutus" ? "#0F52BA" : "#000"}` }} href="/aboutus" className="flex items-center">
+                <Link style={router.pathname=="/aboutus" ? aftText : befText} href="/aboutus" className="flex items-center">
                     About Happy Milan
                 </Link>
 
@@ -143,10 +159,10 @@ function CommonNavbar() {
                 as="li"
                 variant="small"
 
-                className="p-1 lg:w-[62px] lg:grid place-items-center lg:h-[30px]  font-normal poppins rounded-[10px]"
-                style={{ color: `${isBlogActive ? "#0F52BA" : ""}`, backgroundColor: `${isBlogActive ? "rgba(15, 82, 186, 0.05)" : ""}`, fontFamily: "Poppins", fontSize: "14px", fontStyle: "normal", fontWeight: "400", lineHeight: "normal", }}
+                className="hover:bg-[#F2F7FF] p-1 lg:w-[62px] lg:grid place-items-center lg:h-[30px]  font-normal poppins rounded-[10px]"
+                // style={{ color: `${isBlogActive ? "#0F52BA" : ""}`, backgroundColor: `${isBlogActive ? "rgba(15, 82, 186, 0.05)" : ""}`, fontFamily: "Poppins", fontSize: "14px", fontStyle: "normal", fontWeight: "400", lineHeight: "normal", }}
             >
-                <Link style={{ color: `${isBlogActive ? "#0F52BA" : "#000"}` }} href="/blog" className="flex items-center">
+                <Link style={isBlogActive ? aftText : befText} href="/blog" className="flex items-center">
                     Blogs
                 </Link>
             </Typography>
@@ -155,11 +171,11 @@ function CommonNavbar() {
                 as="li"
                 variant="small"
                 color="blue-gray"
-                className="p-1 font-normal rounded-[10px] p-[7px]"
-                style={{ color: `${isSuccessActive ? "#0F52BA" : ""}`, backgroundColor: `${isSuccessActive ? "rgba(15, 82, 186, 0.05)" : ""}`, fontFamily: "Poppins", fontSize: "14px", fontStyle: "normal", fontWeight: "400", lineHeight: "normal", }}
+                className="hover:bg-[#F2F7FF] p-1 font-normal rounded-[10px] p-[7px]"
+                // style={{ color: `${isSuccessActive ? "#0F52BA" : ""}`, backgroundColor: `${isSuccessActive ? "rgba(15, 82, 186, 0.05)" : ""}`, fontFamily: "Poppins", fontSize: "14px", fontStyle: "normal", fontWeight: "400", lineHeight: "normal", }}
 
             >
-                <Link style={{ color: `${isSuccessActive ? "#0F52BA" : "#000"}` }} href="/successstories" className="flex items-center">
+                <Link style={isSuccessActive ? aftText : befText} href="/successstories" className="flex items-center">
                     Success Stories
                 </Link>
             </Typography>
@@ -183,7 +199,7 @@ function CommonNavbar() {
                     >
                         Member Login{" "}
                         {!isLoginActive ?
-                            <Image width={16} height={16}
+                            <Image loading="lazy" width={16} height={16}
                                 alt="icon"
                                 src="/assests/Black/Vector.svg"
                                 className="mr-4  relative left-[15px]"
@@ -199,7 +215,7 @@ function CommonNavbar() {
             </>
                 :
                 <>
-                   <ProfileImage size={30}/>
+                    <ProfileImage size={30} onClick={() => alert("Hello")} />
                 </>
             }
 
@@ -218,12 +234,12 @@ function CommonNavbar() {
 
                         className="mr-4 cursor-pointer py-1.5 lg:ml-[50px] font-medium"
                     >
-                        <Link href="/">  <Image width={148} height={36} alt="logo" src="/heroSec/Happy-milan2.svg" /></Link>
+                        <Link href="/">  <Image loading="lazy" width={148} height={36} alt="logo" src="/heroSec/Happy-milan2.svg" /></Link>
                     </Typography>
                     <div className="flex items-center gap-4">
                         {/* <div className={` w-[600px] hidden lg:block `}>{navList}</div> */}
                         <div className={`${token ? "w-[100%]" : "w-[600px]"} hidden lg:block `}>{navList}</div>
-                      
+
                         <IconButton
                             variant="text"
                             className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"

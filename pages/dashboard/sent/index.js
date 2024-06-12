@@ -2,82 +2,19 @@
 import React, { useState } from 'react'
 import NavBar from '../NavBar'
 import SideBar from '../SideBar'
-import Footer from '../../components/Footer'
-import UserStory from '../commonCompo/UserStory'
-import SentRequest from './comp/SentRequest'
-import GridList from './comp/GridList'
-import ProfileComplete from '../commonCompo/ProfileComplete'
-import MoreSuggestion from '../commonCompo/MoreSuggestion'
 import ProtectedRoutes from '../../routes/ProtectedRoutes'
+import dynamic from 'next/dynamic'
+import Image from 'next/image'
+const UserStory = dynamic(() => import('../commonCompo/UserStory'));
+const SentRequest = dynamic(() => import('./comp/SentRequest'));
+const GridList = dynamic(() => import('./comp/GridList'));
+const ProfileComplete = dynamic(() => import('../commonCompo/ProfileComplete'));
+const MoreSuggestion = dynamic(() => import('../commonCompo/MoreSuggestion'));
+const Footer = dynamic(() => import('../../components/Footer'));
 
 function index() {
 
-  const Text7 = {
-    color: "#000",
-    fontFamily: "Poppins",
-    fontSize: "14px",
-    fontStyle: "normal",
-    fontWeight: "600",
-    lineHeight: "normal"
-  }
-  const Text8 = {
-    fontFamily: "Poppins",
-    fontSize: "12px",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "normal"
-  }
-  const BoldText = {
-    color: "#000",
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: "500",
-    lineHeight: "normal"
-  }
-  const ProfileName = {
-    color: "#000",
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: "600",
-    lineHeight: "normal"
-  }
-  const Text3 = {
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "normal"
-  }
 
-  const ListText = {
-    color: "#000",
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "24px" /* 171.429% */
-  }
-
-  const Text4 = {
-    color: "#000",
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "12px"
-  }
-
-  const Box = {
-    borderRadius: "10px",
-    background: "#FFF",
-    boxShadow: "0px 0px 14px 0px rgba(0, 0, 0, 0.07)"
-  }
-
-  const Text5 = {
-    color: "#0F52BA",
-    fontFamily: "Poppins",
-    fontSize: "16px",
-    fontStyle: "normal",
-    fontWeight: "500",
-    lineHeight: "22px"
-  }
   const Text6 = {
     color: "#000",
     fontFamily: "Poppins",
@@ -86,33 +23,24 @@ function index() {
     fontWeight: "400",
     lineHeight: "22px"
   }
-  const RequestBox = {
-    borderRadius: "10px",
-    background: "#FFF",
-    boxShadow: "0px 0px 14px 0px rgba(0, 0, 0, 0.07)"
-  }
 
-  const ProfileCard = {
-    borderRadius: "10px",
-    background: "#FFF",
-    boxShadow: "0px 0px 14px 0px rgba(0, 0, 0, 0.07)"
-  }
   const [Listtype, setListtype] = useState(false);
 
+  const handleSearch = (searchTerm) => { }
 
   return (
-    <> 
-    
-    <ProtectedRoutes/>
-    <NavBar />
+    <>
+
+      <ProtectedRoutes />
+      <NavBar handleSearch={handleSearch} />
 
 
-    <SideBar />
+      <SideBar />
 
-   
-    {/* Main Section Start */}
 
-<div  id='main-centerlized-content' className='flex justify-center flex-col'>
+      {/* Main Section Start */}
+
+      <div id='main-centerlized-content' className='flex justify-center flex-col'>
         <div id='first-child' className='pl-[0px] lg:pl-[240px] 2xl:pl-[280px] xl:pl-[240px] flex  mt-[100px]'>
 
           <div className='h-full'>
@@ -124,60 +52,24 @@ function index() {
 
             <div id='centerlized-content' className='2xl:block xl:block lg:block hidden'>
               <div className='relative 2xl:w-[715px] xl:w-[635px] lg:w-[650px] m-[10px] flex justify-between'>
-                
+
                 <h1 className='p-[5px] relative 2xl:left-[40px] lg:left-[10px] xl:left-[55px]'><span style={Text6}>Sent Requests</span></h1>
-                <div className='flex space-x-[10px] relative right-[50px]'>
-                  <button className='' onClick={() => setListtype(true)}>
+                <div className='justify-center  w-[62px] h-[30px] rounded-[17.5px] border-[1px] border-[#F3F3F3] flex  relative right-[50px]'>
 
-                    {/* Grid View Mode  */}
+                  <div onClick={() => setListtype(true)} style={{ cursor: "pointer", borderRadius: "17.5px 0PX 0px 17.5px" }} className={`w-[45px] ${Listtype ? "bg-[#F3F8FF]" : ""} hover:bg-[#F3F8FF] grid place-items-center h-[28px] border-r-[1px] border-r-[#F3F3F3]`}>
+                    <Image width={13} height={13} alt='listview' src={Listtype ? "/assests/dashboard/menus/after-grid.svg" : "/assests/dashboard/menus/before-grid.svg"} />
 
-                    {/* <img src='/assests/Black/3-grid.svg'/> */}
-                    {
-                      !Listtype ? <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 4H4V0H0V4ZM6 16H10V12H6V16ZM0 16H4V12H0V16ZM0 10H4V6H0V10ZM6 10H10V6H6V10ZM12 0V4H16V0H12ZM6 4H10V0H6V4ZM12 10H16V6H12V10ZM12 16H16V12H12V16Z" fill="#BBBBBB" />
-                      </svg> : <svg className='' width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 4H4V0H0V4ZM6 16H10V12H6V16ZM0 16H4V12H0V16ZM0 10H4V6H0V10ZM6 10H10V6H6V10ZM12 0V4H16V0H12ZM6 4H10V0H6V4ZM12 10H16V6H12V10ZM12 16H16V12H12V16Z" fill="#0F52BA" />
-                      </svg>
-                    }
-                  </button>
+                  </div>
+
 
 
                   {/* Grid View Mode  */}
-                  <button className='' onClick={() => setListtype(false)}>
 
-                    {/* List View Mode  */}
-                    {!Listtype ?
-                      <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g clip-path="url(#clip0_576_120)">
-                          <path d="M16.5 0H0.5V4H16.5V0Z" fill="#0F52BA" />
-                          <path d="M16.5 6H0.5V10H16.5V6Z" fill="#0F52BA" />
-                          <path d="M16.5 12H0.5V16H16.5V12Z" fill="#0F52BA" />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_576_120">
-                            <rect width="16" height="16" fill="white" transform="translate(0.5)" />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                      :
-                      <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g clip-path="url(#clip0_576_120)">
-                          <path d="M16.5 0H0.5V4H16.5V0Z" fill="#BBBBBB" />
-                          <path d="M16.5 6H0.5V10H16.5V6Z" fill="#BBBBBB" />
-                          <path d="M16.5 12H0.5V16H16.5V12Z" fill="#BBBBBB" />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_576_120">
-                            <rect width="16" height="16" fill="white" transform="translate(0.5)" />
-                          </clipPath>
-                        </defs>
-                      </svg>}
+                  <div onClick={() => setListtype(false)} style={{ cursor: "pointer", borderRadius: "0px 17.5px 17.5px 0px" }} className={`w-[45px] ${Listtype ? "" : " bg-[#F3F8FF]"}  hover:bg-[#F3F8FF] grid place-items-center h-[28px] border-l-[1px] border-l-[#F3F3F3]`}>
+                    <Image width={13} height={13} alt='listview' src={Listtype ? "/assests/dashboard/menus/before-list.svg" : "/assests/dashboard/menus/after-list.svg"} />
 
+                  </div>
 
-                    {/* List View Mode  */}
-
-
-                  </button>
                 </div>
               </div>
 
@@ -189,7 +81,7 @@ function index() {
 
             </div>
             <div className='block lg:block 2xl:hidden xl:hidden relative top-[60px] pl-[15px]'>
-            <h1 className='p-[5px] relative 2xl:left-[40px] lg:left-[10px] xl:left-[55px]'><span style={Text6}>Sent Requests</span></h1>
+              <h1 className='p-[5px] relative 2xl:left-[40px] lg:left-[10px] xl:left-[55px]'><span style={Text6}>Sent Requests</span></h1>
             </div>
             <div className='block lg:hidden 2xl:hidden xl:hidden'>
 
@@ -198,13 +90,11 @@ function index() {
             </div>
           </div>
 
-          <div className='hidden  z-[-10]  absolute 2xl:top-[250px] xl:top-[245px] right-10  2xl:flex xl:flex flex-col space-y-[30px] justify-center items-end w-full 2xl:w-[380px] xl:w-[350px]'>
+          <div className=" hidden  absolute 2xl:top-[250px] xl:top-[245px] right-10 2xl:flex xl:flex flex-col space-y-[30px] justify-center items-end w-full 2xl:w-[380px] xl:w-[350px]">
 
-            {/* Side Section 2 */}
             <ProfileComplete />
 
             <MoreSuggestion />
-
           </div>
         </div>
         <div className='pt-[100px]'>

@@ -10,7 +10,7 @@ export const fetchUserById = (id) => async (dispatch) => {
   try {
 
     // const userid = "659bb6ebcc4b4bb29364a569"
-    const response = await axios.get(`https://happymilan.tech/api/v1/user/user/${id}`);
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/user/${id}`);
     dispatch({
       type: FETCH_USER_BY_ID_SUCCESS,
       payload: response.data.data,

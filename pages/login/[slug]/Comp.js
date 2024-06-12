@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from 'next/router';
 import Navbar from "../../components/Navbar";
 import Image from "next/image";
@@ -70,7 +70,7 @@ function Comp({ formData, updateFormData }) {
                     <div className="flex lg:flex-row md:flex-col">
 
                         <div className="hidden lg:block w-[500px] h-full lg:mt-[50px]  2xl:mt-[11%] xl:mt-[40px] 2xl:h-full xl:h-[500px] lg:h-full">
-                            <Image width={500} height={500} alt="login-img" src="/assests/common/group-img-1.svg" className="2xl:w-full 2xl:h-full xl:h-[500px] lg:h-full lg:w-full md:w-full md:h-full" />
+                            <Image loading="lazy" width={500} height={500} alt="login-img" src="/assests/common/group-img-1.svg" className="2xl:w-full 2xl:h-full xl:h-[500px] lg:h-full lg:w-full md:w-full md:h-full" />
                         </div>
                         <div className=" 2xl:w-[500px] xl:w-[500px] lg:w-[500px]  md:w-[500px] w-full  h-[400px] 2xl:mt-[140px] xl:mt-[100px]">
 
@@ -137,7 +137,7 @@ function Comp({ formData, updateFormData }) {
                                 </div>
                                 <div className="h-[50px] grid  place-items-end ">
                                     {
-                                        activebtn === 0 ? "" : <button id="grad-btn" onClick={ContinueBtn} className=" mr-[77px] w-[147px] h-[50px] rounded-[10px] bg-[#0F52BA]"><span className="inline pr-[10px] text-[white] block" style={btnstyle}>Continue</span><Image alt="icon-2" width={18} height={20} className="inline" src="/vector.svg" /></button>
+                                        activebtn === 0 ? "" : <button id="grad-btn" onClick={ContinueBtn} className=" mr-[77px] w-[147px] h-[50px] rounded-[10px] bg-[#0F52BA]"><span className="inline pr-[10px] text-[white] block" style={btnstyle}>Continue</span><Image loading="lazy" alt="icon-2" width={18} height={20} className="inline" src="/vector.svg" /></button>
 
                                     }
                                 </div>

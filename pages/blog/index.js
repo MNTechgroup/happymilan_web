@@ -43,8 +43,7 @@ function index() {
         fontWeight: "400",
         lineHeight: "normal",
     }
-
-    // lg:w-4/5
+    
     return (
         <>
             <Navbar />
@@ -72,7 +71,7 @@ function index() {
 
                                             </div>
                                             <div className='w-full lg:w-auto grid place-items-center lg:block pt-[20px]'>
-                                                <Link href="/blog/1"> <button style={Content} className='w-[214px] h-[50px] rounded-[24px] bg-[#F8F8F8] inline'><span className='pr-[15px]'>Read Full Article</span> <Image width={16} height={16} className='inline' src='/assests/common/blog-arrow.svg' /></button></Link>
+                                                <Link href="/blog/1"> <button style={Content} className='w-[214px] h-[50px] rounded-[24px] bg-[#F8F8F8] inline'><span className='pr-[15px]'>Read Full Article</span> <Image alt="img" width={16} height={16} className='inline' src='/assests/common/blog-arrow.svg' /></button></Link>
                                             </div>
 
                                         </div>
@@ -102,7 +101,7 @@ function index() {
 
                                             </div>
                                             <div className='w-full lg:w-auto grid place-items-center lg:block pt-[20px]'>
-                                                <Link href="/blog/1"> <button style={Content} className='w-[214px] h-[50px] rounded-[24px] bg-[#F8F8F8] inline'><span className='pr-[15px]'>Read Full Article</span> <Image width={16} height={16} className='inline' src='/assests/common/blog-arrow.svg' /></button></Link>
+                                                <Link href="/blog/1"> <button style={Content} className='w-[214px] h-[50px] rounded-[24px] bg-[#F8F8F8] inline'><span className='pr-[15px]'>Read Full Article</span> <Image alt="img" width={16} height={16} className='inline' src='/assests/common/blog-arrow.svg' /></button></Link>
                                             </div>
 
                                         </div>

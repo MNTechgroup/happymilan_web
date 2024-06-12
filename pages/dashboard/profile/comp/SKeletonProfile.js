@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
-import { STATUSES, fetchMyProfileData, updateMyProfileData } from '../../../../store/reducers/MyProfile';
+import { fetchMyProfileData  } from '../../../../store/reducers/MyProfile';
 import { Skeleton } from '@mui/material';
 
 function SkeletonProfile() {

@@ -1,102 +1,46 @@
-import Image from "next/image";
 import React from "react";
+import NavBar from "../../NavBar";
 
-function EmailAlert() {
+import SideBar from "../comp/Sidebar";
+import dynamic from "next/dynamic";
+import EmailAlert from "./comp/EmailAlert";
+const Sidebar2 = dynamic(() => import("../comp/Sidebar2"));
+// const EmailAlert = dynamic(() => import("./comp/EmailAlert"));
+const BackButton = dynamic(() => import("../comp/BackButton"));
+
+function index() {
+
+  const handleSearch = (searchTerm) => { }
+
   return (
     <>
-      <div className="mb-[80px]">
-        <div className="flex mt-[-17px]">
-        <Image width={11} height={14} src='/assests/dashboard/seting/privacy-icon.svg' />
-          <h1 className="text-[15px] xl:text-[16px] font-medium ml-[15px]">
-            Email/SMS Alert Setting
-          </h1>
-        </div>
-        <h1 className="w-[580px] lg:w-[650px] xl:w-[700px] text-[11px] xl:text-[12px] text-[#484848] font-medium mt-[20px]">
-          See information about your account, download an archive of your data,
-          or learn about your account deactivation options
-        </h1>
-        <div className=" mt-[20px] xl:mt-[25px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
-        <div className=" mt-[25px]">
-          <h1 className="text-[15px] xl:text-[16px] font-medium ">My Alerts Manager</h1>
-        </div>
-        <h1 className="w-[580px] lg:w-[640px] xl:w-[700px] text-[11px] xl:text-[12px]  font-medium mt-[10px]">
-        Manage your subscriptions to HappyMilan.com alerts on email listed below. 
-        </h1>
-        <div className=" mt-[20px] xl:mt-[25px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
-        <div className=" mt-[25px]">
-          <h1 className="text-[15px] xl:text-[16px] font-medium ">
-            Match Mail & Photo Match Mail
-          </h1>
-        </div>
-        <div className="mt-[20px] flex ">
-        <div className="flex justify-center items-center">
-          <input
-            className="w-[15.5px] xl:w-[16px] h-[15.5px] xl:h-[16px] "
-            type="checkbox"
-            id="send"
-            name="mail"
-          ></input>
-          <label for="send" className="ml-[15px] xl:ml-[20px] text-[11px] xl:text-[12px] font-medium  ">
-            Send me Broader Matches if there are no new Preferred Matches
-          </label>
+
+      <SideBar />
+      <div className='w-full h-full grid place-items-center'>
+
+        <div className='hidden md:block w-[90%] mt-[120px] '>
+
+          <h1 className='fixed left-10 text-[16px] text-[#716969] font-medium'>Account Setting</h1>
+          <div className='fixed right-10'>
+            <BackButton />
+          </div>
+          <div className='flex mt-[20px]'>
+
+            <div className='fixed w-[1px] ml-[20%] lg:ml-[18%] xl:ml-[250px] mt-[-17px] h-[185px] bg-[#ECECEC]'></div>
+
+
+            <main className=' absolute ml-[25%] lg:ml-[23%] xl:ml-[330px]'><EmailAlert /></main>
           </div>
         </div>
-        <div className=" mt-[20px] xl:mt-[25px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
-        <div className=" mt-[25px]">
-          <h1 className="text-[16px] font-medium ">Email Alert</h1>
+
+        <div className='block md:hidden w-[90% mt-[120px]'>
+          <Sidebar2 />
         </div>
-        <div className="mt-[20px] flex ">
-          <div className=" flex justify-center items-center">
-            <input
-              className="w-[15.5px] xl:w-[16px] h-[15.5px] xl:h-[16px] "
-              type="radio"
-              id="Daily"
-              name="hello"
-            ></input>
-            <label for="Daily" className="ml-[15px] xl:ml-[20px] text-[11px] xl:text-[12px] font-medium ">
-              Daily
-            </label>
-          </div>
-          <div className="ml-[200px]  flex justify-center items-center">
-            <input
-              className="w-[15.5px] xl:w-[16px] h-[15.5px] xl:h-[16px] "
-              type="radio"
-              id="Tri-Weekly"
-              name="hello"
-            ></input>
-            <label for="Tri-Weekly" className="ml-[15px] xl:ml-[20px] text-[11px] xl:text-[12px]  font-medium ">
-            Tri-Weekly
-            </label>
-          </div>
-          </div>
-          <div className="mt-[20px] flex ">
-          <div className=" flex justify-center items-center">
-            <input
-              className="w-[15.5px] xl:w-[16px] h-[15.5px] xl:h-[16px] "
-              type="radio"
-              id="Weekly"
-              name="hello"
-            ></input>
-            <label for="Weekly" className="ml-[15px] xl:ml-[20px] text-[11px] xl:text-[12px]  font-medium ">
-            Weekly
-            </label>
-          </div>
-          
-          <div className="ml-[189px] xl:ml-[188px] flex justify-center items-center">
-            <input
-              className="w-[15.5px] xl:w-[16px] h-[15.5px] xl:h-[16px] rounded-none "
-              type="radio"
-              id="Unsubscribe"
-              name="hello"
-            ></input>
-            <label for="Unsubscribe" className="ml-[15px] xl:ml-[20px] text-[11px] xl:text-[12px]  font-medium ">
-            Unsubscribe
-            </label>
-          </div>
-        </div>
+
       </div>
+
     </>
   );
 }
 
-export default EmailAlert;
+export default index;

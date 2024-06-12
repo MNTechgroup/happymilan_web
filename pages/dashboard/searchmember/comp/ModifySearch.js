@@ -1,13 +1,32 @@
 import React, { useState } from 'react'
 import dynamic from "next/dynamic";
+import { GetSearchUsersData, updateSearchData } from '../../../../store/actions/SearchUsersActions';
+import { connect, useDispatch, useSelector } from 'react-redux';
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
-function ModifySearch({ setFormOpen }) {
+function ModifySearch({ state, updateSearchData, setFormOpen }) {
 
     const Text1 = {
         color: "#000",
         fontFamily: "Poppins",
         fontSize: "18px",
+        fontStyle: "normal",
+        fontWeight: "400",
+        lineHeight: "22px" /* 122.222% */
+    }
+
+    const saveSearchText = {
+        color: "#000",
+        fontFamily: "Poppins",
+        fontSize: "12px",
+        fontStyle: "normal",
+        fontWeight: "600",
+        lineHeight: "22px" /* 122.222% */
+    }
+    const SaveText = {
+        color: "#000",
+        fontFamily: "Poppins",
+        fontSize: "14px",
         fontStyle: "normal",
         fontWeight: "400",
         lineHeight: "22px" /* 122.222% */
@@ -36,268 +55,425 @@ function ModifySearch({ setFormOpen }) {
     };
 
     const MaritalStatus = [
-        { value: 1, label: "Single" },
-        { value: 2, label: "Married" },
-        { value: 3, label: "Divorced" },
-        { value: 4, label: "Separated" },
-        { value: 5, label: "Widowed" }
+        { label: 'Single', value: 'single' },
+        { label: 'Never Married', value: 'never-married' },
+        { label: 'Married', value: 'married' },
 
     ]
-    const ReligionOptions = [
-        { value: 1, label: "Hinduism" },
-        { value: 2, label: "Judaism" },
-        { value: 3, label: "Christianity" },
-        { value: 4, label: "Buddhism" },
-        { value: 5, label: "Islam" },
-        // Add more religions as needed
+
+    const communityOptions = [
+        { value: "patel", label: "Patel" },
+        { value: "shah", label: "Shah" },
+        { value: "mehta", label: "Mehta" },
+        // Add more community options as needed
     ];
 
-    const MotherTongueOptions = [
-        { value: "gujarati", label: "Gujarati" },
+
+    const countryoflivingOptions = [
+        { value: "india", label: "India" },
+        { value: "us", label: "United States" },
+        { value: "canada", label: "Canada" },
+        { value: "mexico", label: "Mexico" },
+        // Add more countries as needed
+    ];
+
+    const motherTongueOption = [
         { value: "english", label: "English" },
-        { value: "spanish", label: "Spanish" },
-        { value: "mandarin", label: "Mandarin Chinese" },
         { value: "hindi", label: "Hindi" },
-        { value: "arabic", label: "Arabic" },
-        // Add more mother tongues as needed
+        { value: "gujarati", label: "Gujarati" }
     ];
 
 
-    const Country = [
-        { value: 1, label: 'India' },
-        { value: 2, label: 'Canada' },
-        { value: 3, label: 'United States' },
-        { value: 4, label: 'China' },
-        { value: 5, label: 'Brazil' },
-        { value: 6, label: 'Australia' },
-        { value: 7, label: 'United Kingdom' },
-        { value: 8, label: 'Germany' },
-        { value: 9, label: 'France' },
-        { value: 10, label: 'Japan' },
-        { value: 11, label: 'South Korea' },
-        { value: 12, label: 'Russia' },
-        { value: 13, label: 'Mexico' },
-        { value: 14, label: 'Italy' },
-        { value: 15, label: 'Spain' },
-        { value: 16, label: 'Netherlands' },
-        { value: 17, label: 'Sweden' },
-        { value: 18, label: 'Switzerland' },
-        { value: 19, label: 'Norway' },
-        { value: 20, label: 'Denmark' },
-    ]
+    const religionOptions = [
+        { value: "hindu", label: "Hinduism" },
+        { value: "muslim", label: "Islam" },
+        { value: "sikh", label: "Sikhism" },
+        // Add more options as needed
+    ];
 
-    const states = [
-        { value: 1, label: 'Andhra Pradesh' },
-        { value: 2, label: 'Arunachal Pradesh' },
-        { value: 3, label: 'Assam' },
-        { value: 4, label: 'Bihar' },
-        { value: 5, label: 'Chhattisgarh' },
-        { value: 6, label: 'Goa' },
-        { value: 7, label: 'Gujarat' },
-        { value: 8, label: 'Haryana' },
-        { value: 9, label: 'Himachal Pradesh' },
-        { value: 10, label: 'Jharkhand' }
-    ]
 
-    const citydata = [
-        { value: 1, label: 'Ahmedabad' },
-        { value: 2, label: 'Surat' },
-        { value: 3, label: 'Vadodara' },
-        { value: 4, label: 'Rajkot' },
-        { value: 5, label: 'Gandhinagar' },
-        { value: 6, label: 'Bhavnagar' },
-        { value: 7, label: 'Jamnagar' },
-        { value: 8, label: 'Junagadh' },
-        { value: 9, label: 'Anand' },
-        { value: 10, label: 'Bharuch' }
-    ]
+
+
+    const statesOptions = [
+        { value: 'gujarat', label: 'Gujarat' },
+        { value: 'otava', label: 'Otava' },
+        { value: 'Assam', label: 'Assam' },
+    ];
+
+
+    const cityOptions = [
+        { value: "ahmedabad", label: "Ahmedabad" },
+        { value: "surat", label: "Surat" },
+        { value: "toronto", label: "Toronto" },
+    ];
+
+
     const [selectedOptions, setSelectedOptions] = useState();
     const [selectedmaritalstatus, setSelectedmaritalstatus] = useState();
-    const [selectedReligion, setSelectedReligion] = useState();
+    const [selectedReligion, setSelectedReligion] = useState([]);
     const [selectCommunity, setSelectCommunity] = useState();
     const [selectMotherTongue, setSelectMotherTongue] = useState();
     const [selectStateofLiving, setSelectStateofLiving] = useState();
     const [selectCityeofLiving, setSelectCityeofLiving] = useState();
+    const [Userage, SetUserage] = useState({
+        minAge: null,
+        maxAge: null
+    })
 
     function handleSelect(data) {
+        const values = data.map(item => item.value);
         setSelectedOptions(data);
+        updateSearchData({
+            ...state.searchform,
+            currentCountry: [...values], // Set the religion field to the updated value
+        });
     }
 
     const handleMaritalstatus = (data) => {
-        setSelectedmaritalstatus(data)
+        // setSelectedmaritalstatus(data)
+        const values = data.map(item => item.value);
+        setSelectedmaritalstatus(data);
+        updateSearchData({
+            ...state.searchform,
+            maritalStatus: [...values], // Set the religion field to the updated value
+        });
+
     }
 
     const handleReligion = (data) => {
-        setSelectedReligion(data)
+        const values = data.map(item => item.value);
+        setSelectedReligion(data);
+        // console.log("🚀 ~ handleReligion ~ data:", values)
+        updateSearchData({
+            ...state.searchform,
+            religion: [...values], // Set the religion field to the updated value
+        });
+
+
     }
 
     const handleCommunity = (data) => {
+        const values = data.map(item => item.value);
         setSelectCommunity(data)
+        updateSearchData({
+            ...state.searchform,
+            community: [...values], // Set the religion field to the updated value
+        });
     }
 
     const handleMotherTongue = (data) => {
-        setSelectMotherTongue(data)
+        const values = data.map(item => item.value);
+        setSelectMotherTongue(data);
+        // console.log("🚀 ~ handleReligion ~ data:", values)
+        updateSearchData({
+            ...state.searchform,
+            motherTongue: [...values], // Set the religion field to the updated value
+        });
+
     }
     const handleStateofLiving = (data) => {
-        setSelectStateofLiving(data)
+        const values = data.map(item => item.value);
+        setSelectStateofLiving(data);
+        updateSearchData({
+            ...state.searchform,
+            stateofLiving: [...values], // Set the religion field to the updated value
+        });
+
+
+
+
     }
 
-    const handleCityeofLiving = (data) =>{
+    const handleCityeofLiving = (data) => {
         setSelectCityeofLiving(data)
     }
 
-    const [toggle, settoggle] = useState("")
+    // const [toggle, settoggle] = useState("")
+
+    const SearchData = useSelector((state) => state.searchform)
+
+    const dispatch = useDispatch();
+
+    const SearchDataHandle = () => {
+
+        dispatch(GetSearchUsersData(SearchData))
+
+        setFormOpen(false)
+
+
+    }
+
+    const HanldeInputChange = (e) => {
+        const name = e.target.name;
+        const value = e.target.value
+
+        updateSearchData({
+            ...state.searchform, // Ensure to spread the existing searchData to retain other fields
+            [name]: parseInt(value) // Update the minAge or maxAge field based on the input name
+        });
+
+        SetUserage(prevState => ({ ...prevState, [name]: value }))
+
+
+    }
+
+    const CLearAllData = () => {
+        setSelectedOptions(null)
+        setSelectedmaritalstatus(null)
+        setSelectedReligion(null)
+        setSelectCommunity(null)
+        setSelectMotherTongue(null)
+        setSelectStateofLiving(null)
+        setSelectCityeofLiving(null)
+        SetUserage({
+            minAge: "",
+            maxAge: ""
+        })
+
+        // updateSearchData({
+        //     ...state.searchform,
+        //     stateofLiving: [...values], // Set the religion field to the updated value
+        // });
+
+        updateSearchData({
+            minAge: 0,
+            maxAge: 0,
+            maritalStatus: [],
+            religion: [],
+            community: [],
+            stateofLiving: [],
+            motherTongue: [],
+            currentCountry: [],
+            loading: false, // to track if API call is in progress
+            searchResults: null, // to store search results from the API
+            error: null, // to store any errors that occur during API call
+        });
+
+
+    }
+
     return (
         <>
-            <div class="2xl:ml-0 xl:ml-0 lg:ml-[150px] flex flex-col space-y-[40px] w-full  md:w-[600px] 2xl:mr-[110px] mt-[120px] pb-[50px]">
-                <div>
-                    <h1 style={Text1}>Search Your Match</h1>
-                </div>
+            <div className='flex w-full justify-evenly ml-[40px] items-center' >
+                <div class="2xl:ml-[210px] xl:ml-[210px] lg:ml-[150px] flex flex-col space-y-[40px] w-full  md:w-[600px] 2xl:mr-[110px] mt-[120px] pb-[50px]">
+                    <div>
+                        <h1 style={Text1}>Search Your Match</h1>
+                    </div>
 
-                <div className='flex flex-col space-y-[20px]'>
-                    <div className='flex space-y-[20px] md:space-y-0 flex-col md:flex-row justify-between'>
+                    <div className='flex flex-col space-y-[20px]'>
                         <div className='flex items-center'>
                             <h1>Age</h1>
                             <div className='flex justify-between items-center relative left-[48px] md:left-[118px] rounded-[8px] border-[1px] border-[#D8D8D8] w-[140px] h-[50px]'>
 
-                                <input type='number' placeholder='from' className='rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
+                                <input onChange={HanldeInputChange} value={Userage.minAge} name='minAge' type='number' placeholder='From' className='rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
                                 <div className='w-[1px] h-[20px] bg-[#D8D8D8]'></div>
-                                <input type='number' placeholder='to' className='rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
+                                <input onChange={HanldeInputChange} value={Userage.maxAge} name='maxAge' type='number' placeholder='To' className='rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
                             </div>
                         </div>
-                        <div className='flex items-center space-x-[30px] '>
-                            <h1>Height</h1>
-                            <div className='flex justify-between items-center rounded-[8px] border-[1px] border-[#D8D8D8] w-[140px] h-[50px]'>
-                                <input type='number' placeholder='from' className='rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
-                                <div className='w-[1px] h-[20px] bg-[#D8D8D8]'></div>
-                                <input type='number' placeholder='to' className='rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
+                        <div className='flex space-y-[20px] md:space-y-0 flex-col md:flex-row justify-between'>
+                            <div className='flex items-center'>
+                                <h1>Height</h1>
+                                <div className='flex justify-between items-center relative left-[48px] md:left-[100px] rounded-[8px] border-[1px] border-[#D8D8D8] w-[140px] h-[50px]'>
+
+                                    <input   name='minheight' type='number' placeholder='From' className='rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
+                                    <div className='w-[1px] h-[20px] bg-[#D8D8D8]'></div>
+                                    <input   name='maxheight' type='number' placeholder='To' className='rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
+                                </div>
+                            </div>
+                            <div className='flex items-center space-x-[30px] '>
+                                <h1>weight</h1>
+                                <div className='flex justify-between items-center rounded-[8px] border-[1px] border-[#D8D8D8] w-[140px] h-[50px]'>
+                                    <input type='number' placeholder='From' className='rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
+                                    <div className='w-[1px] h-[20px] bg-[#D8D8D8]'></div>
+                                    <input type='number' placeholder='To' className='rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className='flex items-center'>
-                        <h1 className='w-[150px]'>Marital Status</h1>
-                        <div className='w-full md:w-[479px]'>
-                            <DynamicSelect
+                        <div className='flex items-center'>
+                            <h1 className='w-[150px]'>Marital Status</h1>
+                            <div className='w-full md:w-[479px]'>
+                                <DynamicSelect
 
-                                options={MaritalStatus}
-                                placeholder="Select.."
-                                styles={customStyle}
-                                value={selectedmaritalstatus}
-                                onChange={handleMaritalstatus}
-                                isSearchable={true}
-                                isMulti />
+                                    options={MaritalStatus}
+                                    placeholder="Select.."
+                                    styles={customStyle}
+                                    value={selectedmaritalstatus}
+                                    onChange={handleMaritalstatus}
+                                    isSearchable={true}
+                                    isMulti />
+                            </div>
+                        </div>
+                        <div className='flex items-center'>
+                            <h1 className='w-[150px]'>Religion</h1>
+                            <div className='w-full md:w-[479px]'>
+                                <DynamicSelect
+
+                                    options={religionOptions}
+                                    placeholder="Select.."
+                                    styles={customStyle}
+                                    value={selectedReligion}
+                                    onChange={handleReligion}
+                                    isSearchable={true}
+                                    isMulti />
+                            </div>
+                        </div>
+                        <div className='flex items-center'>
+                            <h1 className='w-[150px]'>Community</h1>
+                            <div className='w-full md:w-[479px]'>
+                                <DynamicSelect
+
+                                    options={communityOptions}
+                                    placeholder="Select.."
+                                    styles={customStyle}
+                                    value={selectCommunity}
+                                    onChange={handleCommunity}
+                                    isSearchable={true}
+                                    isMulti />
+                            </div>
+                        </div>
+                        <div className='flex items-center'>
+                            <h1 className='w-[150px]'>Mother Tongue</h1>
+                            <div className='w-full md:w-[479px]'>
+                                <DynamicSelect
+
+                                    options={motherTongueOption}
+                                    placeholder="Select.."
+                                    styles={customStyle}
+                                    value={selectMotherTongue}
+                                    onChange={handleMotherTongue}
+                                    isSearchable={true}
+                                    isMulti />
+                            </div>
+                        </div>
+
+                        <div className='flex'>
+                            <h1 className='relative top-[10px] w-[150px]'>Country Living</h1>
+                            <div className='w-full md:w-[479px] flex flex-col space-y-[10px]'>
+                                <DynamicSelect
+
+                                    options={countryoflivingOptions}
+                                    placeholder="Select.."
+                                    styles={customStyle}
+                                    value={selectedOptions}
+                                    onChange={handleSelect}
+                                    isSearchable={true}
+                                    isMulti />
+                            </div>
+                        </div>
+                        <div className='flex items-center'>
+                            <h1 className='w-[150px]'>State Living</h1>
+                            <div className='w-full md:w-[479px]'>
+                                <DynamicSelect
+
+                                    options={statesOptions}
+                                    placeholder="Select.."
+                                    styles={customStyle}
+                                    value={selectStateofLiving}
+                                    onChange={handleStateofLiving}
+                                    isSearchable={true}
+                                    isMulti />
+                            </div>
+                        </div>
+                        <div className='flex items-center'>
+                            <h1 className='w-[150px]'>City Living</h1>
+                            <div className='w-full md:w-[479px]'>
+                                <DynamicSelect
+
+                                    options={cityOptions}
+                                    placeholder="Select.."
+                                    styles={customStyle}
+                                    value={selectCityeofLiving}
+                                    onChange={handleCityeofLiving}
+                                    isSearchable={true}
+                                    isMulti />
+                            </div>
+                        </div>
+                        <div className='pt-[10px]'>
+                            <div className='w-full bg-[#EFEFEF] h-[1px]'></div>
+                        </div>
+                        <div className='flex items-center'>
+                            <h1 className='w-[150px]'>Save Search</h1>
+                            <div className='w-full md:w-[479px]'>
+                                <input type='text' placeholder='My Matches' className='pl-[20px] oultine-none w-full rounded-[8px] h-[50px] border-[1px] hover:border-[#000] border-[#D8D8D8]' />
+                            </div>
+                        </div>
+                        <div className='pt-[10px]'>
+                            <div className='w-full bg-[#EFEFEF] h-[1px]'></div>
+                        </div>
+
+
+                        <div className='w-full flex justify-end space-x-[20px]'>
+                            <button onClick={CLearAllData} className={` border-[1px] border-[#0F52BA] hover:bg-[#F2F7FF] w-[104px] h-[50px] text-[black] rounded-[25px]`}>Clear All</button>
+                            <button id='grad-btn' className={` border-[1px] border-[#0F52BA] bg-[#0F52BA] text-[white] w-[104px] h-[50px] rounded-[25px]`} onClick={SearchDataHandle} >Search</button>
                         </div>
                     </div>
-                    <div className='flex items-center'>
-                        <h1 className='w-[150px]'>Religion</h1>
-                        <div className='w-full md:w-[479px]'>
-                            <DynamicSelect
 
-                                options={ReligionOptions}
-                                placeholder="Select.."
-                                styles={customStyle}
-                                value={selectedReligion}
-                                onChange={handleReligion}
-                                isSearchable={true}
-                                isMulti />
+
+                </div>
+                <div className='relative top-[-230px]'>
+                    <div id='Save-Search-Box' className=''>
+                        <div className='pb-[13px] relative pt-[14px] left-[16px]'>
+                            <span style={saveSearchText}>My Saved Search</span>
                         </div>
-                    </div>
-                    <div className='flex items-center'>
-                        <h1 className='w-[150px]'>Community</h1>
-                        <div className='w-full md:w-[479px]'>
-                            <DynamicSelect
-
-                                options={Country}
-                                placeholder="Select.."
-                                styles={customStyle}
-                                value={selectCommunity}
-                                onChange={handleCommunity}
-                                isSearchable={true}
-                                isMulti />
+                        <div className='pb-[14px] w-full grid place-items-center'>
+                            <div className='bg-[#F2F2F2] h-[1px] w-[90%]'></div>
                         </div>
-                    </div>
-                    <div className='flex items-center'>
-                        <h1 className='w-[150px]'>Mother Tongue</h1>
-                        <div className='w-full md:w-[479px]'>
-                            <DynamicSelect
-
-                                options={MotherTongueOptions}
-                                placeholder="Select.."
-                                styles={customStyle}
-                                value={selectMotherTongue}
-                                onChange={handleMotherTongue}
-                                isSearchable={true}
-                                isMulti />
+                        <div className='grid place-items-center'>
+                            <ul className='flex flex-col justify-start items-start space-y-[15px]'>
+                                <li className='cursor-pointer flex justify-between p-[10px] h-[40px] w-[264px] rounded-[22px] hover:bg-[#F2F7FF] '>
+                                    <div><span style={SaveText}>My Matches</span></div>
+                                    <div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                            <g clip-path="url(#clip0_1066_324)">
+                                                <path d="M4.5 14.25C4.5 15.075 5.175 15.75 6 15.75H12C12.825 15.75 13.5 15.075 13.5 14.25V5.25H4.5V14.25ZM6 6.75H12V14.25H6V6.75ZM11.625 3L10.875 2.25H7.125L6.375 3H3.75V4.5H14.25V3H11.625Z" fill="#5F6368" />
+                                            </g>
+                                            <defs>
+                                                <clipPath id="clip0_1066_324">
+                                                    <rect width="18" height="18" fill="white" />
+                                                </clipPath>
+                                            </defs>
+                                        </svg>
+                                    </div>
+                                </li>
+                                <li className='cursor-pointer flex justify-between p-[10px] h-[40px] w-[264px] rounded-[22px] hover:bg-[#F2F7FF] '>
+                                    <div><span style={SaveText}>My Matches 1</span></div>
+                                    <div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                            <g clip-path="url(#clip0_1066_324)">
+                                                <path d="M4.5 14.25C4.5 15.075 5.175 15.75 6 15.75H12C12.825 15.75 13.5 15.075 13.5 14.25V5.25H4.5V14.25ZM6 6.75H12V14.25H6V6.75ZM11.625 3L10.875 2.25H7.125L6.375 3H3.75V4.5H14.25V3H11.625Z" fill="#5F6368" />
+                                            </g>
+                                            <defs>
+                                                <clipPath id="clip0_1066_324">
+                                                    <rect width="18" height="18" fill="white" />
+                                                </clipPath>
+                                            </defs>
+                                        </svg>
+                                    </div>
+                                </li>
+                                <li className='cursor-pointer flex justify-between p-[10px] h-[40px] w-[264px] rounded-[22px] hover:bg-[#F2F7FF] '>
+                                    <div><span style={SaveText}>My Matches 2</span></div>
+                                    <div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                            <g clip-path="url(#clip0_1066_324)">
+                                                <path d="M4.5 14.25C4.5 15.075 5.175 15.75 6 15.75H12C12.825 15.75 13.5 15.075 13.5 14.25V5.25H4.5V14.25ZM6 6.75H12V14.25H6V6.75ZM11.625 3L10.875 2.25H7.125L6.375 3H3.75V4.5H14.25V3H11.625Z" fill="#5F6368" />
+                                            </g>
+                                            <defs>
+                                                <clipPath id="clip0_1066_324">
+                                                    <rect width="18" height="18" fill="white" />
+                                                </clipPath>
+                                            </defs>
+                                        </svg>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
-                    </div>
-
-                    <div className='flex'>
-                        <h1 className='relative top-[10px] w-[150px]'>Country Living</h1>
-                        <div className='w-full md:w-[479px] flex flex-col space-y-[10px]'>
-                            <DynamicSelect
-
-                                options={Country}
-                                placeholder="Select.."
-                                styles={customStyle}
-                                value={selectedOptions}
-                                onChange={handleSelect}
-                                isSearchable={true}
-                                isMulti />
-                        </div>
-                    </div>
-                    <div className='flex items-center'>
-                        <h1 className='w-[150px]'>State Living</h1>
-                        <div className='w-full md:w-[479px]'>
-                            <DynamicSelect
-
-                                options={states}
-                                placeholder="Select.."
-                                styles={customStyle}
-                                value={selectStateofLiving}
-                                onChange={handleStateofLiving}
-                                isSearchable={true}
-                                isMulti />
-                        </div>
-                    </div>
-                    <div className='flex items-center'>
-                        <h1 className='w-[150px]'>City Living</h1>
-                        <div className='w-full md:w-[479px]'>
-                            <DynamicSelect
-
-                                options={citydata}
-                                placeholder="Select.."
-                                styles={customStyle}
-                                value={selectCityeofLiving}
-                                onChange={handleCityeofLiving}
-                                isSearchable={true}
-                                isMulti />
-                        </div>
-                    </div>
-                    <div>
-                        <div className='w-full bg-[#EFEFEF] h-[1px]'></div>
-                    </div>
-                    <div className='flex items-center'>
-                        <h1>With Photo?</h1>
-                        <div className='relative left-[50px]'>
-                            <button onClick={() => settoggle("yes")} id={toggle === "yes" ? "grad-button" : ""} className={`bg-[#F9F9F9] text-[black]  w-[90px] h-[50px] rounded-l-[8px] duration-500`}>Yes</button>
-                            <button onClick={() => settoggle("no")} id={toggle === "no" ? "grad-button" : ""} className={`bg-[#F9F9F9] text-[black] w-[90px] h-[50px] rounded-r-[8px] duration-500`}>No</button>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div className='w-full bg-[#EFEFEF] h-[1px]'></div>
-                    </div>
-
-                    <div className='w-full flex justify-end space-x-[20px]'>
-                        <button className={` border-[1px] border-[#0F52BA] w-[104px] h-[50px] text-[black] rounded-[10px]`}>Clear All</button>
-                        <button id='grad-btn' className={` border-[1px] border-[#0F52BA] bg-[#0F52BA] text-[white] w-[104px] h-[50px] rounded-[10px]`} onClick={() => setFormOpen(false)} >Search</button>
                     </div>
                 </div>
             </div>
-
-
         </>
     )
 }
 
-export default ModifySearch
+// export default ModifySearch
+// searchformReducer
+export default connect(state => ({ state }), { updateSearchData })(ModifySearch);

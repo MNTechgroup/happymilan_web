@@ -1,32 +1,35 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import {
-    Navbar,
-    Typography,
-    IconButton,
-} from "@material-tailwind/react";
+import React, { useContext, useEffect, useState } from "react";
+import { Navbar, IconButton } from "@material-tailwind/react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
-import Menu from '@mui/material/Menu';
-import Tooltip from '@mui/material/Tooltip';
-import Fade from '@mui/material/Fade';
 import Image from "next/image";
-import { Dialog, DialogContent } from "@mui/material";
-import { deleteCookie, getCookie } from 'cookies-next';
-import RequestNotification from "../components/Notification/RequestNotification";
-import Avatar from "react-avatar";
-import ProfileImage from "../components/Maincomp/ProfileImage";
-// fill-rule assests/Black/Search.svg /assests/pic/rohan-patel-img.svg
-const Text2 = {
-    fontFamily: "Poppins",
-    fontSize: "14px",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "normal"
-}
+import { Badge, Dialog, DialogContent, Stack } from "@mui/material";
+import { getCookie } from 'cookies-next';
+// Import only the specific Material-UI components and icons you need
+import Drawer from '@mui/material/Drawer';
+import Menu from '@mui/material/Menu';
+import { useDispatch } from "react-redux";
+import propTypes from 'prop-types'
+import { logoutuser } from "../../store/actions/UsersAction";
+import { getMessaging, onMessage } from 'firebase/messaging';
+import firebaseApp from '../../utils/firebase/firebase';
+import toast, { Toaster } from 'react-hot-toast';
+import Chats from "../components/Chat/UIChat";
+import UIConversation from "../components/Chat/UIConversation";
+import { UserContext } from "../../ContextProvider/UsersConversationContext";
+import { useDarkMode } from "../../ContextProvider/DarkModeContext";
+import icons from "../../utils/icons/icons";
+import { useChatSettings } from "../../ContextProvider/ChatSetingContext";
+
+const RequestNotification = dynamic(() => import("../components/Notification/RequestNotification"));
+const ProfileImage = dynamic(() => import("../components/Maincomp/ProfileImage"));
+const UpgradeButton = dynamic(() => import("../components/Buttons/UpgradeButton"));
+const DarkModeToggle = dynamic(() => import("../emoji"));
+
 const userId = {
     fontFamily: "Poppins",
     fontSize: "14px",
@@ -43,7 +46,7 @@ const Text4 = {
 }
 
 const UserProfileName = {
-    color: "#000",
+    // color: "#000",
     fontFamily: "Poppins",
     fontSize: "14px",
     fontStyle: "normal",
@@ -57,18 +60,6 @@ const Username2 = {
     fontWeight: "600",
     lineHeight: "normal"
 }
-const Activity = {
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "normal"
-}
-const Activity2 = {
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "normal"
-}
 
 const userStatus = {
     fontFamily: "Poppins",
@@ -77,8 +68,6 @@ const userStatus = {
     fontWeight: "500",
     lineHeight: "normal"
 }
-
-//profile id search
 
 const planPrice = {
     fontFamily: "Poppins",
@@ -93,13 +82,49 @@ const planPrice2 = {
     lineHeight: "14px"
 }
 
-const BoxSdow2 = {
-    borderRadius: "10px",
-    background: "#FFF",
-    boxShadow: "0px 0px 5px 5px rgba(0, 0, 0, 0.03)"
-}
 
-function NavBar() {
+
+function NavBar({ handleSearch }) {
+
+
+    const [token, settoken] = useState()
+    const [Uname, SetUname] = useState();
+
+    useEffect(() => {
+
+        if (getCookie("userName")) {
+            SetUname(getCookie("userName"));
+        }
+        else {
+            SetUname("NA")
+
+        }
+        settoken(getCookie("authtoken"))
+
+    }, [])
+
+
+
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const { darkMode, toggleDarkMode } = useDarkMode();
+
+    const BoxSdow2 = {
+        borderRadius: "10px",
+        background: darkMode ? "#242526" : "#FFF",
+        boxShadow: "0px 0px 5px 5px rgba(0, 0, 0, 0.03)"
+    }
+
+    // Debounce the handleSearch function to limit the search executions
+    // const debouncedHandleSearch = debounce(handleSearch, 300); log out
+
+    const handleChange = (event) => {
+        const { value } = event.target;
+        setSearchTerm(value);
+        // Call the debounced handleSearch function with the search term Log out
+        handleSearch(value);
+    };
+
 
 
     const router = useRouter();
@@ -107,141 +132,15 @@ function NavBar() {
     //For Message Notification
 
     const [state, setState] = React.useState({
-        right: false, // Initialize only the 'right' anchor to be closed
+        right: false, // Initialize only the 'right' anchor to be closed profi
     });
 
     const toggleDrawer = (anchor, open) => (event) => {
         setState({ ...state, [anchor]: open });
     };
 
-    const handleContentClick = (e) => {
-        e.stopPropagation();
-    };
-
-    const Chats = [
-        {
-            id: 1,
-            type: "me",
-            name: 'John Doe',
-            message: 'Hi! How are you?'
-        },
-        {
-            id: 2,
-            type: "other",
-            name: 'Jane Smith',
-            message: 'Hello!'
-        },
-        {
-            id: 3,
-            type: "me",
-            name: 'John Doe',
-            message: 'I am fine.'
-        },
-        {
-            id: 4,
-            type: "other",
-            name: 'Jane Smith',
-            message: 'Good to hear that.'
-        },
-        {
-            id: 5,
-            type: "me",
-            name: 'John Doe',
-            message: 'How about yourself?'
-        },
-        {
-            id: 6,
-            type: "other",
-            name: 'Jane Smith',
-            message: 'I\'m doing well.'
-        },
-        {
-            id: 7,
-            type: "me",
-            name: 'John Doe',
-            message: 'That is great to hear.'
-        },
-        {
-            id: 8,
-            type: "other",
-            name: 'Jane Smith',
-            message: 'Thanks for asking.'
-        },
-        {
-            id: 9,
-            type: "other",
-            name: 'Jane Smith',
-            message: 'Thanks for asking.'
-        },
-        {
-            id: 10,
-            type: "me",
-            name: 'Jane Smith',
-            message: 'Thanks for asking.'
-        },
-        {
-            id: 11,
-            type: "me",
-            name: 'Jane Smith',
-            message: 'Thanks for asking.'
-        },
-        {
-            id: 12,
-            type: "other",
-            name: 'Jane Smith',
-            message: 'Thanks for asking.'
-        },
-        {
-            id: 13,
-            type: "other",
-            name: 'Jane Smith',
-            message: 'Thanks for asking.'
-        },
-        {
-            id: 14,
-            type: "me",
-            name: 'Jane Smith',
-            message: 'Thanks for asking.'
-        },
-        {
-            id: 15,
-            type: "other",
-            name: 'Jane Smith',
-            message: 'Thanks for asking.'
-        },
-        {
-            id: 16,
-            type: "other",
-            name: 'Jane Smith',
-            message: 'Thanks for asking.'
-        },
-        {
-            id: 17,
-            type: "other",
-            name: 'Jane Smith',
-            message: 'hello for asking.'
-        },
-
-    ];
 
 
-    const ChatText = {
-        color: "#000",
-        fontFamily: "Poppins",
-        fontStyle: "normal",
-        fontWeight: "400",
-        lineHeight: "normal"
-    }
-
-
-    const TimeText = {
-        color: "#C8C8C8",
-        fontFamily: "Poppins",
-        fontSize: "10px",
-        fontStyle: "normal",
-        fontWeight: "400",
-        lineHeight: "normal"
-    }
     const LogoutModalText = {
         fontFamily: "Poppins",
         fontSize: "20px",
@@ -250,275 +149,53 @@ function NavBar() {
         lineHeight: "30px"
     }
 
+
+    const [Wide, SetWide] = useState(false);
+
+
+    // Don't forget to handle disconnection and other events
+
+    const { settings, setSettings } = useChatSettings();
+
+
+    const HandleWide = () => {
+        SetWide(!Wide)
+        
+            setSettings({
+                ...settings,
+                isMinimized: !settings.isMinimized,
+            });
+    }
+
+    const [ChatUser, SetChatUser] = useState({
+        userName: "",
+        id: ""
+    })
+
     const list = () => (
-        <Box
-            role="presentation"
-
-        >
-            <div className={`scroll-req-content  h-full bg-[#FFF] 2xl:w-[340px] w-[350px] xl:w-[300px] `}>
-                <div className="overflow-y-scroll h-full pb-[40px] w-full grid place-items-center">
-                    <div className="flex flex-col gap-y-[15px] fixed top-0 bg-[#FFF]">
-
-                        <div className="relative left-[1%] 2xl:left-[1%] xl:left-[7px] flex space-x-[19px]  pt-[20px] items-center">
-                            <Image alt="img" width={47} height={47} className="w-[47px] h-[47px] 2xl:w-[47px] 2xl:h-[47px] xl:w-[40px] xl:h-[40px]" src="/assests/dashboard/user/userProfile.svg" />
-                            <div>
-                                <h1 style={UserProfileName} className="text-bold text-[14px]">Riya M Shah</h1>
-                                <p style={userStatus} className="text-[#0091FF]">Online</p>
-                            </div>
-                        </div>
-
-                        <div className=" h-[1px] w-[286px] bg-[#ECECEC]"></div>
-
-                        <div>
-                            <input
-                                onClick={handleContentClick}
-                                type="text" placeholder="Search Member"
-                                style={Text2}
-                                className="pl-[40px] w-[278px] h-[50px] oultine-none focus:outline-none text-[black] focus:border-[1px] focus:border-[black] rounded-[10px] bg-[#FAFAFA] text-[#727272]" />
-                            <Image
-                                alt="img"
-                                width={18}
-                                height={15}
-                                src="/assests/Black/Search.svg"
-                                style={{ width: '18px', height: '15px' }} // Ensure aspect ratio is maintained
-                                className="w-[18px] h-[15px] absolute inline 2xl:left-[10px] xl:left-[10px] left-[10px] mt-[19px]"
-                            />
-
-                        </div>
-
-                    </div>
-                    <div className="mr-[15px] pt-[20px] flex flex-col space-y-[15px] mt-[150px]">
-                        <div onClick={toggleInnerDrawer} className="hover:bg-[#F4F9FF] cursor-pointer p-[10px] rounded-[10px] w-[278px] flex space-x-[19px]  items-center">
-                            <Image alt="img" width={47} height={47} className=" w-[47px] h-[47px] 2xl:w-[47px] 2xl:h-[47px] xl:w-[40px] xl:h-[40px]" src="/assests/dashboard/request/req-3.svg" />
-                            <div>
-                                <h1 style={Username2}>Rishikesh Shah <span style={userStatus} className="text-[#A7A7A7] ml-[5px]">1h ago</span></h1>
-                                <p style={Activity} className="text-[12px] 2xl:text-[11px] xl:text-[10px]"> Hi, I am busy now. Can I talk...</p>
-                            </div>
-                        </div>
-                        <div className="hover:bg-[#F4F9FF] cursor-pointer p-[10px] rounded-[10px] w-[278px] flex space-x-[19px]  items-center">
-                            <Image alt="img" width={47} height={47} className="w-[47px] h-[47px] 2xl:w-[47px] 2xl:h-[47px] xl:w-[40px] xl:h-[40px]" src="/assests/dashboard/request/req-4.svg" />
-                            <div>
-                                <h1 style={Username2}>Ronit Kumar <span style={userStatus} className="text-[#A7A7A7] ml-[5px]">1h ago</span></h1>
-                                <p style={Activity} className="text-[12px] 2xl:text-[11px] xl:text-[10px]"> Hi, I am busy now. Can I talk...</p>
-                            </div>
-                        </div>
-                        <div className="hover:bg-[#F4F9FF] cursor-pointer p-[10px] rounded-[10px] w-[278px] flex space-x-[19px]  items-center">
-                            <Image alt="img" width={47} height={47} className="w-[47px] h-[47px] 2xl:w-[47px] 2xl:h-[47px] xl:w-[40px] xl:h-[40px]" src="/assests/dashboard/request/req-5.svg" />
-
-                            <div>
-                                <h1 style={Username2}>Priyal Mehta <span style={userStatus} className="text-[#A7A7A7] ml-[5px]">1h ago</span></h1>
-                                <p style={Activity} className="text-[12px] 2xl:text-[11px] xl:text-[10px]"> Hi, I am busy now. Can I talk...</p>
-                            </div>
-                        </div>
-                        <div className="hover:bg-[#F4F9FF] cursor-pointer p-[10px] rounded-[10px] w-[278px] flex space-x-[19px]  items-center">
-                            <Image alt="img" width={47} height={47} className="w-[47px] h-[47px] 2xl:w-[47px] 2xl:h-[47px] xl:w-[40px] xl:h-[40px]" src="/assests/dashboard/request/req-1.svg" />
-                            <div>
-                                <h1 style={Username2}>Rhitik Gajjar <span style={userStatus} className="text-[#A7A7A7] ml-[5px]">1h ago</span></h1>
-                                <p style={Activity} className="text-[12px] 2xl:text-[11px] xl:text-[10px]"> Hi, I am busy now. Can I talk...</p>
-                            </div>
-                        </div>
-                        <div className="hover:bg-[#F4F9FF] cursor-pointer p-[10px] rounded-[10px] w-[278px] flex space-x-[19px] items-center">
-                            <Image alt="img" width={47} height={47} className="w-[47px] h-[47px] 2xl:w-[47px] 2xl:h-[47px] xl:w-[40px] xl:h-[40px]" src="/assests/dashboard/request/req-7.svg" />
-                            <div>
-                                <h1 style={Username2}>Meet Patel<span style={userStatus} className="text-[#A7A7A7] ml-[5px]">1h ago</span></h1>
-                                <p style={Activity} className="text-[12px] 2xl:text-[11px] xl:text-[10px]"> Hi, I am busy now. Can I talk...</p>
-                            </div>
-                        </div>
-                        <div className="hover:bg-[#F4F9FF] cursor-pointer p-[10px] rounded-[10px] w-[278px] flex space-x-[19px] items-center">
-                            <Image alt="img" width={47} height={47} className="w-[47px] h-[47px] 2xl:w-[47px] 2xl:h-[47px] xl:w-[40px] xl:h-[40px]" src="/assests/dashboard/request/req-6.svg" />
-                            <div>
-                                <h1 style={Username2}>Niketan Sharma<span style={userStatus} className="text-[#A7A7A7] ml-[5px]">1h ago</span></h1>
-                                <p style={Activity} className="text-[12px] 2xl:text-[11px] xl:text-[10px]"> Hi, I am busy now. Can I talk...</p>
-                            </div>
-                        </div>
-
-                        <div className="hidden">
-                            <button className="w-[278px] h-[40px] rounded-[10px] bg-[#FAFAFA]">View All</button>
-                        </div>
-                    </div>
-                </div>
+        <Box>
+            <div className={`scroll-req-content  h-full  bg-[#FFF] 2xl:w-[340px] w-[350px] xl:w-[300px] `}>
+                <Chats HandleWide={HandleWide} toggleInnerDrawer={toggleInnerDrawer} SetChatUser={SetChatUser} />
             </div>
             <Drawer anchor="right" BackdropProps={{ style: { opacity: 0 } }} open={innerDrawerOpen} onClose={toggleInnerDrawer}>
-                <div className="2xl:w-[750px] xl:w-[650px]">
-                    <div className="flex space-x-[10px]">
-                        <div className={` scroll-req-content  h-full bg-[#FFF] 2xl:w-[340px] w-[350px] xl:w-[300px] `}>
-                            <div className="overflow-y-scroll h-full pb-[40px] w-full grid place-items-center">
-                                <div className="2xl:w-[320px] xl:w-[280px] flex flex-col gap-y-[15px] fixed top-0 bg-[#FFF]">
-
-                                    <div className="bg-[#FFF] relative 2xl:left-[10px] xl:left-[10px] flex space-x-[19px]  pt-[20px] items-center">
-                                        <Image alt="img" width={47} height={47} className="w-[47px] h-[47px] 2xl:w-[47px] 2xl:h-[47px] xl:w-[40px] xl:h-[40px]" src="/assests/dashboard/user/userProfile.svg" />
-                                        <div>
-                                            <h1 style={UserProfileName} className="text-bold text-[14px]">Riya M Shah</h1>
-                                            <p style={userStatus} className="text-[#0091FF]">Online</p>
-                                        </div>
-                                    </div>
-
-                                    <div className=" h-[1px] 2xl:w-[270px] xl:w-[230px] bg-[#ECECEC]"></div>
-
-                                    <div className="ml-[-0px]">
-                                        <input
-                                            onClick={handleContentClick}
-                                            type="text" placeholder="Search Member"
-                                            style={Text2}
-                                            className="pl-[40px] w-[270px] xl:w-[230px] 2xl:w-[270px] h-[50px] 2xl:h-[50px] xl:h-[40px] oultine-none focus:outline-none text-[black] focus:border-[1px] focus:border-[black] rounded-[10px] bg-[#FAFAFA] text-[#727272]" />
-                                        <Image
-                                            alt="img"
-                                            width={18}
-                                            height={15}
-                                            src="/assests/Black/Search.svg"
-                                            style={{ width: '18px', height: '15px' }} // Ensure aspect ratio is maintained
-                                            className="w-[18px] h-[15px] absolute inline 2xl:left-[10px] xl:left-[10px] left-[10px] mt-[19px]"
-                                        />
-
-                                    </div>
-
-                                </div>
-                                <div className="mr-[55px] pt-[20px] flex items-center justify-center flex-col space-y-[15px] 2xl:mt-[150px] xl:mt-[130px]">
-                                    <div className="bg-[#F4F9FF]  rounded-[10px]  xl:w-[230px] 2xl:w-[270px] p-[10px] flex space-x-[19px]  items-center">
-                                        <Image alt="img" width={47} height={47} onClick={toggleInnerDrawer} className="ml-[5px] cursor-pointer w-[47px] h-[47px] 2xl:w-[47px] 2xl:h-[47px] xl:w-[40px] xl:h-[40px]" src="/assests/dashboard/request/req-3.svg" />
-                                        <div>
-                                            <h1 style={Username2} className="text-[14px] 2xl:text-[14px] xl:text-[12px]">Rishikesh Shah <span style={userStatus} className="text-[#A7A7A7] ml-[5px]">1h ago</span></h1>
-                                            <p style={Activity2} className="text-[12px] 2xl:text-[11px] xl:text-[10px]" > Hi, I am bus now. Can I talk...</p>
-                                        </div>
-                                    </div>
-                                    <div className="hover:bg-[#F4F9FF] xl:w-[230px] 2xl:w-[270px] rounded-[10px] cursor-pointer flex  p-[10px] space-x-[19px]  items-center">
-                                        <Image alt="img" width={47} height={47} className="w-[47px] h-[47px] ml-[5px] 2xl:w-[47px] 2xl:h-[47px] xl:w-[40px] xl:h-[40px]" src="/assests/dashboard/request/req-4.svg" />
-                                        <div>
-                                            <h1 style={Username2} className="text-[14px] 2xl:text-[14px] xl:text-[12px]">Ronit Kumar <span style={userStatus} className="text-[#A7A7A7] ml-[5px]">1h ago</span></h1>
-                                            <p style={Activity2} className="text-[12px] 2xl:text-[11px] xl:text-[10px]" > Hi, I am bus now. Can I talk...</p>
-                                        </div>
-                                    </div>
-                                    <div className="hover:bg-[#F4F9FF] xl:w-[230px] 2xl:w-[270px] rounded-[10px] cursor-pointer flex  p-[10px] space-x-[19px]  items-center">
-                                        <Image alt="img" width={47} height={47} className="w-[47px] h-[47px] ml-[5px] 2xl:w-[47px] 2xl:h-[47px] xl:w-[40px] xl:h-[40px]" src="/assests/dashboard/request/req-5.svg" />
-
-                                        <div>
-                                            <h1 style={Username2} className="text-[14px] 2xl:text-[14px] xl:text-[12px]">Priyal Mehta <span style={userStatus} className="text-[#A7A7A7] ml-[5px]">1h ago</span></h1>
-                                            <p style={Activity2} className="text-[12px] 2xl:text-[11px] xl:text-[10px]" > Hi, I am bus now. Can I talk...</p>
-                                        </div>
-                                    </div>
-                                    <div className="hover:bg-[#F4F9FF] xl:w-[230px] 2xl:w-[270px] rounded-[10px] cursor-pointer flex  p-[10px] space-x-[19px]  items-center">
-                                        <Image alt="img" width={47} height={47} className="w-[47px] h-[47px] ml-[5px] 2xl:w-[47px] 2xl:h-[47px] xl:w-[40px] xl:h-[40px]" src="/assests/dashboard/request/req-1.svg" />
-                                        <div>
-                                            <h1 style={Username2} className="text-[14px] 2xl:text-[14px] xl:text-[12px]">Rhitik Gajjar <span style={userStatus} className="text-[#A7A7A7] ml-[5px]">1h ago</span></h1>
-                                            <p style={Activity2} className="text-[12px] 2xl:text-[11px] xl:text-[10px]" > Hi, I am bus now. Can I talk...</p>
-                                        </div>
-                                    </div>
-                                    <div className="hover:bg-[#F4F9FF] xl:w-[230px] 2xl:w-[270px] rounded-[10px] cursor-pointer flex  p-[10px] space-x-[19px] items-center">
-                                        <Image alt="img" width={47} height={47} className="w-[47px] h-[47px] ml-[5px] 2xl:w-[47px] 2xl:h-[47px] xl:w-[40px] xl:h-[40px]" src="/assests/dashboard/request/req-7.svg" />
-                                        <div>
-                                            <h1 style={Username2} className="text-[14px] 2xl:text-[14px] xl:text-[12px]">Meet Patel<span style={userStatus} className="text-[#A7A7A7] ml-[5px]">1h ago</span></h1>
-                                            <p style={Activity2} className="text-[12px] 2xl:text-[11px] xl:text-[10px]" > Hi, I am bus now. Can I talk...</p>
-                                        </div>
-                                    </div>
-                                    <div className="hover:bg-[#F4F9FF] xl:w-[230px] 2xl:w-[270px] rounded-[10px] cursor-pointer flex  p-[10px] space-x-[19px] items-center">
-                                        <Image alt="img" width={47} height={47} className="w-[47px] h-[47px] ml-[5px] 2xl:w-[47px] 2xl:h-[47px] xl:w-[40px] xl:h-[40px]" src="/assests/dashboard/request/req-6.svg" />
-                                        <div>
-                                            <h1 style={Username2} className="text-[14px] 2xl:text-[14px] xl:text-[12px]">Niketan Sharma<span style={userStatus} className="text-[#A7A7A7] ml-[5px]">1h ago</span></h1>
-                                            <p style={Activity2} className="text-[12px] 2xl:text-[11px] xl:text-[10px]" > Hi, I am bus now. Can I talk...</p>
-                                        </div>
-                                    </div>
+                <Stack direction='row' sx={{ width: '100%' }}>
+                    {/* Chats */}
+                    {/* <ChatSidebar HanldeSetUser={HanldeSetUser} /> */}
+                    <Chats HandleWide={HandleWide} />
+                    <Box sx={{
+                        height: '100%', width: Wide ? 'calc(100vw - 320px)' : 'calc(750px - 300px)',
+                        backgroundColor: '#F0F4FA'
+                    }}>
+                        {/* <ChatRoomPage UserRoom={UserRoom} /> */}
+                        <UIConversation UserDetails={ChatUser} />
+                    </Box>
 
 
-                                    <div className="hidden">
-                                        <button className="w-[278px] h-[40px] rounded-[10px] bg-[#FAFAFA]">View All</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="relative left-[-60px] z-[10] w-[1px] h-[100vh] bg-[#E6E6E6]">
-                            <div className="w-[1px] h-[100px] 2xl:mt-[280px] xl:mt-[300px] mt-[280px] bg-[black]"></div>
-                        </div>
-
-                        {/* Chat Section */}
-
-                        <div className="fixed">
-                            <div className="space-y-[20px] relative left-[300px] 2xl:w-[400px] xl:w-[300px]">
-                                <div className="fixed 2xl:w-[400px] xl:w-[300px]">
-                                    <div className="w-full mt-[20px] flex  justify-between items-center ">
-                                        <div className="relative 2xl:left-0 xl:left-[-40px] flex space-x-[19px]  items-center">
-                                            <Image alt="img" width={47} height={47} className="w-[47px] h-[47px] 2xl:w-[47px] 2xl:h-[47px] xl:w-[40px] xl:h-[40px]" src="/assests/dashboard/request/req-3.svg" />
-                                            <div>
-                                                <h1 style={Username2}>Rishikesh Shah</h1>
-                                                <p style={userStatus} className="text-[#0091FF]">Online</p>
-
-                                            </div>
-                                        </div>
-
-                                        <div className="">
-                                            <Image alt="img" width={4} height={16} className="2xl:w-auto 2xl:h-auto xl:w-[5px] xl:h-[14px]" src="/assests/dashboard/chats/chat-more-icon.svg" />
-                                        </div>
-
-                                    </div>
-                                    <div className=" 2xl:ml-[-10px] xl:ml-[-50px] mt-[15px] h-[1px] w-[100vh] bg-[#ECECEC]"></div>
-
-                                    <div className="2xl:pl-[5px] xl:pl-[0px] 2xl:ml-0 xl:ml-[-35px]  overflow-y-scroll w-[100%] h-[500px]  2xl:pt-[50px] xl:pt-[30px] 2xl:pb-[60px] xl:pb-[100px]">
-
-                                        <div className="flex flex-col space-y-[20px]">
-
-                                            {
-                                                Chats.map(({ type, message, id }, index) => {
-
-
-
-                                                    if (type === 'me') {
-
-                                                        return (<>
-
-                                                            <div key={id} className=" flex justify-end  space-x-[15px]">
-                                                                <div className="flex flex-col justify-center rounded-[10px] bg-[#FAFAFA] p-[10px]">
-                                                                    <h1 style={ChatText} className="text-[12px]">{message}</h1>
-                                                                    <p style={TimeText} className="mt-[10px] mr-[5px] text-right">{"08:15 am"}</p>
-                                                                </div>
-                                                                <div>
-                                                                    <Image alt="img" width={40} height={40} src="/assests/dashboard/user/userProfile.svg" className="w-[40px] h-[40px] 2xl:w-[40px] 2xl:h-[40px] xl:w-[35px] xl:h-[35px]" />
-                                                                </div>
-                                                            </div>
-                                                        </>
-                                                        )
-                                                    } else {
-                                                        return (
-                                                            <>
-                                                                <div key={id} className="flex justify-start  space-x-[15px]">
-                                                                    <div>
-                                                                        <Image alt="img" width={40} height={40} src="/assests/dashboard/request/req-3.svg" className="w-[40px] h-[40px] 2xl:w-[40px] 2xl:h-[40px] xl:w-[35px] xl:h-[35px]" />
-                                                                    </div>
-                                                                    <div className="flex flex-col justify-center rounded-[10px] bg-[#FAFAFA] p-[10px]">
-                                                                        <h1 className="text-[12px]">{message}</h1>
-                                                                        <p style={TimeText} className="mt-[10px] ml-[5px] text-left">{"08:15 am"}</p>
-                                                                    </div>
-                                                                </div>
-
-                                                            </>
-                                                        )
-                                                    }
-                                                })
-                                            }
-                                        </div>
-
-
-                                    </div>
-                                    <div className=" fixed 2xl:bottom-[0px] xl:bottom-[0px] bg-[#FFF] w-[500px] 2xl:w-[500px] xl:w-[380px] 2xl:pl-0 xl:pl-[35px] 2xl:right-[-60px] xl:right-0 h-[100px]  space-y-[10px]">
-
-                                        <div className="flex relative 2xl:left-[-40px] xl:left-[-35px] justify-center space-x-[20px]">
-                                            <input type="text" placeholder="Type message here" className="focus:outline-none w-[333px] h-[50px] border-[1px] border-[#6D6D6D] rounded-[10px] pl-[20px]" /> <button><Image alt="img" width={29} height={24} src="/assests/dashboard/chats/send-icon.svg" /></button>
-                                        </div>
-                                        <div className="2xl:ml-[20px] xl:ml-[-32px]">
-                                            <ul className="flex space-x-[20px]">
-                                                <li><Image alt="img" width={23} height={20} src="/assests/dashboard/chats/camera-icon.svg" /></li>
-                                                <li><Image alt="img" width={11} height={20} src="/assests/dashboard/chats/document-attach-icon.svg" /></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+                </Stack>
             </Drawer>
         </Box >
     );
-    //For Message Notification input
+    //For Message Notification input profile id
 
 
 
@@ -537,7 +214,8 @@ function NavBar() {
 
 
     const NotificationList = (anchor) => (
-        <Box
+        <Box id="sidebarScroll"
+            className="dark:bg-[#242526] bg-[#FFF] "
             sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 350 }}
 
         >
@@ -571,8 +249,14 @@ function NavBar() {
 
     //inner Drawer For Chat
 
+    const { userData, updateUser } = useContext(UserContext);
+
     const [innerDrawerOpen, setInnerDrawerOpen] = useState(false);
-    const toggleInnerDrawer = () => {
+    const toggleInnerDrawer = (res) => {
+        SetChatUser(res)
+        updateUser(res)
+
+
         setInnerDrawerOpen(!innerDrawerOpen);
         if (innerDrawerOpen) {
             setState(state.right = false)
@@ -707,7 +391,7 @@ function NavBar() {
                         {isUpgradeActive ? "" : <>
                             <li>
                                 <div className="relative left-[14px] top-[10px]">
-                                    <button id="grad-btn" onClick={() => router.push("/dashboard/upgrade")} style={Text2} className="text-[#FFF] mr-[2px] text-center flex items-center justify-center w-[110px] h-[40px] bg-[#0F52BA] rounded-[8px]">Upgrade<Image alt="img" width={17} height={14} className="pl-[5px]" src="/assests/dashboard/icon/crown-icon.svg" /></button>
+                                    <UpgradeButton IconSize={17} BtnSizeH={40} BtnSizeW={110} />
                                 </div>
                             </li>
                         </>
@@ -719,6 +403,8 @@ function NavBar() {
     );
 
     const [openLogoutModal, setOpenLogoutModal] = React.useState(false);
+
+    const dispatch = useDispatch();
 
     const handleClickOpenLogout = () => {
         setOpenLogoutModal(true);
@@ -735,111 +421,79 @@ function NavBar() {
 
         }
         else {
-
-            deleteCookie('authtoken', { path: '/' });
-            deleteCookie('email', { path: '/' });
-            deleteCookie('jwtToken', { path: '/' });
-            deleteCookie('userName', { path: '/' });
-            deleteCookie('data', { path: '/' });
-            deleteCookie('userid', { path: '/' });
-            localStorage.clear()
-
+            dispatch(logoutuser())
             router.push("/login")
         }
 
     }
 
-    const [token, settoken] = useState()
-    const [Uname, SetUname] = useState();
-    // const [Username, SetUsername] = useState();
 
-    useEffect(() => {
 
-        if (getCookie("userName")) {
-            SetUname(getCookie("userName"));
-        }
-        else {
-            SetUname("NA")
+    const [notificationCount, setNotificationCount] = useState(0);
 
-        }
-        settoken(getCookie("authtoken"))
+    if (typeof window !== 'undefined') {
+        const messaging = getMessaging(firebaseApp);
 
-    }, [])
+        // Listen for incoming messages
+        onMessage(messaging, (payload) => {
+            console.log('Message received:', payload);
+
+            // Display the message as a toast notification
+            setNotificationCount((prevCount) => prevCount + 1);
+            toast.success(payload.notification?.title);
+        });
+    }
+
+    const handleNotificationOpen = () => {
+        toggleNotification('right', true)();
+        setNotificationCount(0)
+    }
 
     const navList = (
         <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6 lg:justify-end lg:gap-x-[50px]">
-            <Typography
-                id="nav-links"
-                as="li"
-                variant="small"
-                color="blue-gray"
+            <div
                 className="p-1 font-normal poppins rounded-[10px]"
-
-
             >
                 {isUpgradeActive ? "" : <>
-                    <button id="grad-btn" style={Text2} onClick={() => router.push("/dashboard/upgrade")} className="text-[#FFF] text-center flex items-center justify-center w-[123px] h-[40px] bg-[#0F52BA] rounded-[8px]">Upgrade<Image alt="img" width={23} height={23} className="pl-[5px]" src="/assests/dashboard/icon/crown-icon.svg" /></button>
+                    <UpgradeButton IconSize={23} BtnSizeH={40} BtnSizeW={123} />
                 </>}
 
-            </Typography>
-            <Typography
+            </div>
+            <div
                 id="nav-links"
-                as="li"
-                variant="small"
-                color="blue-gray"
-                className="p-1 font-normal poppins rounded-[10px]"
-
+                className="p-1 p-[5px]  font-normal poppins rounded-[100%] hover:bg-[#F2F7FF] w-[40px] h-[40px] grid place-items-center"
+                
             >
 
 
-                <Image alt="img" width={26} height={20} className="cursor-pointer" onClick={toggleDrawer('right', true)} src="/assests/dashboard/icon/notification.svg" />
+                <Image alt="img" width={26} height={20} className="cursor-pointer" onClick={toggleDrawer('right', true)} src={darkMode ? "/assests/dashboard/icon/notification-white.svg" : "/assests/dashboard/icon/notification.svg"} />
 
-            </Typography>
-            <Typography
+            </div>
+            <div
                 id="nav-links"
-                as="li"
-                variant="small"
-
-                className="p-1 font-normal poppins rounded-[10px]"
+                className="p-1 font-normal poppins p-[5px] rounded-[100%] hover:bg-[#F2F7FF] w-[40px] h-[40px] grid place-items-center"
             >
-                <Image alt="img" width={17} height={20} className="cursor-pointer" onClick={toggleNotification('right', true)} src="/assests/dashboard/icon/notification-icon.svg" />
-
-            </Typography>
-            <Typography
+                <Badge badgeContent={notificationCount} color="primary">
+                    <Image alt="img" width={17} height={20} className="cursor-pointer" onClick={handleNotificationOpen} src={darkMode ? "/assests/dashboard/icon/notification-icon-white.svg" : "/assests/dashboard/icon/notification-icon.svg"} />
+                </Badge>
+            </div>
+            <div
                 id="nav-links"
-                as="li"
-                variant="small"
-                color="blue-gray"
                 className="p-1 font-normal rounded-[10px] p-[7px]"
 
             >
-                <button aria-controls="second-fade-menu" aria-haspopup="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M1.48288 20C1.07718 20 0.728608 19.8542 0.437165 19.5625C0.145722 19.2708 0 18.922 0 18.516C0 18.1099 0.145722 17.7611 0.437165 17.4694C0.728608 17.1777 1.07718 17.0319 1.48288 17.0319C1.88861 17.0319 2.2372 17.1777 2.52864 17.4694C2.82006 17.7611 2.96577 18.1099 2.96577 18.516C2.96577 18.922 2.82006 19.2708 2.52864 19.5625C2.2372 19.8542 1.88861 20 1.48288 20ZM9.99222 20C9.58652 20 9.23795 19.8542 8.9465 19.5625C8.65506 19.2708 8.50934 18.922 8.50934 18.516C8.50934 18.1099 8.65506 17.7611 8.9465 17.4694C9.23795 17.1777 9.58652 17.0319 9.99222 17.0319C10.3979 17.0319 10.7465 17.1777 11.0379 17.4694C11.3294 17.7611 11.4751 18.1099 11.4751 18.516C11.4751 18.922 11.3294 19.2708 11.0379 19.5625C10.7465 19.8542 10.3979 20 9.99222 20ZM18.5016 20C18.0958 20 17.7473 19.8542 17.4558 19.5625C17.1644 19.2708 17.0187 18.922 17.0187 18.516C17.0187 18.1099 17.1644 17.7611 17.4558 17.4694C17.7473 17.1777 18.0958 17.0319 18.5016 17.0319C18.9073 17.0319 19.2558 17.1777 19.5473 17.4694C19.8387 17.7611 19.9844 18.1099 19.9844 18.516C19.9844 18.922 19.8387 19.2708 19.5473 19.5625C19.2558 19.8542 18.9073 20 18.5016 20ZM1.48288 11.484C1.07718 11.484 0.728608 11.3382 0.437165 11.0465C0.145722 10.7549 0 10.406 0 10C0 9.59398 0.145722 9.24514 0.437165 8.95347C0.728608 8.6618 1.07718 8.51596 1.48288 8.51596C1.88861 8.51596 2.2372 8.6618 2.52864 8.95347C2.82006 9.24514 2.96577 9.59398 2.96577 10C2.96577 10.406 2.82006 10.7549 2.52864 11.0465C2.2372 11.3382 1.88861 11.484 1.48288 11.484ZM9.99222 11.484C9.58652 11.484 9.23795 11.3382 8.9465 11.0465C8.65506 10.7549 8.50934 10.406 8.50934 10C8.50934 9.59398 8.65506 9.24514 8.9465 8.95347C9.23795 8.6618 9.58652 8.51596 9.99222 8.51596C10.3979 8.51596 10.7465 8.6618 11.0379 8.95347C11.3294 9.24514 11.4751 9.59398 11.4751 10C11.4751 10.406 11.3294 10.7549 11.0379 11.0465C10.7465 11.3382 10.3979 11.484 9.99222 11.484ZM18.5016 11.484C18.0958 11.484 17.7473 11.3382 17.4558 11.0465C17.1644 10.7549 17.0187 10.406 17.0187 10C17.0187 9.59398 17.1644 9.24514 17.4558 8.95347C17.7473 8.6618 18.0958 8.51596 18.5016 8.51596C18.9073 8.51596 19.2558 8.6618 19.5473 8.95347C19.8387 9.24514 19.9844 9.59398 19.9844 10C19.9844 10.406 19.8387 10.7549 19.5473 11.0465C19.2558 11.3382 18.9073 11.484 18.5016 11.484ZM1.48288 2.96808C1.07718 2.96808 0.728608 2.82225 0.437165 2.53061C0.145722 2.23894 0 1.89008 0 1.48404C0 1.07802 0.145722 0.729175 0.437165 0.437505C0.728608 0.145835 1.07718 0 1.48288 0C1.88861 0 2.2372 0.145835 2.52864 0.437505C2.82006 0.729175 2.96577 1.07802 2.96577 1.48404C2.96577 1.89008 2.82006 2.23894 2.52864 2.53061C2.2372 2.82225 1.88861 2.96808 1.48288 2.96808ZM9.99222 2.96808C9.58652 2.96808 9.23795 2.82225 8.9465 2.53061C8.65506 2.23894 8.50934 1.89008 8.50934 1.48404C8.50934 1.07802 8.65506 0.729175 8.9465 0.437505C9.23795 0.145835 9.58652 0 9.99222 0C10.3979 0 10.7465 0.145835 11.0379 0.437505C11.3294 0.729175 11.4751 1.07802 11.4751 1.48404C11.4751 1.89008 11.3294 2.23894 11.0379 2.53061C10.7465 2.82225 10.3979 2.96808 9.99222 2.96808ZM18.5016 2.96808C18.0958 2.96808 17.7473 2.82225 17.4558 2.53061C17.1644 2.23894 17.0187 1.89008 17.0187 1.48404C17.0187 1.07802 17.1644 0.729175 17.4558 0.437505C17.7473 0.145835 18.0958 0 18.5016 0C18.9073 0 19.2558 0.145835 19.5473 0.437505C19.8387 0.729175 19.9844 1.07802 19.9844 1.48404C19.9844 1.89008 19.8387 2.23894 19.5473 2.53061C19.2558 2.82225 18.9073 2.96808 18.5016 2.96808Z" fill="black" />
-                    </svg>
-                </button>
+                {darkMode ? icons["nav-dots-menu"].dark : icons["nav-dots-menu"].light}
 
-
-            </Typography>
-            <Typography
+            </div>
+            <div
                 id="nav-links"
-                as="li"
-                variant="small"
-                color="blue-gray"
                 className="p-1 font-normal rounded-[10px] p-[7px] rounded-[10px]"
 
             >
+                <div style={{ cursor: "pointer" }} onClick={handleClick}>
+                    <ProfileImage size={40} />
+                </div>
 
-                <Tooltip title="Account settings" id="fade-button"
-                    aria-controls={open ? 'fade-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    onClick={handleClick}>
-
-                     <div onClick={handleClick}>   
-                    <ProfileImage size={40}/>
-                    </div>
-                </Tooltip>
                 <Menu
                     id="fade-menu"
                     MenuListProps={{
@@ -848,18 +502,19 @@ function NavBar() {
                     anchorEl={anchorEl}
                     open={open}
                     onClose={handleClose}
-                    TransitionComponent={Fade}
-                    className="ml-[-25px] mt-[10px]"
+                    className=" ml-[-25px] mt-[10px]"
                     PaperProps={{
                         elevation: 0,
                         sx: {
                             overflow: 'visible',
+                            backgroundColor: darkMode ? "#242526" : "#FFF",
 
                             '& .MuiAvatar-root': {
                                 width: 32,
                                 height: 32,
                                 ml: -0.5,
                                 mr: 1,
+
                             },
                             '&:before': {
                                 content: '""',
@@ -870,7 +525,7 @@ function NavBar() {
                                 width: 10,
                                 height: 10,
 
-                                transform: 'translateY(-50%) rotate(45deg)',
+                                // transform: 'translateY(-50%) rotate(45deg)',
                                 zIndex: 0,
                             },
                             transition: 'none',
@@ -881,45 +536,86 @@ function NavBar() {
 
 
 
-                    <div className="pt-[20px] w-[278px] h-[410px] bg-[#FFF]" style={BoxSdow2}>
+                    <div className="pt-[20px] w-[278px] h-[449px]" style={BoxSdow2}>
                         <div className="flex flex-col space-y-[20px]">
 
                             <div className="flex space-x-[39px] pl-[24px] items-center">
 
-                               <ProfileImage size={47}/>
+                                <ProfileImage size={47} />
                                 <div>
-                                    <ul className="relative right-[18px] flex items-center space-x-[10px]">
-                                        <li className=""><Image alt="img" width={8} height={8} src="/assests/dashboard/menu/verfied-tick.svg" /></li>
-                                        <li style={planPrice2} className="text-[12px]"><h1>Gold</h1></li>
-                                    </ul>
-                                    <h1 style={planPrice} className="text-[12px]">One Month</h1>
+                                    {isUpgradeActive ?
+                                        (<>
+                                            <ul className="relative right-[18px] flex items-center space-x-[10px]">
+                                                <li className=""><Image alt="img" width={8} height={8} src="/assests/dashboard/menu/verfied-tick.svg" /></li>
+                                                <li style={planPrice2} className="text-[12px]"><h1>Gold</h1></li>
+                                            </ul>
+                                            <h1 style={planPrice} className="text-[12px]">One Month</h1>
+                                        </>)
+                                        : null}
                                 </div>
                             </div>
 
-                            <div className="pl-[24px] ">
-                                <h1 style={UserProfileName} className="text-[#000]">{Uname}</h1>
+                            <div className="pl-[28px] ">
+                                <h1 style={UserProfileName} className="text-[#000] dark:text-[#FFF]">{Uname}</h1>
                                 <p style={userId} className="text-[#50545A]">ID: HM1002021</p>
-                                <div className="pt-[8px]">
-                                    <button id="grad-btn" onClick={() => router.push("/dashboard/upgrade")} style={Text2} className="text-[#FFF] mr-[2px] text-center flex items-center justify-center w-[123px] h-[40px] bg-[#0F52BA] rounded-[8px]">Upgrade<Image alt="img" width={23} height={23} className="pl-[5px]" src="/assests/dashboard/icon/crown-icon.svg" /></button>
 
-                                </div>
                             </div>
                             <div className="w-full grid place-items-center">
                                 <div className="bg-[#EBEBEB] h-[1px] w-[230px]"></div>
                             </div>
-                            <div className="pt-[0px] flex  flex-col space-y-[21px]">
-                                <ul style={Text4} className="pl-[30px] text-[#000] space-y-[21px]">
+                            <div className="relative left-[-10px] pt-[0px] flex items-center flex-col space-y-[23px]">
+                                <ul style={Text4} className=" dark:text-[#FFF] pl-[0px] text-[#000] space-y-[8px]">
 
-                                    <li className="cursor-pointer flex items-center space-x-[10px]">
-                                        <Link href="/dashboard/profile" className="cursor-pointer flex items-center space-x-[10px]" > <Image alt="img" width={17.223} height={16} src="/assests/dashboard/menu/menu-profile.svg" className="w-[17.223px] h-[16px]" />
-                                            <h1>My Profile</h1></Link>
+                                    <li className="w-[230px] h-[34px] p-[10px] pl-[15px] hover:bg-[#F3F8FF] dark:hover:bg-[#18191a] rounded-[100px]  cursor-pointer flex items-center space-x-[10px]">
+                                        <span>
+                                            {darkMode ? icons.myprofile.dark : icons.myprofile.light}
+                                        </span>
+                                        <Link className="relative left-[5px]" href="/dashboard/profile" >
+                                            My Profile
+                                        </Link>
                                     </li>
-                                    <li className="flex items-center space-x-[10px]"><Image alt="img" width={17.223} height={16} src="/assests/dashboard/menu/menu-seting.svg" className="w-[17.223px] h-[16px]" /><h1><Link href="/dashboard/seting">Accounts</Link></h1></li>
-                                    <li className="flex items-center space-x-[10px]"><Image alt="img" width={17.223} height={16} src="/assests/dashboard/menu/menu-lock.svg" className="w-[17.223px] h-[16px]" /><h1>Privacy Policy</h1></li>
+                                    <li className="w-[230px] h-[34px] p-[10px] pl-[15px] hover:bg-[#F3F8FF] dark:hover:bg-[#18191a] rounded-[100px]  flex items-center space-x-[10px]">
+                                        <span>
+                                            {darkMode ? icons.setting.dark : icons.setting.light}
+                                        </span>
+                                        <Link className="relative left-[5px]" href="/dashboard/seting/credentials">Accounts</Link>
+                                    </li>
+                                    <li className="w-[230px] h-[34px] p-[10px] pl-[15px] hover:bg-[#F3F8FF] dark:hover:bg-[#18191a] rounded-[100px]  flex items-center space-x-[10px]">
+
+                                        <span>
+                                            {darkMode ? icons["menu-lock"].dark : icons["menu-lock"].light}
+                                        </span>
+
+                                        <Link className="relative left-[5px]" href="/dashboard/seting/privacyseting">Privacy Policy</Link>
+                                    </li>
+
+
+                                </ul>
+                                <div className="w-full grid place-items-center">
+                                    <div className="bg-[#EBEBEB] h-[1px] w-[230px]"></div>
+                                </div>
+                                <ul className="pl-[10px]">
+                                    <li className="flex items-center space-x-[60px]">
+                                        <div className="flex space-x-[0px]">
+                                            <span className="relative left-[-2px]">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                                    <path d="M8.06547 16C5.82506 16 3.92072 15.2159 2.35242 13.6476C0.78414 12.0793 0 10.1749 0 7.93453C0 5.96181 0.624113 4.23786 1.87234 2.76268C3.12057 1.28751 4.67867 0.366612 6.54664 0C6.30224 0.488816 6.1102 1.00382 5.97054 1.54501C5.83088 2.0862 5.76105 2.64484 5.76105 3.22095C5.76105 5.1704 6.44336 6.82743 7.80797 8.19203C9.17257 9.55664 10.8296 10.239 12.779 10.239C13.3552 10.239 13.9138 10.1691 14.455 10.0295C14.9962 9.8898 15.5025 9.69776 15.9738 9.45336C15.6247 11.3213 14.7125 12.8794 13.2373 14.1277C11.7621 15.3759 10.0382 16 8.06547 16ZM8.06547 15.2668C9.60175 15.2668 10.9809 14.8434 12.2029 13.9967C13.425 13.15 14.3153 12.0458 14.874 10.6841C14.5248 10.7714 14.1757 10.8412 13.8265 10.8936C13.4774 10.946 13.1282 10.9722 12.779 10.9722C10.6318 10.9722 8.80305 10.2171 7.29296 8.70704C5.78287 7.19695 5.02782 5.36825 5.02782 3.22095C5.02782 2.87179 5.05401 2.52264 5.10638 2.17349C5.15876 1.82433 5.22859 1.47518 5.31588 1.12602C3.95417 1.68467 2.84997 2.57501 2.00327 3.79705C1.15657 5.01909 0.733224 6.39825 0.733224 7.93453C0.733224 9.95963 1.44899 11.6879 2.88052 13.1195C4.31206 14.551 6.04037 15.2668 8.06547 15.2668Z" fill={darkMode ? "#FFF" : "#000"} />
+                                                </svg>
+                                            </span>
+
+                                            <span className="relative left-[10px] dark:text-[#FFF] text-[#000]">Dark Mode</span>
+
+                                        </div>
+                                        <div>
+                                            <DarkModeToggle toggleDarkMode={toggleDarkMode} />
+                                        </div>
+                                    </li>
                                 </ul>
 
-                                <div onClick={handleClickOpenLogout} className="flex justify-center">
-                                    <button className="w-[230px] h-[44px] text-[black] bg-[#F7F7F7] rounded-[10px] flex justify-center items-center" style={Text4}><h1>Log Out </h1><Image alt="img" width={15} height={18} className="relative left-[50px]" src="/assests/dashboard/menu/menu-logout.svg" /></button>
+                                <div onClick={handleClickOpenLogout} className="relative left-[10px] flex justify-center">
+                                    <button id={darkMode ? "Gradient-logout-btn-2" : ""} className="w-[230px] h-[44px] border-[1px] border-[#EBEBEB] text-[black] dark:text-[#FFF] dark:bg-[#141516] dark:border-[1px] dark:border-[#FFF] bg-[#FFF] hover:bg-[#F3F8FF] rounded-[22px]" style={Text4}>
+                                        Log Out
+                                    </button>
                                 </div>
 
                                 <Dialog
@@ -948,37 +644,41 @@ function NavBar() {
                         </div>
                     </div>
                 </Menu>
-            </Typography>
-        </ul>
+            </div >
+        </ul >
     );
     return (
         <>
             <Navbar
-                className={`z-10 border-none fixed top-0 left-0 top-0 h-max shadow-none  max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4 p-4 text-white `}
-                style={{ backgroundColor: "#FFF" }}
+                className={` z-10 border-none fixed top-0 left-0 top-0 h-max shadow-none  max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4 p-4 text-white `}
+                style={{ backgroundColor: darkMode ? "#18191a" : "#FFF" }}
 
             >
                 <div className="flex items-center flex-row-reverse lg:flex-row justify-between">
-                    <Typography
-                        as="li"
+                    <div
 
                         className="mr-4 cursor-pointer py-1.5 lg:ml-[0px] font-medium"
                     >
-                        <Link href="/">  <Image alt="img" width={148} height={36} src="/heroSec/Happy-milan2.svg" /></Link>
-                    </Typography>
-                    <Typography
-                        as="li"
+                        <Link href="/">  <Image quality={45} loading="lazy" alt="img" width={148} height={36} src={darkMode ? "/heroSec/new-logo-white.svg" : "/heroSec/Happy-milan2.svg"} /></Link>
+                    </div>
+                    <div
                         id="id-search-centerlized"
                         className=" hidden absolute 2xl:left-[335px] xl:left-[310px] 2xl:flex xl:flex cursor-pointer py-1.5 lg:ml-[0px] font-medium"
                     >
                         {
                             isUpgradeActive ? "" : <>
-                                <input type='text' className='text-[#000] outline-none   pl-[10px] w-[200px] h-[40px] rounded-[8px] bg-[#F7F7F7] border-none ouline-none focus:border-[1px] focus:border-[black] pr-[40px]' placeholder='Profile ID Search' /> <Image alt="img" width={15} height={14} style={{width:"15px" , height:"14px"}} src="/assests/Black/Search.svg" className="relative right-[30px] top-[12px]" />
+                                {/* <Image loading="lazy" alt="img" width={15} height={14} style={{ width: "15px", height: "14px" }} src="/assests/Black/Search.svg" className="absolute mt-[12px] ml-[10px]" /> */}
+                                <div className="hover:bg-[#F2F7FF] h-[30px] w-[30px] rounded-[100%] absolute mt-[5px] ml-[5px] grid place-items-center">
+                                   <Image width={15} height={15} alt="search" src="/assests/dashboard/icon/Search-grad.svg" loading="lazy" />
+                                </div>
+                                <input type='search'
+                                    value={searchTerm}
+                                    onChange={handleChange} className='text-[#000] dark:text-[#FFF] outline-none   pl-[40px] w-[200px] h-[40px] rounded-[23px] bg-none border-[1px] border-[#E3E3E3]  dark:bg-[#242526]  ouline-none focus:border-[1px] focus:border-[black] pr-[10px]' placeholder='Profile ID Search' />
 
                             </>
                         }
 
-                    </Typography>
+                    </div>
                     <div className="flex items-center gap-4">
                         <div className="w-[600px] hidden lg:block ">{navList}</div>
                         <IconButton
@@ -1055,9 +755,18 @@ function NavBar() {
             >
                 {list('right')}
             </Drawer>
+
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
         </>
     )
 }
+
+NavBar.propTypes = {
+    handleSearch: propTypes.func.isRequired,
+};
 
 
 export default NavBar

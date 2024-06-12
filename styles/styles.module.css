@@ -1,0 +1,106 @@
+/* BoldText */
+.BoldText {
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+/* ProfileName */
+.ProfileName {
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+/* statusText */
+.statusText {
+  font-family: 'Poppins', sans-serif;
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 12px;
+}
+
+
+.slidePage {
+  opacity: 0;
+  transform: translateX(100%);
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.slideIn {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
+
+.ChatSidebar {
+  background: #FFF;
+  padding-left: 20px;
+  box-shadow: -10px 0px 20px 0px rgba(0, 0, 0, 0.13);
+}
+
+/* components/ChatLayout.module.css */
+
+.container {
+  display: grid;
+  grid-template-columns: 335px 1fr;
+  /* Sidebar width and remaining width */
+  height: 100vh;
+  /* Full viewport height */
+}
+
+.sidebar {
+  width: 335px;
+  /* border: 1px solid black; */
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* Enable vertical scrollbar if content exceeds height */
+
+}
+
+
+.chatRoom {
+  overflow-y: auto;
+  /* Enable vertical scrollbar if content exceeds height */
+  /* padding: 20px; */
+}
+
+/* styles/styles.module.css */
+
+.customscrollbar {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  /* For Firefox */
+  scrollbar-color: #d33636 #df2a2a;
+  /* For Firefox */
+}
+
+.customscrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.customscrollbar::-webkit-scrollbar-thumb {
+  background-color: #d12d2d;
+  border-radius: 3px;
+}
+
+.customscrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #cd2c2c;
+}
+
+
+#seting-plans-text {
+  color: #000;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+/* components/Sidebar.module.css */

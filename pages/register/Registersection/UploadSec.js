@@ -60,20 +60,6 @@ function UploadSec({ formData, updateFormData, HandleTabclick, activeTab }) {
 
         }))
 
-
-          console.log("<== selected Images2 ==>",selectedImages2)
-
-        const selectedImages = acceptedFiles.map((file,index) => ({
-            id : index,
-            key: file.name,
-            contentType: file.type,
-            data: URL.createObjectURL(file),
-            
-          }
-          ));
-
-          console.log("<== selected Images ==>",selectedImages)
-
         acceptedFiles.forEach((file) => {
            
             const reader = new FileReader();
@@ -81,8 +67,6 @@ function UploadSec({ formData, updateFormData, HandleTabclick, activeTab }) {
             reader.onabort = () => console.log('file reading was aborted');
             reader.onerror = () => console.log('file reading has failed');
             reader.onload = () => {
-
-                // const binaryData = reader.result;
 
 
                 updateFormData({
@@ -123,7 +107,7 @@ function UploadSec({ formData, updateFormData, HandleTabclick, activeTab }) {
                             <div {...getRootProps()} className='w-[250px]  lg:w-[346px] h-[67px]'>
                                 <input {...getInputProps()} className="hidden" />
                                 <div className='w-full grid place-items-center mt-[-10%] mb-[10%]'>
-                                    <img src='./loginassests/register-icons/Drag-Drop.svg' />
+                                    <img alt='upload' src='./loginassests/register-icons/Drag-Drop.svg' />
                                 </div>
                                 <h1 className='text-[15px] lg:text-[24px]' style={Text2}>Select Photos (5) or Video (1)
                                     <span className='text-[16px]' style={Text3}> Or drag and drop a file</span></h1>

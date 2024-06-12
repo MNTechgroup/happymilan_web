@@ -2,6 +2,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { getCookie } from "cookies-next";
+import { Getlikeduserdata } from './UsersAction';
 
 export const FETCH_ALL_USERS_REQUEST = 'FETCH_ALL_USERS_REQUEST';
 export const FETCH_ALL_USERS_SUCCESS = 'FETCH_ALL_USERS_SUCCESS';
@@ -30,6 +31,83 @@ export const likeUser = (userId) => ({
   payload: userId,
 });
 
+export const CreateLikeUser = (user) => {
+  console.log("🚀 ~ CreateLikeUser ~ userId:", user)
+  return async (dispatch) => {
+
+    const axios = require('axios');
+    const token = getCookie("authtoken")
+    let data = JSON.stringify({
+      "likedUserId": user?.userId,
+      "isLike": user?.status
+    });
+
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/like/create-like`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      data: data
+    };
+
+    axios.request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        dispatch({ type: LIKE_USER, payload: response.data });
+
+
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+
+  }
+
+}
+
+export const UnlikeTheUser = (Postdata) => {
+  // console.log("🚀 ~ UnlikeTheUser ~ data:", Postdata)
+  return async (dispatch) => {
+
+    // const likedUSerId = data.likedUserId
+    // const theID = data.id
+
+    const axios = require('axios');
+    const token = getCookie("authtoken")
+    let data = JSON.stringify({
+      "likedUserId": Postdata.likedUserId,
+      "isLike": false
+    });
+
+    let config = {
+      method: 'put',
+      maxBodyLength: Infinity,
+      url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/like/update-like/${Postdata.id}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      data: data
+    };
+
+    axios.request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        dispatch({ type: LIKE_USER, payload: response.data })
+        dispatch(Getlikeduserdata())
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+
+  }
+
+}
 export const unlikeUser = (userId) => ({
   type: UNLIKE_USER,
   payload: userId,
@@ -58,7 +136,16 @@ export const fetchAllUsers = () => async (dispatch) => {
   dispatch({ type: FETCH_ALL_USERS_REQUEST });
 
   try {
-    const response = await axios.get('https://happymilan.tech/api/v1/user/user');
+    const token = getCookie("authtoken")
+    // const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/user`);
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/v1/user/user/getUserByGender`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     const theuser = getCookie('email');
     const filterUsers = response.data.data.filter(user => user.email !== theuser)
     const shuffledata = shuffleArray(filterUsers);
@@ -79,11 +166,7 @@ export const fetchAllUsers = () => async (dispatch) => {
 
 const addNewShortlist = () => ({
   type: ADD_NEW_SHORTLIST,
-  
-});
 
-const markShortlistsAsSeen = () => ({
-  type: MARK_SHORTLISTS_AS_SEEN,
 });
 
 
@@ -94,7 +177,7 @@ export const addToShortlist = (shortlistId) => async (dispatch) => {
   try {
     const token = getCookie('authtoken');
     const response = await axios.post(
-      'https://happymilan.tech/api/v1/user/shortlist/create-shortlist',
+      `${process.env.NEXT_PUBLIC_API_URL}/v1/user/shortlist/create-shortlist`,
       { shortlistId },
       {
         headers: {
@@ -125,9 +208,9 @@ export const RemoveShortlist = createAsyncThunk(
   'shortlist/removeshortlist',
   async (shortlistid, thunkAPI) => {
 
-    const url = `https://happymilan.tech/api/v1/user/shortlist/delete-short-list/${shortlistid}`;
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/v1/user/shortlist/delete-short-list/${shortlistid}`;
     const token = getCookie("authtoken")
-    
+
     const config = {
       method: 'DELETE',
       headers: {
@@ -135,7 +218,7 @@ export const RemoveShortlist = createAsyncThunk(
         'Content-Type': 'application/json', // Add any other required headers
       },
     };
-    
+
     fetch(url, config)
       .then(response => {
         if (!response.ok) {
@@ -149,8 +232,6 @@ export const RemoveShortlist = createAsyncThunk(
       .catch(error => {
         console.error('Fetch error:', error);
       });
-    
-
 
   }
 );

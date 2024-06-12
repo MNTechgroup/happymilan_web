@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { updateFormData, updateGeneralInfo } from "../../../store/actions/registerUser";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { getCookie } from "cookies-next";
+import { validatePhoneNumber } from "../../../utils/form/validationRules";
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
 //Style for Select Box
@@ -34,18 +35,6 @@ const customStyle2 = {
 
 
 
-const Spanstyle = {
-  color: "#000",
-  fontFamily: "Poppins",
-  fontSize: "12px",
-  fontStyle: "normal",
-  fontWeight: "400",
-  lineHeight: "normal",
-  position: "relative",
-  top: "-10px",
-  left: "4px",
-};
-
 const Text1 = {
   fontFamily: "Poppins",
   fontSize: "16px",
@@ -63,16 +52,6 @@ const Text2 = {
   lineHeight: "normal"
 }
 
-
-const Btntextstyle = {
-  color: "#000",
-  textAlign: "center",
-  fontFamily: "Poppins",
-  fontSize: "14px",
-  fontStyle: "normal",
-  fontWeight: "400",
-  lineHeight: "normal",
-};
 
 const doItlater = {
   fontFamily: "Poppins",
@@ -100,7 +79,10 @@ const ContactSection = ({ formData, updateFormData, HandleTabclick, activeTab })
   ];
 
 
-
+  const [PhoneNumberError, setPhoneNumberError] = useState({
+    label: "",
+    status: false
+  })
 
   const handleInputChange = (e) => {
     const name = e.target.name;
@@ -118,7 +100,25 @@ const ContactSection = ({ formData, updateFormData, HandleTabclick, activeTab })
         homeCode: selectedcode
       })
     }
-
+    else if (name == "mobileNumber") {
+      
+      if (!validatePhoneNumber(value)) {
+        
+        setPhoneNumberError((prev) => ({
+          label:"Enter Valid Phone Number",
+          status: true
+        }))
+      }else
+      {
+        setPhoneNumberError((prev) => ({
+          label:"",
+          status: false
+        }))
+        updateFormData({
+          contact: { ...formData.contact, [name]: value }
+        });
+      }
+    }
 
 
     updateFormData({
@@ -135,15 +135,10 @@ const ContactSection = ({ formData, updateFormData, HandleTabclick, activeTab })
 
     }))
 
-    // console.log({mobileNumber : contact.mobileCode + " " + contact.mobileNumber,
-    // homeMobileNumber : contact.homeCode +" " + contact.homeMobileNumber})
-    
-   
-
   }
 
   const [Uemail, setUemail] = useState();
-    
+
   useEffect(() => {
     setUemail(getCookie('email'))
   }, [])
@@ -182,16 +177,20 @@ const ContactSection = ({ formData, updateFormData, HandleTabclick, activeTab })
             <div className="">
               <input
                 placeholder="Number"
-                className="focus:outline-none focus:border-black border-[#e6e6e6] text-[#000] border-[1px] pl-[18px] rounded-[8px] w-full  lg:w-[481px] h-[50px]"
+                className={`hover:border-[black] focus:outline-none focus:border-black border-${PhoneNumberError.status ? "[red]" : "[#e6e6e6]"} text-[#000] border-[1px] pl-[18px] rounded-[8px] w-full  lg:w-[481px] h-[50px]`}
                 label="Number"
                 name="mobileNumber"
                 type="number"
                 onChange={handleInputChange}
                 value={formData?.contact.mobileNumber}
+                maxLength={10}
+
 
               />
+             
             </div>
           </div>
+          <span className="text-[red] text-[10px] relative left-[190px]">{PhoneNumberError.label}</span>
         </div>
 
         <div className="w-full 2xl:w-[665px] xl:w-[665px] md:w-full lg:w-full">
@@ -208,7 +207,7 @@ const ContactSection = ({ formData, updateFormData, HandleTabclick, activeTab })
             <div className="">
               <input
                 placeholder="Number"
-                className="focus:outline-none focus:border-black border-[#e6e6e6] text-[#000] border-[1px] pl-[18px] rounded-[8px] w-full  lg:w-[481px] h-[50px]"
+                className="hover:border-[black] focus:outline-none focus:border-black border-[#e6e6e6] text-[#000] border-[1px] pl-[18px] rounded-[8px] w-full  lg:w-[481px] h-[50px]"
                 label="Number"
                 name="homeMobileNumber"
                 onChange={handleInputChange}
@@ -220,7 +219,7 @@ const ContactSection = ({ formData, updateFormData, HandleTabclick, activeTab })
 
         <div className='w-full 2xl:w-[665px] xl:w-[665px] md:w-full lg:w-full'>
           <h1 className='text-[#000] pb-[10px]' style={Text2}>Enter Email Address</h1>
-          <input type='text' value={Uemail} placeholder='Email Address' className='outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[100%] border-[1px] border-[#e6e6e6] pl-[10px] rounded-[8px] ' />
+          <input type='text' value={Uemail} placeholder='Email Address' className='hover:border-[black] outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[100%] border-[1px] border-[#e6e6e6] pl-[10px] rounded-[8px] ' />
         </div>
 
       </div>

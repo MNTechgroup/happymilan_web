@@ -3,12 +3,14 @@ import React, { useState } from 'react'
 import NavBar from '../NavBar'
 import SideBar from '../SideBar'
 import Footer from '../../components/Footer'
-import UserStory from '../commonCompo/UserStory'
-import BlockedUser from './comp/BlockedUser'
-import ProfileComplete from '../commonCompo/ProfileComplete'
-import MoreSuggestion from '../commonCompo/MoreSuggestion'
-import BlockedUserGrid from './comp/BlockUserGrid'
-import ProtectedRoutes from '../../routes/ProtectedRoutes'
+import dynamic from 'next/dynamic'
+import Image from 'next/image'
+const UserStory = dynamic(() => import('../commonCompo/UserStory'));
+const BlockedUser = dynamic(() => import('./comp/BlockedUser'));
+const ProfileComplete = dynamic(() => import('../commonCompo/ProfileComplete'));
+const MoreSuggestion = dynamic(() => import('../commonCompo/MoreSuggestion'));
+const BlockedUserGrid = dynamic(() => import('./comp/BlockUserGrid'));
+const ProtectedRoutes = dynamic(() => import('../../routes/ProtectedRoutes'));
 function index() {
 
   const Text6 = {
@@ -19,121 +21,85 @@ function index() {
     fontWeight: "400",
     lineHeight: "22px"
   }
-  
+
   const [Listtype, setListtype] = useState(false);
+
+  const handleSearch = (searchTerm) => { }
 
   return (
     <>
 
-<ProtectedRoutes/>
-<NavBar />
+      <ProtectedRoutes />
+      <NavBar handleSearch={handleSearch} />
 
 
-<SideBar />
+      <SideBar />
 
 
-{/* Main Section Start */}
- 
-
-<div id='main-centerlized-content' className='flex justify-center flex-col'>
-    <div id='first-child' className='pl-[0px] lg:pl-[240px] 2xl:pl-[280px] xl:pl-[240px] flex  mt-[100px]'>
-
-      <div className='h-full'>
-        {/* Side Section 1 */}
-
-        <div id='story-centerlized-content' className='pl-[15px] md:pl-[15px] lg:pl-[10px] 2xl:pl-0 xl:pl-0'>
-          <UserStory />
-        </div>
-
-        <div id='centerlized-content' className='2xl:block xl:block lg:block hidden'>
-          <div className='relative 2xl:w-[715px] xl:w-[635px] lg:w-[650px] m-[10px] flex justify-between'>
-            
-            <h1 className='p-[5px] relative 2xl:left-[40px] lg:left-[10px] xl:left-[55px]'><span style={Text6}>Blocked Profile</span></h1>
-            <div className='flex space-x-[10px] relative right-[50px]'>
-              <button className='' onClick={() => setListtype(true)}>
-
-                {/* Grid View Mode  */}
-
-                {/* <img src='/assests/Black/3-grid.svg'/> */}
-                {
-                  !Listtype ? <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0 4H4V0H0V4ZM6 16H10V12H6V16ZM0 16H4V12H0V16ZM0 10H4V6H0V10ZM6 10H10V6H6V10ZM12 0V4H16V0H12ZM6 4H10V0H6V4ZM12 10H16V6H12V10ZM12 16H16V12H12V16Z" fill="#BBBBBB" />
-                  </svg> : <svg className='' width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0 4H4V0H0V4ZM6 16H10V12H6V16ZM0 16H4V12H0V16ZM0 10H4V6H0V10ZM6 10H10V6H6V10ZM12 0V4H16V0H12ZM6 4H10V0H6V4ZM12 10H16V6H12V10ZM12 16H16V12H12V16Z" fill="#0F52BA" />
-                  </svg>
-                }
-              </button>
+      {/* Main Section Start */}
 
 
-              {/* Grid View Mode  */}
-              <button className='' onClick={() => setListtype(false)}>
+      <div id='main-centerlized-content' className='flex justify-center flex-col'>
+        <div id='first-child' className='pl-[0px] lg:pl-[240px] 2xl:pl-[280px] xl:pl-[240px] flex  mt-[100px]'>
 
-                {/* List View Mode  */}
-                {!Listtype ?
-                  <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g clip-path="url(#clip0_576_120)">
-                      <path d="M16.5 0H0.5V4H16.5V0Z" fill="#0F52BA" />
-                      <path d="M16.5 6H0.5V10H16.5V6Z" fill="#0F52BA" />
-                      <path d="M16.5 12H0.5V16H16.5V12Z" fill="#0F52BA" />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_576_120">
-                        <rect width="16" height="16" fill="white" transform="translate(0.5)" />
-                      </clipPath>
-                    </defs>
-                  </svg>
-                  :
-                  <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g clip-path="url(#clip0_576_120)">
-                      <path d="M16.5 0H0.5V4H16.5V0Z" fill="#BBBBBB" />
-                      <path d="M16.5 6H0.5V10H16.5V6Z" fill="#BBBBBB" />
-                      <path d="M16.5 12H0.5V16H16.5V12Z" fill="#BBBBBB" />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_576_120">
-                        <rect width="16" height="16" fill="white" transform="translate(0.5)" />
-                      </clipPath>
-                    </defs>
-                  </svg>}
+          <div className='h-full'>
+            {/* Side Section 1 */}
+
+            <div id='story-centerlized-content' className='pl-[15px] md:pl-[15px] lg:pl-[10px] 2xl:pl-0 xl:pl-0'>
+              <UserStory />
+            </div>
+
+            <div id='centerlized-content' className='2xl:block xl:block lg:block hidden'>
+              <div className='relative 2xl:w-[715px] xl:w-[635px] lg:w-[650px] m-[10px] flex justify-between'>
+
+                <h1 className='p-[5px] relative 2xl:left-[40px] lg:left-[10px] xl:left-[55px]'><span style={Text6}>Blocked Profile</span></h1>
+                <div className='justify-center  w-[62px] h-[30px] rounded-[17.5px] border-[1px] border-[#F3F3F3] flex  relative right-[50px]'>
+
+                  <div onClick={() => setListtype(true)} style={{ cursor: "pointer", borderRadius: "17.5px 0PX 0px 17.5px" }} className={`w-[45px] ${Listtype ? "bg-[#F3F8FF]" : ""} hover:bg-[#F3F8FF] grid place-items-center h-[28px] border-r-[1px] border-r-[#F3F3F3]`}>
+                    <Image width={13} height={13} alt='listview' src={Listtype ? "/assests/dashboard/menus/after-grid.svg" : "/assests/dashboard/menus/before-grid.svg"} />
+
+                  </div>
 
 
-                {/* List View Mode  */}
+
+                  {/* Grid View Mode  */}
+
+                  <div onClick={() => setListtype(false)} style={{ cursor: "pointer", borderRadius: "0px 17.5px 17.5px 0px" }} className={`w-[45px] ${Listtype ? "" : " bg-[#F3F8FF]"}  hover:bg-[#F3F8FF] grid place-items-center h-[28px] border-l-[1px] border-l-[#F3F3F3]`}>
+                    <Image width={13} height={13} alt='listview' src={Listtype ? "/assests/dashboard/menus/before-list.svg" : "/assests/dashboard/menus/after-list.svg"} />
+
+                  </div>
+
+                </div>
+              </div>
+
+              {/* User Card  */}
+
+              {!Listtype ?
+                <BlockedUser /> : <BlockedUserGrid />}
 
 
-              </button>
+            </div>
+            <div className='block lg:block 2xl:hidden xl:hidden relative top-[60px] pl-[15px]'>
+              <h1 className='p-[5px] relative 2xl:left-[40px] lg:left-[10px] xl:left-[55px]'><span style={Text6}>Blocked Profile</span></h1>
+            </div>
+            <div className='block lg:hidden 2xl:hidden xl:hidden'>
+
+              <BlockedUserGrid />
+
             </div>
           </div>
 
-          {/* User Card  */}
+          <div className=" hidden  absolute 2xl:top-[250px] xl:top-[245px] right-10 2xl:flex xl:flex flex-col space-y-[30px] justify-center items-end w-full 2xl:w-[380px] xl:w-[350px]">
 
-          {!Listtype ?
-            <BlockedUser /> : <BlockedUserGrid />}
+            <ProfileComplete />
 
-
+            <MoreSuggestion />
+          </div>
         </div>
-        <div className='block lg:block 2xl:hidden xl:hidden relative top-[60px] pl-[15px]'>
-        <h1 className='p-[5px] relative 2xl:left-[40px] lg:left-[10px] xl:left-[55px]'><span style={Text6}>Blocked Profile</span></h1>
-        </div>
-        <div className='block lg:hidden 2xl:hidden xl:hidden'>
-
-          <BlockedUserGrid />
-
+        <div className='pt-[100px]'>
+          <Footer />
         </div>
       </div>
-
-      <div className='hidden  z-[-10]  absolute 2xl:top-[250px] xl:top-[245px] right-10  2xl:flex xl:flex flex-col space-y-[30px] justify-center items-end w-full 2xl:w-[380px] xl:w-[350px]'>
-
-        {/* Side Section 2 */}
-        <ProfileComplete />
-
-        <MoreSuggestion />
-
-      </div>
-    </div>
-    <div className='pt-[100px]'>
-      <Footer />
-    </div>
-  </div>
 
     </>
   )

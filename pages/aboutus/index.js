@@ -5,8 +5,9 @@ import Footer from "../components/Footer";
 import { useRouter } from "next/router";
 import Navbar from "../components/Navbar";
 import Image from "next/image";
+import UIbuttons from "../../UI/Buttons";
 
-
+{/* <img */ }
 const Text1 = {
     color: "#000",
     fontFamily: "Poppins",
@@ -59,13 +60,22 @@ function index() {
                 <div className="p-2 bg-gray-200  w-[178px] h-[191px]" id="profile-section">
 
                     <div className='grid place-items-center p-1 mt-10 w-full'>
-                        <Image alt="star" width={43} height={41} src='/assests/Blue/LandingPage-Star.svg' />
+                        <Image loading="lazy" alt="star" width={43} height={41} src='/assests/Blue/LandingPage-Star.svg' />
                         <span className='mt-5'>{data.text}</span>
                     </div>
 
                 </div>
             </>
         )
+    }
+
+
+    const BTNText = {
+        fontFamily: "Poppins",
+        fontSize: "16px",
+        fontStyle: "normal",
+        fontWeight: "400",
+        lineHeight: "normal",
     }
 
     return (
@@ -79,7 +89,7 @@ function index() {
                     <div className="flex w-full h-full flex-col lg:flex-row  justify-evenly">
                         <div className="flex justify-center items-end  mt-[30px] 2xl:mt-[30px] xl:mt-[30px] lg:mt-[5px]  lg:h-[500px] lg:w-[100%] 2xl:h-[570px] 2xl:w-[100%] xl:w-[500px] xl:h-[500px]   grid place-items-center">
                             <div className="">
-                                <Image width={535} height={491} alt="image" src="/assests/common/about-img-1.svg" className="2xl:h-auto xl:h-auto lg:h-[400px]" />
+                                <Image loading="lazy" width={535} height={491} alt="image" src="/assests/common/about-img-1.svg" className="2xl:h-auto xl:h-auto lg:h-[400px]" />
                             </div>
                         </div>
                         <div className=" w-full h-full lg:h-[500px] lg:w-[100%] 2xl:h-[600px] 2xl:w-[100%] xl:w-[500px] xl:h-[500px]   grid place-items-center">
@@ -127,9 +137,8 @@ function index() {
 
                         </div>
                     </div>
-                    <div className="hidden w-full h-[350px]">
-                        <img className="w-full h-full " src="assests/common/about-img-1.svg" />
-                    </div>
+
+                    {/* temporarily Close  */}
 
                 </div>
 
@@ -157,7 +166,7 @@ function index() {
                                 <h1 className='lg:text-left text-center  2xl:w-[403px] xl:w-[403px] lg:w-[320px] text-[20px] md:text-[32px] lg:text-[25px] 2xl:text-[32px] xl:text-[32px]  mb-10' id='sec-3-h1'>Why you should register with us?</h1>
                                 <p className='mb-10 lg:text-[16px] 2xl:text-[20px] xl:text-[20px]  text-[15px] text-center lg:text-left'>Welcome to Matrimoney, the premier online platform for finding your perfect life partner! We understand that finding a compatible partner is one of life's most important journeys</p>
                                 <div className='w-full lg:block flex justify-center'>
-                                    <button onClick={() => router.push("/login")}><span>Create New Profile</span></button>
+                                   <UIbuttons.CreateNewProfileBTN Textstyle={BTNText}/>
                                 </div>
 
                             </div>
@@ -201,7 +210,7 @@ function index() {
                     <div className=' w-full pb-[90px] lg:pb-0 md:pb-0 sm:pb-0 flex  md:items-center flex-col md:flex-col lg:flex-row  justify-center lg:my-[90px] xl:my-[80px] 2xl:my-[90px] md:my-[0px] 2xl:p-[15px] xl:p-[15px] lg:p-[0px]'>
                         <div className='flex flex-col md:flex-row p-10'>
                             <div className='block sm:hidden lg:m-5 md:m-5 lg:my-10'>
-                                <img className='cursor-pointer' onClick={() => router.push("/successstories")} src='/heroSec/landing-storyimg-1.svg' />
+                                <Image alt="back" width={260} height={381} loading="lazy" className='cursor-pointer' onClick={() => router.push("/successstories")} src='/heroSec/landing-storyimg-1.svg' />
                             </div>
                             <div className='hidden sm:block lg:m-5 md:m-5 lg:my-10'>
                                 <Image alt="img" width={260} height={381} id='story-img' src='/rectangle-369@2x.png' className='2xl:rounded-none xl:rounded-none lg:rounded-[10px] relative md:w-[260px] w-[260px] lg:w-[220px] 2xl:w-[260px] xl:w-[260px]  top-[100px] lg:top-[0px] 2xl:h-[381px] xl:h-[381px] lg:h-[360px] md:h-[381px] h-[381px] object-cover' />
@@ -232,7 +241,9 @@ function index() {
                             </div>
 
                             <div className='block sm:hidden lg:m-5 md:m-5 lg:my-10 my-[10%]'>
-                                <img className='cursor-pointer' onClick={() => router.push("/successstories")} src='/heroSec/landing-storyimg-2.svg' />
+                                {/* <img className='cursor-pointer' onClick={() => router.push("/successstories")} src='/heroSec/landing-storyimg-2.svg' /> */}
+                                <Image alt="img" width={260} height={381} loading="lazy" className='cursor-pointer' onClick={() => router.push("/successstories")} src='/heroSec/landing-storyimg-2.svg' />
+
                             </div>
 
                             <div className='hidden sm:block lg:m-5 md:m-5 lg:my-10'>
@@ -276,7 +287,8 @@ function index() {
                                         <h3 id='sec-2-explore-str'>Explore Successful Stories</h3>
                                     </div>
 
-                                    <button onClick={() => router.push("/successstories")} id='sec-2-explore-story' className='mt-[10%] md:mt-[10%] lg:mt-[18.5%] 2xl:mt-[15.5%] xl:mt-[15.5%]'><span>Explore All Stories</span></button>
+                                    {/* <button onClick={() => router.push("/successstories")} id='sec-2-explore-story' className='mt-[10%] md:mt-[10%] lg:mt-[18.5%] 2xl:mt-[15.5%] xl:mt-[15.5%]'><span>Explore All Stories</span></button> */}
+                                    <UIbuttons.ExploreBTN/>
                                 </div>
                             </section>
                             {/* <!-- Section: 2  End--> */}

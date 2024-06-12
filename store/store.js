@@ -1,7 +1,6 @@
 // store/store.js
-import authReducer from './reducers/authReducer';
 import Loginreducer from './reducers/loginReducer';
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { formReducer } from './reducers/registerReducer';
 import MyProfile from './reducers/MyProfile';
 import allUsersReducer from './reducers/GetingAlluser';
@@ -10,21 +9,29 @@ import GetShortlistList from './reducers/GetShortlistList';
 import NotificationReducer from './reducers/NotificationReducer';
 import userReducer from './reducers/UserReducers';
 import { imageReducer } from './reducers/UploadImagereducer';
+import { searchformReducer } from './reducers/SearchUsersReducer';
+import Userseting from './reducers/UserSettingReducer';
+import SafetyConsentReducer from './reducers/safetyConsentReducer';
+import UpgradePlansReducer from './reducers/UpgradeReducer';
 
 const store = configureStore({
   reducer: {
-    login : Loginreducer,
-    // auth : authReducer ,// Add more slices if needed
-    uploadreducer : imageReducer,
+    login: Loginreducer,
+    uploadreducer: imageReducer,
     form: formReducer,
-    myprofile : MyProfile,
-    alluser : allUsersReducer,
-    userById : userByIdReducer,
-    shortlistdata : GetShortlistList,
-    notificatin : NotificationReducer,
-    usersact : userReducer
+    searchform: searchformReducer,
+    myprofile: MyProfile,
+    alluser: allUsersReducer,
+    userById: userByIdReducer,
+    shortlistdata: GetShortlistList,
+    notificatin: NotificationReducer,
+    userseting: Userseting,
+    usersact: userReducer,
+    upgradeplans : UpgradePlansReducer,
+    chatSafetyConsent: SafetyConsentReducer,
+   
   },
- });
+});
 
 
 export default store;

@@ -7,54 +7,8 @@ import HobbySection from './tabs/HobbySection';
 import Image from 'next/image';
 
 function index() {
-
-    const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
-    const options = [
-        { value: 'option1', label: 'Option 1' },
-        { value: 'option2', label: 'Option 2' },
-        { value: 'option3', label: 'Option 3' },
-    ];
-    const options2 = [
-        { value: 'option1', label: 'Option 1' },
-        { value: 'option2', label: 'Option 2' },
-        { value: 'option3', label: 'Option 3' },
-    ];
-    
+ 
     const router = useRouter();
-
-
-    const customStyles = {
-        control: (provided,state) => ({
-            ...provided,
-            paddingRight: '10px',
-            paddingLeft:"8px",
-            width: "300px",
-            height: "50px",
-            borderRadius: "8px",
-            border:"1px solid #e6e6e6",
-            borderColor: state.isFocused ? 'black' : provided.borderColor,
-            '&:hover': {
-                borderColor: 'black',
-              },
-            boxShadow: state.isFocused ? 'none' : provided.boxShadow, // Add padding on the right side
-        }),
-       
-        indicatorSeparator: (provided) => ({
-            ...provided,
-            display: 'none',
-            paddingRight: "20px"
-            // Hide the vertical line behind the arrow
-        }),
-    };
-
-    const TitleText = {
-        color: "#000",
-        fontFamily: "Poppins",
-        fontSize: "18px",
-        fontStyle: "normal",
-        fontWeight: "400",
-        lineHeight: "normal"
-    }
    
     const btnstyle = {
         fontFamily: "Poppins",
@@ -76,19 +30,6 @@ function index() {
         setActiveTab(activeTab + 1)
         }
     }
-
-    const [selectedGender, setSelectedGender] = useState("male");
-    const HandleGendertab = (text) => {
-        setSelectedGender(text)
-
-    }
-
-    const [selectedInterest,setSelectInterest] = useState("")
-    const HandleInterestedrtab = (text) =>{
-        setSelectInterest(text)
-    }
-
-
 //  Hobbies Section Data  <img
 
 
@@ -141,10 +82,7 @@ const Text1 = {
                                 <div
                                     onClick={() => HandleTabclick(1)}
                                     className={` rounded-[10px] w-[54px] h-[54px] grid place-items-center bg-[#0F52BA] ${activeTab === 2
-                                        // activeTab === 3 ||
-                                        // activeTab === 4 ||
-                                        // activeTab === 5 ||
-                                        // activeTab === 6
+                                      
                                         ? "bg-green-500"
                                         : ""
                                          } 

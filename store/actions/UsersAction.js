@@ -5,16 +5,27 @@ import {
     ACCEPT_REQUEST_SUCCESS, ACCEPT_REQUEST_FAILURE, REJECT_REQUEST,
     REJECT_REQUEST_SUCCESS, ACCEPT_REQUEST, REJECT_REQUEST_FAILURE, GET_EDUCATION_DATA_SUCCESS,
     GET_EDUCATION_DATA_FAILURE, GET_EDUCATION_DATA, GET_ADDRESS_DATA_SUCCESS, GET_ADDRESS_DATA_FAILURE,
-    GET_ADDRESS_DATA, GET_PROFESSIONAL_DATA_SUCCESS, GET_PROFESSIONAL_DATA_FAILURE, GET_PROFESSIONAL_DATA,
-    GET_PARTNERPREFERENCE_DATA, GET_PARTNERPREFERENCE_DATA_FAILURE, GET_PARTNERPREFERENCE_DATA_SUCCESS,
-    UPDATE_EDUCATION_DATA, UPDATE_EDUCATION_DATA_SUCCESS, UPDATE_EDUCATION_DATA_FAILURE, GET_ACCEPTED_REQUEST_DATA, GET_ACCEPTED_REQUEST_DATA_SUCCESS, GET_ACCEPTED_REQUEST_DATA_FAILURE, GET_SENTREQUEST_DATA_SUCCESS, GET_SENTREQUEST_DATA_FAILURE, GET_SENTREQUEST_DATA, LOGOUT_USER, LOGOUT_USER_SUCCESS, GET_BLOCK_USERDATA, GET_BLOCK_USERDATA_SUCCESS, GET_BLOCK_USERDATA_FAILURE, SENT_BLOCK_REQUEST_SUCCESS, SENT_BLOCK_REQUEST_FAILURE, SENT_BLOCK_REQUEST, CANCEL_FRIEND_REQUEST_FAILURE, CANCEL_FRIEND_REQUEST_SUCCESS, CANCEL_FRIEND_REQUEST
+    GET_PROFESSIONAL_DATA_SUCCESS, GET_PROFESSIONAL_DATA_FAILURE, GET_PROFESSIONAL_DATA,
+    GET_PARTNERPREFERENCE_DATA, GET_PARTNERPREFERENCE_DATA_SUCCESS,
+    UPDATE_EDUCATION_DATA, UPDATE_EDUCATION_DATA_SUCCESS, UPDATE_EDUCATION_DATA_FAILURE, GET_ACCEPTED_REQUEST_DATA,
+    GET_ACCEPTED_REQUEST_DATA_SUCCESS, GET_ACCEPTED_REQUEST_DATA_FAILURE, GET_SENTREQUEST_DATA_SUCCESS, GET_SENTREQUEST_DATA_FAILURE,
+    GET_SENTREQUEST_DATA, LOGOUT_USER, GET_BLOCK_USERDATA, GET_BLOCK_USERDATA_SUCCESS, GET_BLOCK_USERDATA_FAILURE,
+    SENT_BLOCK_REQUEST_SUCCESS, SENT_BLOCK_REQUEST_FAILURE, SENT_BLOCK_REQUEST, CANCEL_FRIEND_REQUEST_FAILURE, CANCEL_FRIEND_REQUEST_SUCCESS,
+    CANCEL_FRIEND_REQUEST, UPDATE_PROFILE_IMAGE, UPDATE_PROFILE_IMAGE_SUCCESS, UPDATE_PROFILE_IMAGE_FAILURE, GET_CANCELREQUEST_DATA,
+    GET_CANCELREQUEST_DATA_SUCCESS, GET_CANCELREQUEST_DATA_FAILURE, DELETE_IMAGE_SUCCESS, DELETE_IMAGE_FAILURE, DELETE_IMAGE,
+    UPDATE_PROFILE_IMAGE_PROCESS, POST_RECENT_USERPROFILE_SUCCESS, POST_RECENT_USERPROFILE_FAILURE, POST_RECENT_USERPROFILE,
+    GET_RECENT_USERPROFILE_DATA, GET_RECENT_USERPROFILE_DATA_FAILURE, GET_RECENT_USERPROFILE_DATA_SUCCESS, UPDATE_ADDRESS_DATA,
+    UPDATE_ADDRESS_DATA_FAILURE, UPDATE_ADDRESS_DATA_SUCCESS, FETCH_GRID_USER_DATA_REQUEST, FETCH_GRID_USER_DATA_REQUEST_SUCCESS,
+    LIKED_USERS_PROFILE_DATA, LIKED_USERS_PROFILE_DATA_SUCCESS, UPLOAD_MY_STORY, UPLOAD_MY_STORY_SUCCESS, UPLOAD_MY_STORY_FAILURE,
+    GET_ALL_STATUS_SUCCESS, GET_ALL_STATUS, GET_ALL_STATUS_FAILURE, UPLOAD_MY_STORY_MODAL, DELETE_MY_STATUS_SUCCESS, DELETE_STATUS_MODAL
 } from '../type';
 import { GET_REQUEST, GET_REQUEST_SUCCESS, GET_REQUEST_FAILURE } from '../type';
-import { useRouter } from 'next/router';
+import { fetchMyProfileData } from '../reducers/MyProfile';
 
 export const sendRequest = (requestData) => {
     return async (dispatch) => {
         dispatch({ type: SEND_REQUEST });
+        // console.log(process.env.NEXT_PUBLIC_API_URL)
         const currentUser = getCookie("userid")
         const token = getCookie("authtoken")
         const axios = require('axios');
@@ -26,7 +37,7 @@ export const sendRequest = (requestData) => {
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'https://happymilan.tech/api/v1/user/friend/create-friend',
+            url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/friend/create-friend`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -36,7 +47,7 @@ export const sendRequest = (requestData) => {
 
         axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
+                // console.log(JSON.stringify(response.data));
 
                 dispatch({ type: REQUEST_SUCCESS, payload: response.data });
             })
@@ -65,7 +76,7 @@ export const getFriendsList = () => {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: 'https://happymilan.tech/api/v1/user/friend/get-frd-requests',
+            url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/friend/get-frd-requests`,
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -74,7 +85,7 @@ export const getFriendsList = () => {
         const response = await axios.request(config);
 
         response.data.data.forEach(async (element) => {
-            const url = `https://happymilan.tech/api/v1/user/user/${element.id}`;
+            const url = `${process.env.NEXT_PUBLIC_API_URL}/v1/user/user/${element.id}`;
 
             try {
                 const fetchResponse = await fetch(url);
@@ -82,7 +93,7 @@ export const getFriendsList = () => {
                     throw new Error('Network response was not ok');
                 }
                 const data = await fetchResponse.json();
-                console.log(JSON.stringify(data));
+                // console.log(JSON.stringify(data));
             } catch (error) {
                 console.error('There was a problem with your fetch operation:', error);
             }
@@ -108,7 +119,7 @@ export const getRequestFailure = (error) => ({
 export const acceptRequest = (requestData) => {
     return async (dispatch) => {
 
-        console.log(requestData)
+        // console.log(requestData)
         dispatch({ type: ACCEPT_REQUEST })
 
         const axios = require('axios');
@@ -123,7 +134,8 @@ export const acceptRequest = (requestData) => {
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'https://happymilan.tech/api/v1/user/friend/respond-friend-req',
+            url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/friend/respond-friend-req`,
+            // url: 'https://ed07-49-36-90-151.ngrok-free.app/v1/user/friend/respond-friend-req',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -133,7 +145,7 @@ export const acceptRequest = (requestData) => {
 
         axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
+                // console.log(JSON.stringify(response.data));
                 dispatch({ type: ACCEPT_REQUEST_SUCCESS, payload: response.data })
                 // dispatch({type : GET_REQUEST })
             })
@@ -156,7 +168,7 @@ export const acceptRequestFailure = (error) => ({
 export const rejectRequest = (requestData) => {
     return async (dispatch) => {
         dispatch({ type: REJECT_REQUEST });
-    
+
         console.log(requestData)
 
         const axios = require('axios');
@@ -171,7 +183,7 @@ export const rejectRequest = (requestData) => {
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'https://happymilan.tech/api/v1/user/friend/respond-friend-req',
+            url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/friend/respond-friend-req`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -181,7 +193,7 @@ export const rejectRequest = (requestData) => {
 
         axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
+                // console.log(JSON.stringify(response.data));
                 dispatch({ type: REJECT_REQUEST_SUCCESS, payload: response.data })
                 // dispatch({type : GET_REQUEST })
             })
@@ -202,6 +214,7 @@ export const rejectRequestFailure = (error) => ({
     payload: error
 })
 
+
 export const getEducationData = (requestData) => {
     return async (dispatch) => {
         dispatch({ type: GET_EDUCATION_DATA });
@@ -212,7 +225,7 @@ export const getEducationData = (requestData) => {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `https://happymilan.tech/api/v1/user/userEducation/${requestData}`,
+            url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/userEducation/${requestData}`,
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -220,7 +233,7 @@ export const getEducationData = (requestData) => {
 
         axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
+                // console.log(JSON.stringify(response.data));
                 dispatch({ type: GET_EDUCATION_DATA_SUCCESS, payload: response.data })
             })
             .catch((error) => {
@@ -251,7 +264,7 @@ export const updateEducationData = (userid, alldata) => {
         let config = {
             method: 'put',
             maxBodyLength: Infinity,
-            url: `https://happymilan.tech/api/v1/user/userEducation/${userid}`,
+            url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/userEducation/${userid}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -261,7 +274,7 @@ export const updateEducationData = (userid, alldata) => {
 
         axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
+                // console.log(JSON.stringify(response.data));
                 dispatch({ type: UPDATE_EDUCATION_DATA_SUCCESS, payload: response.data });
             })
             .catch((error) => {
@@ -282,46 +295,6 @@ export const updateEducationDataFailure = (error) => ({
 })
 
 
-export const getAddressData = (requestData) => {
-    return async (dispatch) => {
-        dispatch({ type: GET_ADDRESS_DATA });
-
-        const axios = require('axios');
-        const token = getCookie("authtoken")
-
-        let config = {
-            method: 'get',
-            maxBodyLength: Infinity,
-            url: `https://happymilan.tech/api/v1/user/userEducation/${requestData}`,
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        };
-
-        axios.request(config)
-            .then((response) => {
-                console.log(JSON.stringify(response.data));
-                dispatch({ type: GET_ADDRESS_DATA_SUCCESS, payload: response.data })
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-
-    }
-}
-
-export const getAddressSuccess = (response) => ({
-    type: GET_ADDRESS_DATA_SUCCESS,
-    payload: response
-})
-
-export const getAddressFailure = (error) => ({
-    type: GET_ADDRESS_DATA_FAILURE,
-    payload: error
-})
-
-
-
 export const getProfessionalData = (requestData) => {
     return async (dispatch) => {
         dispatch({ type: GET_PROFESSIONAL_DATA });
@@ -332,7 +305,7 @@ export const getProfessionalData = (requestData) => {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/user/userProfessionalDetail/getbyid/${requestData}`,
+            url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/userProfessionalDetail/getbyid/${requestData}`,
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -340,7 +313,7 @@ export const getProfessionalData = (requestData) => {
 
         axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
+                // console.log(JSON.stringify(response.data));
                 dispatch({ type: GET_PROFESSIONAL_DATA_SUCCESS, payload: response.data })
             })
             .catch((error) => {
@@ -374,7 +347,7 @@ export const getPartnerpreferencedata = (requestData) => {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/user/partner/${requestData}`,
+            url: `${process.env.NEXT_PUBLIC_API_URL}/user/partner/${requestData}`,
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -382,8 +355,8 @@ export const getPartnerpreferencedata = (requestData) => {
 
         axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
-                dispatch({ type: GET_PARTNERPREFERENCE_DATA_SUCCESS, payload: response.data })
+                // console.log(JSON.stringify(response.data));
+                dispatch({ type: GET_PARTNERPREFERENCE_DATA_SUCCESS, payload: response.data.data })
             })
             .catch((error) => {
                 console.log(error);
@@ -414,20 +387,21 @@ export const getAcceptedRequestData = () => {
 
             const config = {
                 method: 'get',
-                url: 'https://happymilan.tech/api/v1/user/friend/get-frds',
+                url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/friend/get-frds`,
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             };
 
             const response = await axios(config);
+            console.log("🚀 ~ return ~ response:", response)
             const currentUser = getCookie("userid")
 
-            const friendRequests = response.data.data.map((res) => currentUser == res.friend.id ? res.user : res.friend);
+            const friendRequests = response.data.data.map((res) => currentUser == res?.friend?.id ? res?.user : res?.friend);
             const friendIds = friendRequests.reduce((ids, friendArray) => {
                 // Ensure friendArray is an object with id property before extracting id
-                if (friendArray && friendArray.id) {
-                    ids.push(friendArray.id);
+                if (friendArray && friendArray?.id) {
+                    ids.push(friendArray?.id);
                 } else {
                     console.error('Friend array is not in the expected format:', friendArray);
                 }
@@ -435,8 +409,8 @@ export const getAcceptedRequestData = () => {
             }, []);
 
 
-            console.log("<== friendRequests ==>",friendRequests)
-            console.log("<== friendIds ==>",friendIds)
+            // console.log("<== friendRequests ==>", friendRequests)
+            // console.log("<== friendIds ==>", friendIds)
 
 
             // Define the batch size for fetching user data
@@ -452,6 +426,7 @@ export const getAcceptedRequestData = () => {
                 const batchIds = friendIds.slice(start, end);
 
                 const batchUserData = await fetchUserDataBatch(batchIds);
+                console.log("🚀 ~ return ~ batchUserData:", batchUserData)
                 userDataArray.push(...batchUserData);
             }
 
@@ -501,7 +476,7 @@ export const getSentrequestData = () => {
 
             const config = {
                 method: 'get',
-                url: 'https://happymilan.tech/api/v1/user/friend/get-request-sent',
+                url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/friend/get-request-sent`,
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -568,6 +543,7 @@ export const getSentrequestDataFailure = (error) => ({
 })
 
 export const logoutuser = () => {
+    console.log("Logout from Redux...")
     return async (dispatch) => {
 
         dispatch({
@@ -602,7 +578,7 @@ export const getblockuserdata = () => {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: 'https://happymilan.tech/api/v1/user/friend/get-block-list',
+            url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/friend/get-block-list`,
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -610,7 +586,7 @@ export const getblockuserdata = () => {
 
         axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
+                // console.log(JSON.stringify(response.data));
                 dispatch({ type: GET_BLOCK_USERDATA_SUCCESS, payload: response.data })
             })
             .catch((error) => {
@@ -654,7 +630,7 @@ export const FetchUserDataById = async (userId) => {
             redirect: 'follow',
         };
 
-        const response = await fetch(`https://happymilan.tech/api/v1/user/user/${userId}`, requestOptions);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/user/${userId}`, requestOptions);
 
         if (response.ok) {
             const result = await response.json();
@@ -673,12 +649,12 @@ export const FetchUserDataById = async (userId) => {
 
 }
 
-export const Sentblockrequest = (requestData,OtherUserId) => {
+export const Sentblockrequest = (requestData, OtherUserId) => {
 
     return async (dispatch) => {
         dispatch({ type: SENT_BLOCK_REQUEST });
 
-        
+
         const axios = require('axios');
         const currentuserId = getCookie("userid")
         const token = getCookie("authtoken")
@@ -691,9 +667,9 @@ export const Sentblockrequest = (requestData,OtherUserId) => {
         });
 
         let config = {
-            method: 'post',
+            method: 'PUT',
             maxBodyLength: Infinity,
-            url: 'https://happymilan.tech/api/v1/user/friend/respond-friend-req',
+            url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/friend/respond-friend-req`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -703,14 +679,14 @@ export const Sentblockrequest = (requestData,OtherUserId) => {
 
         axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
+                // console.log(JSON.stringify(response.data));
                 dispatch({ type: SENT_BLOCK_REQUEST_SUCCESS, payload: response.data })
                 // dispatch({type : GET_REQUEST })
             })
             .catch((error) => {
                 console.log(error);
             });
-        
+
     }
 
 }
@@ -730,9 +706,9 @@ export const Sentblockrequestfailure = (error) => (
 )
 
 
-export const Cancelfriendrequest = (requestData,curUser) =>{
-    return async (dispatch) =>{
-        dispatch ({type : CANCEL_FRIEND_REQUEST})
+export const Cancelfriendrequest = (requestData, curUser) => {
+    return async (dispatch) => {
+        dispatch({ type: CANCEL_FRIEND_REQUEST })
 
         const axios = require('axios');
         const currentuserId = getCookie("userid")
@@ -748,7 +724,7 @@ export const Cancelfriendrequest = (requestData,curUser) =>{
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'https://happymilan.tech/api/v1/user/friend/respond-friend-req',
+            url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/friend/respond-friend-req`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -758,9 +734,9 @@ export const Cancelfriendrequest = (requestData,curUser) =>{
 
         axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
+                // console.log(JSON.stringify(response.data));
                 dispatch({ type: CANCEL_FRIEND_REQUEST_SUCCESS, payload: response.data })
-             })
+            })
             .catch((error) => {
                 console.log(error);
             });
@@ -769,16 +745,608 @@ export const Cancelfriendrequest = (requestData,curUser) =>{
 
 }
 
-export const Cancelfriendrequestsuccess = (response) =>(
+export const Cancelfriendrequestsuccess = (response) => (
     {
-    type : CANCEL_FRIEND_REQUEST_SUCCESS,
-    payload : response
-    }
- )
-
-export const Cancelfriendrequestfailure = (error) =>(
-    {
-        type : CANCEL_FRIEND_REQUEST_FAILURE,
-        payload : error
+        type: CANCEL_FRIEND_REQUEST_SUCCESS,
+        payload: response
     }
 )
+
+export const Cancelfriendrequestfailure = (error) => (
+    {
+        type: CANCEL_FRIEND_REQUEST_FAILURE,
+        payload: error
+    }
+)
+
+
+export const Updateprofileimage = (requestdata, seconddata) => {
+    // console.log("🚀 ~ Updateprofileimage ~ seconddata:", seconddata)
+    // console.log("🚀 ~ Updateprofileimage ~ requestdata:", requestdata)
+
+    return async (dispatch) => {
+        dispatch({ type: UPDATE_PROFILE_IMAGE })
+
+        try {
+            const authToken = getCookie("authtoken");
+            // Assuming requestdata is the image data you want to send in the request
+            const data = {
+                "key": requestdata.key,
+                "contentType": requestdata.contentType,
+                "isProfilePic": true,
+                "profileType": "profileImage"
+            }
+
+            // Construct the fetch options
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`
+                },
+                body: JSON.stringify(data)
+            };
+
+            // Make the fetch request
+            fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/s3/presignedurl/`, options)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Handle the response data here (e.g., update UI, etc.)
+                    console.log('Response from server:', data);
+                    const alldata = data.data.url
+                    console.log("🚀 ~ return ~ alldata:", alldata)
+
+                    fetch(seconddata.blob)
+                        .then(response => response.blob())
+                        .then(blobData => {
+
+                            console.log("🚀 ~ blobData:", blobData)
+
+
+                            const axios = require('axios');
+                            let config = {
+                                method: 'put',
+                                maxBodyLength: Infinity,
+                                url: data.data.url,
+                                headers: {
+                                    'Content-Type': 'image/jpeg',
+                                    'x-amz-acl': 'public-read',
+                                },
+                                data: blobData
+                            };
+
+                            axios.request(config)
+                                .then((response) => {
+                                    // console.log(JSON.stringify(response.data));
+                                    dispatch({ type: UPDATE_PROFILE_IMAGE_SUCCESS })
+                                    dispatch(fetchMyProfileData())
+                                })
+                                .catch((error) => {
+                                    console.log(error);
+                                });
+                        })
+                })
+            console.log("🚀 ~ return ~ data:", data)
+                .catch(error => {
+                    console.error('There was a problem with your fetch operation:', error);
+                });
+            // })
+            // console.log("🚀 ~ blobData:", blobData)
+
+
+
+        } catch (error) {
+            // Handle any errors that occurred outside of the fetch
+            console.error('Error:', error);
+        }
+    }
+
+}
+
+export const Updateprofileimagesuccess = (response) => (
+    {
+        type: UPDATE_PROFILE_IMAGE_SUCCESS,
+        payload: response
+    }
+)
+
+export const Updateprofileimagefailure = (error) => (
+    {
+        type: UPDATE_PROFILE_IMAGE_FAILURE,
+        payload: error
+    }
+)
+
+export const Getcancelrequestdata = () => {
+
+    return async (dispatch) => {
+        dispatch({ type: GET_CANCELREQUEST_DATA })
+
+        const axios = require('axios');
+        const authToken = getCookie("authtoken");
+
+        let config = {
+            method: 'get',
+            maxBodyLength: Infinity,
+            url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/friend/get-rejected-frds`,
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            }
+        };
+
+        axios.request(config)
+            .then((response) => {
+                dispatch({ type: GET_CANCELREQUEST_DATA_SUCCESS, payload: response.data })
+                // console.log(JSON.stringify(response.data));
+                console.log("🚀 ~ .then ~ response:", response.data)
+            })
+
+            .catch((error) => {
+                console.log(error);
+            });
+
+    }
+}
+
+export const Getcancelrequestdatasuccess = (response) => (
+    {
+        type: GET_CANCELREQUEST_DATA_SUCCESS,
+        payload: response
+    }
+)
+
+export const Getcancelrequestdatafailure = (error) => (
+    {
+        type: GET_CANCELREQUEST_DATA_FAILURE,
+        payload: error
+    }
+)
+
+export const Deleteimage = (imagedata) => {
+    console.log("🚀 ~ Deleteimage ~ imagedata:", imagedata)
+
+    return async (dispatch) => {
+        dispatch({ type: DELETE_IMAGE })
+
+        const axios = require('axios');
+        const currentuserId = getCookie("userid")
+        let data = JSON.stringify({
+            "profileImageUrl": imagedata.url,
+            "name": imagedata.name
+        });
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/user/delete-profile-image/${currentuserId}`,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+
+        axios.request(config)
+            .then((response) => {
+                console.log(JSON.stringify(response.data));
+                dispatch({ type: DELETE_IMAGE_SUCCESS })
+                dispatch(fetchMyProfileData())
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+
+
+    }
+}
+
+export const Deleteimagesuccess = (response) => (
+    {
+        type: DELETE_IMAGE_SUCCESS,
+        payload: response
+    }
+)
+
+export const Deleteimagefailure = (error) => (
+    {
+        type: DELETE_IMAGE_FAILURE,
+        payload: error
+    }
+)
+
+export const Updateprofileimageprocess = () => (
+    {
+        type: UPDATE_PROFILE_IMAGE_PROCESS,
+    }
+)
+
+
+export const Postrecentuserprofile = (visitedUserId) => {
+
+
+    return async (dispatch) => {
+        dispatch({ type: POST_RECENT_USERPROFILE })
+
+        const axios = require('axios');
+        const authToken = getCookie("authtoken");
+
+
+        let data = JSON.stringify({
+            "viewerId": visitedUserId
+        });
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/profile-viewer/create-profile-viewer`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            data: data
+        };
+
+        axios.request(config)
+            .then((response) => {
+                console.log(JSON.stringify(response.data));
+                dispatch({ type: POST_RECENT_USERPROFILE_SUCCESS })
+            })
+            .catch((error) => {
+                console.log(error);
+                dispatch({ type: POST_RECENT_USERPROFILE_SUCCESS, payload: error });
+            });
+
+
+    }
+
+}
+
+export const Postrecentuserprofilesuccess = () => (
+    {
+        type: POST_RECENT_USERPROFILE_SUCCESS,
+    }
+)
+
+export const Postrecentuserprofilefailure = (error) => (
+    {
+        type: POST_RECENT_USERPROFILE_FAILURE,
+        payload: error
+    }
+)
+
+export const GetrecentuserprofileData = () => {
+    return async (dispatch) => {
+        dispatch({ type: GET_RECENT_USERPROFILE_DATA })
+
+        const axios = require('axios');
+        const authToken = getCookie("authtoken");
+        const currentUserId = getCookie("userid")
+
+        let config = {
+            method: 'GET',
+            maxBodyLength: Infinity,
+            url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/profile-viewer/get-profile-viewer/${currentUserId}`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            // data: data
+        };
+
+        axios.request(config)
+            .then((response) => {
+
+                dispatch({ type: GET_RECENT_USERPROFILE_DATA_SUCCESS, payload: response.data.data })
+            })
+            .catch((error) => {
+                console.log(error);
+                dispatch({ type: GET_RECENT_USERPROFILE_DATA_FAILURE, payload: error });
+            });
+    }
+
+}
+
+export const GetrecentuserprofiledataSuccess = (response) => (
+    {
+        type: GET_RECENT_USERPROFILE_DATA_SUCCESS,
+        payload: response
+    }
+)
+
+export const GetrecentuserprofiledataFailure = (error) => (
+    {
+        type: GET_RECENT_USERPROFILE_DATA_FAILURE,
+        payload: error
+    }
+)
+
+export const Updateaddressdata = (addressDataId) => {
+    return async (dispatch) => {
+        dispatch({ type: UPDATE_ADDRESS_DATA })
+
+    }
+
+}
+
+export const Updateaddressdatasuccess = (response) => ({
+    type: UPDATE_ADDRESS_DATA_SUCCESS,
+    payload: response
+})
+
+export const Updateaddressdatafailure = (response) => ({
+    type: UPDATE_ADDRESS_DATA_FAILURE,
+    payload: response
+})
+
+export const FetchGriduserdata = (currentPage) => {
+    return async (dispatch) => {
+        dispatch({ type: FETCH_GRID_USER_DATA_REQUEST })
+
+        try {
+            const axios = require('axios');
+            const token = getCookie("authtoken")
+
+            let config = {
+                method: 'get',
+                maxBodyLength: Infinity,
+                url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/user/paginated?page=${currentPage}&limit=6`,
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            };
+
+            axios.request(config)
+                .then((response) => {
+                    const data = response.data
+
+
+                    dispatch({
+                        type: FETCH_GRID_USER_DATA_REQUEST_SUCCESS,
+                        payload: {
+                            userData: data.data.results,
+                            totalPages: data.data.totalPages,
+                            currentPage: data.data.page,
+                            pagesdata: data.data
+                        }
+                    })
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+
+
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+
+    }
+}
+
+export const FetchGriduserdatasuccess = () => {
+
+}
+
+
+export const Getlikeduserdata = () => {
+    return async (dispatch) => {
+        dispatch({ type: LIKED_USERS_PROFILE_DATA })
+        const axios = require('axios');
+        const token = getCookie("authtoken")
+        const userId = getCookie("userid")
+        let data = '';
+
+        let config = {
+            method: 'get',
+            maxBodyLength: Infinity,
+            // url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/like/get-like/${userId}`,
+            url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/like/getlike/${userId}?limit=50`,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            data: data
+        };
+
+        axios.request(config)
+            .then((response) => {
+                console.log(JSON.stringify(response.data));
+                dispatch({ type: LIKED_USERS_PROFILE_DATA_SUCCESS, payload: response.data.data })
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+    }
+}
+
+//For Story Upload 
+
+export const Uploadmystory = (requestdata, seconddata, theblob, Caption) => {
+
+    return async (dispatch) => {
+        dispatch({ type: UPLOAD_MY_STORY })
+
+        try {
+
+
+            const authToken = getCookie("authtoken");
+            // Assuming requestdata is the image data you want to send in the request
+            const data = {
+                "key": requestdata.imagesdata.key,
+                "contentType": requestdata.imagesdata.contentType,
+                "isProfilePic": false,
+                // "caption": Caption ? Caption : "",
+                "caption": Caption ,
+                "profileType": "statusImage"
+            }
+
+            const data2 = {
+                "key": requestdata.imagesdata.key,
+                "contentType": requestdata.imagesdata.contentType,
+                "isProfilePic": false,
+                // "caption": Caption ? Caption : "",
+                "profileType": "statusImage"
+            }
+
+            // Construct the fetch options
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`
+                },
+                body: JSON.stringify(Caption ? data : data2)
+            };
+
+            // Make the fetch request
+            fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/s3/presignedurl/`, options)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Handle the response data here (e.g., update UI, etc.)
+                    console.log('Response from server:', data);
+
+                    fetch(seconddata)
+                        .then(response => response.blob())
+                        .then(blobData => {
+
+                            console.log("🚀 ~ blobData:", blobData)
+
+
+                            const axios = require('axios');
+                            let config = {
+                                method: 'put',
+                                maxBodyLength: Infinity,
+                                url: data.data.url,
+                                headers: {
+                                    'Content-Type': 'image/jpeg',
+                                    'x-amz-acl': 'public-read',
+                                },
+                                data: blobData
+                            };
+
+                            axios.request(config)
+                                .then((response) => {
+                                    console.log(JSON.stringify(response.data));
+                                    dispatch({ type: UPLOAD_MY_STORY_SUCCESS })
+                                    // dispatch({ type: UPLOAD_MY_STORY_MODAL })
+                                    dispatch(Getallstatus())
+                                    dispatch(fetchMyProfileData())
+                                })
+                                .catch((error) => {
+                                    console.log(error);
+                                });
+                        })
+                })
+
+                .catch(error => {
+                    console.error('There was a problem with your fetch operation:', error);
+                });
+            // })
+            // console.log("🚀 ~ blobData:", blobData)
+
+
+
+        } catch (error) {
+            // Handle any errors that occurred outside of the fetch
+            console.error('Error:', error);
+        }
+    }
+
+}
+
+export const Uploadmystorysuccess = (response) => (
+    {
+        type: UPLOAD_MY_STORY_SUCCESS,
+        payload: response
+    }
+)
+
+
+export const Uploadmystoryfailure = (error) => (
+    {
+        type: UPLOAD_MY_STORY_FAILURE,
+        payload: error
+    }
+)
+
+export const Uploadmystorymodal = () => ({
+    type: UPLOAD_MY_STORY_MODAL
+})
+
+export const Getallstatus = () => {
+    return async (dispatch) => {
+        dispatch({ type: GET_ALL_STATUS })
+        const axios = require('axios');
+        const token = getCookie("authtoken");
+        const currentUser = getCookie("userid")
+
+        let config = {
+            method: 'get',
+            maxBodyLength: Infinity,
+            url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/status/get-all-status`,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+
+        axios.request(config)
+            .then((response) => {
+                // console.log(JSON.stringify(response.data));
+                const mystory = response.data.data.filter((item) => item.userId.id == currentUser)
+                const allstatus = response.data.data.filter((item) => item.userId.id != currentUser)
+
+                dispatch({ type: GET_ALL_STATUS_SUCCESS, payload: { mystory, allstatus } })
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+    }
+}
+
+
+export const Getallstatusfailure = (error) => ({
+    type: GET_ALL_STATUS_FAILURE,
+    payload: error
+})
+
+export const DeleteMystatus = (StatusID) => {
+    return async (dispatch) => {
+        const axios = require('axios');
+        const token = getCookie("authtoken")
+        let data = '';
+
+        let config = {
+            method: 'delete',
+            maxBodyLength: Infinity,
+            url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/status/delete-status/${StatusID}`,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            data: data
+        };
+
+        axios.request(config)
+            .then((response) => {
+                console.log(JSON.stringify(response.data));
+                dispatch(Getallstatus())
+                dispatch({ type: DELETE_MY_STATUS_SUCCESS })
+                dispatch({ type: DELETE_STATUS_MODAL })
+
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+    }
+}
+// GET_ALL_STATUS_SUCCESS

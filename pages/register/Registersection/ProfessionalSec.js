@@ -30,16 +30,6 @@ const customStyles = {
     }),
 };
 
-
-// const Text1 = {
-//     color: "#0F52BA",
-//     fontFamily: "Poppins",
-//     fontSize: "14px",
-//     fontStyle: "normal",
-//     fontWeight: "400",
-//     lineHeight: "normal"
-// }
-
 const Text1 = {
     fontFamily: "Poppins",
     fontSize: "16px",
@@ -56,29 +46,6 @@ const Text2 = {
     lineHeight: "normal"
 }
 
-
-const Btntextstyle = {
-    color: "#000",
-    textAlign: "center",
-    fontFamily: "Poppins",
-    fontSize: "14px",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "normal",
-};
-
-
-const Spanstyle = {
-    color: "#000",
-    fontFamily: "Poppins",
-    fontSize: "12px",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "normal",
-    position: "relative",
-    top: "-10px",
-    left: "4px"
-}
 
 function ProfessionalSec({ formData, updateFormData, HandleTabclick, activeTab }) {
 
@@ -192,7 +159,7 @@ const handleInputChange = (e) =>{
                     <h1 className='text-[#000] pb-[10px]' style={Text2}>Company Name</h1>
 
                     <div class="flex items-center space-x-2">
-                        <input onChange={handleInputChange} value={formData?.professional.companyName} type='text' name='companyName' placeholder='Enter Company Name' className='outline-none focus:border-[1px] focus:border-[black] pr-[10px] h-[50px] w-[300px] border-[1px] border-[#e6e6e6] pl-[10px] rounded-[8px] ' />
+                        <input onChange={handleInputChange} value={formData?.professional.companyName} type='text' name='companyName' placeholder='Enter Company Name' className='hover:border-[black] outline-none focus:border-[1px] focus:border-[black] pr-[10px] h-[50px] w-[300px] border-[1px] border-[#e6e6e6] pl-[10px] rounded-[8px] ' />
                     </div>
                 </div>
 
@@ -200,13 +167,8 @@ const handleInputChange = (e) =>{
                     <h1 className='text-[#000] pb-[10px]' style={Text2}>Annual Salary</h1>
 
                     <div class="flex items-center space-x-2">
-                        {/* <DynamicSelect
-                            className="h-[50px] w-[300px] flex justify-end"
-                            styles={customStyles}
-                            options={options4}
-                        /> */}
 
-                        <input onChange={handleInputChange} value={formData?.professional.currentSalary} type='number' name='currentSalary' placeholder='Enter Your current Salary' className='outline-none focus:border-[1px] focus:border-[black] pr-[10px] h-[50px] w-[300px] border-[1px] border-[#e6e6e6] pl-[10px] rounded-[8px] ' />
+                        <input onChange={handleInputChange} value={formData?.professional.currentSalary} type='number' name='currentSalary' placeholder='Enter Your current Salary' className='hover:border-[black] outline-none focus:border-[1px] focus:border-[black] pr-[10px] h-[50px] w-[300px] border-[1px] border-[#e6e6e6] pl-[10px] rounded-[8px] ' />
 
                     </div>
                 </div>
@@ -239,8 +201,6 @@ const handleInputChange = (e) =>{
                         />
                     </div>
                 </div>
-
-
 
             </div>
 

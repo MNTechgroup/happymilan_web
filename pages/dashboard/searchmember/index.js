@@ -1,63 +1,20 @@
 
-import UserProfile from './comp/Searchprofile'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import NavBar from '../NavBar'
 import SideBar from '../SideBar'
 import Footer from '../../components/Footer'
-import UserStory from '../commonCompo/UserStory'
-import ModifySearch from './comp/ModifySearch'
-import ProfileComplete from '../commonCompo/ProfileComplete'
-import MoreSuggestion from '../commonCompo/MoreSuggestion'
-import SearchUSerGrid from './comp/SearchUserGrid'
 import Image from 'next/image'
 import ProtectedRoutes from '../../routes/ProtectedRoutes'
+import { useSelector } from 'react-redux'
+import dynamic from 'next/dynamic'
+const UserStory = dynamic(() => import('../commonCompo/UserStory'));
+const ModifySearch = dynamic(() => import('./comp/ModifySearch'));
+const ProfileComplete = dynamic(() => import('../commonCompo/ProfileComplete'));
+const MoreSuggestion = dynamic(() => import('../commonCompo/MoreSuggestion'));
+const SearchUSerGrid = dynamic(() => import('./comp/SearchUserGrid'));
+const UserProfile = dynamic(() => import('./comp/Searchprofile'))
 
-{/* <img  */}
 function index() {
-
-  const Text7 = {
-    color: "#000",
-    fontFamily: "Poppins",
-    fontSize: "14px",
-    fontStyle: "normal",
-    fontWeight: "600",
-    lineHeight: "normal"
-  }
-  const Text8 = {
-    fontFamily: "Poppins",
-    fontSize: "12px",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "normal"
-  }
-  const BoldText = {
-    color: "#000",
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: "500",
-    lineHeight: "normal"
-  }
-  const ProfileName = {
-    color: "#000",
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: "600",
-    lineHeight: "normal"
-  }
-  const Text3 = {
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "normal"
-  }
-
-  const ListText = {
-    color: "#000",
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "24px" /* 171.429% */
-  }
 
   const Text4 = {
     color: "#000",
@@ -65,6 +22,13 @@ function index() {
     fontStyle: "normal",
     fontWeight: "400",
     lineHeight: "12px"
+  }
+  const modifyText = {
+    color: "#000",
+    fontFamily: "Poppins",
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: "normal"
   }
 
   const Box = {
@@ -100,8 +64,9 @@ function index() {
   }
   const [FormOpen, setFormOpen] = useState(true);
 
+  const { loading, data } = useSelector((state) => state.usersact.searchusersprofiledata)
 
-
+  const handleSearch = (searchTerm) => { }
 
   useEffect(() => {
     if (!FormOpen) {
@@ -112,8 +77,8 @@ function index() {
   return (
     <>
 
-<ProtectedRoutes/>
-      <NavBar />
+      <ProtectedRoutes />
+      <NavBar handleSearch={handleSearch} />
 
 
       <SideBar />
@@ -132,8 +97,8 @@ function index() {
       </>
         :
         <>
-       <div id='main-centerlized-content' className='flex justify-center flex-col'>
-      <div id='first-child' className='pl-[0px] lg:pl-[240px] 2xl:pl-[280px] xl:pl-[240px] flex  mt-[100px]'>
+          <div id='main-centerlized-content' className='flex justify-center flex-col'>
+            <div id='first-child' className='pl-[0px] lg:pl-[240px] 2xl:pl-[280px] xl:pl-[240px] flex  mt-[100px]'>
 
               <div className=' h-full'>
                 {/* Side Section 1 */}
@@ -145,10 +110,10 @@ function index() {
                 <div id='centerlized-content'>
                   <div className='relative md:top-0 top-[50px] 2xl:w-[715px] xl:w-[635px] lg:w-[650px] md:w-[635px] w-full m-[10px] space-x-[0px] md:space-x-0 flex justify-between'>
 
-                    <h1 className='p-[5px] relative 2xl:left-[40px] lg:left-[10px] xl:left-[55px]'><span className='md:text-[16px] text-[14px]' style={Text5}>124</span> <span className='text-[12px] md:text-[16px]' style={Text6}>Profiles Found For You!</span></h1>
+                    <h1 className='p-[5px] relative 2xl:left-[40px] lg:left-[10px] xl:left-[55px]'><span className='md:text-[16px] text-[14px]' style={Text5}>{loading ? 0 : `${data?.length} `}</span> <span className='text-[12px] md:text-[16px]' style={Text6}>Profiles Found For You!</span></h1>
                     <div className='flex space-x-[10px] relative right-[50px]'>
-                      <button onClick={() => setFormOpen(true)} style={Text4} className='text-[12px] md:text-[14px] w-[150px] md:w-[168px] h-[40px] rounded-[10px] border-[1px] border-[#0F52BA]'>
-                        Modify Search <Image width={24} height={14} src='/assests/Black/ModifySearch.svg' className='inline pl-[10px]' />
+                      <button onClick={() => setFormOpen(true)} style={modifyText} className='text-[12px] md:text-[14px] w-[100px] md:w-[105px] h-[30px] rounded-[17px] hover:bg-[#F2F7FF]'>
+                        <span className='relative left-[-5px]'>Modify</span> <Image alt='search' loading='lazy' width={24} height={14} src='/assests/Black/ModifySearch.svg' className='w-[23px] h-[14px] inline relative left-[8px]' />
                       </button>
                     </div>
                   </div>
@@ -173,24 +138,22 @@ function index() {
 
               </div>
 
-              <div className='hidden  z-[-10]  absolute 2xl:top-[250px] xl:top-[245px] right-10  2xl:flex xl:flex flex-col space-y-[30px] justify-center items-end w-full 2xl:w-[380px] xl:w-[350px]'>
+              <div className=" hidden  absolute 2xl:top-[250px] xl:top-[245px] right-10 2xl:flex xl:flex flex-col space-y-[30px] justify-center items-end w-full 2xl:w-[380px] xl:w-[350px]">
 
-                {/* Side Section 2 */}
                 <ProfileComplete />
 
                 <MoreSuggestion />
-
               </div>
 
 
             </div>
-            </div>
-          </>}
-          <div className='pt-[100px]'>
-            <Footer />
           </div>
+        </>}
+      <div className='pt-[100px]'>
+        <Footer />
+      </div>
 
-       
+
 
     </>
   )

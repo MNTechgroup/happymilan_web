@@ -8,8 +8,11 @@ import {
   } from "@material-tailwind/react";
 import Footer from '../components/Footer';
 import Image from 'next/image';
+import UIbuttons from '../../UI/Buttons';
 
 function index() {
+
+
 
     const TitleText = {
         color: "#0F52BA",
@@ -106,7 +109,7 @@ function index() {
                     <div className='w-full h-full mt-[50px]  2xl:mt-[20px] xl:mt-[20px] gap-x-[90px]  flex flex-col-reverse flex-col lg:flex-row justify-evenly'>
                         <div className="flex justify-center items-end  mt-[30px]  lg:h-[600px] lg:w-[100%] 2xl:h-[570px] 2xl:w-[100%] xl:w-[500px] xl:h-[500px]   grid place-items-center">
                         <div className="md:pr-0 md:pl-0 pl-[10px] pr-[10px]">
-                        <Image alt="img" width={466} height={445} src="/assests/common/career-img.svg" className="" />
+                        <Image loading='lazy' alt="img" width={466} height={445} src="/assests/common/career-img.svg" className="" />
                         </div>
                          </div>
                          <div className=" w-full h-full lg:h-[600px] lg:w-[100%] 2xl:h-[600px] 2xl:w-[530px] xl:w-[500px] xl:h-[500px]   grid place-items-center">
@@ -163,9 +166,9 @@ function index() {
                     <div className='w-full h-full grid place-items-center'>
                         <div className='flex justify-evenly lg:justify-center 2xl:gap-x-[22px] xl:gap-x-[22px]  lg:gap-x-[22px] pt-[70px]  w-full md:w-[700px]'>
                             <button style={Btntext} className='h-[40px] border-[1px] border-[#DADADA] rounded-[10px] w-[84px] bg-[#0F52BA] text-[white] text-center'>HR</button>
-                            <button style={Btntext} className='h-[40px] border-[1px] border-[#DADADA] rounded-[10px] w-[84px]  bg-[#FFF] hover:bg-[#0F52BA] duration-300 hover:text-[white]  text-[black] text-center'>IT</button>
-                            <button style={Btntext} className='h-[40px] border-[1px] border-[#DADADA] p-[10px] rounded-[10px]  bg-[#FFF] hover:bg-[#0F52BA] duration-300 hover:text-[white]  text-[black] '>Sales & Marketing</button>
-                            <button style={Btntext} className='h-[40px] border-[1px] border-[#DADADA] rounded-[10px]  md:w-[111px] bg-[#FFF] hover:bg-[#0F52BA] duration-300 hover:text-[white]  text-[black] text-center'>Design</button>
+                            <button style={Btntext} className='h-[40px] border-[1px] border-[#DADADA] rounded-[10px] w-[84px]  bg-[#FFF] hover:bg-[#F3F8FF] duration-300   text-[black] text-center'>IT</button>
+                            <button style={Btntext} className='h-[40px] border-[1px] border-[#DADADA] p-[10px] rounded-[10px]  bg-[#FFF] hover:bg-[#F3F8FF] duration-300   text-[black] '>Sales & Marketing</button>
+                            <button style={Btntext} className='h-[40px] border-[1px] border-[#DADADA] rounded-[10px]  md:w-[111px] bg-[#FFF] hover:bg-[#F3F8FF] duration-300   text-[black] text-center'>Design</button>
                         </div>
 
                     </div>
@@ -184,9 +187,9 @@ function index() {
                                         <h1 className='m-[4px] pb-[10px]' style={CardTitle}>Web Developer</h1>
 
 
-                                        <Image alt="img" width={8} height={10} className='m-[5px] inline' src='/assests/Black/remote.svg' />
+                                        <Image loading='lazy' alt="img" width={8} height={10} className='m-[5px] inline' src='/assests/Black/remote.svg' />
                                         <span className='m-[5px] inline' style={CardContent}>Remote</span>
-                                        <Image alt="img" width={10} height={10} className='ml-[25px] m-[5px] inline' src='/assests/Black/clock.svg' />
+                                        <Image loading='lazy' alt="img" width={10} height={10} className='ml-[25px] m-[5px] inline' src='/assests/Black/clock.svg' />
                                         <span className='m-[5px] inline' style={CardContent}>5 Days Work</span>
 
                                     </div>
@@ -202,7 +205,8 @@ function index() {
                     </div>
 
                     <div className='flex justify-center gap-y-[30px] mt-[80px]'>
-                        <button style={Btntext} className='w-[148px] h-[40px] rounded-[10px] bg-[#0F52BA] text-[#FFF]'>Send you CV</button>
+                        {/* <button style={Btntext} className='w-[148px] h-[40px] rounded-[10px] bg-[#0F52BA] text-[#FFF]'>Send you CV</button> */}
+                        <UIbuttons.SendCVBTN BtnStyle={Btntext} />
                     </div>
 
                 </div>

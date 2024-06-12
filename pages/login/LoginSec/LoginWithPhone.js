@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { useRouter } from 'next/router'
 import React from 'react'
+import  GoogleLoginButton  from '../../components/Buttons/GoogleLoginButton';
 
 function LoginWithPhone({ rendercomponent, setrendercomponent }) {
     const TextStyle = {
@@ -34,7 +34,7 @@ function LoginWithPhone({ rendercomponent, setrendercomponent }) {
     return (
         <>
             <div>
-                <Image alt='back-arrow' width={0} height={0} style={{height:"auto",width:"auto"}} className="h-[18px] w-[20px] absolute p-[20px]" onClick={() => setrendercomponent(0)} src="/assests/common/Back-Arow.svg" />
+                <Image loading='lazy' alt='back-arrow' width={0} height={0} style={{height:"auto",width:"auto"}} className="h-[18px] w-[20px] absolute p-[20px]" onClick={() => setrendercomponent(0)} src="/assests/common/Back-Arow.svg" />
             </div>
 
             <div className='w-full h-full grid place-items-center'>
@@ -43,13 +43,13 @@ function LoginWithPhone({ rendercomponent, setrendercomponent }) {
                     <h1 style={TextStyle} className='mb-[30px]'>Sign in via Phone</h1>
                     <div>
                         <input type='email' name='email' placeholder='Enter Mobile Number' className='focus:border-[1px] focus:border-[black] outline-none border-[1px] pl-[50px] border-[#E6E6E6] rounded-[8px] w-[300px] 2xl:h-[50px] h-[50px] xl:h-[45px]' onChange={(e) => setCredentials({ ...credentials, email: e.target.value })} />
-                        <Image alt='phone-icon' width={14.023} height={18} className='w-[14.023px] h-[18px] absolute mt-[-36px] 2xl:mt-[-35px] xl:mt-[-33px] ml-[20px]' src='/loginassests/call-icon.svg' />
+                        <Image loading='lazy' alt='phone-icon' width={14.023} height={18} className='w-[14.023px] h-[18px] absolute mt-[-36px] 2xl:mt-[-35px] xl:mt-[-33px] ml-[20px]' src='/loginassests/call-icon.svg' />
 
 
                     </div>
                     <div>
                         <input type='password' name='password' placeholder='Enter Password' className='focus:border-[1px] focus:border-[black] outline-none border-[1px] pl-[50px] border-[#E6E6E6] rounded-[8px] w-[300px] 2xl:h-[50px] h-[50px] xl:h-[45px]' onChange={(e) => setCredentials({ ...credentials, password: e.target.value })} />
-                        <Image alt='password-icon' width={14.023} height={18} className='w-[14.023px] h-[18px] absolute mt-[-36px] 2xl:mt-[-35px] xl:mt-[-33px] ml-[20px]' src='/loginassests/lock-icon.svg' />
+                        <Image loading='lazy' alt='password-icon' width={14.023} height={18} className='w-[14.023px] h-[18px] absolute mt-[-36px] 2xl:mt-[-35px] xl:mt-[-33px] ml-[20px]' src='/loginassests/lock-icon.svg' />
                         </div>
                     <div>
                         <h1 className='cursor-pointer' style={ResetPassword}>Reset Password</h1>
@@ -67,11 +67,9 @@ function LoginWithPhone({ rendercomponent, setrendercomponent }) {
                     <div className='w-[79px] h-[1px]  bg-[#EBEBEB]'> </div>
                 </div>
                 <div className='flex items-center justify-center gap-x-[30px] mt-[-10px] relative 2xl:top-[-9px] xl:top-[-7px]'>
+                    <GoogleLoginButton/>
                     <div className="xl:w-[45px] xl:h-[45px] 2xl:w-[50px] 2xl:h-[50px]">
-                        <Image alt='google-icon' width={50} height={50} src='/assests/social/google-icon-btn.svg' />
-                    </div>
-                    <div className="xl:w-[45px] xl:h-[45px] 2xl:w-[50px] 2xl:h-[50px]">
-                        <Image alt='fb-icon' width={50} height={50} src='/assests/social/facebook-icon-btn.svg' />
+                        <Image loading='lazy' alt='fb-icon' width={50} height={50} src='/assests/social/facebook-icon-btn.svg' />
                     </div>
                     <div className="xl:w-[45px] xl:h-[45px] 2xl:w-[50px] 2xl:h-[50px]">
                         <div onClick={() => setrendercomponent(1)} className="cursor-pointer group hover:bg-[#F8F8F8] 2xl:w-[50px] 2xl:h-[50px]  h-[50px] w-[50px] xl:w-[45px] xl:h-[45px] border-[1px] rounded-[50px] border-[#D4D4D4] grid place-items-center">
