@@ -361,7 +361,7 @@ function SampleUserProfile({ users }) {
                                                                 <li className="cursor-pointer hover:bg-[#F2F7FF] items-center rounded-[17px] p-[10px] flex space-x-[10px] top-[-12px] relative left-[5px]">
 
                                                                     <MatchScoreModal user={res} />
-                                                                    
+
                                                                 </li>
 
 
@@ -480,8 +480,6 @@ function SampleUserProfile({ users }) {
                                                                 style={Text3}
                                                                 className="text-[#979797] text-[14px] 2xl:text-[12px] xl:text-[12px] pr-[10px]"
                                                             >
-                                                               
-
                                                                 <ShowMore userid={res?.id} text={res?.writeBoutYourSelf} maxLength={100} />
                                                             </p>
                                                         </div>

@@ -1,9 +1,8 @@
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
-import { CreateLikeUser, UnlikeTheUser } from '../../../store/actions/GetingAlluser';
+import { CreateLikeUser } from '../../../store/actions/GetingAlluser';
 import { useDispatch, useSelector } from 'react-redux';
 import { FetchGriduserdata, Getlikeduserdata, GetrecentuserprofileData, sendRequest } from '../../../store/actions/UsersAction';
-import { Dialog } from '@mui/material';
 import { useSocket } from '../../../ContextProvider/SocketContext';
 import { getCookie } from 'cookies-next';
 
@@ -48,10 +47,7 @@ function GridLikeUser({ currentPage, from, user, RequestId, HandleRequestModal }
     const handleLikeClick = () => {
         setIsUserLiked(!isUserLiked); // Toggle like state
         if (!isUserLiked) {
-            console.log({
-                "userId": currentUserId,
-                "likedUserId": user?.id
-            })
+           
             socket?.emit('createUserLike', {
                 "userId": currentUserId,
                 "likedUserId": user?.id
@@ -66,7 +62,7 @@ function GridLikeUser({ currentPage, from, user, RequestId, HandleRequestModal }
             }, 3000);
             setIsUserDisliked(false);
         } else {
-            alert("Already Liked...")
+            
         }
 
     }
@@ -103,7 +99,7 @@ function GridLikeUser({ currentPage, from, user, RequestId, HandleRequestModal }
                     dispatch(FetchGriduserdata(currentPage))
                 } else { dispatch(GetrecentuserprofileData()) }
                 console.log("Called Dispatch....")
-            }, 3000);
+            }, 3000);``
             // dispatch(CreateLikeUser(userId, false));
             setIsUserLiked(false);
             setIsUserDisliked(true);

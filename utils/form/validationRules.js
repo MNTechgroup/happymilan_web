@@ -1,4 +1,19 @@
 // validation.js
+
+
+const phonePatterns = {
+    "+1": /^[2-9]\d{2}[2-9]\d{2}\d{4}$/, // Example pattern for US
+    "+91": /^[6-9]\d{9}$/, // Example pattern for India
+    // Add more country codes and their respective patterns
+  };
+
+  const validatePhoneNumberByCountryCode = (phoneNumber, countryCode) => {
+    console.log("🚀 ~ validatePhoneNumberByCountryCode ~ countryCode:", countryCode)
+    const regex = phonePatterns[countryCode];
+    return regex ? regex.test(phoneNumber) : false;
+  };
+
+
 const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
@@ -40,4 +55,5 @@ const validateLastName = (lastName) => {
     return null;
   };
 
-export { validateEmail, validatePassword , validatePhoneNumber , validateFirstName , validateLastName };
+
+export { validateEmail, validatePassword , validatePhoneNumber , validateFirstName , validateLastName , validatePhoneNumberByCountryCode };

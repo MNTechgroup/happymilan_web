@@ -4,6 +4,10 @@ import React from "react";
 
 function UserprofileSkeleton() {
 
+  const Box = {
+    borderRadius: "10px",
+    boxShadow: "0px 0px 14px 0px rgba(0, 0, 0, 0.07)",
+};
 
   return (
     <>
@@ -11,6 +15,7 @@ function UserprofileSkeleton() {
         <div className="">
           <div
             className={`ml-[50px] relative left-[-4px]  xl:left-[-3px] 2xl:left-[-3px]  flex m-[10px] lg:w-[590px]  2xl:w-[631px] 2xl:h-[294px] xl:w-[540px] xl:h-[284px] bg-[#FFF] dark:bg-[#242526]`}
+            style={Box}        
           >
             <div className="w-[350px]">
               <div className="p-[15px] w-full ">
@@ -161,7 +166,7 @@ function UserprofileSkeleton() {
                     </Skeleton>
                   </ul>
                 </div>
-                <div className="mt-[20px] 2xl:mt-[20px] xl:mt-[15px]">
+                <div className="mt-[30px] 2xl:mt-[20px] xl:mt-[15px]">
                   <Skeleton
                     variant="p"
                     className="text-[#979797] text-[14px] 2xl:text-[12px] xl:text-[12px] "

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { GetrecentuserprofileData } from '../../../store/actions/UsersAction'
 import { Skeleton } from '@mui/material'
 
-import _ from 'lodash';
+import shuffledata from 'lodash/shuffle';
 import GridLikeUser from '../../components/Buttons/GridLikeUser'
 
 function RecentlyView() {
@@ -64,7 +64,7 @@ function RecentlyView() {
 
   const { data, loading } = useSelector((state) => state.usersact.recentusersdata)
 
-  const shuffledData = _.shuffle(data);
+  const shuffledData = shuffledata(data);
 
 
   return (

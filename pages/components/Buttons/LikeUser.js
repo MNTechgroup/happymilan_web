@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CreateLikeUser, UnlikeTheUser } from "../../../store/actions/GetingAlluser";
 import { Getlikeduserdata } from "../../../store/actions/UsersAction";
+import { getCookie } from "cookies-next";
+import { useSocket } from "../../../ContextProvider/SocketContext";
 
 const LikeUser = ({ ActiveLike, setActiveLike, userId }) => {
   const dispatch = useDispatch();
@@ -20,9 +22,17 @@ const LikeUser = ({ ActiveLike, setActiveLike, userId }) => {
     }
   }, [data, userId]);
 
+  const currentUserId = getCookie("userid")
+  const socket = useSocket()
+
+
   const handleLikeUser = () => {
     if (!isUserLiked) {
       // dispatch(CreateLikeUser(userId, true));
+      socket?.emit('createUserLike', {
+        "userId": currentUserId,
+        "likedUserId": userId
+    })
       dispatch(CreateLikeUser({ userId: userId, status: true }));
 
       setIsUserLiked(true);
@@ -43,6 +53,14 @@ const LikeUser = ({ ActiveLike, setActiveLike, userId }) => {
 
       const res = data.results.find((item) => item.likedUserId === userId)
       // console.log("🚀 ~ handleDislikeUser ~ res:", res)
+      // console.log("🚀 ~ handleDislikeUser ~ res:", res)
+
+      socket?.emit('updateUserLike', {
+        "userId": currentUserId,
+        "likedUserId": res?.likedUserId,
+        "isLike": false
+    })
+
       dispatch(UnlikeTheUser(res))
       // dispatch(CreateLikeUser(userId, false));
       setIsUserLiked(false);
@@ -127,7 +145,7 @@ const LikeUser = ({ ActiveLike, setActiveLike, userId }) => {
             isUserLiked
               ? "/assests/animation/After-Like.svg"
               : HoverAnimation
-                ? "/assests/animation/after-Like.svg"
+                ? "/assests/animation/After-Like.svg"
                 : "/assests/animation/before-Like.svg"
           }
         />

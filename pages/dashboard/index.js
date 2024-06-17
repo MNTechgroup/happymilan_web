@@ -7,12 +7,11 @@ import NavBar from './NavBar';
 import SideBar from './SideBar';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import { getCookie } from 'cookies-next';
-import icons from '../../utils/icons/icons';
 import { getSentrequestData } from '../../store/actions/UsersAction';
 import { getAuthData } from '../../utils/API/Localstorage';
 import Image from 'next/image';
+import { useDarkMode } from '../../ContextProvider/DarkModeContext';
 // Lazy load your components
 const UserProfile = dynamic(() => import('./commonCompo/UserProfile'));
 const UserGridProfile = dynamic(() => import('./commonCompo/UserGridProfile'));
@@ -30,6 +29,8 @@ function index() {
 
   const dispatch = useDispatch();
   const authRoute = getAuthData()
+
+  const {darkMode , toggleDarkMode } = useDarkMode();
 
   useEffect(() => {
     dispatch(getSentrequestData())
@@ -130,9 +131,9 @@ function index() {
               <div className=' relative 2xl:w-[715px] xl:w-[635px] lg:w-[650px] m-[10px] flex justify-between'>
 
                 <h1 className='text-[#000] dark:text-[#FFF] p-[5px] relative lg:left-[15px] 2xl:left-[40px] xl:left-[55px]'><span style={Text6} >New Requests</span></h1>
-                <div className='justify-center  w-[62px] h-[30px] rounded-[17.5px] border-[1px] border-[#F3F3F3] flex  relative right-[50px]'>
+                <div className={`justify-center  w-[62px] h-[30px] rounded-[17.5px] border-[1px] ${darkMode ? "border-[#73757b]" : "border-[#F3F3F3]"} flex  relative right-[50px]`}>
 
-                  <div onClick={() => setListType(true)} style={{ cursor:"pointer" ,borderRadius: "17.5px 0PX 0px 17.5px" }} className={`w-[45px] ${listType ? "bg-[#F3F8FF]" : ""} hover:bg-[#F3F8FF] grid place-items-center h-[28px] border-r-[1px] border-r-[#F3F3F3]`}>
+                  <div onClick={() => setListType(true)} style={{ cursor:"pointer" ,borderRadius: "17.5px 0PX 0px 17.5px" }} className={`w-[45px] ${darkMode ? "bg-[#141516] border-r-[#73757b]"  : listType ?  "border-r-[#F3F3F3] bg-[#F3F8FF]"  : " hover:bg-[#F3F8FF] border-r-[#F3F3F3]" } grid place-items-center h-[28px] border-r-[1px] `}>
                     <Image width={13} height={13} alt='listview' src={listType ? "/assests/dashboard/menus/after-grid.svg" : "/assests/dashboard/menus/before-grid.svg"} />
 
                   </div>
@@ -141,7 +142,7 @@ function index() {
 
                   {/* Grid View Mode  */}
 
-                  <div onClick={() => setListType(false)} style={{ cursor:"pointer" ,borderRadius: "0px 17.5px 17.5px 0px" }} className={`w-[45px] ${listType ?  ""  : " bg-[#F3F8FF]"}  hover:bg-[#F3F8FF] grid place-items-center h-[28px] border-l-[1px] border-l-[#F3F3F3]`}>
+                  <div onClick={() => setListType(false)} style={{ cursor:"pointer" ,borderRadius: "0px 17.5px 17.5px 0px" }} className={`w-[45px] ${darkMode ? "bg-[#141516] border-l-[#73757b]"  : listType ?  "border-l-[#F3F3F3]  "  : " bg-[#F3F8FF] hover:bg-[#F3F8FF] border-l-[#F3F3F3]" }   grid place-items-center h-[28px] border-l-[1px]`}>
                     <Image width={13} height={13} alt='listview' src={listType ? "/assests/dashboard/menus/before-list.svg" : "/assests/dashboard/menus/after-list.svg"} />
 
                   </div>
@@ -169,16 +170,16 @@ function index() {
             </div>
 
 
-            <div className="block lg:block 2xl:hidden xl:hidden relative top-[60px] pl-[15px]">
+            {/* <div className="block lg:block 2xl:hidden xl:hidden relative top-[60px] pl-[15px]">
               <h1 className="p-[5px] relative 2xl:left-[40px] xl:left-[55px]">
                 <span className='text-[#000] dark:text-[#FFF]' style={Text6}>New Matches</span>
                 <span style={Text5} className="pl-[10px]">06</span>
               </h1>
-            </div>
+            </div> */}
 
-            <div className="block lg:block 2xl:hidden xl:hidden ">
+            {/* <div  className="block lg:block 2xl:hidden xl:hidden ">
               <UserGridProfile />
-            </div>
+            </div> */}
 
             <div id="centerlized-content" className=" hidden lg:block mt-[50px] ">
               <RecentlyView />

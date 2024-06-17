@@ -420,6 +420,7 @@ function index() {
                 height={47}
                 alt="img"
                 loading="lazy"
+                // src="/assests/common/group-rounded.svg"
                 src="/assests/common/group-rounded.svg"
               />
             </div>

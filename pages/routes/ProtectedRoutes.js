@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { getCookie } from 'cookies-next';
-import { getAuthData } from '../../utils/API/Localstorage';
+// import { getAuthData } from '../../utils/API/Localstorage';
 
 const ProtectedRoutes = ({ children }) => {
   const router = useRouter();

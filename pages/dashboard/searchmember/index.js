@@ -7,6 +7,7 @@ import Image from 'next/image'
 import ProtectedRoutes from '../../routes/ProtectedRoutes'
 import { useSelector } from 'react-redux'
 import dynamic from 'next/dynamic'
+import { useDarkMode } from '../../../ContextProvider/DarkModeContext'
 const UserStory = dynamic(() => import('../commonCompo/UserStory'));
 const ModifySearch = dynamic(() => import('./comp/ModifySearch'));
 const ProfileComplete = dynamic(() => import('../commonCompo/ProfileComplete'));
@@ -15,6 +16,9 @@ const SearchUSerGrid = dynamic(() => import('./comp/SearchUserGrid'));
 const UserProfile = dynamic(() => import('./comp/Searchprofile'))
 
 function index() {
+
+  const { darkMode, toggleDarkMode } = useDarkMode();
+
 
   const Text4 = {
     color: "#000",
@@ -45,7 +49,6 @@ function index() {
     lineHeight: "22px"
   }
   const Text6 = {
-    color: "#000",
     fontFamily: "Poppins",
     fontStyle: "normal",
     fontWeight: "400",
@@ -86,7 +89,7 @@ function index() {
 
       {/* Main Section Start */}
       {FormOpen ? <>
-        <div className='w-full h-full grid place-items-center'>
+        <div className='dark:bg-[#18191a] w-full h-full grid place-items-center'>
 
           <div className=''>
             <ModifySearch setFormOpen={setFormOpen} />
@@ -97,7 +100,7 @@ function index() {
       </>
         :
         <>
-          <div id='main-centerlized-content' className='flex justify-center flex-col'>
+          <div id='main-centerlized-content' className='dark:bg-[#18191a] flex justify-center flex-col'>
             <div id='first-child' className='pl-[0px] lg:pl-[240px] 2xl:pl-[280px] xl:pl-[240px] flex  mt-[100px]'>
 
               <div className=' h-full'>
@@ -110,10 +113,15 @@ function index() {
                 <div id='centerlized-content'>
                   <div className='relative md:top-0 top-[50px] 2xl:w-[715px] xl:w-[635px] lg:w-[650px] md:w-[635px] w-full m-[10px] space-x-[0px] md:space-x-0 flex justify-between'>
 
-                    <h1 className='p-[5px] relative 2xl:left-[40px] lg:left-[10px] xl:left-[55px]'><span className='md:text-[16px] text-[14px]' style={Text5}>{loading ? 0 : `${data?.length} `}</span> <span className='text-[12px] md:text-[16px]' style={Text6}>Profiles Found For You!</span></h1>
+                    <h1 className='p-[5px] relative 2xl:left-[40px] lg:left-[10px] xl:left-[55px]'><span className='md:text-[16px] text-[14px]' style={Text5}>{loading ? 0 : `${data?.length} `}</span> <span className='text-[12px] md:text-[16px] text-[#000] dark:text-[#FFF]' style={Text6}>Profiles Found For You!</span></h1>
                     <div className='flex space-x-[10px] relative right-[50px]'>
                       <button onClick={() => setFormOpen(true)} style={modifyText} className='text-[12px] md:text-[14px] w-[100px] md:w-[105px] h-[30px] rounded-[17px] hover:bg-[#F2F7FF]'>
-                        <span className='relative left-[-5px]'>Modify</span> <Image alt='search' loading='lazy' width={24} height={14} src='/assests/Black/ModifySearch.svg' className='w-[23px] h-[14px] inline relative left-[8px]' />
+                        <span className='relative left-[-5px] text-[#000] dark:text-[#FFF]'>Modify</span>
+                        {darkMode ?
+                          <Image alt='search' loading='lazy' width={24} height={14} src='/assests/Black/Modify-dark.svg' className='w-[23px] h-[14px] inline relative left-[8px]' />
+                          :
+                          <Image alt='search' loading='lazy' width={24} height={14} src='/assests/Black/ModifySearch.svg' className='w-[23px] h-[14px] inline relative left-[8px]' />
+                        }
                       </button>
                     </div>
                   </div>
@@ -149,7 +157,7 @@ function index() {
             </div>
           </div>
         </>}
-      <div className='pt-[100px]'>
+      <div className='dark:bg-[#18191a] pt-[100px]'>
         <Footer />
       </div>
 

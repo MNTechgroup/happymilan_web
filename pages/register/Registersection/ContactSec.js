@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { updateFormData, updateGeneralInfo } from "../../../store/actions/registerUser";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { getCookie } from "cookies-next";
-import { validatePhoneNumber } from "../../../utils/form/validationRules";
+import { validatePhoneNumber, validatePhoneNumberByCountryCode } from "../../../utils/form/validationRules";
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
 //Style for Select Box
@@ -87,6 +87,9 @@ const ContactSection = ({ formData, updateFormData, HandleTabclick, activeTab })
   const handleInputChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
+
+    let errorMessage = '';
+    
     if (name == "mobileCode") {
       const selectedCurrentCity = countryCodes.find((option) => option.value === value);
       SetCodes({
@@ -100,23 +103,15 @@ const ContactSection = ({ formData, updateFormData, HandleTabclick, activeTab })
         homeCode: selectedcode
       })
     }
-    else if (name == "mobileNumber") {
-      
-      if (!validatePhoneNumber(value)) {
-        
-        setPhoneNumberError((prev) => ({
-          label:"Enter Valid Phone Number",
-          status: true
-        }))
-      }else
-      {
-        setPhoneNumberError((prev) => ({
-          label:"",
-          status: false
-        }))
-        updateFormData({
-          contact: { ...formData.contact, [name]: value }
-        });
+    if (name === 'mobileNumber' || name === 'mobileCode') {
+      const mobileNumber = name === 'mobileNumber' ? value : formData.contact.mobileNumber;
+      const mobileCode = name === 'mobileCode' ? value : formData.contact.mobileCode;
+
+      if (mobileNumber && mobileCode && !validatePhoneNumberByCountryCode(mobileNumber, mobileCode)) {
+        errorMessage = 'Invalid mobile number for the selected country code.';
+        setPhoneNumberError({ status: true, label: errorMessage });
+      } else {
+        setPhoneNumberError({ status: false, label: '' });
       }
     }
 

@@ -1,6 +1,6 @@
 import { Box, Stack } from '@mui/material';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { AudioMessage, DocMsg, LinkMsg, MediaMsg, ReplyMsg, TextMsg, TypingMessage } from '../../../data/Msgtypes';
+import { AudioMessage, DocMsg, LinkMsg, MediaMsg, ReplyMsg, TextMsg } from '../../../data/Msgtypes';
 import { getCookie } from 'cookies-next';
 import { UserContext } from '../../../ContextProvider/UsersConversationContext';
 
@@ -46,9 +46,6 @@ const Message = ({ socket }) => {
       else if (data?.data.message == "messages received") {
         setMessages(prevMessages => {
           console.log("Receive Log")
-
-
-
           const newMessages = data.data.sendMessage?.results?.filter(msg => !prevMessages.some(x => x.id === msg.id));
           console.log("🚀 ~ socket.on ~ newMessages:", newMessages)
           return [...newMessages, ...prevMessages];

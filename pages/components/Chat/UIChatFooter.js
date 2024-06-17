@@ -1,6 +1,5 @@
-import { Box, IconButton, InputAdornment, Stack, TextField } from '@mui/material';
+import { Box, IconButton, Stack } from '@mui/material';
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { styled } from "@mui/material/styles";
 import Image from 'next/image';
 import { getCookie } from 'cookies-next';
 import { UserContext } from '../../../ContextProvider/UsersConversationContext';
@@ -16,13 +15,6 @@ import { useChatSettings } from '../../../ContextProvider/ChatSetingContext';
 // Import EmojiPicker dynamically
 const EmojiPicker = dynamic(() => import('emoji-picker-react'), { ssr: false });
 
-const StyledInput = styled(TextField)(({ theme }) => ({
-    "& .MuiInputBase-input": {
-        paddingTop: '12px',
-        paddingBottom: '12px',
-        background: "#FFF"
-    }
-}));
 
 
 const ChatInput = ({ HandleStopVoice, HanldeVoiceChat, setOpenPicker, StartVoice, socket, handleSendMessage, message, setMessage, updateFormData, formData }) => {

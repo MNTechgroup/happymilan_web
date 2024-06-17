@@ -75,7 +75,7 @@ function index() {
             <div className="w-full lg:w-[750px]">
               <div className=" h-[10px]"></div>
 
-              <Accordion style={{borderRadius:"18px"}} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
+              <Accordion style={{ borderRadius: "18px" }} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1-content"
@@ -127,7 +127,7 @@ function index() {
                   </ul>
                 </AccordionDetails>
               </Accordion>
-              <Accordion style={{borderRadius:"18px"}} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
+              <Accordion style={{ borderRadius: "18px" }} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1-content"
@@ -166,7 +166,7 @@ function index() {
                   </ul>
                 </AccordionDetails>
               </Accordion>
-              <Accordion style={{borderRadius:"18px"}} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
+              <Accordion style={{ borderRadius: "18px" }} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1-content"
@@ -197,7 +197,7 @@ function index() {
                   </ul>
                 </AccordionDetails>
               </Accordion>
-              <Accordion style={{borderRadius:"18px"}} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
+              <Accordion style={{ borderRadius: "18px" }} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1-content"
@@ -223,7 +223,7 @@ function index() {
                   </ul>
                 </AccordionDetails>
               </Accordion>
-              <Accordion style={{borderRadius:"18px"}} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
+              <Accordion style={{ borderRadius: "18px" }} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1-content"
@@ -242,7 +242,7 @@ function index() {
                   </ul>
                 </AccordionDetails>
               </Accordion>
-              <Accordion style={{borderRadius:"18px"}} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
+              <Accordion style={{ borderRadius: "18px" }} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1-content"
@@ -261,7 +261,7 @@ function index() {
                   </ul>
                 </AccordionDetails>
               </Accordion>
-              <Accordion style={{borderRadius:"18px"}} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
+              <Accordion style={{ borderRadius: "18px" }} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1-content"
@@ -282,7 +282,7 @@ function index() {
                   </ul>
                 </AccordionDetails>
               </Accordion>
-              <Accordion style={{borderRadius:"18px"}} className="shadow-none  border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
+              <Accordion style={{ borderRadius: "18px" }} className="shadow-none  border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1-content"
@@ -298,11 +298,14 @@ function index() {
                       Privacy Policy, please contact us at
                     </li>
                     <li className="mt-[21px]">
-                      <span className="text-[#0F52BA]">Email:</span>{" "}
+                      <span className="text-[#0F52BA]">Email :</span>{" "}
                       contact@mntechgroup.com
                     </li>
                     <li className="mt-[5px]">
-                      <span className="text-[#0F52BA]">Support:</span> +91 91048 14072
+                      <span className="text-[#0F52BA]">Support :</span> +91 91048 14072
+                    </li>
+                    <li className="mt-[5px]">
+                      <span className="text-[#0F52BA]">Operating Address :</span> Siddharth Heights, Vavol, Gandhinagar 382016, India
                     </li>
                     <li className="mt-[21px]">
                       Thank you for trusting HappyMilan.com with your personal
@@ -314,7 +317,7 @@ function index() {
               </Accordion>
               <div className=" h-[10px]"></div>
 
-             
+
             </div>
           </div>
         </div>

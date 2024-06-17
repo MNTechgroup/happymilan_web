@@ -218,11 +218,11 @@ function index() {
             </h1>
             <ul style={ContentText}>
               <li>
-              We reserve the right to terminate or suspend your account, at our discretion, without notice, for any conduct that we believe violates this Agreement or is harmful to other users or us. After termination, the user will no longer be able to access or use the HappyMilan website or app.
-              </li>         
+                We reserve the right to terminate or suspend your account, at our discretion, without notice, for any conduct that we believe violates this Agreement or is harmful to other users or us. After termination, the user will no longer be able to access or use the HappyMilan website or app.
+              </li>
             </ul>
             <div className="mt-[21px]">
-            <span>Under what circumstances we may terminate your account: </span>
+              <span>Under what circumstances we may terminate your account: </span>
             </div>
             <ul className="mt-[21px] space-y-[8px]">
               <li>- Providing incorrect information on the HappyMilan website/app. </li>
@@ -258,7 +258,7 @@ function index() {
             </h1>
             <ul style={ContentText}>
               <li>
-              All payments are in accordance with the guideines provided by the RBI, including cash, cheque, net banking, debit card, credit card, PayPal, RTGS, NEFT, etc. HappyMilan uses a third-party payment gateway, and you agree to provide us with your PAN/Form 60/61 of the Income Tax Act. 
+                All payments are in accordance with the guideines provided by the RBI, including cash, cheque, net banking, debit card, credit card, PayPal, RTGS, NEFT, etc. HappyMilan uses a third-party payment gateway, and you agree to provide us with your PAN/Form 60/61 of the Income Tax Act.
               </li>
 
             </ul>
@@ -349,10 +349,13 @@ function index() {
                 For any questions or concerns regarding this Agreement, please contact us at;
               </li>
               <li className="mt-[21px]">
-                <span className="text-[#0F52BA]">Email:</span> contact@mntechgroup.com
+                <span className="text-[#0F52BA]">Email :</span> contact@mntechgroup.com
               </li>
               <li className="mt-[5px]">
-                <span className="text-[#0F52BA]">Support:</span> +91 91048 14072
+                <span className="text-[#0F52BA]">Support :</span> +91 91048 14072
+              </li>
+              <li className="mt-[5px]">
+                <span className="text-[#0F52BA]">Operating Address :</span> Siddharth Heights, Vavol, Gandhinagar 382016, India
               </li>
               <li className="mt-[21px]">
                 By clicking "I Accept" or by using our services, you acknowledge that you have read, understood, and agree to be bound by the terms and conditions of this Agreement in accordance with the Information Technology Act, 2000.
@@ -366,7 +369,7 @@ function index() {
           <div className="w-[100%] h-[1px] bg-[#CCC] mt-[20px]"></div>
           <div>
             <h1 style={Textstyle2} className="pb-[20px] pt-[20px]">
-             If Any Complaints
+              If Any Complaints
             </h1>
             <ul style={ContentText}>
               <li>

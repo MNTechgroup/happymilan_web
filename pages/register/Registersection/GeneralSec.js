@@ -112,8 +112,10 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
 
     //   console.log(isFormValid)
 
-    const [FNError,SetFNError] = useState("")
-    const [LNError,SetLNError] = useState("")
+    const [FNError, SetFNError] = useState("")
+    const [LNError, SetLNError] = useState("")
+
+    const [CharCount, setCharCount] = useState(0)
 
     const handleInputChange = (event) => {
         const name = event.target.name;
@@ -208,7 +210,7 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
 
 
 
-        }else if(name == "firstName"){
+        } else if (name == "firstName") {
             SetFNError(validateFirstName(value))
 
             updateFormData({
@@ -220,9 +222,13 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
             });
 
         }
-        else if(name == "lastName"){
-            SetLNError(validateLastName(value))
+        else if (name == "lastName") {
 
+
+
+            let lstname = validateLastName(value);
+
+            SetLNError(lstname)
             updateFormData({
                 ...formData,
                 general: {
@@ -231,8 +237,22 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
                 }
             });
 
+        } else if (name == "writeBoutYourSelf") {
+            const maxChars = 150
+            if (value.length <= maxChars) {
+                // setuserdata(prevValue => ({ ...prevValue, [name]: value }))
+                updateFormData({
+                    ...formData,
+                    general: {
+                        ...formData.general,
+                        writeBoutYourSelf: value,
+
+                    }
+                });
+                setCharCount(value.length);
+            }
         }
-        else {
+        if (name === 'birthTime') { } else {
 
             // Update the form data in Redux store
             updateFormData({
@@ -277,7 +297,7 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
                 </div>
                 <div>
                     <h1 className='text-[#000] pb-[10px]' style={Text2}>First Name <span className={`text-[10px] text-${nullFields.includes('firstName') ? "[red]" : "[black]"}`}>*</span></h1>
-                    <input name="firstName" style={{ border : "1px solid #e6e6e6"}} value={formData?.general.firstName} onChange={handleInputChange} type='text' placeholder='First Name' className={`hover:border-[black] outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[300px] border-[1px] border-${'[#e6e6e6]'} pl-[10px] rounded-[8px]`} />
+                    <input name="firstName" style={{ border: FNError != null ? "1px solid red" : "1px solid #e6e6e6" }} value={formData?.general.firstName} onChange={handleInputChange} type='text' placeholder='First Name' className={`hover:border-[black] outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[300px] border-[1px] border-${'[#e6e6e6]'} pl-[10px] rounded-[8px]`} />
                     <span className="block relative text-[10px] text-[red] left-[5px] top-[5px]">{FNError}</span>
                     {/* <input name="firstName" style={{border:isFieldNull("firstName") ? "1px solid red" : "1px solid #e6e6e6"}} value={formData?.general.firstName} onChange={handleInputChange} type='text' placeholder='First Name' className={`hover:border-[black] outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[300px] border-[1px] border-${'[#e6e6e6]'} pl-[10px] rounded-[8px]`} /> */}
                     {/* {isFieldNull("firstName") ? <><span className="block text-[red]">required</span></> : ""} */}
@@ -285,7 +305,7 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
 
                 <div>
                     <h1 className='text-[#000] pb-[10px]' style={Text2}>Last Name</h1>
-                    <input name="lastName" style={{ border: "1px solid #e6e6e6" }} value={formData?.general.lastName} onChange={handleInputChange} type='text' placeholder="Last Name" className={`hover:border-[black] outline-none focus:border-[1px] focus:border-[black] pr-[10px] h-[50px] w-[300px] border-[1px] border-${'[#e6e6e6]'} pl-[10px] rounded-[8px] `} required />
+                    <input name="lastName" style={{ border: LNError != null ? "1px solid red" : "1px solid #e6e6e6" }} value={formData?.general.lastName} onChange={handleInputChange} type='text' placeholder="Last Name" className={`hover:border-[black] outline-none focus:border-[1px] focus:border-[black] pr-[10px] h-[50px] w-[300px] border-[1px] border-${'[#e6e6e6]'} pl-[10px] rounded-[8px] `} required />
                     <span className="block relative text-[10px] text-[red] left-[5px] top-[5px]">{LNError}</span>
                     {/* <input name="lastName" style={{ border: isFieldNull("lastName") ? "1px solid red" : "1px solid #e6e6e6" }} value={formData?.general.lastName} onChange={handleInputChange} type='text' placeholder="Last Name" className={`hover:border-[black] outline-none focus:border-[1px] focus:border-[black] pr-[10px] h-[50px] w-[300px] border-[1px] border-${'[#e6e6e6]'} pl-[10px] rounded-[8px] `} required /> */}
                     {/* {isFieldNull("lastName") ? <><span className="block text-[red]">required</span></> : ""} */}
@@ -443,8 +463,13 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
                 <div className='w-full 2xl:w-[665px] xl:w-[665px] md:w-full lg:w-full'>
 
                     <h1 style={Text2} className="pb-[10px]">Write About Yourself</h1>
-                    <textarea style={{ border: isFieldNull("writeBoutYourSelf") ? "1px solid red" : "1px solid #e6e6e6" }} name="writeBoutYourSelf" value={formData?.general.writeBoutYourSelf} onChange={handleInputChange} type='text' className={`hover:border-[black] pt-[5px] outline-none focus:border-[1px] focus:border-[black] h-50 2xl:h-[76px] xl:h-[76px] w-[100%] border-[1px] border-${'[#e6e6e6]'} pl-[10px] rounded-[8px]`} />
+                    <textarea
+                        style={{ border: isFieldNull("writeBoutYourSelf") ? "1px solid red" : "1px solid #e6e6e6" }}
+                        name="writeBoutYourSelf" value={formData?.general.writeBoutYourSelf}
+                        onChange={handleInputChange} type='text'
+                        className={`hover:border-[black] pt-[5px] outline-none focus:border-[1px] focus:border-[black] h-50 2xl:h-[76px] xl:h-[76px] w-[100%] border-[1px] border-${'[#e6e6e6]'} pl-[10px] rounded-[8px]`} />
 
+                    <span className="text-[12px]">{CharCount}/150</span>
                 </div>
 
             </div>

@@ -36,11 +36,15 @@ function HobbiesTab() {
     };
 
     const { loading, data } = useSelector((state) => state.myprofile.profileData?.HobbiesData)
+    console.log("🚀 ~ HobbiesTab ~ data:", data)
 
-    const { upload, general, address, allhobbies } = useSelector((state) => state.form?.formData)
+
+    const { upload,  allhobbies } = useSelector((state) => state.form?.formData)
 
 
     //Edit Hobbies 
+
+
 
 
     const Text1 = {
@@ -67,6 +71,7 @@ function HobbiesTab() {
         { value: "PlayInstrument", label: "Play Instrument" },
         { value: "Poetry", label: "Poetry" }
     ]
+
 
 
     const FunOptions =
@@ -119,7 +124,7 @@ function HobbiesTab() {
     useEffect(() => {
         dispatch(fetchMyhoobies())
     }, [])
-
+      
     return (
         <>
             <div className='w-full h-[369px] border-[1px] border-[#F1F1F1] rounded-[10px] space-y-[20px]'>
@@ -160,7 +165,6 @@ function HobbiesTab() {
                                 <h1 className="font-semibold" style={Text1}>Fun</h1>
                                 <div className='w-full mt-[10px]'>
                                     <DynamicSelect
-
                                         options={FunOptions}
                                         placeholder="Select.."
                                         styles={customStyle}
@@ -174,13 +178,14 @@ function HobbiesTab() {
                                 <h1 className="font-semibold" style={Text1}>Fitness</h1>
                                 <div className='w-full mt-[10px]'>
                                     <DynamicSelect
-
+                                        // defaultValue={}
                                         options={FitnessDataoption}
                                         placeholder="Select.."
                                         styles={customStyle}
                                         onChange={(selectedOption) => handleInputChange({ target: { name: "fitness", value: selectedOption } })}
                                         isSearchable={true}
                                         isMulti />
+
                                 </div>
                             </div>
                             <div className='w-[90%] flex justify-end pb-[10px] mt-[10px]'>

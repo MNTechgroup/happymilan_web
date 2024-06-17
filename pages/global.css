@@ -14,7 +14,7 @@ body {
   border-width: 0;
 }
 
-/* heart-bg Gradient-btn active-no sec-2-explore-story sec-3-content grad-button grad-button Grad-btn grad-btn Gradient-btn Seting-menu-notgrad Gradient-btn Add-details-btn*/
+/* heart-bg audio Gradient-btn active-no sec-2-explore-story sec-3-content grad-button grad-button Grad-btn grad-btn Gradient-btn Seting-menu-notgrad Gradient-btn Add-details-btn*/
 :root {
   --blue: #0f52ba;
   --white: #ffffff;
@@ -1443,7 +1443,7 @@ body::-webkit-scrollbar {
 
 
 
-/* For audio message  */
+/* For audio message Save-Search-Box */
 
 
 
@@ -1491,7 +1491,6 @@ input[type="range"] {
 
 #Save-Search-Box {
   border-radius: 10px;
-  background: #FFF;
   box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.07);
   width: 280px;
   height: 248px;

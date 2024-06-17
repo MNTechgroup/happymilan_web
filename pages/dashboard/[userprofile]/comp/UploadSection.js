@@ -1,7 +1,7 @@
 'use client';
 
 import { Dialog, DialogContent } from '@mui/material';
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import PhotoGrid from './PhotoGrid';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';

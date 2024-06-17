@@ -13,6 +13,7 @@ import Image from "next/image";
 
 
 function SideBar() {
+  
 
   const { darkMode, toggleDarkMode } = useDarkMode();
 
@@ -98,7 +99,7 @@ function SideBar() {
           </div>
 
           <ul className="relative left-[-10px] space-y-[10px] pb-[20px] font-medium border-t  border-gray-200 dark:border-[#292929] p-[10px]">
-            <li name="dashboard" className="duration-100 hover:bg-[#F2F7FF] rounded-[17px] p-[5px] pl-[10px] flex items-center ">
+            <li name="dashboard" className={`duration-100 ${darkMode ? "" : "hover:bg-[#F2F7FF]"} rounded-[17px] p-[5px] pl-[10px] flex items-center`}>
               <span>
                 {router.pathname === "/dashboard" ?
                   <>
@@ -114,7 +115,9 @@ function SideBar() {
                   </> :
                   <>
                     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">
-                      <path d="M0.647934 13.3521H4.25785V7.93719H8.14545V13.3521H11.7554V5.02149L6.20165 0.809917L0.647934 5.02149V13.3521ZM0 14V4.69752L6.20165 0L12.4033 4.69752V14H7.49752V8.58512H4.90579V14H0Z" fill="black" />
+                      <path d="M0.647934 13.3521H4.25785V7.93719H8.14545V13.3521H11.7554V5.02149L6.20165 0.809917L0.647934 5.02149V13.3521ZM0 14V4.69752L6.20165 0L12.4033 4.69752V14H7.49752V8.58512H4.90579V14H0Z" 
+                      
+                      fill={darkMode ? "#FFF" : "black" }/>
                     </svg>
                   </>}
 
@@ -124,22 +127,22 @@ function SideBar() {
                 <h1
                   style={Text3}
                   id={router.pathname === "/dashboard" ? "sidebar-navlink-grad" : ""}
-                  className={`text-[14px] pl-[10px] dark:text-[#FFF] 
+                  className={`text-[14px] pl-[10px] dark:hover:text-[#FFF] 
                   ${darkMode
-                      ? router.pathname === "/dashboard"
-                        ? "text-[#FFF]"
-                        : "text-[#7D7F86]"
-                      :
-                      router.pathname === "/dashboard"
-                        ? ""
-                        : ""}`}
-                >
+                    ? router.pathname === "/dashboard"
+                      ? "text-[#FFF]"
+                      : "text-[#7D7F86]"
+                    :
+                    router.pathname === "/dashboard"
+                      ? ""
+                      : ""}`}
+              >
                   Home
                 </h1>
               </Link>
             </li>
 
-            <li className="hover:bg-[#F2F7FF] duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center">
+            <li className={`${darkMode ? "" : "hover:bg-[#F2F7FF]"} duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center`}>
               {router.pathname === "/dashboard/searchmember" ? <>
                 <Image width={14} height={14} alt="search-icon" src="/assests/sidebar/search-member-icon.svg" />
 
@@ -154,7 +157,7 @@ function SideBar() {
                   <g clipPath="url(#clip0_576_132)">
                     <path
                       d="M13.9296 14L9.98889 9.9037C9.4772 10.3717 8.88046 10.7263 8.19868 10.9677C7.51689 11.209 6.84326 11.3296 6.17778 11.3296C4.5909 11.3296 3.24789 10.7823 2.14873 9.68756C1.04958 8.59283 0.5 7.25332 0.5 5.66904C0.5 4.08474 1.04736 2.74383 2.14207 1.6463C3.2368 0.548765 4.57435 0 6.1547 0C7.73506 0 9.08029 0.547772 10.1904 1.64332C11.3005 2.73884 11.8556 4.07751 11.8556 5.65932C11.8556 6.36298 11.7259 7.05617 11.4667 7.73889C11.2074 8.42161 10.8531 9.00494 10.4037 9.48889L14.3444 13.5593L13.9296 14ZM6.17778 10.7593C7.61378 10.7593 8.82402 10.271 9.8085 9.29445C10.793 8.3179 11.2852 7.10802 11.2852 5.66481C11.2852 4.2216 10.793 3.01173 9.8085 2.03519C8.82402 1.05864 7.61378 0.57037 6.17778 0.57037C4.74178 0.57037 3.53154 1.05864 2.54706 2.03519C1.5626 3.01173 1.07037 4.2216 1.07037 5.66481C1.07037 7.10802 1.5626 8.3179 2.54706 9.29445C3.53154 10.271 4.74178 10.7593 6.17778 10.7593Z"
-                      fill="black"
+                      fill={darkMode ? "#FFF" : "black"}
                     />
                   </g>
                   <defs>
@@ -189,7 +192,7 @@ function SideBar() {
               </Link>
             </li>
 
-            <li className="hover:bg-[#F2F7FF] duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center ">
+            <li className={`${darkMode ? "" : "hover:bg-[#F2F7FF]"} duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center `}>
 
               {router.pathname === "/dashboard/accepted" ? <>
                 <Image width={14} height={14} alt="search-icon" src="/assests/sidebar/accepted-icon.svg" />
@@ -199,7 +202,7 @@ function SideBar() {
                   <svg width="25" height="24" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clipPath="url(#clip0_576_184)">
                       <path d="M6.35278 10.0154L11.3321 5.03611L10.8714 4.57991L6.35278 9.11346L4.07928 6.83995L3.63802 7.29616L6.35278 10.0154ZM7.50261 14C6.53762 14 5.63154 13.8163 4.78439 13.449C3.93722 13.0816 3.19521 12.5798 2.55837 11.9435C1.92154 11.3073 1.41927 10.566 1.05156 9.71962C0.683854 8.87325 0.5 7.96758 0.5 7.00261C0.5 6.03462 0.683679 5.12456 1.05104 4.27241C1.41841 3.42026 1.92022 2.67901 2.55646 2.04865C3.19271 1.4183 3.93402 0.919269 4.78038 0.551562C5.62675 0.183854 6.53242 0 7.49739 0C8.46538 0 9.37544 0.183679 10.2276 0.551036C11.0797 0.918406 11.821 1.41697 12.4514 2.04674C13.0817 2.67651 13.5807 3.41706 13.9484 4.26841C14.3161 5.11976 14.5 6.02942 14.5 6.99739C14.5 7.96238 14.3163 8.86846 13.949 9.71561C13.5816 10.5628 13.083 11.3048 12.4533 11.9416C11.8235 12.5785 11.0829 13.0807 10.2316 13.4484C9.38024 13.8161 8.47058 14 7.50261 14ZM7.5 13.4017C9.28092 13.4017 10.7931 12.7792 12.0365 11.5343C13.28 10.2894 13.9017 8.77792 13.9017 7C13.9017 5.21908 13.28 3.7069 12.0365 2.46346C10.7931 1.22001 9.28092 0.598286 7.5 0.598286C5.72208 0.598286 4.21065 1.22001 2.96571 2.46346C1.72076 3.7069 1.09829 5.21908 1.09829 7C1.09829 8.77792 1.72076 10.2894 2.96571 11.5343C4.21065 12.7792 5.72208 13.4017 7.5 13.4017Z"
-                        fill={"black"} />
+                        fill={darkMode ? "#FFF" : "black"} />
                     </g>
                     <defs>
                       <clipPath id="clip0_576_184">
@@ -244,7 +247,7 @@ function SideBar() {
               </div>
             </li>
 
-            <li className="hover:bg-[#F2F7FF] duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center relative left-[-1px] ">
+            <li className={`${darkMode ? "" : "hover:bg-[#F2F7FF]"} duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center relative left-[-1px] `}>
               {
                 router.pathname === "/dashboard/recentlyviewed" ? <>
                   <Image width={19} height={12} alt="recentView" src={"/assests/sidebar/recently-view-icon.svg"} />
@@ -260,7 +263,7 @@ function SideBar() {
                     <path
                       id="Vector"
                       d="M9.60588 9.6C10.552 9.6 11.3542 9.26888 12.0125 8.60663C12.6708 7.94436 13 7.14019 13 6.19413C13 5.24804 12.6689 4.44583 12.0066 3.7875C11.3444 3.12917 10.5402 2.8 9.59413 2.8C8.64804 2.8 7.84583 3.13112 7.1875 3.79337C6.52917 4.45564 6.2 5.25981 6.2 6.20587C6.2 7.15196 6.53112 7.95417 7.19337 8.6125C7.85564 9.27083 8.65981 9.6 9.60588 9.6ZM9.6 8.9C8.85 8.9 8.2125 8.6375 7.6875 8.1125C7.1625 7.5875 6.9 6.95 6.9 6.2C6.9 5.45 7.1625 4.8125 7.6875 4.2875C8.2125 3.7625 8.85 3.5 9.6 3.5C10.35 3.5 10.9875 3.7625 11.5125 4.2875C12.0375 4.8125 12.3 5.45 12.3 6.2C12.3 6.95 12.0375 7.5875 11.5125 8.1125C10.9875 8.6375 10.35 8.9 9.6 8.9ZM9.60358 12.4C7.51786 12.4 5.61667 11.8375 3.9 10.7125C2.18333 9.5875 0.883333 8.08333 0 6.2C0.883333 4.31667 2.18214 2.8125 3.89643 1.6875C5.61071 0.5625 7.51071 0 9.59643 0C11.6821 0 13.5833 0.5625 15.3 1.6875C17.0167 2.8125 18.3167 4.31667 19.2 6.2C18.3167 8.08333 17.0179 9.5875 15.3036 10.7125C13.5893 11.8375 11.6893 12.4 9.60358 12.4ZM9.6 11.7C11.4833 11.7 13.2125 11.2042 14.7875 10.2125C16.3625 9.22083 17.5667 7.88333 18.4 6.2C17.5667 4.51667 16.3625 3.17917 14.7875 2.1875C13.2125 1.19583 11.4833 0.7 9.6 0.7C7.71667 0.7 5.9875 1.19583 4.4125 2.1875C2.8375 3.17917 1.63333 4.51667 0.8 6.2C1.63333 7.88333 2.8375 9.22083 4.4125 10.2125C5.9875 11.2042 7.71667 11.7 9.6 11.7Z"
-                      fill={"black"}
+                      fill={darkMode ? "#FFF" : "black"}
                     />
                   </svg>
                 </>
@@ -288,7 +291,7 @@ function SideBar() {
               </Link>
             </li>
 
-            <li className="hover:bg-[#F2F7FF] duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center ">
+            <li className={`${darkMode ? "" : "hover:bg-[#F2F7FF]"} duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center `}>
               {router.pathname === "/dashboard/newrequest" ?
                 <>
                   <Image width={15} height={14} alt="newrequest" src={"/assests/sidebar/new-request-icon.svg"} />
@@ -305,7 +308,7 @@ function SideBar() {
                     <g clipPath="url(#clip0_576_128)">
                       <path
                         d="M1.72727 14C1.3822 14 1.09139 13.8817 0.854841 13.6452C0.61828 13.4086 0.5 13.1178 0.5 12.7727V1.22727C0.5 0.882197 0.61828 0.591379 0.854841 0.354818C1.09139 0.118273 1.3822 0 1.72727 0H13.2727C13.6178 0 13.9086 0.118273 14.1452 0.354818C14.3817 0.591379 14.5 0.882197 14.5 1.22727V12.7727C14.5 13.1178 14.3817 13.4086 14.1452 13.6452C13.9086 13.8817 13.6178 14 13.2727 14H1.72727ZM1.72727 13.5H13.2727C13.4848 13.5 13.6591 13.4318 13.7955 13.2955C13.9318 13.1591 14 12.9848 14 12.7727V10.2045H10.4091C10.1364 10.7955 9.73331 11.25 9.19993 11.5682C8.66654 11.8864 8.09836 12.0455 7.49539 12.0455C6.8924 12.0455 6.32576 11.8864 5.79545 11.5682C5.26515 11.25 4.86364 10.7955 4.59091 10.2045H1V12.7727C1 12.9848 1.06818 13.1591 1.20455 13.2955C1.34091 13.4318 1.51515 13.5 1.72727 13.5ZM7.50395 11.5455C8.09223 11.5455 8.625 11.375 9.10227 11.0341C9.57955 10.6932 9.93182 10.25 10.1591 9.70455H14V1.22727C14 1.01515 13.9318 0.840909 13.7955 0.704545C13.6591 0.568182 13.4848 0.5 13.2727 0.5H1.72727C1.51515 0.5 1.34091 0.568182 1.20455 0.704545C1.06818 0.840909 1 1.01515 1 1.22727V9.70455H4.84091C5.06818 10.25 5.42177 10.6932 5.90168 11.0341C6.38159 11.375 6.91568 11.5455 7.50395 11.5455ZM7.5 7.84091L4.72727 5.06818L5.09091 4.72727L7.25 6.88636V2.31818H7.75V6.88636L9.90909 4.72727L10.2727 5.06818L7.5 7.84091ZM1.72727 13.5H1H14H1.72727Z"
-                        fill={"black"}
+                        fill={darkMode ? "#FFF" : "black"}
                       />
                     </g>
                     <defs>
@@ -350,7 +353,7 @@ function SideBar() {
               </div>
             </li>
 
-            <li className="hover:bg-[#F2F7FF] duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center ">
+            <li className={`${darkMode ? "" : "hover:bg-[#F2F7FF]"} duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center `}>
               {router.pathname === "/dashboard/shortlists" ?
                 <>
                   <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -428,7 +431,7 @@ function SideBar() {
               </Link>
             </li>
 
-            <li className="hover:bg-[#F2F7FF] duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center ">
+            <li className={`${darkMode ? "" : "hover:bg-[#F2F7FF]"} duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center `}>
               {router.pathname === "/dashboard/sent" ?
                 <>
                   <Image width={16} height={14} alt="sent" className="relative left-[2px]" src={"/assests/sidebar/sent-icon.svg"} />
@@ -472,7 +475,7 @@ function SideBar() {
             </li>
           </ul>
           <ul className="relative left-[-10px] pb-[20px]  pt-2 mt-0 p-[10px] space-y-[10px] font-medium border-t border-gray-200 dark:border-[#292929]">
-            <li className="hover:bg-[#F2F7FF] duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center">
+            <li className={`${darkMode ? "" : "hover:bg-[#F2F7FF]"} duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center`}>
               {router.pathname === "/dashboard/cancelled" ?
                 <>
                   <Image className="relative top-[3px]" width={15} height={14} alt="cancel" src={"/assests/sidebar/cancel-icon.svg"} />
@@ -507,7 +510,7 @@ function SideBar() {
               </Link>
             </li>
 
-            <li className="hover:bg-[#F2F7FF] duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center">
+            <li className={`${darkMode ? "" : "hover:bg-[#F2F7FF]"} duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center`}>
               <svg
                 width="15"
                 height="14"
@@ -561,7 +564,7 @@ function SideBar() {
               </Link>
             </li>
 
-            <li className="hover:bg-[#F2F7FF] duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center">
+            <li className={`${darkMode ? "" : "hover:bg-[#F2F7FF]"} duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center`}>
               <svg
                 width="14"
                 height="14"
@@ -598,7 +601,7 @@ function SideBar() {
                 <h1
                   style={Text3}
                   id={router.pathname === "/dashboard/deleted" ? "sidebar-navlink-grad" : ""}
-                  className={`text-[14px] dark:hover:text-[#000] pl-[10px]
+                  className={`text-[14px] dark:hover:text-[#FFF] pl-[10px]
                   ${darkMode
                       ? router.pathname === "/dashboard/deleted"
 
