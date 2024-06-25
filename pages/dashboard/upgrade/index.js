@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import ProtectedRoutes from '../../routes/ProtectedRoutes';
 import dynamic from 'next/dynamic';
+import useRazorpay from 'react-razorpay';
+import { getCookie } from 'cookies-next';
 
 const PricingBox = dynamic(() => import('./comp/PricingBox'));
 const PricingBox2 = dynamic(() => import('./comp/PricingBox2'));
@@ -32,35 +34,50 @@ function index() {
 
     const router = useRouter();
 
+    // const [Razorpay] = useRazorpay();
+
 
     const HandleCheckout = async (e) => {
         console.log("🚀 ~ HandleCheckout ~ e:", e)
-        router.push("/dashboard/upgrade/1")
+        router.push(`/dashboard/upgrade/${e?.planId}`)
 
-        try {
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/razorpay/order`, { "planId": "667a53da5f57120e070eeed7" });
-            console.log("🚀 ~ HandleCheckout ~ response:", response)
+        // const axios = require('axios')
+        // const token = getCookie("authtoken")
 
-            // Handle successful response (e.g., initiate Razorpay checkout)
-            var options = {
-                "key": "rzp_test_Dv5ALfzUvZ12UN",
-                "name": "Acme Corp",
-                "description": "Test Transaction",
-                "image": "https://example.com/your_logo",
-                "order_id": response.data.id,
-                "callback_url": "/is-order-complete",
-                "theme": {
-                    "color": "#3399cc"
-                }
-            };
-            var rzp1 = new Razorpay(options);
+        // try {
 
-            rzp1.open();
-            e.preventDefault();
+        //     const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/razorpay/order`, { "planId": "667a53da5f57120e070eeed7" },
+        //         {
+        //             headers: {
+        //                 'Authorization': `Bearer ${token}`,
+        //                 'ngrok-skip-browser-warning': 'true',
+        //             }
+        //         }
+        //     );
 
-        } catch (error) {
-            // Handle error
-        }
+        //     console.log("🚀 ~ HandleCheckout ~ response:", response)
+
+        //     // Handle successful response (e.g., initiate Razorpay checkout)
+        //     var options = {
+        //         "key": "rzp_live_2SoKzqAUA6FY69",
+        //         "name": "Acme Corp",
+        //         "description": "Test Transaction",
+        //         "image": "https://example.com/your_logo",
+        //         "order_id": response.data.id,
+        //         "callback_url": "/is-order-complete",
+        //         "theme": {
+        //             "color": "#3399cc"
+        //         }
+        //     };
+        //     var rzp1 = new Razorpay(options);
+
+        //     rzp1.open();
+        //     e.preventDefault();
+
+        // } catch (error) {
+        //     // Handle error
+        //     console.log('=== var error ===>', error)
+        // }
 
 
 

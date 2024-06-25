@@ -14,7 +14,9 @@ export const GetupgradePlans = (currentPage) => {
                 maxBodyLength: Infinity,
                 url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/plan/get-plan`,
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${token}`,
+                    'ngrok-skip-browser-warning': 'true',
+
                 }
             };
 

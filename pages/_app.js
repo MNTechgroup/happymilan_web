@@ -12,7 +12,7 @@ import { SocketProvider } from "../ContextProvider/SocketContext";
 import Head from "next/head";
 import "./global.css";
 import { ChatSettingsProvider } from "../ContextProvider/ChatSetingContext";
-import { DrawerProvider } from "../ContextProvider/DrawerContext";
+// import { DrawerProvider } from "../ContextProvider/DrawerContext";
 
 
 
@@ -48,7 +48,7 @@ export default function MyApp({
             <SocketProvider>
               <UsersConversationProvider>
                 <ChatSettingsProvider>
-                  <DrawerProvider>
+                  {/* <DrawerProvider> */}
                     <ThemeProvider>
 
                       {/* <Nextjsprogress height={2} color="#3742b6" /> */}
@@ -56,7 +56,7 @@ export default function MyApp({
 
                       <Component {...pageProps} />
                     </ThemeProvider>
-                  </DrawerProvider>
+                  {/* </DrawerProvider> */}
                 </ChatSettingsProvider>
               </UsersConversationProvider>
             </SocketProvider>

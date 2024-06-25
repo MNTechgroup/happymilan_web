@@ -1,6 +1,8 @@
+import { getCookie } from "cookies-next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
+import useRazorpay from "react-razorpay";
 
 function UpgradePage() {
     const TitleText = {
@@ -65,6 +67,52 @@ function UpgradePage() {
     };
 
     const router = useRouter();
+
+    const [Razorpay] = useRazorpay();
+
+
+
+    const PayNow = async () => {
+        const axios = require('axios')
+        const token = getCookie("authtoken")
+
+        try {
+
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/razorpay/order`, { "planId": "667a53da5f57120e070eeed7" },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'ngrok-skip-browser-warning': 'true',
+                    }
+                }
+            );
+
+            console.log("🚀 ~ HandleCheckout ~ response:", response)
+
+            // Handle successful response (e.g., initiate Razorpay checkout)
+            var options = {
+                "key": "rzp_live_2SoKzqAUA6FY69",
+                "name": "Acme Corp",
+                "description": "Test Transaction",
+                "image": "https://example.com/your_logo",
+                "order_id": response.data.id,
+                "callback_url": "/is-order-complete",
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+
+            rzp1.open();
+            e.preventDefault();
+
+        } catch (error) {
+            // Handle error
+            console.log('=== var error ===>', error)
+        }
+    }
+
+
     return (
         <>
             <div className="2xl:space-y-[30px] xl:space-y-[18px] lg:space-y-[20px] space-y-[10px] w-full h-full grid place-items-center 2xl:mt-[100px] xl:mt-[80px] lg:mt-[70px]">
@@ -198,6 +246,7 @@ function UpgradePage() {
                     <button
                         id="grad-button"
                         style={btnText}
+                        onClick={PayNow}
                         className="w-[142px] 2xl:h-[50px] xl:h-[40px] lg:h-[40px] h-[40px] rounded-[25px]"
                     >
                         Pay Now
