@@ -35,32 +35,34 @@ function index() {
 
     const HandleCheckout = async (e) => {
         console.log("🚀 ~ HandleCheckout ~ e:", e)
-        router.push("/dashboard/upgrade/1")
+        // router.push("/dashboard/upgrade/1")
 
-        // try {
-        //     const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/razorpay/order`, { amount: 200 });
-        //     console.log("🚀 ~ HandleCheckout ~ response:", response)
+        try {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/razorpay/order`, {
+                "planId": "667a53da5f57120e070eeed7"
+            });
+            console.log("🚀 ~ HandleCheckout ~ response:", response)
 
-        //     // Handle successful response (e.g., initiate Razorpay checkout)
-        //     var options = {
-        //         "key": "rzp_test_Dv5ALfzUvZ12UN",
-        //         "name": "Acme Corp",
-        //         "description": "Test Transaction",
-        //         "image": "https://example.com/your_logo",
-        //         "order_id": response.data.id,
-        //         "callback_url": "/is-order-complete",
-        //         "theme": {
-        //             "color": "#3399cc"
-        //         }
-        //     };
-        //     var rzp1 = new Razorpay(options);
+            // Handle successful response (e.g., initiate Razorpay checkout)
+            var options = {
+                "key": "rzp_test_Dv5ALfzUvZ12UN",
+                "name": "Acme Corp",
+                "description": "Test Transaction",
+                "image": "https://example.com/your_logo",
+                "order_id": response.data.id,
+                "callback_url": "/is-order-complete",
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            var rzp1 = new Razorpay(options);
 
-        //     rzp1.open();
-        //     e.preventDefault();
+            rzp1.open();
+            e.preventDefault();
 
-        // } catch (error) {
-        //     // Handle error
-        // }
+        } catch (error) {
+            // Handle error
+        }
 
 
 
