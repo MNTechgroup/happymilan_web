@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
 import useRazorpay from "react-razorpay";
+import axios from "axios";
 
 function UpgradePage() {
     const TitleText = {
@@ -73,44 +74,46 @@ function UpgradePage() {
 
 
     const PayNow = async () => {
-        const axios = require('axios')
-        const token = getCookie("authtoken")
+        const token = getCookie("authtoken");
 
         try {
-
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/razorpay/order`, { "planId": "667a53da5f57120e070eeed7" },
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/razorpay/order`,
+                { "planId": "667a53da5f57120e070eeed7" },
                 {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'ngrok-skip-browser-warning': 'true',
                     }
-                }
-            );
+                });
 
-            console.log("🚀 ~ HandleCheckout ~ response:", response)
+            const callbackUrl = `${process.env.NEXT_PUBLIC_API_URL}/v1/user/razorpay/is-order-complete?authToken=${token}`;
 
-            // Handle successful response (e.g., initiate Razorpay checkout)
-            var options = {
+            const options = {
                 "key": "rzp_live_2SoKzqAUA6FY69",
                 "name": "Acme Corp",
                 "description": "Test Transaction",
-                "image": "https://example.com/your_logo",
-                "order_id": response.data.id,
-                "callback_url": "/is-order-complete",
+                "order_id": response.data.data.id,
+                "callback_url": callbackUrl, // Include the token in the callback URL
                 "theme": {
                     "color": "#3399cc"
                 }
             };
-            var rzp1 = new Razorpay(options);
+
+            console.log("🚀 ~ HandleCheckout ~ response:", response);
+
+            const rzp1 = new Razorpay(options);
+            rzp1.on('payment.failed', (response) => {
+                console.log(response.error);
+                // Handle payment failure here
+            });
 
             rzp1.open();
-            e.preventDefault();
-
         } catch (error) {
             // Handle error
-            console.log('=== var error ===>', error)
+            console.log('=== var error ===>', error);
         }
-    }
+    };
+
 
 
     return (
@@ -120,7 +123,7 @@ function UpgradePage() {
                     <h1 style={TitleText}>Your Plan Summary</h1>
                 </div>
                 <div
-                    className="space-y-[5px] 
+                    className="space-y-[5px]
                 2xl:w-[650px] 2xl:h-[435px]
                 xl:w-[550px] xl:h-[350px]
                 lg:w-[650px] lg:h-[435px]
@@ -129,7 +132,7 @@ function UpgradePage() {
                 >
                     <div className="p-[20px] 2xl:p-[20px] xl:p-[12px] lg:p-[10px] w-full flex justify-between items-center">
                         <div
-                            className="pl-[10px] flex flex-col 
+                            className="pl-[10px] flex flex-col
                         2xl:space-y-[14px]
                         xl:space-y-[12px]
                         lg:space-y-[10px]
@@ -169,7 +172,7 @@ function UpgradePage() {
                     </div>
                     <div className="p-[20px] 2xl:p-[20px] xl:p-[12px] lg:p-[10px]">
                         <div
-                            className="pl-[10px] 
+                            className="pl-[10px]
                         2xl:space-y-[20px]
                         xl:space-y-[15px]
                         space-y-[20px]"
