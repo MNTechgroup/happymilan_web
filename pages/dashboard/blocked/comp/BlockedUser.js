@@ -11,12 +11,13 @@ import 'swiper/css/pagination';
 import { Pagination } from 'swiper';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
-const ShareModal = dynamic(()=> import('../../../components/Models/ShareModal'))
+const ShareModal = dynamic(() => import('../../../components/Models/ShareModal'))
 import Popover from '@mui/material/Popover';
 import { Dialog, DialogContent } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { acceptRequest, getblockuserdata } from '../../../../store/actions/UsersAction';
 import UserprofileSkeleton from '../../../components/Loader/UserprofileSkeleton';
+import MatchScoreModal from '../../../components/UserModal/MatchScoreModal';
 
 function BlockedUser() {
 
@@ -193,21 +194,21 @@ function BlockedUser() {
                                                 <div className='w-[350px]'>
                                                     <div className='p-[15px] w-full '>
                                                         {/* {res.user.userProfilePic && res.user.userProfilePic.length > 0 ? ( */}
-                                                            <Swiper
+                                                        <Swiper
 
-                                                                pagination={{ clickable: true }}
-                                                                modules={[Pagination]}
-                                                                className="mySwiper relative 2xl:w-[197px] xl:w-[187px] w-[185px] h-[260px]"
-                                                            >
-                                                                {/* {res.user.userProfilePic.slice(0, 3).map((Imageres, theindex) => ( */}
+                                                            pagination={{ clickable: true }}
+                                                            modules={[Pagination]}
+                                                            className="mySwiper relative 2xl:w-[197px] xl:w-[187px] w-[185px] h-[260px]"
+                                                        >
+                                                            {/* {res.user.userProfilePic.slice(0, 3).map((Imageres, theindex) => ( */}
 
-                                                                    <SwiperSlide>
-                                                                        <Image placeholder="blur" blurDataURL="data:..." alt={`img`} width={197} height={258} style={{ width: "197px", height: "258px", borderRadius: "10px", objectFit:"cover" }} className='w-[197px] h-[258px]' src={res.user.profilePic} loading="lazy" />
-                                                                    </SwiperSlide>
+                                                            <SwiperSlide>
+                                                                <Image placeholder="blur" blurDataURL="data:..." alt={`img`} width={197} height={258} style={{ width: "197px", height: "258px", borderRadius: "10px", objectFit: "cover" }} className='w-[197px] h-[258px]' src={res.user.profilePic} loading="lazy" />
+                                                            </SwiperSlide>
 
-                                                                {/* ))} */}
+                                                            {/* ))} */}
 
-                                                            </Swiper>
+                                                        </Swiper>
 
 
                                                         {/* ) : (
@@ -229,10 +230,24 @@ function BlockedUser() {
                                                             <h1 style={statusText} className={res.Activestatus ? `text-[#17C270]` : `text-[#7A7A7A]`}>{res.Activestatus ? "Online now" : "Offline"}</h1>
                                                         </div>
                                                         <div className='pr-[8px]'>
-                                                            <ul className='flex justify-evenly space-x-[20px] pr-[10px] pt-[10px]'>
-                                                                <li className='relative left-[10px]'><Image loading="lazy" alt='couple-icon' width={17} height={14} src='/assests/Black/Couple2.svg' /></li>
-                                                                <li className='text-[10px]' style={Text4}>You & Her</li>
-                                                                <li><Image loading="lazy" alt='star-icon' width={15} height={14} src='/assests/Black/Stars-2.svg' /></li>
+                                                            <ul className='flex justify-evenly space-x-[10px] pr-[10px] pt-[10px]'>
+                                                                <li className={`cursor-pointer hover:bg-[#F2F7FF] dark:hover:bg-[#383838]  items-center rounded-[17px] p-[10px] flex space-x-[10px] top-[-12px] relative left-[5px]`}>
+                                                                    <MatchScoreModal user={res?.user} />
+                                                                </li>
+                                                                <li
+                                                                    className="cursor-pointer"
+                                                                    // onClick={() => HandleShortlist(res.id)}
+                                                                >
+                                                                    <div className="cursor-pointer hover:bg-[#F2F7FF] dark:hover:bg-[#383838] p-[5px] rounded-[50%] relative top-[-5px]">
+                                                                        <Image
+                                                                            loading="lazy"
+                                                                            width={15}
+                                                                            height={14}
+                                                                            alt="star"
+                                                                            src={"/assests/Black/Stars-2.svg"}
+                                                                        />
+                                                                    </div>
+                                                                </li>
                                                                 <li>
 
 

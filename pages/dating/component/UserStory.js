@@ -48,7 +48,7 @@ function UserStory() {
         lineHeight: "32px"
     }
 
-   
+
     const [notification, setNotification] = React.useState({
         right: false, // Initialize only the 'right' anchor to be closed
     });
@@ -121,7 +121,7 @@ function UserStory() {
             <>
                 <div className='md:pb-[20px] lg:pb-0 flex flex-col justify-center items-center space-y-[20px] w-full h-full   md:w-[350px] md:h-[150px] lg:w-[426px] lg:h-[230px] 2xl:w-[526px] 2xl:h-[330px] xl:w-[526px] xl:h-[330px] bg-[#F5F5F5] rounded-[10px]'>
                     <div className='mt-[10%] lg:mt-0 md:w-[60px] md:h-[60px] lg:w-auto lg:h-auto 2xl:w-auto 2xl:h-auto xl:w-auto xl:h-auto'>
-                        <Image width={63} height={44}  src='/loginassests/register-icons/Drag-Drop.svg' />
+                        <Image width={63} height={44} src='/loginassests/register-icons/Drag-Drop.svg' />
                     </div>
                     <div className='text-center'>
                         <h1 style={Text1} className='2xl:text-[24px] xl:text-[24px] lg:text-[24px] md:text-[18px]'>Select Photos</h1>
@@ -145,7 +145,7 @@ function UserStory() {
                         </div>
                     </div>
                     <div className='w-full'>
-                    <input placeholder='Caption..' type='text' className='lg:mt-0 mt-[20px] pl-[20px] w-full h-[40px] 2xl:h-[50px] md:h-[30px] xl:h-[50px] lg:h-[40px] rounded-[10px] border-[1px] border-[#D8D8D8] focus:outline-none focus:border-[1px] focus:border-[black]' />
+                        <input placeholder='Caption..' type='text' className='lg:mt-0 mt-[20px] pl-[20px] w-full h-[40px] 2xl:h-[50px] md:h-[30px] xl:h-[50px] lg:h-[40px] rounded-[10px] border-[1px] border-[#D8D8D8] focus:outline-none focus:border-[1px] focus:border-[black]' />
                     </div>
                 </div>
             </>
@@ -177,13 +177,13 @@ function UserStory() {
                         <div className='space-y-[20px]'>
                             <div className='lg:pb-0 pb-[20px] flex items-center justify-between space-x-[20px]'>
                                 <div className='flex items-center space-x-[20px]'>
-                                <Image width={47} height={47} className="lg:w-[47px] lg:h-[47px] md:w-[40px] md:h-[40px]" src="/assests/dashboard/user/userProfile.svg" />
-                                <div className='text-[#000]'>
-                                    <h1 style={Username} className='text-[10px] md:text-[12px] lg:text-[14px]'>Riya M Shah</h1>
-                                    <p style={Activity}>27, Designer</p>
+                                    <Image width={47} height={47} className="lg:w-[47px] lg:h-[47px] md:w-[40px] md:h-[40px]" src="/assests/dashboard/user/userProfile.svg" />
+                                    <div className='text-[#000]'>
+                                        <h1 style={Username} className='text-[10px] md:text-[12px] lg:text-[14px]'>Riya M Shah</h1>
+                                        <p style={Activity}>27, Designer</p>
+                                    </div>
                                 </div>
-                                </div>
-                               
+
                             </div>
 
                             <div className=''>
@@ -200,10 +200,6 @@ function UserStory() {
 
                 </Dialog>
                 <div onClick={toggleNotification('right', true)} className='w-[47px] h-[47px] cursor-pointer bg-[#FFF] rounded-full grid place-items-center'><Image width={47} height={47} src='/assests/dashboard/user/1.svg' /></div>
-                <div onClick={toggleNotification('right', true)} className='w-[47px] h-[47px] cursor-pointer bg-[#FFF] rounded-full grid place-items-center'><Image width={47} height={47} src='/assests/dashboard/user/2.svg' /></div>
-                <div onClick={toggleNotification('right', true)} className='w-[47px] h-[47px] cursor-pointer bg-[#FFF] rounded-full grid place-items-center'><Image width={47} height={47} src='/assests/dashboard/user/3.svg' /></div>
-                <div onClick={toggleNotification('right', true)} className='w-[47px] h-[47px] cursor-pointer bg-[#FFF] rounded-full grid place-items-center'><Image width={47} height={47} src='/assests/dashboard/user/4.svg' /></div>
-                <div onClick={toggleNotification('right', true)} className='w-[47px] h-[47px] cursor-pointer bg-[#FFF] rounded-full grid place-items-center'><Image width={47} height={47} src='/assests/dashboard/user/5.svg' /></div>
             </div>
 
             <Drawer

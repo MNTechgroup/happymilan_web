@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import styles from '../../../../styles/styles.module.css'
-import Popover from '@mui/material/Popover';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
@@ -25,6 +24,7 @@ import ReportModal from '../../../components/Models/ReportModal';
 import BlockUserModal from '../../../components/Models/BlockModal'
 import { addToShortlist } from '../../../../store/actions/GetingAlluser';
 import ShowMore from '../../../components/Maincomp/UserBio';
+import MatchScoreModal from '../../../components/UserModal/MatchScoreModal';
 
 function AcceptedRequest() {
     const { darkMode, toggleDarkMode } = useDarkMode();
@@ -38,12 +38,6 @@ function AcceptedRequest() {
     const [Data, setData] = useState("");
     const [openShortlistModal, setopenShortlistModal] = React.useState(false)
     const [shortlistText, setshortlistText] = useState();
-
-
-    const OpenRegisterModal = (res) => {
-        setData(res);
-        setisRegisterModalOpen(true);
-    };
 
     const CloseRegisterModal = () => {
         setisRegisterModalOpen(false);
@@ -335,7 +329,7 @@ function AcceptedRequest() {
 
                         {
 
-                 
+
                             data?.acceptedrequestdata?.data.data.map((res) => {
 
 
@@ -369,26 +363,11 @@ function AcceptedRequest() {
                                                         </div>
                                                         <div className='pr-[8px]'>
                                                             <ul className='flex justify-evenly space-x-[10px] pr-[10px] pt-[10px]'>
-                                                                <li className="cursor-pointer hover:bg-[#F2F7FF] items-center rounded-[17px] p-[10px] flex space-x-[10px] top-[-12px] relative left-[5px]">
-                                                                    <div>
-                                                                        <Image
-                                                                            loading="lazy"
-                                                                            alt="couple-icon"
-                                                                            width={17}
-                                                                            height={14}
-                                                                            src="/assests/Black/Couple2.svg"
-
-                                                                        />
-                                                                    </div>
-                                                                    <div className="">
-                                                                        <span className="relative top-[-2px] text-[10px] text-[#000] dark:text-[#FFF]"
-                                                                            style={Text4}>
-                                                                            Match Score
-                                                                        </span>
-                                                                    </div>
+                                                                <li className={`cursor-pointer hover:bg-[#F2F7FF] dark:hover:bg-[#383838]  items-center rounded-[17px] p-[10px] flex space-x-[10px] top-[-12px] relative left-[5px]`}>
+                                                                    <MatchScoreModal user={IsUser ? res?.user : res?.friend} />
                                                                 </li>
                                                                 <li>
-                                                                    <div onClick={() => HandleShortlist(IsUser ? res?.user?.id : res?.friend?.id)} className="cursor-pointer hover:bg-[#F2F7FF] p-[5px] rounded-[50%] relative top-[-5px]">
+                                                                    <div onClick={() => HandleShortlist(IsUser ? res?.user?.id : res?.friend?.id)} className="cursor-pointer dark:hover:bg-[#383838] hover:bg-[#F2F7FF] p-[5px] rounded-[50%] relative top-[-5px]">
                                                                         <Image
                                                                             loading="lazy"
                                                                             width={15}

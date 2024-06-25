@@ -1,5 +1,4 @@
 import { Box, Stack } from '@mui/material';
-import { getCookie } from 'cookies-next';
 import Image from 'next/image';
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../../ContextProvider/UsersConversationContext';

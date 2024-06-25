@@ -145,7 +145,7 @@ function EducationTab() {
             <div className={`w-full  ${showForm ? "h-[400px]" : "h-[369px]"}  border-[1px] border-[#F1F1F1] rounded-[10px] space-y-[20px]`}>
                 <div className='pt-[10px] grid place-items-center'>
                     <ul className='w-[90%] flex justify-between items-center m-[10px]'>
-                        <li><h1 style={Text2} className='text-[16px]'>{showForm ? "Modify General Information" : "Education Details"}</h1></li>
+                        <li><h1 style={Text2} className='dark:text-[#FFF] text-[16px]'>{showForm ? "Modify Education Information" : "Education Details"}</h1></li>
 
                         <li>
                             <div className='cursor-pointer w-[37px] h-[37px] hover:bg-[#F0F9FF] rounded-[50%] flex items-center justify-center'>
@@ -259,24 +259,24 @@ function EducationTab() {
                                         <div className='grid place-items-center'>
                                             <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
                                                 <div>
-                                                    <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Degree</p>
-                                                    <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.degree ? capitalizeFirstLetter(data.degree) : "NA"}</h1>
+                                                    <p style={Text2} className='dark:text-[#FFF]  2xl:text-[14px] xl:text-[12px] text-[12px]'>Degree</p>
+                                                    <h1 style={Text5} className='dark:text-[#FFF]  2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.degree ? capitalizeFirstLetter(data.degree) : "NA"}</h1>
                                                 </div>
                                                 <div>
-                                                    <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>College/University</p>
-                                                    <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.collage ? capitalizeFirstLetter(data.collage) : "NA"}</h1>
+                                                    <p style={Text2} className='dark:text-[#FFF]  2xl:text-[14px] xl:text-[12px] text-[12px]'>College/University</p>
+                                                    <h1 style={Text5} className='dark:text-[#FFF]  2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.collage ? capitalizeFirstLetter(data.collage) : "NA"}</h1>
                                                 </div>
                                                 <div>
-                                                    <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>City</p>
-                                                    <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.city ? capitalizeFirstLetter(data.city) : "NA"}</h1>
+                                                    <p style={Text2} className='dark:text-[#FFF]  2xl:text-[14px] xl:text-[12px] text-[12px]'>City</p>
+                                                    <h1 style={Text5} className='dark:text-[#FFF]  2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.city ? capitalizeFirstLetter(data.city) : "NA"}</h1>
                                                 </div>
                                                 <div>
-                                                    <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>State</p>
-                                                    <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.state ? capitalizeFirstLetter(data.state) : "NA"}</h1>
+                                                    <p style={Text2} className='dark:text-[#FFF]  2xl:text-[14px] xl:text-[12px] text-[12px]'>State</p>
+                                                    <h1 style={Text5} className='dark:text-[#FFF]  2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.state ? capitalizeFirstLetter(data.state) : "NA"}</h1>
                                                 </div>
                                                 <div>
-                                                    <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Country</p>
-                                                    <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.country ? capitalizeFirstLetter(data.country) : "NA"}</h1>
+                                                    <p style={Text2} className='dark:text-[#FFF]  2xl:text-[14px] xl:text-[12px] text-[12px]'>Country</p>
+                                                    <h1 style={Text5} className='dark:text-[#FFF]  2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.country ? capitalizeFirstLetter(data.country) : "NA"}</h1>
                                                 </div>
 
                                             </div>

@@ -89,7 +89,7 @@ const ProfileMenu = ({ HandleCancelRequest , MenuTitle, res, SetCurURL, openModa
     return (
         <>
 
-            <div onClick={(event) => handleClick(event, res)} className="grid place-items-center cursor-pointer hover:bg-[#F2F7FF] relative top-[-8px] rounded-[10px] h-[30px] w-[16px]">
+            <div onClick={(event) => handleClick(event, res)} className="grid place-items-center cursor-pointer hover:bg-[#F2F7FF] dark:hover:bg-[#383838] relative top-[-8px] rounded-[10px] h-[30px] w-[16px]">
                 <span aria-describedby={id}
                     variant="contained"
                     className="cursor-pointer"

@@ -12,6 +12,7 @@ import { SocketProvider } from "../ContextProvider/SocketContext";
 import Head from "next/head";
 import "./global.css";
 import { ChatSettingsProvider } from "../ContextProvider/ChatSetingContext";
+import { DrawerProvider } from "../ContextProvider/DrawerContext";
 
 
 
@@ -40,19 +41,22 @@ export default function MyApp({
         {/* Add more meta tags as needed */}
       </Head>
 
+
       <Provider store={store}>
         <SessionProvider>
           <DarkModeProvider>
             <SocketProvider>
               <UsersConversationProvider>
                 <ChatSettingsProvider>
-                  <ThemeProvider>
+                  <DrawerProvider>
+                    <ThemeProvider>
 
-                    {/* <Nextjsprogress height={2} color="#3742b6" /> */}
-                    {/* <Component {...pageProps} toggleDarkMode={toggleDarkMode} darkMode={darkMode}/> */}
+                      {/* <Nextjsprogress height={2} color="#3742b6" /> */}
+                      {/* <Component {...pageProps} toggleDarkMode={toggleDarkMode} darkMode={darkMode}/> */}
 
-                    <Component {...pageProps} />
-                  </ThemeProvider>
+                      <Component {...pageProps} />
+                    </ThemeProvider>
+                  </DrawerProvider>
                 </ChatSettingsProvider>
               </UsersConversationProvider>
             </SocketProvider>

@@ -1,17 +1,16 @@
 "use client";
 
 import React, { useContext, useEffect, useState } from "react";
-import { Navbar, IconButton } from "@material-tailwind/react";
+import { IconButton } from "@material-tailwind/react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Box from '@mui/material/Box';
 import Image from "next/image";
-import { Badge, Dialog, DialogContent, Stack } from "@mui/material";
+import { AppBar, Badge, Dialog, DialogContent, Modal, Stack } from "@mui/material";
 import { getCookie } from 'cookies-next';
 // Import only the specific Material-UI components and icons you need
 import Drawer from '@mui/material/Drawer';
-import Menu from '@mui/material/Menu';
 import { useDispatch } from "react-redux";
 import propTypes from 'prop-types'
 import { logoutuser } from "../../store/actions/UsersAction";
@@ -24,11 +23,14 @@ import { UserContext } from "../../ContextProvider/UsersConversationContext";
 import { useDarkMode } from "../../ContextProvider/DarkModeContext";
 import icons from "../../utils/icons/icons";
 import { useChatSettings } from "../../ContextProvider/ChatSetingContext";
+import DarkModeToggle from '../emoji'
 
-const RequestNotification = dynamic(() => import("../components/Notification/RequestNotification"));
+const RequestNotification = dynamic(() => import("../components/Notification/RequestNotification"), {
+    ssr: false
+});
 const ProfileImage = dynamic(() => import("../components/Maincomp/ProfileImage"));
 const UpgradeButton = dynamic(() => import("../components/Buttons/UpgradeButton"));
-const DarkModeToggle = dynamic(() => import("../emoji"));
+// const DarkModeToggle = dynamic(() => import("../emoji"));
 
 const userId = {
     fontFamily: "Poppins",
@@ -160,11 +162,11 @@ function NavBar({ handleSearch }) {
 
     const HandleWide = () => {
         SetWide(!Wide)
-        
-            setSettings({
-                ...settings,
-                isMinimized: !settings.isMinimized,
-            });
+
+        setSettings({
+            ...settings,
+            isMinimized: !settings.isMinimized,
+        });
     }
 
     const [ChatUser, SetChatUser] = useState({
@@ -217,7 +219,6 @@ function NavBar({ handleSearch }) {
         <Box id="sidebarScroll"
             className="dark:bg-[#242526] bg-[#FFF] "
             sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 350 }}
-
         >
             <RequestNotification />
         </Box>
@@ -227,13 +228,12 @@ function NavBar({ handleSearch }) {
 
     //For Profile Menu
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
+    const [OpenProfileModal, setOpenProfileModal] = useState(false)
     const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
+        setOpenProfileModal(true)
     };
     const handleClose = () => {
-        setAnchorEl(null);
+        setOpenProfileModal(false)
     };
 
 
@@ -279,6 +279,10 @@ function NavBar({ handleSearch }) {
 
         setMobileState({ 'left': open });
     };
+
+
+
+
 
 
     const MobileNav = (anchor) => (
@@ -417,7 +421,7 @@ function NavBar({ handleSearch }) {
     const HandleLogout = (e) => {
         if (e.target.name === "stay") {
             setOpenLogoutModal(false);
-            setAnchorEl(null);
+
 
         }
         else {
@@ -461,8 +465,8 @@ function NavBar({ handleSearch }) {
             </div>
             <div
                 id="nav-links"
-                className="p-1 p-[5px]  font-normal poppins rounded-[100%] hover:bg-[#F2F7FF] w-[40px] h-[40px] grid place-items-center"
-                
+                className="p-1 p-[5px]  font-normal poppins rounded-[100%] dark:hover:bg-[#383838] hover:bg-[#F2F7FF] w-[40px] h-[40px] grid place-items-center"
+
             >
 
 
@@ -471,7 +475,7 @@ function NavBar({ handleSearch }) {
             </div>
             <div
                 id="nav-links"
-                className="p-1 font-normal poppins p-[5px] rounded-[100%] hover:bg-[#F2F7FF] w-[40px] h-[40px] grid place-items-center"
+                className="p-1 font-normal poppins p-[5px] rounded-[100%] dark:hover:bg-[#383838] hover:bg-[#F2F7FF] w-[40px] h-[40px] grid place-items-center"
             >
                 <Badge badgeContent={notificationCount} color="primary">
                     <Image alt="img" width={17} height={20} className="cursor-pointer" onClick={handleNotificationOpen} src={darkMode ? "/assests/dashboard/icon/notification-icon-white.svg" : "/assests/dashboard/icon/notification-icon.svg"} />
@@ -494,162 +498,136 @@ function NavBar({ handleSearch }) {
                     <ProfileImage size={40} />
                 </div>
 
-                <Menu
+                <Modal
                     id="fade-menu"
                     MenuListProps={{
                         'aria-labelledby': 'fade-button',
                     }}
-                    anchorEl={anchorEl}
-                    open={open}
+                    BackdropProps={{ style: { opacity: 0 } }}
+
+                    open={OpenProfileModal}
                     onClose={handleClose}
-                    className=" ml-[-25px] mt-[10px]"
-                    PaperProps={{
-                        elevation: 0,
-                        sx: {
-                            overflow: 'visible',
-                            backgroundColor: darkMode ? "#242526" : "#FFF",
-
-                            '& .MuiAvatar-root': {
-                                width: 32,
-                                height: 32,
-                                ml: -0.5,
-                                mr: 1,
-
-                            },
-                            '&:before': {
-                                content: '""',
-                                display: 'block',
-                                position: 'absolute',
-                                top: 0,
-                                right: 14,
-                                width: 10,
-                                height: 10,
-
-                                // transform: 'translateY(-50%) rotate(45deg)',
-                                zIndex: 0,
-                            },
-                            transition: 'none',
-                        },
-                    }}
+                    sx={{ outline: "none" }}
+                    style={{ outline: "none", position: "absolute", right: "50px", top: "70px" }}
 
                 >
+                    <Box sx={{ outline: "none" }} className="absolute right-0">
+                        <div className="pt-[20px] w-[278px] h-[449px]" style={BoxSdow2}>
+                            <div className="flex flex-col space-y-[20px]">
 
+                                <div className="flex space-x-[39px] pl-[24px] items-center">
 
-
-                    <div className="pt-[20px] w-[278px] h-[449px]" style={BoxSdow2}>
-                        <div className="flex flex-col space-y-[20px]">
-
-                            <div className="flex space-x-[39px] pl-[24px] items-center">
-
-                                <ProfileImage size={47} />
-                                <div>
-                                    {isUpgradeActive ?
-                                        (<>
-                                            <ul className="relative right-[18px] flex items-center space-x-[10px]">
-                                                <li className=""><Image alt="img" width={8} height={8} src="/assests/dashboard/menu/verfied-tick.svg" /></li>
-                                                <li style={planPrice2} className="text-[12px]"><h1>Gold</h1></li>
-                                            </ul>
-                                            <h1 style={planPrice} className="text-[12px]">One Month</h1>
-                                        </>)
-                                        : null}
+                                    <ProfileImage size={47} />
+                                    <div>
+                                        {isUpgradeActive ?
+                                            (<>
+                                                <ul className="relative right-[18px] flex items-center space-x-[10px]">
+                                                    <li className=""><Image alt="img" width={8} height={8} src="/assests/dashboard/menu/verfied-tick.svg" /></li>
+                                                    <li style={planPrice2} className="text-[12px]"><h1>Gold</h1></li>
+                                                </ul>
+                                                <h1 style={planPrice} className="text-[12px]">One Month</h1>
+                                            </>)
+                                            : null}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className="pl-[28px] ">
-                                <h1 style={UserProfileName} className="text-[#000] dark:text-[#FFF]">{Uname}</h1>
-                                <p style={userId} className="text-[#50545A]">ID: HM1002021</p>
+                                <div className="pl-[28px] ">
+                                    <h1 style={UserProfileName} className="text-[#000] dark:text-[#FFF]">{Uname}</h1>
+                                    <p style={userId} className="text-[#50545A]">ID: HM1002021</p>
 
-                            </div>
-                            <div className="w-full grid place-items-center">
-                                <div className="bg-[#EBEBEB] h-[1px] w-[230px]"></div>
-                            </div>
-                            <div className="relative left-[-10px] pt-[0px] flex items-center flex-col space-y-[23px]">
-                                <ul style={Text4} className=" dark:text-[#FFF] pl-[0px] text-[#000] space-y-[8px]">
-
-                                    <li className="w-[230px] h-[34px] p-[10px] pl-[15px] hover:bg-[#F3F8FF] dark:hover:bg-[#18191a] rounded-[100px]  cursor-pointer flex items-center space-x-[10px]">
-                                        <span>
-                                            {darkMode ? icons.myprofile.dark : icons.myprofile.light}
-                                        </span>
-                                        <Link className="relative left-[5px]" href="/dashboard/profile" >
-                                            My Profile
-                                        </Link>
-                                    </li>
-                                    <li className="w-[230px] h-[34px] p-[10px] pl-[15px] hover:bg-[#F3F8FF] dark:hover:bg-[#18191a] rounded-[100px]  flex items-center space-x-[10px]">
-                                        <span>
-                                            {darkMode ? icons.setting.dark : icons.setting.light}
-                                        </span>
-                                        <Link className="relative left-[5px]" href="/dashboard/seting/credentials">Accounts</Link>
-                                    </li>
-                                    <li className="w-[230px] h-[34px] p-[10px] pl-[15px] hover:bg-[#F3F8FF] dark:hover:bg-[#18191a] rounded-[100px]  flex items-center space-x-[10px]">
-
-                                        <span>
-                                            {darkMode ? icons["menu-lock"].dark : icons["menu-lock"].light}
-                                        </span>
-
-                                        <Link className="relative left-[5px]" href="/dashboard/seting/privacyseting">Privacy Policy</Link>
-                                    </li>
-
-
-                                </ul>
+                                </div>
                                 <div className="w-full grid place-items-center">
                                     <div className="bg-[#EBEBEB] h-[1px] w-[230px]"></div>
                                 </div>
-                                <ul className="pl-[10px]">
-                                    <li className="flex items-center space-x-[60px]">
-                                        <div className="flex space-x-[0px]">
-                                            <span className="relative left-[-2px]">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                                    <path d="M8.06547 16C5.82506 16 3.92072 15.2159 2.35242 13.6476C0.78414 12.0793 0 10.1749 0 7.93453C0 5.96181 0.624113 4.23786 1.87234 2.76268C3.12057 1.28751 4.67867 0.366612 6.54664 0C6.30224 0.488816 6.1102 1.00382 5.97054 1.54501C5.83088 2.0862 5.76105 2.64484 5.76105 3.22095C5.76105 5.1704 6.44336 6.82743 7.80797 8.19203C9.17257 9.55664 10.8296 10.239 12.779 10.239C13.3552 10.239 13.9138 10.1691 14.455 10.0295C14.9962 9.8898 15.5025 9.69776 15.9738 9.45336C15.6247 11.3213 14.7125 12.8794 13.2373 14.1277C11.7621 15.3759 10.0382 16 8.06547 16ZM8.06547 15.2668C9.60175 15.2668 10.9809 14.8434 12.2029 13.9967C13.425 13.15 14.3153 12.0458 14.874 10.6841C14.5248 10.7714 14.1757 10.8412 13.8265 10.8936C13.4774 10.946 13.1282 10.9722 12.779 10.9722C10.6318 10.9722 8.80305 10.2171 7.29296 8.70704C5.78287 7.19695 5.02782 5.36825 5.02782 3.22095C5.02782 2.87179 5.05401 2.52264 5.10638 2.17349C5.15876 1.82433 5.22859 1.47518 5.31588 1.12602C3.95417 1.68467 2.84997 2.57501 2.00327 3.79705C1.15657 5.01909 0.733224 6.39825 0.733224 7.93453C0.733224 9.95963 1.44899 11.6879 2.88052 13.1195C4.31206 14.551 6.04037 15.2668 8.06547 15.2668Z" fill={darkMode ? "#FFF" : "#000"} />
-                                                </svg>
+                                <div className="relative left-[-10px] pt-[0px] flex items-center flex-col space-y-[23px]">
+                                    <ul style={Text4} className=" dark:text-[#FFF] pl-[0px] text-[#000] space-y-[8px]">
+
+                                        <li className="w-[230px] h-[34px] p-[10px] pl-[15px] hover:bg-[#F3F8FF] dark:hover:bg-[#18191a] rounded-[100px]  cursor-pointer flex items-center space-x-[10px]">
+                                            <span>
+                                                {darkMode ? icons.myprofile.dark : icons.myprofile.light}
+                                            </span>
+                                            <Link className="relative left-[5px]" href="/dashboard/profile" >
+                                                My Profile
+                                            </Link>
+                                        </li>
+                                        <li className="w-[230px] h-[34px] p-[10px] pl-[15px] hover:bg-[#F3F8FF] dark:hover:bg-[#18191a] rounded-[100px]  flex items-center space-x-[10px]">
+                                            <span>
+                                                {darkMode ? icons.setting.dark : icons.setting.light}
+                                            </span>
+                                            <Link className="relative left-[5px]" href="/dashboard/seting/credentials">Accounts</Link>
+                                        </li>
+                                        <li className="w-[230px] h-[34px] p-[10px] pl-[15px] hover:bg-[#F3F8FF] dark:hover:bg-[#18191a] rounded-[100px]  flex items-center space-x-[10px]">
+
+                                            <span>
+                                                {darkMode ? icons["menu-lock"].dark : icons["menu-lock"].light}
                                             </span>
 
-                                            <span className="relative left-[10px] dark:text-[#FFF] text-[#000]">Dark Mode</span>
+                                            <Link className="relative left-[5px]" href="/dashboard/seting/privacyseting">Privacy Policy</Link>
+                                        </li>
 
-                                        </div>
-                                        <div>
-                                            <DarkModeToggle toggleDarkMode={toggleDarkMode} />
-                                        </div>
-                                    </li>
-                                </ul>
 
-                                <div onClick={handleClickOpenLogout} className="relative left-[10px] flex justify-center">
-                                    <button id={darkMode ? "Gradient-logout-btn-2" : ""} className="w-[230px] h-[44px] border-[1px] border-[#EBEBEB] text-[black] dark:text-[#FFF] dark:bg-[#141516] dark:border-[1px] dark:border-[#FFF] bg-[#FFF] hover:bg-[#F3F8FF] rounded-[22px]" style={Text4}>
-                                        Log Out
-                                    </button>
-                                </div>
-
-                                <Dialog
-                                    open={openLogoutModal}
-                                    onClose={handleCloseLogout}
-                                    aria-labelledby="alert-dialog-title"
-                                    aria-describedby="alert-dialog-description"
-                                    className=""
-                                >
-
-                                    <DialogContent className="text-center w-[400px] mt-[20px]">
-                                        <div id="alert-dialog-description">
-                                            <p style={LogoutModalText}> Are you sure you want to exit?</p>
-                                        </div>
-                                    </DialogContent>
-                                    <div className="flex justify-evenly p-[20px] mb-[20px]">
-                                        <div>
-                                            <button onClick={HandleLogout} name="stay" id="grad-button" className="rounded-[10px] w-[122px] h-[50px]">Stay</button>
-                                        </div>
-                                        <div>
-                                            <button onClick={HandleLogout} name="exit" className="border-[black] border-[1px] rounded-[10px] w-[122px] h-[50px]">Log out</button>
-                                        </div>
+                                    </ul>
+                                    <div className="w-full grid place-items-center">
+                                        <div className="bg-[#EBEBEB] h-[1px] w-[230px]"></div>
                                     </div>
-                                </Dialog>
+                                    <ul className="pl-[10px]">
+                                        <li className="flex items-center space-x-[60px]">
+                                            <div className="flex space-x-[0px]">
+                                                <span className="relative left-[-2px]">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                                        <path d="M8.06547 16C5.82506 16 3.92072 15.2159 2.35242 13.6476C0.78414 12.0793 0 10.1749 0 7.93453C0 5.96181 0.624113 4.23786 1.87234 2.76268C3.12057 1.28751 4.67867 0.366612 6.54664 0C6.30224 0.488816 6.1102 1.00382 5.97054 1.54501C5.83088 2.0862 5.76105 2.64484 5.76105 3.22095C5.76105 5.1704 6.44336 6.82743 7.80797 8.19203C9.17257 9.55664 10.8296 10.239 12.779 10.239C13.3552 10.239 13.9138 10.1691 14.455 10.0295C14.9962 9.8898 15.5025 9.69776 15.9738 9.45336C15.6247 11.3213 14.7125 12.8794 13.2373 14.1277C11.7621 15.3759 10.0382 16 8.06547 16ZM8.06547 15.2668C9.60175 15.2668 10.9809 14.8434 12.2029 13.9967C13.425 13.15 14.3153 12.0458 14.874 10.6841C14.5248 10.7714 14.1757 10.8412 13.8265 10.8936C13.4774 10.946 13.1282 10.9722 12.779 10.9722C10.6318 10.9722 8.80305 10.2171 7.29296 8.70704C5.78287 7.19695 5.02782 5.36825 5.02782 3.22095C5.02782 2.87179 5.05401 2.52264 5.10638 2.17349C5.15876 1.82433 5.22859 1.47518 5.31588 1.12602C3.95417 1.68467 2.84997 2.57501 2.00327 3.79705C1.15657 5.01909 0.733224 6.39825 0.733224 7.93453C0.733224 9.95963 1.44899 11.6879 2.88052 13.1195C4.31206 14.551 6.04037 15.2668 8.06547 15.2668Z" fill={darkMode ? "#FFF" : "#000"} />
+                                                    </svg>
+                                                </span>
+
+                                                <span className="relative left-[10px] dark:text-[#FFF] text-[#000]">Dark Mode</span>
+
+                                            </div>
+                                            <div>
+                                                <DarkModeToggle toggleDarkMode={toggleDarkMode} />
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                    <div onClick={handleClickOpenLogout} className="relative left-[10px] flex justify-center">
+                                        <button id={darkMode ? "Gradient-logout-btn-2" : ""} className="w-[230px] h-[44px] border-[1px] border-[#EBEBEB] text-[black] dark:text-[#FFF] dark:bg-[#141516] dark:border-[1px] dark:border-[#FFF] bg-[#FFF] hover:bg-[#F3F8FF] rounded-[22px]" style={Text4}>
+                                            Log Out
+                                        </button>
+                                    </div>
+
+                                    <Dialog
+                                        open={openLogoutModal}
+                                        onClose={handleCloseLogout}
+                                        aria-labelledby="alert-dialog-title"
+                                        aria-describedby="alert-dialog-description"
+                                        className=""
+                                    >
+
+                                        <DialogContent className="text-center w-[400px] mt-[20px]">
+                                            <div id="alert-dialog-description">
+                                                <p style={LogoutModalText}> Are you sure you want to exit?</p>
+                                            </div>
+                                        </DialogContent>
+                                        <div className="flex justify-evenly p-[20px] mb-[20px]">
+                                            <div>
+                                                <button onClick={HandleLogout} name="stay" id="grad-button" className="rounded-[10px] w-[122px] h-[50px]">Stay</button>
+                                            </div>
+                                            <div>
+                                                <button onClick={HandleLogout} name="exit" className="border-[black] border-[1px] rounded-[10px] w-[122px] h-[50px]">Log out</button>
+                                            </div>
+                                        </div>
+                                    </Dialog>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </Menu>
+                    </Box>
+                </Modal>
             </div >
         </ul >
     );
     return (
         <>
-            <Navbar
+            <AppBar
+                sx={{ boxShadow: "none" }}
                 className={` z-10 border-none fixed top-0 left-0 top-0 h-max shadow-none  max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4 p-4 text-white `}
                 style={{ backgroundColor: darkMode ? "#18191a" : "#FFF" }}
 
@@ -667,9 +645,8 @@ function NavBar({ handleSearch }) {
                     >
                         {
                             isUpgradeActive ? "" : <>
-                                {/* <Image loading="lazy" alt="img" width={15} height={14} style={{ width: "15px", height: "14px" }} src="/assests/Black/Search.svg" className="absolute mt-[12px] ml-[10px]" /> */}
                                 <div className="hover:bg-[#F2F7FF] h-[30px] w-[30px] rounded-[100%] absolute mt-[5px] ml-[5px] grid place-items-center">
-                                   <Image width={15} height={15} alt="search" src="/assests/dashboard/icon/Search-grad.svg" loading="lazy" />
+                                    <Image width={15} height={15} alt="search" src="/assests/dashboard/icon/Search-grad.svg" loading="lazy" />
                                 </div>
                                 <input type='search'
                                     value={searchTerm}
@@ -735,7 +712,7 @@ function NavBar({ handleSearch }) {
 
                 </div>
 
-            </Navbar>
+            </AppBar>
 
             <Drawer
                 anchor="right"

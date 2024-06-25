@@ -5,7 +5,6 @@ import Navbar from "../components/Navbar";
 import Image from "next/image";
 import UIbuttons from "../../UI/Buttons";
 
-{/* <img */ }
 const Text1 = {
     color: "#000",
     fontFamily: "Poppins",
@@ -87,7 +86,7 @@ function index() {
                     <div className="flex w-full h-full flex-col lg:flex-row  justify-evenly">
                         <div className="flex justify-center items-end  mt-[30px] 2xl:mt-[30px] xl:mt-[30px] lg:mt-[5px]  lg:h-[500px] lg:w-[100%] 2xl:h-[570px] 2xl:w-[100%] xl:w-[500px] xl:h-[500px]   grid place-items-center">
                             <div className="">
-                                <Image loading="lazy" width={535} height={491} alt="image" src="/assests/common/about-img-1.svg" className="2xl:h-auto xl:h-auto lg:h-[400px]" />
+                                <Image loading="lazy" width={535} height={491} alt="image" src="/assests/common/about-img-1.png" className="2xl:h-auto xl:h-auto lg:h-[400px]" />
                             </div>
                         </div>
                         <div className=" w-full h-full lg:h-[500px] lg:w-[100%] 2xl:h-[600px] 2xl:w-[100%] xl:w-[500px] xl:h-[500px]   grid place-items-center">

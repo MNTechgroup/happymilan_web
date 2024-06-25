@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { connect } from 'react-redux'
 import { updateFormData } from '../../../store/actions/registerUser'
+import Image from "next/image";
 
 
 const Text1 = {
@@ -25,6 +26,8 @@ const Text2 = {
 function GridphotoSec({ formData, updateFormData, }) {
 
     const data = useSelector((state) => state.form.formData.upload)
+
+    const [TheImages, SetTheImages] = useState(data.images)
     const images = data.images
     const Gridlayout = [
         { id: 1, image: "/assests/userpics/1.jpg", type: "image" },
@@ -42,10 +45,23 @@ function GridphotoSec({ formData, updateFormData, }) {
     const [griddata, setgriddata] = useState(Gridlayout);
     const [selectedImage, setSelectedImage] = useState("");
 
-    const HandleRemove = (id) => {
-        setgriddata((prev) => {
-            return prev.filter((dt) => id !== dt.id);
+
+
+    const HandleRemove = (res) => {
+        console.log("TheImage", TheImages)
+        const filteredArray = TheImages.filter(item => item.id !== res.id)
+        console.log("🚀 ~ HandleRemove ~ filteredArray:", filteredArray)
+        SetTheImages(filteredArray)
+
+        updateFormData({
+            ...formData,
+            upload: {
+                ...formData.upload,
+                // ...images,
+                images: filteredArray
+            }
         });
+        console.log(res)
     };
 
     const HandleImageclick = (items) => {
@@ -54,25 +70,33 @@ function GridphotoSec({ formData, updateFormData, }) {
     };
     const [SelectedGridImage, SetSelectedGridImage] = useState(null);
 
-    const HandleGridImageClick = (index) => {
-        if (SelectedGridImage === index) {
-            SetSelectedGridImage(null); // Unselect if already selected
-            console.log("<== image clicked 1 ==>")
+    const HandleGridImageClick = (index, items) => {
+
+        // if (items.contentType == "video/mp4") {
+        if (items.contentType.startsWith('video/')) {
+            return null
+                ;
         } else {
-            SetSelectedGridImage(index); // Select the clicked image
-            console.log("<== image clicked 2 ==>",index)
 
-            updateFormData({
-                ...formData,
-                upload: {
-                    ...formData.upload,
-                    images: images.map((image, theindex) => ({
-                        ...image,
-                        isProfile: theindex === index, // Set isProfile to true for the selected image
-                    }))
-                }
-            });
+            if (SelectedGridImage === index) {
+                SetSelectedGridImage(null); // Unselect if already selected
+                console.log("<== image clicked 1 ==>")
+            } else {
+                SetSelectedGridImage(index); // Select the clicked image
+                console.log("<== image clicked 2 ==>", index)
 
+                updateFormData({
+                    ...formData,
+                    upload: {
+                        ...formData.upload,
+                        images: TheImages.map((image, theindex) => ({
+                            ...image,
+                            isProfile: theindex === index, // Set isProfile to true for the selected image
+                        }))
+                    }
+                });
+
+            }
         }
     };
 
@@ -96,6 +120,8 @@ function GridphotoSec({ formData, updateFormData, }) {
             contentType: file.type,
             // Add other properties you may need
         }));
+
+        console.log("FileChange Calll")
 
         updateFormData({
             ...formData,
@@ -123,68 +149,89 @@ function GridphotoSec({ formData, updateFormData, }) {
                             className=" lg:grid lg:gap-y-[30px] gap-y-[20px] gap-x-[29px] flex justify-center lg:justify-left flex-wrap"
                             id="photo-grid-container"
                         >
-                            {images?.map((item, index) => {
+                            {TheImages?.map((item, index) => {
                                 return (
-                                    <div
-                                        key={index}
-                                        className="cursor-pointer w-[150px] h-[150px] lg:w-[200px] lg:h-[200px] rounded-[10px]"
-                                        style={{
-                                            backgroundImage: `url(${item.data})`,
-                                            backgroundSize: "cover",
-                                            backgroundPosition: "center",
-                                        }}
-                                        id="photo-grid-item"
-                                        onClick={() =>
-                                            HandleGridImageClick(index)
-                                        }
-                                    >
-                                        <svg
-                                            onClick={() => HandleRemove(item.key)}
-                                            className="z-[1] cursor-pointer relative ml-[80%] lg:ml-[85%] mt-[5%]"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                        >
-                                            <circle
-                                                cx="12"
-                                                cy="12"
-                                                r="12"
-                                                fill="black"
-                                                fill-opacity="0.4"
-                                            />
-                                            <path
-                                                d="M14.1111 10.3333V15.8889H9.66667V10.3333H14.1111ZM13.2778 7H10.5L9.94444 7.55556H8V8.66667H15.7778V7.55556H13.8333L13.2778 7ZM15.2222 9.22222H8.55556V15.8889C8.55556 16.5 9.05556 17 9.66667 17H14.1111C14.7222 17 15.2222 16.5 15.2222 15.8889V9.22222Z"
-                                                fill="white"
-                                            />
-                                        </svg>
+                                    <>
 
-                                        {item.contentType != "video" ? (
-                                            <>
-                                                <div
-                                                    className={`${SelectedGridImage === index ? "block" : "hidden"
-                                                        }  grid place-items-center  relative lg:top-[-33px] top-[-31px] rounded-[8px]  w-[150px] h-[150px] lg:w-[200px] lg:h-[200px] bg-[#0F52BACC] bg-opacity-70`}
-                                                >
-                                                    <img
-                                                        src="./assests/common/Select-Right.svg"
-                                                        className=""
-                                                    />
-                                                </div>
-                                            </>
-                                        ) : (
-                                            <div className="grid place-items-center w-full h-[65%]">
+                                        <div
+                                            key={index}
+                                            className=" w-[150px] h-[150px] lg:w-[200px] lg:h-[200px] rounded-[10px]"
+                                        // style={{
+                                        //     backgroundImage: `url(${item.data})`,
+                                        //     backgroundSize: "cover",
+                                        //     backgroundPosition: "center",
+                                        // }}
+                                        // id="photo-grid-item"
+                                        // onClick={() => HandleGridImageClick(index, item)}
+                                        >
+
+                                            <div
+                                                className={`${SelectedGridImage === index ? "block" : "hidden"
+                                                    }  grid place-items-center  absolute  rounded-[8px]  w-[150px] h-[150px] lg:w-[200px] lg:h-[200px] bg-[#0F52BACC] `}
+                                            >
                                                 <img
-                                                    onClick={() => {
-                                                        item.type != "video" ? "" : HandleImageclick(item);
-                                                    }}
-                                                    src="/assests/common/videoPlay-icon.svg"
+                                                    src="./assests/common/Select-Right.svg"
+                                                    className=""
                                                 />
                                             </div>
-                                        )}
 
-                                    </div>
-                                );
+                                            <Image width={0} height={0} alt={index} src={item?.data}
+                                                style={{ objectFit: "cover" }}
+                                                className=" w-[150px]   h-[150px] lg:w-[200px] lg:h-[200px] rounded-[10px]"
+                                                id="photo-grid-item"
+                                                onClick={() => HandleGridImageClick(index, item)}
+
+                                            />
+
+                                            <svg
+                                                onClick={() => HandleRemove(item)}
+                                                className="absolute z-[100] cursor-pointer relative top-[-92%] left-[83%]"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="24"
+                                                height="24"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                            >
+                                                <circle
+                                                    cx="12"
+                                                    cy="12"
+                                                    r="12"
+                                                    fill="black"
+                                                    fill-opacity="0.4"
+                                                />
+                                                <path
+                                                    d="M14.1111 10.3333V15.8889H9.66667V10.3333H14.1111ZM13.2778 7H10.5L9.94444 7.55556H8V8.66667H15.7778V7.55556H13.8333L13.2778 7ZM15.2222 9.22222H8.55556V15.8889C8.55556 16.5 9.05556 17 9.66667 17H14.1111C14.7222 17 15.2222 16.5 15.2222 15.8889V9.22222Z"
+                                                    fill="white"
+                                                />
+                                            </svg>
+
+
+
+                                            {/* {item.contentType != "video" ? (
+                                                <>
+                                                    <div
+                                                        className={`${SelectedGridImage === index ? "block" : "hidden"
+                                                            }  grid place-items-center  relative lg:top-[-33px] top-[-31px] rounded-[8px]  w-[150px] h-[150px] lg:w-[200px] lg:h-[200px] bg-[#0F52BACC] bg-opacity-70`}
+                                                    >
+                                                        <img
+                                                            src="./assests/common/Select-Right.svg"
+                                                            className=""
+                                                        />
+                                                    </div>
+                                                </>
+                                            ) : (
+                                                <div className="grid place-items-center w-full h-[65%]">
+                                                    <img
+                                                        onClick={() => {
+                                                            item.type != "video" ? "" : HandleImageclick(item);
+                                                        }}
+                                                        src="/assests/common/videoPlay-icon.svg"
+                                                    />
+                                                </div>
+                                            )} */}
+
+                                        </div>
+                                    </>);
                             })}
 
                             <label htmlFor="dropzone-file">
@@ -204,13 +251,13 @@ function GridphotoSec({ formData, updateFormData, }) {
                                             Drag and drop a <span className="block">Photo/Video</span>
                                         </span>
                                     </div>
-                           
+
+                                </div>
+                            </label>
                         </div>
-                        </label>
                     </div>
                 </div>
-            </div>
-        </div >
+            </div >
 
         </>
     );

@@ -93,16 +93,44 @@ function HobbiesSec({ formData, updateFormData, HandleTabclick, activeTab }) {
     },
   ])
 
+  const [SelectedHobby, SetSelectedHobby] = useState([])
+
 
   const [alldata, SetallarrayData] = useState([])
 
   const dispatch = useDispatch();
 
+  const [savedData, setSavedData] = useState([]);
+
+
   const handleInputChange = (event) => {
+
+    console.log("Calleddd input change")
+
+
+
+
     const value = event.target.value;
+    console.log("🚀 ~ handleInputChange ~ value:", value)
+
+
     const name = event.target.name
 
     const values = value.map(item => item.value);
+
+
+    const combinedValues = [...new Set([...savedData, ...values])];
+
+    // Check if the combined values length is more than 5
+    if (combinedValues.length > 5) {
+      alert("You can only select up to 5 values.");
+      return;
+    }
+
+    // Update the state with the new values
+    setSavedData(combinedValues);
+
+
 
     SetallData(prevData =>
       prevData.map(data =>
@@ -130,29 +158,39 @@ function HobbiesSec({ formData, updateFormData, HandleTabclick, activeTab }) {
 
     console.log("name", name)
     if (name == "creative") {
+      setSelectedCreative(value)
 
       const values = value.map(item => item.value);
       console.log("value", values)
       SetallarrayData(prev => [...prev, ...values]);
+
 
     }
     else if (name == "fun") {
+      setSelectedFun(value)
       const values = value.map(item => item.value);
       console.log("value", values)
       SetallarrayData(prev => [...prev, ...values]);
+
     }
     else if (name == "fitness") {
+      setSelectedFitness(value)
       const values = value.map(item => item.value);
       console.log("value", values)
       SetallarrayData(prev => [...prev, ...values]);
+
     }
+
+
 
 
   }
 
 
   const Subdata = () => {
+    console.log(savedData)
 
+    console.table(selectedCreative, selectedFun, SelectedFitness)
   }
 
   return (
@@ -175,11 +213,11 @@ function HobbiesSec({ formData, updateFormData, HandleTabclick, activeTab }) {
       </div>
 
       <div className='2xl:w-[664px] xl:w-[664px] w-full'>
-        <div className=" lg:w-[664px] flex justify-between mt-[30px]">
+        <div className=" lg:w-[664px] flex justify-between mt-[20px] pb-[10px]">
           <h1 className="font-semibold" style={Text1}>Creative</h1>
           <h1 className="md:mr-[-55px] lg:mr-[0px] 2xl:ml-[0px] xl-mr-[0px]" style={Text1}>
             Selected :{" "}
-            <span onClick={()=>console.log(allData)} className="w-full font-bold">{selectedHobbies.length}/5</span>
+            <span onClick={() => console.log(allData)} className="w-full font-bold">{savedData.length}/5</span>
           </h1>
         </div>
 
@@ -202,7 +240,7 @@ function HobbiesSec({ formData, updateFormData, HandleTabclick, activeTab }) {
 
             <div>
               <h1 className="font-semibold" style={Text1}>Fun</h1>
-              <div>
+              <div className="pt-[10px]">
                 <DynamicSelect
 
                   options={FunOptions}
@@ -217,7 +255,7 @@ function HobbiesSec({ formData, updateFormData, HandleTabclick, activeTab }) {
 
             <div>
               <h1 className="font-semibold" style={Text1}>Fitness</h1>
-              <div>
+              <div className="pt-[10px]">
                 <DynamicSelect
 
                   options={FitnessDataoption}

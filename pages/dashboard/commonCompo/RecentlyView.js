@@ -3,11 +3,16 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { GetrecentuserprofileData } from '../../../store/actions/UsersAction'
 import { Skeleton } from '@mui/material'
-
 import shuffledata from 'lodash/shuffle';
 import GridLikeUser from '../../components/Buttons/GridLikeUser'
+import icons from '../../../utils/icons/icons'
+import { useDarkMode } from '../../../ContextProvider/DarkModeContext'
+import calculateAge from '../../../utils/helpers/CalculateAge'
 
 function RecentlyView() {
+
+  const { darkMode, toggleDarkMode } = useDarkMode();
+
 
   const ProfileName = {
     fontFamily: "Poppins",
@@ -128,12 +133,12 @@ function RecentlyView() {
                             <Image quality={25} loading='lazy' alt='shortlist' width={15} height={14} src='/assests/Black/Stars-2.svg' />
                           </li>
                           <li>
-                            <Image quality={25} loading='lazy' width={3} height={14} alt='more' src='/assests/Black/3Dots.svg' />
+                          {darkMode ? icons.more.dark : icons.more.light}
                           </li>
                         </ul>
                       </div>
                       <div className='flex justify-center '>
-                        {item?.viewerId.profilePic ? <>
+                        {item?.viewerId?.profilePic ? <>
                           <Image quality={40} loading='lazy' alt='profile' style={{ objectFit: "cover" }} width={102} height={102} className='w-[102px] h-[102px] rounded-[50%]' src={item?.viewerId.profilePic} />
                         </>
                           :
@@ -145,13 +150,13 @@ function RecentlyView() {
                         }
                       </div>
                       <div className='text-center'>
-                        <h1 style={ProfileName} className='text-[#000] dark:text-[#FFF] text-[18px]'>{item?.viewerId.name}</h1>
-                        <p style={ListText} className='text-[#000] dark:text-[#FFF] text-[14px]'>32, 5’3”</p>
-                        <p style={ListText} className='text-[#000] dark:text-[#FFF] text-[14px]'>{item?.viewerId.religion ? item?.viewerId.religion : "hindu, patel"}</p>
+                        <h1 style={ProfileName} className='text-[#000] dark:text-[#FFF] text-[18px]'>{item?.viewerId?.name}</h1>
+                        <p style={ListText} className='text-[#000] dark:text-[#FFF] text-[14px]'>{calculateAge(item?.viewerId?.dateOfBirth)}, 5’3”</p>
+                        <p style={ListText} className='text-[#000] dark:text-[#FFF] text-[14px]'>{item?.viewerId?.religion ? item?.viewerId?.religion : "hindu, patel"}</p>
                         <p style={ListText} className='text-[#000] dark:text-[#FFF] text-[14px]'>Never Married</p>
                       </div>
 
-                      <GridLikeUser from={"RecentlyView"}  user={item} theid={item?.viewerId} key={index} />
+                      <GridLikeUser from={"GridProfile"}  user={item?.viewerId} theid={item?.viewerId} key={index} />
                     </div>
                   </>
                 )

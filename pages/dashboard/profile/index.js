@@ -25,7 +25,7 @@ function index() {
       {/* Main Section Start */}
 
 
-      <div id='main-centerlized-content' className='flex justify-center flex-col'>
+      <div id='main-centerlized-content' className='dark:bg-[#18191a] flex justify-center flex-col'>
         <div id='first-child' className='pl-[0px] lg:pl-[240px] 2xl:pl-[280px] xl:pl-[240px] flex  mt-[100px]'>
 
           <div className='h-full'>
@@ -35,7 +35,7 @@ function index() {
               <UserStory />
             </div>
 
-            <div id='centerlized-content' className='ml-[-5px] 2xl:mt-0 xl:mt-0 lg:mt-0 mt-[80px]'>
+            <div id='centerlized-content' className='dark:bg-[#18191a] ml-[-5px] 2xl:mt-0 xl:mt-0 lg:mt-0 mt-[80px]'>
               <div className='relative 2xl:w-[715px] xl:w-[635px] m-[10px] flex justify-between'>
 
                 <Profile />

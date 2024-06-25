@@ -130,7 +130,7 @@ function HobbiesTab() {
             <div className='w-full h-[369px] border-[1px] border-[#F1F1F1] rounded-[10px] space-y-[20px]'>
                 <div className='pt-[10px] grid place-items-center'>
                     <ul className='w-[90%] flex justify-between items-center m-[10px]'>
-                        <li><h1 style={Text2} className='text-[16px]'>Hobbies and Interests</h1></li>
+                        <li><h1 style={Text2} className='dark:text-[#FFF] text-[16px]'>{showForm ? "Modify Hobbies and Interests" : "Hobbies and Interests"}</h1></li>
                         <li>
                             <div className='cursor-pointer w-[37px] h-[37px] hover:bg-[#F0F9FF] rounded-[50%] flex items-center justify-center'>
                                 {!showForm ?
@@ -205,11 +205,11 @@ function HobbiesTab() {
                                     return (
                                         <>
                                             <div>
-                                                <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>{res?.category}</p>
+                                                <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>{res?.category}</p>
                                                 {res?.values.map((val) => {
                                                     return (
                                                         <>
-                                                            <span style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>{val} , </span>
+                                                            <span style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]'>{val} , </span>
 
                                                         </>
                                                     )

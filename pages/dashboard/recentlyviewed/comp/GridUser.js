@@ -1,9 +1,14 @@
 import Image from 'next/image'
 import React from 'react'
+import { useDarkMode } from '../../../../ContextProvider/DarkModeContext';
+import icons from '../../../../utils/icons/icons';
 
 function GridUser() {
+
+    const { darkMode, toggleDarkMode } = useDarkMode();
+
     const ProfileName = {
-        color: "#000",
+        color: darkMode ? "#FFF" : "#000",
         fontFamily: "Poppins",
         fontStyle: "normal",
         fontWeight: "600",
@@ -11,7 +16,7 @@ function GridUser() {
     }
 
     const ListText = {
-        color: "#000",
+        color: darkMode ? "#FFF" : "#000",
         fontFamily: "Poppins",
         fontStyle: "normal",
         fontWeight: "400",
@@ -19,7 +24,7 @@ function GridUser() {
     }
 
     const Text4 = {
-        color: "#000",
+        color: darkMode ? "#FFF" : "#000",
         fontFamily: "Poppins",
         fontStyle: "normal",
         fontWeight: "400",
@@ -29,7 +34,7 @@ function GridUser() {
 
     const ProfileCard = {
         borderRadius: "10px",
-        background: "#FFF",
+        background: darkMode ? "#242526" : "#FFF",
         boxShadow: "0px 0px 14px 0px rgba(0, 0, 0, 0.07)"
     }
 
@@ -186,7 +191,7 @@ function GridUser() {
                                                     <Image loading='lazy' alt='img' width={15} height={14} src='/assests/Black/Stars-2.svg' />
                                                 </li>
                                                 <li>
-                                                    <Image loading='lazy' alt='img' width={3} height={14} src='/assests/Black/3Dots.svg' />
+                                                {darkMode ? icons.more.dark : icons.more.light}
                                                 </li>
                                             </ul>
                                         </div>

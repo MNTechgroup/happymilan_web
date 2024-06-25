@@ -7,10 +7,12 @@ function UserLikesbtn({ HandleShortlistUser, HandleRequestModal , RequestId, use
     const [isUserLiked, setIsUserLiked] = useState(false);
     const [isUserDisliked, setIsUserDisliked] = useState(false);
     const [isRequestSent, setisRequestSent] = useState(false);
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getSentrequestData())
+        // dispatch(getSentrequestData())
+        
     }, [])
+
 
     const [OnHover, SetOnHover] = useState({
         LikeHover: false,

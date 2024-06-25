@@ -308,7 +308,7 @@ const PartnerPreferenceTab = ({ partnerPrefID, formData, updateFormData }) => {
             <div className={`w-full ${showForm ? "h-[100vh]" : "h-[400px]"} border-[1px] border-[#F1F1F1] rounded-[10px] space-y-[20px]`}>
                 <div className='pt-[10px] grid place-items-center'>
                     <ul className='w-[90%] flex justify-between items-center m-[10px]'>
-                        <li><h1 style={Text2} className='text-[16px]'>Partner Preference</h1></li>
+                        <li><h1 style={Text2} className='dark:text-[#FFF] text-[16px]'>{showForm ? "Modify Partner Preference" : "Partner Preference"}</h1></li>
                         <li>
                             <div className='cursor-pointer w-[37px] h-[37px] hover:bg-[#F0F9FF] rounded-[50%] flex items-center justify-center'>
                                 {!showForm ?
@@ -476,36 +476,36 @@ const PartnerPreferenceTab = ({ partnerPrefID, formData, updateFormData }) => {
                                 <div className='grid place-items-center'>
                                     <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
                                         <div>
-                                            <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Age</p>
-                                            <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.age?.min} - {data?.age?.max}</h1>
+                                            <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Age</p>
+                                            <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.age?.min} - {data?.age?.max}</h1>
                                         </div>
                                         <div>
-                                            <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Prefer Height</p>
-                                            <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.height?.min} to {data?.height?.max} ft</h1>
+                                            <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Prefer Height</p>
+                                            <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.height?.min} to {data?.height?.max} ft</h1>
                                         </div>
                                         <div>
-                                            <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Prefer City State</p>
+                                            <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Prefer City State</p>
                                             <ul className='flex'>
                                                 {data?.state.map((val) => {
                                                     return (
                                                         <li>
-                                                            <span style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]' >{val} ,</span>
+                                                            <span style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]' >{val} ,</span>
                                                         </li>
                                                     )
                                                 })}
 
                                             </ul>
-                                            {/* <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.state.map((val)=>{return })}</h1> */}
+                                            {/* <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.state.map((val)=>{return })}</h1> */}
 
                                         </div>
                                         <div>
-                                            <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Prefer Country</p>
-                                            {/* <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>India, Australia,USA</h1> */}
+                                            <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Prefer Country</p>
+                                            {/* <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]'>India, Australia,USA</h1> */}
                                             <ul className='flex'>
                                                 {data?.country.map((val) => {
                                                     return (
                                                         <li>
-                                                            <span style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]' >{val} ,</span>
+                                                            <span style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]' >{val} ,</span>
                                                         </li>
                                                     )
                                                 })}
@@ -513,18 +513,18 @@ const PartnerPreferenceTab = ({ partnerPrefID, formData, updateFormData }) => {
                                             </ul>
                                         </div>
                                         <div>
-                                            <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Prefer Income</p>
-                                            {/* <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>INR 10 Lacs or above</h1> */}
-                                            <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.income}</h1>
+                                            <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Prefer Income</p>
+                                            {/* <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]'>INR 10 Lacs or above</h1> */}
+                                            <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.income}</h1>
                                         </div>
                                         <div>
-                                            <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Creative</p>
-                                            {/* <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>Writing, Painting</h1> */}
+                                            <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Creative</p>
+                                            {/* <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]'>Writing, Painting</h1> */}
                                             <ul className='flex'>
                                                 {data?.creative.map((val) => {
                                                     return (
                                                         <li>
-                                                            <span style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]' >{val} ,</span>
+                                                            <span style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]' >{val} ,</span>
                                                         </li>
                                                     )
                                                 })}
@@ -532,12 +532,12 @@ const PartnerPreferenceTab = ({ partnerPrefID, formData, updateFormData }) => {
                                             </ul>
                                         </div>
                                         <div>
-                                            <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Fun</p>
+                                            <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Fun</p>
                                             <ul className='flex'>
                                                 {data?.fun.map((val) => {
                                                     return (
                                                         <li>
-                                                            <span style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]' >{val} ,</span>
+                                                            <span style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]' >{val} ,</span>
                                                         </li>
                                                     )
                                                 })}
@@ -545,14 +545,14 @@ const PartnerPreferenceTab = ({ partnerPrefID, formData, updateFormData }) => {
                                             </ul>
                                         </div>
                                         <div>
-                                            <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Prefer Diet</p>
-                                            {/* <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>Vegetarian</h1> */}
+                                            <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Prefer Diet</p>
+                                            {/* <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]'>Vegetarian</h1> */}
                                             <ul className='flex'>
 
                                                 {data?.diet.map((val) => {
                                                     return (
                                                         <li>
-                                                            <span style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]' >{val} ,</span>
+                                                            <span style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]' >{val} ,</span>
                                                         </li>
                                                     )
                                                 })}

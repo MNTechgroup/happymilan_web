@@ -8,6 +8,7 @@ import { GetrecentuserprofileData } from '../../../store/actions/UsersAction'
 import UserprofileSkeleton from '../../components/Loader/UserprofileSkeleton'
 import dynamic from 'next/dynamic';
 import Image from 'next/image'
+import { useDarkMode } from '../../../ContextProvider/DarkModeContext'
 
 const Footer = dynamic(() => import('../../components/Footer'))
 const UserStory = dynamic(() => import('../commonCompo/UserStory'));
@@ -27,7 +28,7 @@ function index() {
     lineHeight: "22px"
   }
 
-  const [Listtype, setListtype] = useState(false);
+  const [listType, setListType] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -37,6 +38,9 @@ function index() {
 
   const { data, loading } = useSelector((state) => state.usersact.recentusersdata)
   const handleSearch = (searchTerm) => { }
+
+  const { darkMode, toggleDarkMode } = useDarkMode();
+
 
   return (
     <>
@@ -59,14 +63,14 @@ function index() {
               <UserStory />
             </div>
 
-            <div id='centerlized-content' className='2xl:block xl:block lg:block hidden'>
-              <div className='relative 2xl:w-[715px] xl:w-[635px] lg:w-[650px] m-[10px] flex justify-between'>
+            <div id='centerlized-content' className='dark:bg-[#18191a] 2xl:block xl:block lg:block hidden'>
+              <div className=' relative 2xl:w-[715px] xl:w-[635px] lg:w-[650px] m-[10px] flex justify-between'>
 
-                <h1 className='p-[5px] relative lg:left-[15px] 2xl:left-[40px] xl:left-[55px]'><span style={Text6}>Recently Reviewed</span></h1>
-                <div className='justify-center  w-[62px] h-[30px] rounded-[17.5px] border-[1px] border-[#F3F3F3] flex  relative right-[50px]'>
+                <h1 className='text-[#000] dark:text-[#FFF] p-[5px] relative lg:left-[15px] 2xl:left-[40px] xl:left-[55px]'><span style={Text6} >New Requests</span></h1>
+                <div className={`justify-center  w-[62px] h-[30px] rounded-[17.5px] border-[1px] ${darkMode ? "border-[#73757b]" : "border-[#F3F3F3]"} flex  relative right-[50px]`}>
 
-                  <div onClick={() => setListtype(true)} style={{ cursor: "pointer", borderRadius: "17.5px 0PX 0px 17.5px" }} className={`w-[45px] ${Listtype ? "bg-[#F3F8FF]" : ""} hover:bg-[#F3F8FF] grid place-items-center h-[28px] border-r-[1px] border-r-[#F3F3F3]`}>
-                    <Image width={13} height={13} alt='listview' src={Listtype ? "/assests/dashboard/menus/after-grid.svg" : "/assests/dashboard/menus/before-grid.svg"} />
+                  <div onClick={() => setListType(true)} style={{ cursor: "pointer", borderRadius: "17.5px 0PX 0px 17.5px" }} className={`w-[45px] ${darkMode ? "bg-[#141516] border-r-[#73757b]" : listType ? "border-r-[#F3F3F3] bg-[#F3F8FF]" : " hover:bg-[#F3F8FF] border-r-[#F3F3F3]"} grid place-items-center h-[28px] border-r-[1px] `}>
+                    <Image width={13} height={13} alt='listview' src={listType ? "/assests/dashboard/menus/after-grid.svg" : "/assests/dashboard/menus/before-grid.svg"} />
 
                   </div>
 
@@ -74,8 +78,8 @@ function index() {
 
                   {/* Grid View Mode  */}
 
-                  <div onClick={() => setListtype(false)} style={{ cursor: "pointer", borderRadius: "0px 17.5px 17.5px 0px" }} className={`w-[45px] ${Listtype ? "" : " bg-[#F3F8FF]"}  hover:bg-[#F3F8FF] grid place-items-center h-[28px] border-l-[1px] border-l-[#F3F3F3]`}>
-                    <Image width={13} height={13} alt='listview' src={Listtype ? "/assests/dashboard/menus/before-list.svg" : "/assests/dashboard/menus/after-list.svg"} />
+                  <div onClick={() => setListType(false)} style={{ cursor: "pointer", borderRadius: "0px 17.5px 17.5px 0px" }} className={`w-[45px] ${darkMode ? "bg-[#141516] border-l-[#73757b]" : listType ? "border-l-[#F3F3F3]  " : " bg-[#F3F8FF] hover:bg-[#F3F8FF] border-l-[#F3F3F3]"}   grid place-items-center h-[28px] border-l-[1px]`}>
+                    <Image width={13} height={13} alt='listview' src={listType ? "/assests/dashboard/menus/before-list.svg" : "/assests/dashboard/menus/after-list.svg"} />
 
                   </div>
 
@@ -89,7 +93,7 @@ function index() {
                     <UserprofileSkeleton />
                   </> :
                   <>
-                    {!Listtype ?
+                    {!listType ?
 
                       <RecentViewUser /> : <GridUser />}
                   </>

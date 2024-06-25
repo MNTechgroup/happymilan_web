@@ -71,28 +71,38 @@ function PartnerPreference({ formData, updateFormData }) {
         fontWeight: "400",
         lineHeight: "normal"
     }
-    const options = [
-        { value: 1, label: '1' },
-        { value: 2, label: '2' },
-        { value: 3, label: '3' },
-        { value: 4, label: '4' },
-        { value: 5, label: '5' },
-        { value: 6, label: '6' },
-        { value: 7, label: '7' },
-        { value: 8, label: '8' },
-        { value: 9, label: '9' },
-        { value: 10, label: '10' },
-        { value: 11, label: '11' },
-        { value: 12, label: '12' },
-        { value: 13, label: '13' },
-        { value: 14, label: '14' },
-        { value: 15, label: '15' },
-        { value: 16, label: '16' },
-        { value: 17, label: '17' },
-        { value: 18, label: '18' },
-        { value: 19, label: '19' },
-        { value: 20, label: '20' }
-    ];
+    // const options = [
+    //     { value: 18, label: '18' },
+    //     { value: 19, label: '19' },
+    //     { value: 3, label: '3' },
+    //     { value: 4, label: '4' },
+    //     { value: 5, label: '5' },
+    //     { value: 6, label: '6' },
+    //     { value: 7, label: '7' },
+    //     { value: 8, label: '8' },
+    //     { value: 9, label: '9' },
+    //     { value: 10, label: '10' },
+    //     { value: 11, label: '11' },
+    //     { value: 12, label: '12' },
+    //     { value: 13, label: '13' },
+    //     { value: 14, label: '14' },
+    //     { value: 15, label: '15' },
+    //     { value: 16, label: '16' },
+    //     { value: 17, label: '17' },
+    //     { value: 18, label: '18' },
+    //     { value: 19, label: '19' },
+    //     { value: 20, label: '20' }
+    // ];
+
+    const options = Array.from({ length: 23 }, (v, k) => {
+        const value = k + 18;
+        return { value, label: value.toString() };
+    });
+
+    const heightoption = Array.from({ length: 23 }, (v, k) => {
+        const value = k + 5;
+        return { value, label: value.toString() };
+    });
 
     const Country = [
         { value: "india", label: "India" },
@@ -280,7 +290,7 @@ function PartnerPreference({ formData, updateFormData }) {
 
                 <div>
                     <div className='2xl:w-[664px] xl:w-[664px] md:w-full lg:w-full h-[1px] bg-[#DCDCDC]'>
-                        <div className='h-[1px] w-[74px] bg-[#17C270]'></div>
+                        <div className='h-[1px] w-[95%] bg-[#17C270]'></div>
                     </div>
                 </div>
             </div>
@@ -310,11 +320,11 @@ function PartnerPreference({ formData, updateFormData }) {
                         <div className="flex items-center space-x-[10px]">
                             <DynamicSelect
                                 styles={customStyle2}
-                                options={options}
+                                options={heightoption}
                                 onChange={(selectedOption) => handleInputChange({ target: { name: "heightmin", value: selectedOption?.value } })}
                             />
                             <h1 style={doItlater}>To</h1>
-                            <DynamicSelect styles={customStyle2} options={options}
+                            <DynamicSelect styles={customStyle2} options={heightoption}
                                 onChange={(selectedOption) => handleInputChange({ target: { name: "heightmax", value: selectedOption?.value } })}
                             />
 

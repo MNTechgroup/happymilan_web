@@ -240,7 +240,7 @@ function Home() {
                                     <div className='pb-[17px]'>
                                         <h1 className='text-[#000]' style={Text1}>Welcome to Happy Milan!</h1>
                                     </div>
-                                    <img src='/assests/common/Mariage-img-1.svg' onClick={() => router.push("/successstories/1")} className='cursor-pointer 2xl:h-auto xl:h-[300px]' />
+                                    <img src='/assests/common/Mariage-img-1.png' onClick={() => router.push("/successstories/1")} className='cursor-pointer 2xl:h-auto xl:h-[300px]' />
                                 </div>
                             </div>
 

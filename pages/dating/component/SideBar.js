@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import Image from 'next/image';
+import Avatar from 'react-avatar';
+import ProfileImageDating from './ProfileImageDating';
 
 function SideBar() {
 
@@ -191,7 +193,8 @@ function SideBar() {
 
           <div className='p-[10px]'>
             <div>
-              <Image width={47} height={47} className='w-[47px] h-[47px]' src='/assests/dashboard/user/userProfile.svg' />
+              {/* <Avatar name='Riya Shah' size='47' round /> */}
+              <ProfileImageDating Username={"Riya Shah"} Size={47}/>
             </div>
             <div className='pt-[20px]'>
               <h1 onClick={Click} style={Text2}>Riya M Shah</h1>

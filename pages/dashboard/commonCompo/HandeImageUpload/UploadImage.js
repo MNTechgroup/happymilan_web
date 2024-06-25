@@ -78,13 +78,11 @@ function UploadImage({ formData, updateFormData, openUpload, handleCloseUpload }
     const dispatch = useDispatch();
 
 
-    const CloseTheModal = () =>{
+    const CloseTheModal = () => {
         handleCloseUpload();
-        if(PreviewImage.length > 0)
-        {
-            
-        }else
-        {
+        if (PreviewImage.length > 0) {
+
+        } else {
             SetActiveTab(1)
         }
 
@@ -170,15 +168,15 @@ function UploadImage({ formData, updateFormData, openUpload, handleCloseUpload }
         const { getRootProps, getInputProps } = useDropzone({ onDrop })
         return (
             <>
-                <div className='flex flex-col justify-center items-center space-y-[20px] w-[526px] h-[330px] bg-[#F5F5F5] rounded-[10px]'>
+                <div className='flex flex-col justify-center items-center space-y-[20px] w-[526px] h-[330px] dark:bg-[#242526] bg-[#F5F5F5] rounded-[10px]'>
 
                     <div {...getRootProps()}>
                         <Image alt='drag-drop' width={63} height={44} src='/loginassests/register-icons/Drag-Drop.svg' />
                     </div>
                     <input {...getInputProps()} className="hidden" />
                     <div className='text-center'>
-                        <h1 style={Text4}>Select Photos</h1>
-                        <p style={Text2}>Or drag and drop a file</p>
+                        <h1 className='dark:text-[#FFF] text-[#000]' style={Text4}>Select Photos</h1>
+                        <p className='dark:text-[#FFF] text-[#000]' style={Text2}>Or drag and drop a file</p>
                     </div>
 
                 </div>
@@ -199,12 +197,12 @@ function UploadImage({ formData, updateFormData, openUpload, handleCloseUpload }
         const { getRootProps, getInputProps } = useDropzone({ onDrop })
         return (
             <>
-                <div className='w-[526px] h-[330px] bg-[#F5F5F5] rounded-[10px]'>
+                <div className='w-[526px] h-[330px] bg-[#F5F5F5] dark:bg-[#242526] rounded-[10px]'>
                     <div className='flex space-x-[20px]'>
                         {PreviewImage.map((res, index) => {
                             return (
                                 <>
-                                    
+
 
                                     <div
                                         key={index}
@@ -215,7 +213,7 @@ function UploadImage({ formData, updateFormData, openUpload, handleCloseUpload }
                                             backgroundPosition: "center",
                                         }}
                                         id="photo-grid-item"
-                                   
+
                                     >
                                         <svg
                                             onClick={() => HandleRemove(res.data)}
@@ -244,14 +242,14 @@ function UploadImage({ formData, updateFormData, openUpload, handleCloseUpload }
                         })}
 
 
-                        <div className='mt-[10px] h-[130px] w-[130px]  rounded-[10px] flex flex-col justify-center items-center  bg-[#EBEBEB]'>
+                        <div className='mt-[10px] h-[130px] w-[130px]  rounded-[10px] flex flex-col justify-center items-center dark:bg-[#303133]  bg-[#EBEBEB]'>
                             <div {...getRootProps()}>
                                 <Image alt='drag-drop' width={35} height={35} src='/loginassests/register-icons/Drag-Drop.svg' />
                             </div>
                             <input {...getInputProps()} className="hidden" />
                             <div className='text-center mt-[5px]'>
-                                <h1 style={Text6}>Select Photos</h1>
-                                <p style={Text7}>Or drag and drop a file</p>
+                                <h1 className='dark:text-[#FFF] text-[#000]' style={Text6}>Select Photos</h1>
+                                <p className='dark:text-[#FFF] text-[#000]' style={Text7}>Or drag and drop a file</p>
                             </div>
                         </div>
 
@@ -283,7 +281,7 @@ function UploadImage({ formData, updateFormData, openUpload, handleCloseUpload }
 
             >
 
-                <DialogContent className=''>
+                <DialogContent className='dark:bg-[#303133] '>
                     <div className='space-y-[20px]'>
                         {/* <div className='flex items-center justify-between space-x-[20px]'>
                             <div className='flex items-center space-x-[20px]'>
@@ -295,8 +293,14 @@ function UploadImage({ formData, updateFormData, openUpload, handleCloseUpload }
                             </div>
 
                         </div> */}
-                        <div>
-                            <h1 style={TextTitle}>Upload Photo</h1>
+                        <div className='flex justify-between'>
+                            <div>
+                                <h1 className='dark:text-[#FFF]' style={TextTitle}>Upload Photo</h1>
+                            </div>
+                            <div>
+                                <img alt='close-icon' onClick={CloseTheModal} className="w-[24px] h-[24px] cursor-pointer"  src="/assests/social/close.svg" />
+
+                            </div>
                         </div>
 
                         <div className=''>

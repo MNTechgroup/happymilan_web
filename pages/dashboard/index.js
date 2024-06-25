@@ -9,11 +9,11 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { getCookie } from 'cookies-next';
 import { getSentrequestData } from '../../store/actions/UsersAction';
-import { getAuthData } from '../../utils/API/Localstorage';
 import Image from 'next/image';
 import { useDarkMode } from '../../ContextProvider/DarkModeContext';
+import UserProfile from './commonCompo/UserProfile'
 // Lazy load your components
-const UserProfile = dynamic(() => import('./commonCompo/UserProfile'));
+// const UserProfile = dynamic(() => import('./commonCompo/UserProfile'));
 const UserGridProfile = dynamic(() => import('./commonCompo/UserGridProfile'));
 const ProfileComplete = dynamic(() => import('./commonCompo/ProfileComplete'));
 const MoreSuggestion = dynamic(() => import('./commonCompo/MoreSuggestion'));
@@ -28,13 +28,12 @@ const Footer = dynamic(() => import('../components/Footer'));
 function index() {
 
   const dispatch = useDispatch();
-  const authRoute = getAuthData()
 
-  const {darkMode , toggleDarkMode } = useDarkMode();
+  const { darkMode, toggleDarkMode } = useDarkMode();
 
-  useEffect(() => {
-    dispatch(getSentrequestData())
-  }, [])
+  // useEffect(() => {
+  //   dispatch(getSentrequestData())
+  // }, [])
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [listType, setListType] = useState(false);
 
@@ -53,15 +52,6 @@ function index() {
     setIsModalOpen(false);
     router.push("/register")
 
-  };
-
-  const Text5 = {
-    color: '#0F52BA',
-    fontFamily: 'Poppins',
-    fontSize: '16px',
-    fontStyle: 'normal',
-    fontWeight: '500',
-    lineHeight: '22px',
   };
 
   const Text6 = {
@@ -99,11 +89,6 @@ function index() {
       });
 
   };
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(fetchAllUsers());
-  // }, [])
-
 
   const { users, loading } = useSelector((state) => state.alluser);
 
@@ -133,7 +118,7 @@ function index() {
                 <h1 className='text-[#000] dark:text-[#FFF] p-[5px] relative lg:left-[15px] 2xl:left-[40px] xl:left-[55px]'><span style={Text6} >New Requests</span></h1>
                 <div className={`justify-center  w-[62px] h-[30px] rounded-[17.5px] border-[1px] ${darkMode ? "border-[#73757b]" : "border-[#F3F3F3]"} flex  relative right-[50px]`}>
 
-                  <div onClick={() => setListType(true)} style={{ cursor:"pointer" ,borderRadius: "17.5px 0PX 0px 17.5px" }} className={`w-[45px] ${darkMode ? "bg-[#141516] border-r-[#73757b]"  : listType ?  "border-r-[#F3F3F3] bg-[#F3F8FF]"  : " hover:bg-[#F3F8FF] border-r-[#F3F3F3]" } grid place-items-center h-[28px] border-r-[1px] `}>
+                  <div onClick={() => setListType(true)} style={{ cursor: "pointer", borderRadius: "17.5px 0PX 0px 17.5px" }} className={`w-[45px] ${darkMode ? "bg-[#141516] border-r-[#73757b]" : listType ? "border-r-[#F3F3F3] bg-[#F3F8FF]" : " hover:bg-[#F3F8FF] border-r-[#F3F3F3]"} grid place-items-center h-[28px] border-r-[1px] `}>
                     <Image width={13} height={13} alt='listview' src={listType ? "/assests/dashboard/menus/after-grid.svg" : "/assests/dashboard/menus/before-grid.svg"} />
 
                   </div>
@@ -142,7 +127,7 @@ function index() {
 
                   {/* Grid View Mode  */}
 
-                  <div onClick={() => setListType(false)} style={{ cursor:"pointer" ,borderRadius: "0px 17.5px 17.5px 0px" }} className={`w-[45px] ${darkMode ? "bg-[#141516] border-l-[#73757b]"  : listType ?  "border-l-[#F3F3F3]  "  : " bg-[#F3F8FF] hover:bg-[#F3F8FF] border-l-[#F3F3F3]" }   grid place-items-center h-[28px] border-l-[1px]`}>
+                  <div onClick={() => setListType(false)} style={{ cursor: "pointer", borderRadius: "0px 17.5px 17.5px 0px" }} className={`w-[45px] ${darkMode ? "bg-[#141516] border-l-[#73757b]" : listType ? "border-l-[#F3F3F3]  " : " bg-[#F3F8FF] hover:bg-[#F3F8FF] border-l-[#F3F3F3]"}   grid place-items-center h-[28px] border-l-[1px]`}>
                     <Image width={13} height={13} alt='listview' src={listType ? "/assests/dashboard/menus/before-list.svg" : "/assests/dashboard/menus/after-list.svg"} />
 
                   </div>

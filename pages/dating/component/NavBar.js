@@ -15,6 +15,7 @@ import Menu from '@mui/material/Menu';
 import Tooltip from '@mui/material/Tooltip';
 import Fade from '@mui/material/Fade';
 import Image from "next/image";
+import ProfileImageDating from "./ProfileImageDating";
 
 
 const Text2 = {
@@ -892,7 +893,9 @@ function NavBar() {
                     aria-expanded={open ? 'true' : undefined}
                     onClick={handleClick}>
 
-                    <Image width={40} height={40} className="cursor-pointer" src="/assests/dashboard/user/userProfile.svg" />
+                    {/* <Image width={40} height={40} className="cursor-pointer" src="/assests/dashboard/user/userProfile.svg" /> */}
+
+                    <ProfileImageDating Username={"Riya Shah"} Size={40} />
 
                 </Tooltip>
                 <Menu

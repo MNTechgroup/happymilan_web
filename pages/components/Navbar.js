@@ -2,16 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 import {
-    Navbar,
-    Typography,
     IconButton,
-    Collapse,
 } from "@material-tailwind/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { getCookie } from "cookies-next";
 import ProfileImage from "./Maincomp/ProfileImage";
+import { AppBar, Collapse, Typography } from "@mui/material";
 
 
 function CommonNavbar() {
@@ -145,11 +143,11 @@ function CommonNavbar() {
                 variant="small"
                 color="blue-gray"
                 className="hover:bg-[#F2F7FF] p-1 lg:w-[151px] lg:grid place-items-center lg:h-[30px]  font-normal poppins rounded-[17px]"
-                // style={{ color: `${router.pathname === "/aboutus" ? "#0F52BA" : ""}`, backgroundColor: `${router.pathname === "/aboutus" ? "rgba(15, 82, 186, 0.05)" : ""}`, fontFamily: "Poppins", fontSize: "14px", fontStyle: "normal", fontWeight: "400", lineHeight: "normal", }}
-                // style={ router.pathname == "/aboutus" ?  aftText : befText ,  {fontFamily: "Poppins", fontSize: "14px", fontStyle: "normal",  lineHeight: "normal", }}
+            // style={{ color: `${router.pathname === "/aboutus" ? "#0F52BA" : ""}`, backgroundColor: `${router.pathname === "/aboutus" ? "rgba(15, 82, 186, 0.05)" : ""}`, fontFamily: "Poppins", fontSize: "14px", fontStyle: "normal", fontWeight: "400", lineHeight: "normal", }}
+            // style={ router.pathname == "/aboutus" ?  aftText : befText ,  {fontFamily: "Poppins", fontSize: "14px", fontStyle: "normal",  lineHeight: "normal", }}
             >
 
-                <Link style={router.pathname=="/aboutus" ? aftText : befText} href="/aboutus" className="flex items-center">
+                <Link style={router.pathname == "/aboutus" ? aftText : befText} href="/aboutus" className="flex items-center">
                     About Happy Milan
                 </Link>
 
@@ -160,7 +158,7 @@ function CommonNavbar() {
                 variant="small"
 
                 className="hover:bg-[#F2F7FF] p-1 lg:w-[62px] lg:grid place-items-center lg:h-[30px]  font-normal poppins rounded-[10px]"
-                // style={{ color: `${isBlogActive ? "#0F52BA" : ""}`, backgroundColor: `${isBlogActive ? "rgba(15, 82, 186, 0.05)" : ""}`, fontFamily: "Poppins", fontSize: "14px", fontStyle: "normal", fontWeight: "400", lineHeight: "normal", }}
+            // style={{ color: `${isBlogActive ? "#0F52BA" : ""}`, backgroundColor: `${isBlogActive ? "rgba(15, 82, 186, 0.05)" : ""}`, fontFamily: "Poppins", fontSize: "14px", fontStyle: "normal", fontWeight: "400", lineHeight: "normal", }}
             >
                 <Link style={isBlogActive ? aftText : befText} href="/blog" className="flex items-center">
                     Blogs
@@ -172,7 +170,7 @@ function CommonNavbar() {
                 variant="small"
                 color="blue-gray"
                 className="hover:bg-[#F2F7FF] p-1 font-normal rounded-[10px] p-[7px]"
-                // style={{ color: `${isSuccessActive ? "#0F52BA" : ""}`, backgroundColor: `${isSuccessActive ? "rgba(15, 82, 186, 0.05)" : ""}`, fontFamily: "Poppins", fontSize: "14px", fontStyle: "normal", fontWeight: "400", lineHeight: "normal", }}
+            // style={{ color: `${isSuccessActive ? "#0F52BA" : ""}`, backgroundColor: `${isSuccessActive ? "rgba(15, 82, 186, 0.05)" : ""}`, fontFamily: "Poppins", fontSize: "14px", fontStyle: "normal", fontWeight: "400", lineHeight: "normal", }}
 
             >
                 <Link style={isSuccessActive ? aftText : befText} href="/successstories" className="flex items-center">
@@ -223,14 +221,14 @@ function CommonNavbar() {
     );
     return (
         <>
-            <Navbar
+            <AppBar
                 className={`z-10 border-none fixed top-0 left-0 top-0 h-max shadow-none  max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4 p-4 text-white `}
                 style={{ backgroundColor: "#FFF" }}
 
             >
                 <div className="flex items-center justify-between">
                     <Typography
-                        as="li"
+                      
 
                         className="mr-4 cursor-pointer py-1.5 lg:ml-[50px] font-medium"
                     >
@@ -282,7 +280,7 @@ function CommonNavbar() {
                     </div>
                 </div>
                 <Collapse open={openNav}>{MobileNavList}</Collapse>
-            </Navbar>
+            </AppBar>
         </>
     )
 }

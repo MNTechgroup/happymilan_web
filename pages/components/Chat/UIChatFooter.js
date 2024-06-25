@@ -474,8 +474,10 @@ const ChatFooter = ({ socket, formData, updateFormData }) => {
     const HandleStopVoice = () => {
         SetStartVoice(false)
         console.log("Stop")
-        recorderRef.current.stop();
         uploadAndEmitAudioBlob();
+        console.log(audioChunks.current.length)
+        recorderRef.current.stop();
+
     }
 
 
@@ -546,11 +548,13 @@ const ChatFooter = ({ socket, formData, updateFormData }) => {
                     borderRadius: 1.5
                 }}>
                     <Stack sx={{ height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                        <IconButton onClick={handleSendMessage}>
-                            {/* <Image loading='lazy' alt="send-message" width={29} height={24} src="/assests/dashboard/chats/send-icon.svg" /> */}
-                            <Image loading='lazy' alt="send-message" width={29} height={24} src="/assests/chat/Send-Icon.svg" />
+                        {StartVoice ? <></> : <>
+                            <IconButton onClick={handleSendMessage}>
+                                {/* <Image loading='lazy' alt="send-message" width={29} height={24} src="/assests/dashboard/chats/send-icon.svg" /> */}
+                                <Image loading='lazy' alt="send-message" width={29} height={24} src="/assests/chat/Send-Icon.svg" />
 
-                        </IconButton>
+                            </IconButton>
+                        </>}
                     </Stack>
 
                 </Box>

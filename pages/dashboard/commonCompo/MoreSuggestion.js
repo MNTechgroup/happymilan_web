@@ -14,7 +14,7 @@ function MoreSuggestion() {
 
     useEffect(() => {
         dispatch(fetchAllUsers())
-    }, [])
+    }, [dispatch])
 
     const { darkMode, toggleDarkMode } = useDarkMode();
     const Text7 = {
@@ -69,7 +69,6 @@ function MoreSuggestion() {
         loadMoreUsers(startIndex, usersdata, setStartIndex, setVisibleUsers, setIsLoading);
     };
 
-    const SentRequestData = useSelector((state) => state.usersact.sentrequestdata.sentUsersdata)
 
 
     const [sentrequest, setsentRequest] = useState({});
@@ -82,7 +81,7 @@ function MoreSuggestion() {
             try {
                 await dispatch(sendRequest(user?.id));
                 // Dispatch and wait for response
-                dispatch(getSentrequestData())
+                // dispatch(getSentrequestData())
                 setsentRequest((prevState) => ({
                     ...prevState,
                     [user.id]: !prevState[user.id], // Update the sentRequests state for the specific user ID
@@ -101,12 +100,6 @@ function MoreSuggestion() {
     const LikeUserBtn = ({ user, RequestId, HandleRequestModal }) => {
 
         const [sent, setSent] = useState(false)
-
-        useEffect(() => {
-            const FilledSent = SentRequestData?.some(item => item?.id === user?.id)
-            console.log("🚀 ~ useEffect ~ FilledSent:", FilledSent)
-            setSent(FilledSent)
-        }, [SentRequestData])
 
         const [OnHover, SetOnHover] = useState(false)
 
@@ -156,7 +149,7 @@ function MoreSuggestion() {
 
                                                             </div>
                                                         </div>
-                                                        
+
                                                     </div>
 
                                                 </li>

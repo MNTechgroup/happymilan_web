@@ -144,7 +144,7 @@ const ProfessionalTab = () => {
             <div className='w-full h-[369px] border-[1px] border-[#F1F1F1] rounded-[10px] space-y-[20px]'>
                 <div className='pt-[10px] grid place-items-center'>
                     <ul className='w-[90%] flex justify-between items-center m-[10px]'>
-                        <li><h1 style={Text2} className='text-[16px]'>Professional Details</h1></li>
+                        <li><h1 style={Text2} className='dark:text-[#FFF] text-[16px]'>{showForm ? "Modify Professional Details" : "Professional Details"}</h1></li>
                         <li>
                             <div className='cursor-pointer w-[37px] h-[37px] hover:bg-[#F0F9FF] rounded-[50%] flex items-center justify-center'>
                                 {!showForm ?
@@ -264,28 +264,28 @@ const ProfessionalTab = () => {
                                 <div className='grid place-items-center'>
                                     <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
                                         <div>
-                                            <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Current Designation</p>
-                                            <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.jobTitle ? capitalizeFirstLetter(data.jobTitle) : "NA"}</h1>
+                                            <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Current Designation</p>
+                                            <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.jobTitle ? capitalizeFirstLetter(data.jobTitle) : "NA"}</h1>
                                         </div>
                                         <div>
-                                            <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Job Type</p>
-                                            <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.jobType ? capitalizeFirstLetter(data.jobType) : "NA"}</h1>
+                                            <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Job Type</p>
+                                            <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.jobType ? capitalizeFirstLetter(data.jobType) : "NA"}</h1>
                                         </div>
                                         <div>
-                                            <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Company Name</p>
-                                            <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.companyName ? capitalizeFirstLetter(data.companyName) : "NA"}</h1>
+                                            <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Company Name</p>
+                                            <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.companyName ? capitalizeFirstLetter(data.companyName) : "NA"}</h1>
                                         </div>
                                         <div>
-                                            <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Annual Salary</p>
-                                            <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.currentSalary ? data.currentSalary : "NA"}</h1>
+                                            <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Annual Salary</p>
+                                            <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.currentSalary ? data.currentSalary : "NA"}</h1>
                                         </div>
                                         <div>
-                                            <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Work in City</p>
-                                            <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.workCity ? capitalizeFirstLetter(data.workCity) : "NA"}</h1>
+                                            <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Work in City</p>
+                                            <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.workCity ? capitalizeFirstLetter(data.workCity) : "NA"}</h1>
                                         </div>
                                         <div>
-                                            <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Work in Country</p>
-                                            <h1 style={Text5} className='2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.workCountry ? capitalizeFirstLetter(data.workCountry) : "NA"}</h1>
+                                            <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Work in Country</p>
+                                            <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.workCountry ? capitalizeFirstLetter(data.workCountry) : "NA"}</h1>
                                         </div>
 
                                     </div>

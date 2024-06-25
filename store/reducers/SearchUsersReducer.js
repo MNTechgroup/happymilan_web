@@ -1,17 +1,30 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { DELETE_SAVESEARCH_DATA, DELETE_SAVESEARCH_DATA_SUCCESS, FETCH_SAVESEARCH_DATA, FETCH_SAVESEARCH_DATA_FAILURE, FETCH_SAVESEARCH_DATA_SUCCESS } from '../type';
+import { data } from 'autoprefixer';
 
 const initialState = {
     minAge: 0,
     maxAge: 0,
+    minHeight: 0,
+    maxHeight: 0,
+    minWeight: 0,
+    maxWeight: 0,
     maritalStatus: [],
     religion: [],
     community: [],
-    stateofLiving : [],
+    stateofLiving: [],
     motherTongue: [],
     currentCountry: [],
+    currentCity: [],
+    saveSearch: "",
     loading: false, // to track if API call is in progress
     searchResults: null, // to store search results from the API
     error: null, // to store any errors that occur during API call
+    Searchsave: {
+        loading: false,
+        error: "",
+        data: []
+    }
 };
 
 export const searchformReducer = (state = initialState, action) => {
@@ -21,6 +34,51 @@ export const searchformReducer = (state = initialState, action) => {
                 ...state,
                 ...action.payload, // Merging payload directly into the state
             };
+        case FETCH_SAVESEARCH_DATA:
+            return {
+                ...state,
+                Searchsave: {
+                    loading: true,
+                    data: [],
+                    error: ""
+                }
+            }
+        case FETCH_SAVESEARCH_DATA_SUCCESS:
+            return {
+                ...state,
+                Searchsave: {
+                    loading: false,
+                    data: action.payload,
+                    error: ""
+                }
+            }
+        case FETCH_SAVESEARCH_DATA_FAILURE:
+            return {
+                ...state,
+                Searchsave: {
+                    loading: false,
+                    data: [],
+                    error: ""
+                }
+            }
+        case DELETE_SAVESEARCH_DATA:
+            return {
+                ...state,
+                Searchsave: {
+                    ...state.Searchsave,
+                    loading: true,
+                    error: ""
+                }
+            }
+        case DELETE_SAVESEARCH_DATA_SUCCESS:
+            return {
+                ...state,
+                Searchsave: {
+                    ...state.Searchsave,
+                    loading: false,
+                    error: ""
+                }
+            }
         default:
             return state;
     }

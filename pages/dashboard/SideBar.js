@@ -13,7 +13,7 @@ import Image from "next/image";
 
 
 function SideBar() {
-  
+
 
   const { darkMode, toggleDarkMode } = useDarkMode();
 
@@ -24,14 +24,7 @@ function SideBar() {
     fontWeight: "600",
     lineHeight: "22px",
   };
-  const NotificationText = {
-    color: "#FFF",
-    fontFamily: "Poppins",
-    fontSize: "12px",
-    fontStyle: "normal",
-    fontWeight: "500",
-    lineHeight: "22px",
-  };
+
   const Text3 = {
     fontFamily: "Poppins",
     fontStyle: "normal",
@@ -115,9 +108,9 @@ function SideBar() {
                   </> :
                   <>
                     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">
-                      <path d="M0.647934 13.3521H4.25785V7.93719H8.14545V13.3521H11.7554V5.02149L6.20165 0.809917L0.647934 5.02149V13.3521ZM0 14V4.69752L6.20165 0L12.4033 4.69752V14H7.49752V8.58512H4.90579V14H0Z" 
-                      
-                      fill={darkMode ? "#FFF" : "black" }/>
+                      <path d="M0.647934 13.3521H4.25785V7.93719H8.14545V13.3521H11.7554V5.02149L6.20165 0.809917L0.647934 5.02149V13.3521ZM0 14V4.69752L6.20165 0L12.4033 4.69752V14H7.49752V8.58512H4.90579V14H0Z"
+
+                        fill={darkMode ? "#FFF" : "black"} />
                     </svg>
                   </>}
 
@@ -129,14 +122,14 @@ function SideBar() {
                   id={router.pathname === "/dashboard" ? "sidebar-navlink-grad" : ""}
                   className={`text-[14px] pl-[10px] dark:hover:text-[#FFF] 
                   ${darkMode
-                    ? router.pathname === "/dashboard"
-                      ? "text-[#FFF]"
-                      : "text-[#7D7F86]"
-                    :
-                    router.pathname === "/dashboard"
-                      ? ""
-                      : ""}`}
-              >
+                      ? router.pathname === "/dashboard"
+                        ? "text-[#FFF]"
+                        : "text-[#7D7F86]"
+                      :
+                      router.pathname === "/dashboard"
+                        ? ""
+                        : ""}`}
+                >
                   Home
                 </h1>
               </Link>
@@ -484,7 +477,7 @@ function SideBar() {
                 <>
                   <svg className="relative top-[3px]" width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3.76439 0H12.1376V8.86238L6.95719 14L6.87117 13.9538C6.80008 13.8847 6.74312 13.8038 6.70031 13.711C6.65749 13.6182 6.63609 13.5219 6.63609 13.422V13.3792L7.49235 8.86238H1.15596C0.861978 8.86238 0.59582 8.74322 0.357492 8.50489C0.119164 8.26656 0 8.00041 0 7.70642V6.59327C0 6.50764 0.0142712 6.42915 0.0428135 6.3578L2.35474 0.920489C2.4529 0.660041 2.64267 0.441514 2.92405 0.264908C3.20542 0.0883027 3.48554 0 3.76439 0ZM11.6667 0.470948H3.68196C3.52497 0.470948 3.36442 0.513761 3.20031 0.599388C3.03619 0.685015 2.91131 0.827727 2.82569 1.02752L0.470948 6.59327V7.70642C0.470948 7.89195 0.535168 8.0525 0.663609 8.18807C0.792049 8.32365 0.956167 8.39144 1.15596 8.39144H8.04893L7.10703 13.2294L11.6667 8.64832V0.470948ZM12.1376 8.86238V8.39144H15.263V0.470948H12.1376V0H15.7339V8.86238H12.1376Z"
-                      fill={darkMode ? "#FFF" : "black" }/>
+                      fill={darkMode ? "#FFF" : "black"} />
                   </svg>
 
                 </>}

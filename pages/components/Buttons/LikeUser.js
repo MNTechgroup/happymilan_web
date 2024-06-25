@@ -52,9 +52,7 @@ const LikeUser = ({ ActiveLike, setActiveLike, userId }) => {
     if (!isUserDisliked) {
 
       const res = data.results.find((item) => item.likedUserId === userId)
-      // console.log("🚀 ~ handleDislikeUser ~ res:", res)
-      // console.log("🚀 ~ handleDislikeUser ~ res:", res)
-
+      
       socket?.emit('updateUserLike', {
         "userId": currentUserId,
         "likedUserId": res?.likedUserId,

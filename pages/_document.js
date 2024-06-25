@@ -3,11 +3,14 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 
 class MyDocument extends Document {
-  render() {
+  render() 
+  
+  {
+ 
     return (
       <Html lang="en">
         <Head />
-        <body>
+        <body className='dark:bg-[#18191a]'>
           <Main />
           <NextScript />
         </body>

@@ -4,6 +4,7 @@ import React from 'react'
 import NavBar from '../NavBar'
 import SideBar from '../SideBar'
 import dynamic from 'next/dynamic';
+import { useDrawer } from '../../../ContextProvider/DrawerContext';
 const UserStory = dynamic(() => import('../commonCompo/UserStory'));
 const Profile = dynamic(() => import('./comp/Userprofile'));
 const UploadSection = dynamic(() => import('./comp/UploadSection'));
@@ -17,12 +18,14 @@ const ProtectedRoutes = dynamic(() => import('../../routes/ProtectedRoutes'));
 function index() {
   const handleSearch = (searchTerm) => { }
 
+  const { drawerState, toggleDrawer } = useDrawer();
+
   return (
     <>
 
       <ProtectedRoutes />
 
-      <NavBar handleSearch={handleSearch} />
+      <NavBar StateOfDrawer={drawerState} handleSearch={handleSearch} />
 
 
       <SideBar />
@@ -44,7 +47,7 @@ function index() {
               <div className='relative 2xl:w-[715px] xl:w-[635px] m-[10px] flex justify-between'>
 
 
-                <Profile />
+                <Profile toggleDrawer={toggleDrawer}/>
 
 
 

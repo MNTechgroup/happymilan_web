@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Footer from './Footer';
 import Sidebar from './Navigation';
 import Image from 'next/image';
-import {getCookie} from 'cookies-next'
+import { getCookie } from 'cookies-next'
 import UIbuttons from '../../UI/Buttons';
 
 
@@ -67,11 +67,11 @@ function HeroSection() {
         )
     }
 
-    const [token,setToken] = useState("");
+    const [token, setToken] = useState("");
 
-    useEffect(()=>{
-       setToken(getCookie("jwtToken"))
-    },[])
+    useEffect(() => {
+        setToken(getCookie("jwtToken"))
+    }, [])
 
 
     return (
@@ -94,13 +94,12 @@ function HeroSection() {
                                     <p className='text-[#fff] lg:w-[432px] lg:h-[76px] mt-[30px]'>Welcome to Matrimoney, the premier online platform for finding your perfect life partner! We understand that finding a compatible partner is one of life's most important journeys, and we are here to make that process seamless, enjoyable, and successful.</p>
 
 
-                                    {/* <div className='w-[231px] h-[60px] lg:w-[220px] lg:h-[50px] 2xl:w-[231px] 2xl:h-[60px] xl:w-[220px]  mt-[40px] xl:mt-[30px] flex items-center justify-center'></div> */}
-                                    {!token ? 
-                                    <button className='w-[231px] h-[60px] lg:w-[220px] lg:h-[50px] 2xl:w-[231px] 2xl:h-[60px] xl:w-[220px]  mt-[40px] xl:mt-[30px] flex items-center justify-center' onClick={() => router.push("/login")} >Free Registration <Image quality={40} loading='lazy' alt='icon' width={18} height={20} className='ml-[15px]' src='/assests/Blue/RegisterNow-icon.svg' /></button>
-                                    :
+                                    {/* {!token ?  */}
+                                    <button className='w-[231px] h-[60px] lg:w-[220px] lg:h-[50px] 2xl:w-[231px] 2xl:h-[60px] xl:w-[220px]  mt-[40px] xl:mt-[30px] flex items-center justify-center' onClick={!token ? () => router.push("/login") : () => router.push("/dashboard")} >{!token ? "Free Registration" : "Explore Now"} <Image quality={40} loading='lazy' alt='icon' width={18} height={20} className='ml-[15px]' src='/assests/Blue/RegisterNow-icon.svg' /></button>
+                                    {/* :
                                     <button className='w-[231px] h-[60px] lg:w-[220px] lg:h-[50px] 2xl:w-[231px] 2xl:h-[60px] xl:w-[220px]  mt-[40px] xl:mt-[30px] flex items-center justify-center' onClick={() => router.push("/dashboard")} >Explore Now  <Image quality={40} loading='lazy' alt='icon' width={18} height={20} className='ml-[15px]' src='/assests/Blue/RegisterNow-icon.svg' /></button>
-                                    }
-                                    </div>
+                                    } */}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -118,11 +117,11 @@ function HeroSection() {
                                 <div className='relative py-[80px]  lg:p-10'>
                                     <h1 className='text-[#fff]  lg:leading-[50px] p-1 text-[20px] w-full md:text-[44px] md:w-full lg:w-full lg:text-[44px]'>Discover Your Perfect Match with HappyMilan.</h1>
                                     <p className='w-full lg:w-[432px] text-[#fff] lg:h-[76px] mt-[30px]'>Welcome to Matrimoney, the premier online platform for finding your perfect life partner! We understand that finding a compatible partner is one of life's most important journeys, and we are here to make that process seamless, enjoyable, and successful.</p>
-                                   {!token ? 
-                                    <button className='w-[231px] h-[60px] lg:w-[231px] lg:h-[60px] 2xl:w-[231px] 2xl:h-[60px] xl:w-[220px]  mt-[40px] xl:mt-[30px] flex items-center justify-center' onClick={() => router.push("/login")} > Free Registration <Image quality={40} alt='icon' width={18} height={20} className='ml-[15px]' src='/assests/Blue/RegisterNow-icon.svg' /></button>
-                                    :
-                                    <button className='w-[231px] h-[60px] lg:w-[231px] lg:h-[60px] 2xl:w-[231px] 2xl:h-[60px] xl:w-[220px]  mt-[40px] xl:mt-[30px] flex items-center justify-center' onClick={() => router.push("/login")} > Free Registration <Image quality={40} alt='icon' width={18} height={20} className='ml-[15px]' src='/assests/Blue/RegisterNow-icon.svg' /></button>
-                                   }
+                                    {!token ?
+                                        <button className='w-[231px] h-[60px] lg:w-[231px] lg:h-[60px] 2xl:w-[231px] 2xl:h-[60px] xl:w-[220px]  mt-[40px] xl:mt-[30px] flex items-center justify-center' onClick={() => router.push("/login")} > Free Registration <Image quality={40} alt='icon' width={18} height={20} className='ml-[15px]' src='/assests/Blue/RegisterNow-icon.svg' /></button>
+                                        :
+                                        <button className='w-[231px] h-[60px] lg:w-[231px] lg:h-[60px] 2xl:w-[231px] 2xl:h-[60px] xl:w-[220px]  mt-[40px] xl:mt-[30px] flex items-center justify-center' onClick={() => router.push("/login")} > Free Registration <Image quality={40} alt='icon' width={18} height={20} className='ml-[15px]' src='/assests/Blue/RegisterNow-icon.svg' /></button>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -157,7 +156,7 @@ function HeroSection() {
                                     </div>
                                     <div onClick={() => router.push("/successstories")} className='cursor-pointer m-5'>
                                         <Image
-                                        loading='lazy'
+                                            loading='lazy'
                                             width={8}
                                             height={8}
                                             className="w-8 h-8"
@@ -171,7 +170,7 @@ function HeroSection() {
                         </div>
 
                         <div className='block sm:hidden lg:m-5 md:m-5 lg:my-10 my-[10%]'>
-                            <Image quality={40}  loading='lazy' alt='icon' width={260} height={381} className='cursor-pointer' onClick={() => router.push("/successstories")} src='/heroSec/landing-storyimg-2.svg' />
+                            <Image quality={40} loading='lazy' alt='icon' width={260} height={381} className='cursor-pointer' onClick={() => router.push("/successstories")} src='/heroSec/landing-storyimg-2.svg' />
                         </div>
 
                         <div className='hidden sm:block lg:m-5 md:m-5 lg:my-10'>
@@ -189,7 +188,7 @@ function HeroSection() {
                                     </div>
                                     <div onClick={() => router.push("/successstories")} className='cursor-pointer m-5 relative top-[10px]'>
                                         <Image
-                                        loading='lazy'
+                                            loading='lazy'
                                             width={8}
                                             height={8}
                                             className="w-8 h-8"
@@ -215,7 +214,7 @@ function HeroSection() {
                                     <span id='sec-2-stories-num'>9K+ </span>
                                     <h3 id='sec-2-explore-str'>Explore Successful Stories</h3>
                                 </div>
-                                <UIbuttons.ExploreBTN/>
+                                <UIbuttons.ExploreBTN />
                                 {/* <button onClick={() => router.push("/successstories")} id='sec-2-explore-story' className='mt-[10%] md:mt-[10%] lg:mt-[18.5%] 2xl:mt-[15.5%] xl:mt-[15.5%]'><span>Explore All Stories</span></button> */}
                             </div>
                         </section>
@@ -249,7 +248,7 @@ function HeroSection() {
                         <p className='mb-10 lg:text-[16px] 2xl:text-[20px] xl:text-[20px]  text-[15px] text-center lg:text-left'>Welcome to Matrimoney, the premier online platform for finding your perfect life partner! We understand that finding a compatible partner is one of life's most important journeys</p>
                         <div className='w-full lg:block flex justify-center'>
                             {/* <button onClick={() => router.push("/login")}><span>Create New Profile</span></button> */}
-                            <UIbuttons.CreateNewProfileBTN Textstyle={BTNText}/>
+                            <UIbuttons.CreateNewProfileBTN Textstyle={BTNText} />
                         </div>
 
                     </div>
@@ -277,11 +276,11 @@ function HeroSection() {
                                     <div className=''>
                                         <div>
                                             {/* <Image quality={40} loading='lazy' alt='Google-Play' width={244} height={73} className='m-2 w-[244px] h-[73px]' src='/image-1@2x.png' /> */}
-                                       <UIbuttons.GooglePlayBTN/>
+                                            <UIbuttons.GooglePlayBTN />
                                         </div>
                                         <div className="mt-[4%]">
                                             {/* <Image quality={40} loading='lazy' alt='App-Store' width={244} height={74} className='m-2 w-[244px] h-[74px]' src='/image-2@2x.png' /> */}
-                                        <UIbuttons.AppStoreBTN/>
+                                            <UIbuttons.AppStoreBTN />
                                         </div>
                                     </div>
                                 </div>
@@ -293,11 +292,11 @@ function HeroSection() {
                                 <div className=''>
                                     <div>
                                         {/* <Image quality={40} loading='lazy' alt='Google-Play' width={244} height={73} className='m-2 w-[250px] md:w-[200px] lg:w-[244px] h-[73px]' src='/image-1@2x.png' /> */}
-                                    <UIbuttons.GooglePlayBTN/>
+                                        <UIbuttons.GooglePlayBTN />
                                     </div>
                                     <div>
                                         {/* <Image quality={40} loading='lazy' alt='App-Store' width={244} height={73} className='m-2 w-[250px] md:w-[200px]  lg:w-[244px] h-[73px]' src='/image-2@2x.png' /> */}
-                                    <UIbuttons.AppStoreBTN/>
+                                        <UIbuttons.AppStoreBTN />
                                     </div>
                                 </div>
                             </div>

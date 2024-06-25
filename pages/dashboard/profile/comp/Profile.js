@@ -20,12 +20,19 @@ import moment from 'moment';
 import HobbiesTab from './sections/HobbiesTab';
 import { useSocket } from '../../../../ContextProvider/SocketContext';
 import { capitalizeFirstLetter } from '../../../../utils/form/Captitelize';
+import { useDarkMode } from '../../../../ContextProvider/DarkModeContext';
+import calculateAge from '../../../../utils/helpers/CalculateAge';
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
 function Profile() {
 
+
+    const { darkMode, toggleDarkMode } = useDarkMode();
+
+
+
     const Username = {
-        color: "#000",
+        color: darkMode ? "#FFF" : "#000",
         fontFamily: "Poppins",
         fontStyle: "normal",
         fontWeight: "600",
@@ -58,6 +65,11 @@ function Profile() {
         lineHeight: "normal"
     }
 
+    
+    const InputFonts = {
+        fontFamily: "Poppins",
+    }
+
 
 
     const GeneralTab = ({ data }) => {
@@ -70,7 +82,8 @@ function Profile() {
             birthTime: data?.birthTime && data.birthTime,
             name: data && data.name,
             gender: data?.gender && data.gender,
-            writeBoutYourSelf: data?.writeBoutYourSelf && data.writeBoutYourSelf
+            writeBoutYourSelf: data?.writeBoutYourSelf && data.writeBoutYourSelf,
+            creatingProfileFor : data?.creatingProfileFor
 
         })
 
@@ -122,11 +135,11 @@ function Profile() {
         };
 
         const profileOptions = [
-            { id: 1, label: 'My Self' },
-            { id: 2, label: 'My Son' },
-            { id: 3, label: 'My Daughter' },
-            { id: 4, label: 'My Brother' },
-            { id: 5, label: 'My Friend' },
+            { id: 1, label: 'My Self' , value:"mySelf"},
+            { id: 2, label: 'My Son' ,  value:"mySon"},
+            { id: 3, label: 'My Daughter' ,  value:"myDaughter"},
+            { id: 4, label: 'My Brother' ,  value:"myBrother"},
+            { id: 5, label: 'My Friend' ,  value:"myFriend"},
         ];
 
 
@@ -155,9 +168,10 @@ function Profile() {
                 height: "50px",
                 borderRadius: "8px",
                 border: "1px solid #e6e6e6",
+                backgroundColor: darkMode ? "#141516" : "#FFF",
                 borderColor: state.isFocused ? 'black' : provided.borderColor,
                 '&:hover': {
-                    borderColor: 'black',
+                    borderColor: darkMode ? "#787878" : 'black',
                 },
                 boxShadow: state.isFocused ? 'none' : provided.boxShadow, // Add padding on the right side
             }),
@@ -240,14 +254,15 @@ function Profile() {
 
                     <div className='pt-[10px] grid place-items-center'>
                         <ul className='w-[90%] flex justify-between items-center m-[10px]'>
-                            <li><h1 style={Text2} className='text-[16px]'>{showForm ? "Modify General Information" : "General Information"}</h1></li>
+                            <li><h1 style={Text2} className='dark:text-[#FFF] text-[16px]'>{showForm ? "Modify General Information" : "General Information"}</h1></li>
                             <li>
 
-                                <div className='cursor-pointer w-[37px] h-[37px] hover:bg-[#F0F9FF] rounded-[50%] flex items-center justify-center'>
+                                <div className='cursor-pointer w-[37px] h-[37px] dark:hover:bg-[#252525] hover:bg-[#F0F9FF] rounded-[50%] flex items-center justify-center'>
                                     {!showForm ?
-                                        <Image loading='lazy' alt='editIcon' width={20} height={20} onClick={handleEditClick} src={'/assests/dashboard/icon/edit-details-icon.svg'} />
+                                        <Image alt='editIcon' width={20} height={20} onClick={handleEditClick} src={darkMode ? '/assests/dashboard/icon/edit-details-icon-white.svg' : '/assests/dashboard/icon/edit-details-icon.svg'} />
                                         :
-                                        <Image loading='lazy' alt='modifyIcon' width={15} height={15} onClick={handleEditClick} src={'/assests/profile/cross-edit-icon.svg'} />
+                                        <Image loading='lazy' alt='modifyIcon' width={15} height={15} onClick={handleEditClick} src={darkMode ? '/assests/profile/cross-edit-icon-white.svg' : '/assests/profile/cross-edit-icon.svg'} />
+
                                     }
                                 </div>
                             </li>
@@ -264,9 +279,13 @@ function Profile() {
                                     <div className="inline-block  2xl:flex lg:flex  2xl:mt-0 xl:mt-0 lg:mt-0 mt-[10px] 2xl:ml-0 xl:ml-0 lg:ml-0 2xl:space-x-[12px] lg:space-x-[32px] xl:space-x-[20px]  pt-[10px]">
                                         {profileOptions.map((options) => {
                                             return (<button
-                                                id={data?.creatingProfileFor == options.label ? "grad-button" : ""}
+                                                id={userdata?.creatingProfileFor == options.value ? "grad-button" : ""}
                                                 // id={"grad-button"} 
-                                                style={genralbtnText} className={`2xl:mt-0 xl:mt-0 lg:mt-0 mt-[10px] 2xl:ml-0 xl:ml-0 lg:ml-0 ml-[10px] h-[50px] ${options.id === 3 ? "2xl:w-[120px] xl:w-[110px] lg:w-[128px] w-[100px]" : "w-[100px] 2xl:w-[102px] xl:w-[90px] lg:w-[102px]"} bg-[white] rounded-[8px] border-[1px] border-[#e6e6e6]`} key={options.id}>{options.label}</button>)
+                                                style={genralbtnText}
+                                                onClick={()=>setuserdata(()=>{
+                                                    return {...userdata,creatingProfileFor:options.value}
+                                                })}
+                                                className={`2xl:mt-0 xl:mt-0 lg:mt-0 mt-[10px] 2xl:ml-0 xl:ml-0 lg:ml-0 ml-[10px] h-[50px] ${options.id === 3 ? "2xl:w-[120px] xl:w-[110px] lg:w-[128px] w-[100px]" : "w-[100px] 2xl:w-[102px] xl:w-[90px] lg:w-[102px]"} bg-[white] rounded-[8px] border-[1px] border-[#e6e6e6]`} key={options.id}>{options.label}</button>)
                                         })}
                                     </div>
                                 </div>
@@ -275,11 +294,11 @@ function Profile() {
                                 <div className='w-[90%] pt-[20px]'>
                                     <div className='flex justify-between space-x-[20px]'>
                                         <div>
-                                            <h1 style={labelText} className='text-[#000] pb-[10px]' >First Name</h1>
-                                            <input value={userdata.name} onChange={handleInputChange} name="name" type='text' placeholder='First Name' className='outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[280px] 2xl:w-[270px] xl:w-[235px] lg:w-[300px] border-[1px] border-[#e6e6e6] pl-[10px] rounded-[8px] ' />
+                                            <h1 style={labelText} className='dark:text-[#FFF] text-[#000] pb-[10px]' >First Name</h1>
+                                            <input style={InputFonts} value={userdata.name} onChange={handleInputChange} name="name" type='text' placeholder='First Name' className='text-[14px] dark:text-[#FFF] dark:bg-[#141516] dark:border-[#787878] outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[280px] 2xl:w-[270px] xl:w-[235px] lg:w-[300px] border-[1px] border-[#e6e6e6] pl-[10px] rounded-[8px] ' />
                                         </div>
                                         <div className=' w-[280px] 2xl:w-[270px] xl:w-[235px] lg:w-[300px]'>
-                                            <h1 style={labelText} className='text-[#000] pb-[10px]' >Gender</h1>
+                                            <h1 style={labelText} className='dark:text-[#FFF] text-[#000] pb-[10px]' >Gender</h1>
                                             <div className='space-x-[15px] flex justify-between'>
                                                 <button id={userdata.gender === "male" ? "grad-button" : ""} onClick={() => handleInputChange({ target: { name: 'gender', value: 'male' } })} style={genralbtnText} className='2xl:w-[80px] xl:w-[80px] w-[80px]  h-[50px] text-[black]  bg-[#F9F9F9] rounded-[10px]'>Male</button>
                                                 <button id={userdata.gender === "female" ? "grad-button" : ""} onClick={() => handleInputChange({ target: { name: 'gender', value: 'female' } })} style={genralbtnText} className='2xl:w-[80px] xl:w-[80px] w-[80px]  h-[50px] text-[black]  bg-[#F9F9F9] rounded-[10px]'>Female</button>
@@ -289,17 +308,17 @@ function Profile() {
                                     </div>
                                     <div className='pt-[20px] flex justify-between'>
                                         <div>
-                                            <h1 style={labelText} className='text-[#000] pb-[10px]' >Date Of Birth</h1>
-                                            <input name="dateOfBirth" value={userdata.dateOfBirth} onChange={handleInputChange} type='date' placeholder='First Name' className='outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[280px] 2xl:w-[270px] xl:w-[235px] lg:w-[300px] border-[1px] border-[#e6e6e6] pl-[10px] rounded-[8px] ' />
+                                            <h1 style={labelText} className='dark:text-[#FFF] text-[#000] pb-[10px]' >Date Of Birth</h1>
+                                            <input name="dateOfBirth" value={userdata.dateOfBirth} onChange={handleInputChange} type='date' placeholder='First Name' className='dark:text-[#FFF] dark:bg-[#141516] dark:border-[#787878] outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[280px] 2xl:w-[270px] xl:w-[235px] lg:w-[300px] border-[1px] border-[#e6e6e6] pl-[10px] rounded-[8px] ' />
                                         </div>
                                         <div>
-                                            <h1 style={labelText} className='text-[#000] pb-[10px]' >Time of Birth</h1>
-                                            <input name="birthTime" onChange={handleInputChange} value={userdata.birthTime} type='time' placeholder='First Name' className='outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[280px] 2xl:w-[270px] xl:w-[235px] lg:w-[300px] border-[1px] border-[#e6e6e6] pl-[10px] rounded-[8px] ' />
+                                            <h1 style={labelText} className='dark:text-[#FFF] text-[#000] pb-[10px]' >Time of Birth</h1>
+                                            <input name="birthTime" onChange={handleInputChange} value={userdata.birthTime} type='time' placeholder='First Name' className='dark:text-[#FFF] dark:bg-[#141516] dark:border-[#787878] outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[280px] 2xl:w-[270px] xl:w-[235px] lg:w-[300px] border-[1px] border-[#e6e6e6] pl-[10px] rounded-[8px] ' />
                                         </div>
                                     </div>
                                     <div className='pt-[20px] flex justify-between space-x-[20px]'>
                                         <div>
-                                            <h1 className='text-[#000] pb-[10px]' style={labelText}>Religion</h1>
+                                            <h1 className='dark:text-[#FFF] text-[#000] pb-[10px]' style={labelText}>Religion</h1>
                                             <DynamicSelect
                                                 className="h-[50px] w-[280px] 2xl:w-[270px] xl:w-[235px] lg:w-[300px] flex justify-end"
                                                 styles={customStyles}
@@ -312,7 +331,7 @@ function Profile() {
                                             />
                                         </div>
                                         <div>
-                                            <h1 style={labelText} className='text-[#000] pb-[10px]' >Caste / Sub Caste</h1>
+                                            <h1 style={labelText} className='dark:text-[#FFF] text-[#000] pb-[10px]' >Caste / Sub Caste</h1>
                                             <DynamicSelect
                                                 className="h-[50px] w-[280px] 2xl:w-[270px] xl:w-[235px] lg:w-[300px] flex justify-end"
                                                 styles={customStyles}
@@ -326,7 +345,7 @@ function Profile() {
                                     <div className='pt-[20px] flex justify-between space-x-[20px]'>
                                         <div className='flex justify-between w-[280px] 2xl:w-[270px] xl:w-[235px] lg:w-[300px]'>
                                             <div>
-                                                <h1 className='text-[#000] pb-[10px]' style={labelText}>Height</h1>
+                                                <h1 className='dark:text-[#FFF] text-[#000] pb-[10px]' style={labelText}>Height</h1>
 
                                                 <DynamicSelect
                                                     className="h-[50px] w-[100px] 2xl:w-[120px] xl:w-[120px] lg:w-[100px] flex justify-end"
@@ -335,7 +354,7 @@ function Profile() {
                                                 />
                                             </div>
                                             <div>
-                                                <h1 className='text-[#000] pb-[10px]' style={labelText}>Height</h1>
+                                                <h1 className='dark:text-[#FFF] text-[#000] pb-[10px]' style={labelText}>Height</h1>
 
                                                 <DynamicSelect
                                                     className="h-[50px] w-[100px] 2xl:w-[120px] xl:w-[120px] lg:w-[100px] flex justify-end"
@@ -345,7 +364,7 @@ function Profile() {
                                             </div>
                                         </div>
                                         <div>
-                                            <h1 className='text-[#000] pb-[10px]' style={labelText}>Country of Living</h1>
+                                            <h1 className='dark:text-[#FFF] text-[#000] pb-[10px]' style={labelText}>Country of Living</h1>
 
                                             <DynamicSelect
                                                 className="h-[50px] w-[280px] 2xl:w-[270px] xl:w-[235px] lg:w-[300px] flex justify-end"
@@ -355,9 +374,9 @@ function Profile() {
                                         </div>
                                     </div>
                                     <div className='pt-[20px]'>
-                                        <h1 style={labelText} className="pb-[10px]">Write About Yourself</h1>
-                                        <textarea type='text' name='writeBoutYourSelf' value={userdata.writeBoutYourSelf} onChange={handleInputChange} className='pt-[5px] outline-none focus:border-[1px] focus:border-[black]  2xl:h-[76px] xl:h-[76px] w-full border-[1px] border-[#e6e6e6] pl-[10px] rounded-[8px]' />
-                                        <span>{CharCount}/150</span>
+                                        <h1 style={labelText} className="dark:text-[#FFF] text-[#000] pb-[10px]">Write About Yourself</h1>
+                                        <textarea style={InputFonts} type='text' name='writeBoutYourSelf' value={userdata.writeBoutYourSelf} onChange={handleInputChange} className='text-[14px] dark:text-[#FFF] dark:bg-[#141516] dark:border-[#787878] pt-[5px] outline-none focus:border-[1px] focus:border-[black]  2xl:h-[76px] xl:h-[76px] w-full border-[1px] border-[#e6e6e6] pl-[10px] rounded-[8px]' />
+                                        <span className='dark:text-[#FFF] text-[#000]'>{CharCount}/150</span>
                                     </div>
                                     <div className='flex justify-end pb-[10px] mt-[10px]'>
 
@@ -379,22 +398,22 @@ function Profile() {
                             <div className='grid place-items-center'>
                                 <div className="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
                                     <div>
-                                        <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Date of Birth</p>
-                                        {/* <h1 style={Text5} className='2xl:text-[16px] xl:text-[14px] text-[14px]'>{data && data.dateOfBirth ? (data.dateOfBirth) : ("02 . 03. 1986")}</h1> */}
-                                        <h1 style={Text5} className='2xl:text-[16px] xl:text-[14px] text-[14px]'>{formattedDateOfBirth}</h1>
+                                        <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Date of Birth</p>
+                                        {/* <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px] xl:text-[14px] text-[14px]'>{data && data.dateOfBirth ? (data.dateOfBirth) : ("02 . 03. 1986")}</h1> */}
+                                        <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px] xl:text-[14px] text-[14px]'>{formattedDateOfBirth}</h1>
                                     </div>
                                     <div>
-                                        <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Birth of Time</p>
-                                        {/* <h1 style={Text5} className='2xl:text-[16px] xl:text-[14px] text-[14px]'>{data && data.birthTime ? (data.birthTime) : ("10:01:20 AM")}</h1> */}
-                                        <h1 style={Text5} className='2xl:text-[16px] xl:text-[14px] text-[14px]'>{formattedDateOfBirthTime}</h1>
+                                        <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Birth of Time</p>
+                                        {/* <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px] xl:text-[14px] text-[14px]'>{data && data.birthTime ? (data.birthTime) : ("10:01:20 AM")}</h1> */}
+                                        <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px] xl:text-[14px] text-[14px]'>{formattedDateOfBirthTime}</h1>
                                     </div>
                                     <div>
-                                        <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Religion</p>
-                                        <h1 style={Text5} className='2xl:text-[16px] xl:text-[14px] text-[14px]'>{data && data.religion ? capitalizeFirstLetter(data.religion) : "NA"}</h1>
+                                        <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Religion</p>
+                                        <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px] xl:text-[14px] text-[14px]'>{data && data.religion ? capitalizeFirstLetter(data.religion) : "NA"}</h1>
                                     </div>
                                     <div>
-                                        <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Caste/Sub Caste</p>
-                                        <h1 style={Text5} className='2xl:text-[16px] xl:text-[14px] text-[14px]'>{data && data.cast ? capitalizeFirstLetter(data.cast) : ("NA")}</h1>
+                                        <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Caste/Sub Caste</p>
+                                        <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px] xl:text-[14px] text-[14px]'>{data && data.cast ? capitalizeFirstLetter(data.cast) : ("NA")}</h1>
                                     </div>
                                 </div>
                             </div>
@@ -405,12 +424,12 @@ function Profile() {
                             <div className='grid place-items-center'>
                                 <div className="w-[90%] relative top-[-15px] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
                                     <div>
-                                        <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>{`Height & Weight`}</p>
-                                        <h1 style={Text5} className='2xl:text-[16px] xl:text-[14px] text-[14px]'>{data && data.city ? (data.city) : ("NA")}</h1>
+                                        <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>{`Height & Weight`}</p>
+                                        <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px] xl:text-[14px] text-[14px]'>{data && data.city ? (data.city) : ("NA")}</h1>
                                     </div>
                                     <div>
-                                        <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>{`Marital Status`}</p>
-                                        <h1 style={Text5} className='2xl:text-[16px] xl:text-[14px] text-[14px]'>{data && data.maritalStatus ? capitalizeFirstLetter(data.maritalStatus) : ("NA")}</h1>
+                                        <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>{`Marital Status`}</p>
+                                        <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px] xl:text-[14px] text-[14px]'>{data && data.maritalStatus ? capitalizeFirstLetter(data.maritalStatus) : ("NA")}</h1>
                                     </div>
                                 </div>
                             </div>
@@ -428,6 +447,10 @@ function Profile() {
 
     const { data, status, totalLikes } = useSelector((state) => state.myprofile);
 
+
+
+
+
     const [token, settoken] = useState();
 
 
@@ -443,18 +466,17 @@ function Profile() {
 
     }, []);
 
-    const [UserGender, setUserGender] = useState(data?.gender?.charAt(0).toUpperCase() + data?.gender.slice(1))
 
     const socket = useSocket();
 
     const [LiveLikeCount, SetLiveLikeCount] = useState(0);
 
-    
-        socket?.on('message', (data) => {
-            console.log(" ~ socket?.on ~ data:", data);
-            SetLiveLikeCount(data.data.data?.totalResults);
-        });
-   
+
+    socket?.on('message', (data) => {
+        console.log(" ~ socket?.on ~ data:", data);
+        SetLiveLikeCount(data.data.data?.totalResults);
+    });
+
 
     const [ActiveTab, SetActiveTab] = useState(1);
 
@@ -496,9 +518,9 @@ function Profile() {
         <>
             <link rel="stylesheet" href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" />
 
-            <div className="2xl:pl-0 2xl:pr-0 xl:pl-0 xl:pr-0 lg:pl-[0px] lg:pr-[30px] pl-[0px] pr-[20px] relative 2xl:left-[40px] xl:left-[45px] lg:left-0 left-[0px]">
-                <div className={`flex m-[10px] 2xl:w-[631px] 2xl:h-[294px] xl:w-[540px] xl:h-[284px] lg:w-full w-full bg-[#FFF]`}>
-                    <div id='profile-background-grad' className='w-full h-[100px] 2xl:h-[138px] xl:h-[138px] md:h-[138px] lg:h-[138px] bg-[#0F52BA] rounded-[10px]'>
+            <div className=" dark:bg-[#18191a] 2xl:pl-0 2xl:pr-0 xl:pl-0 xl:pr-0 lg:pl-[0px] lg:pr-[30px] pl-[0px] pr-[20px] relative 2xl:left-[40px] xl:left-[45px] lg:left-0 left-[0px]">
+                <div className={` flex m-[10px] 2xl:w-[631px] 2xl:h-[294px] xl:w-[540px] xl:h-[284px] lg:w-full w-full dark:bg-[#18191a] bg-[#FFF]`}>
+                    <div id='profile-background-grad' className=' w-full h-[100px] 2xl:h-[138px] xl:h-[138px] md:h-[138px] lg:h-[138px] bg-[#0F52BA] rounded-[10px]'>
 
                         <div className='flex justify-between'>
                             <div>
@@ -512,7 +534,7 @@ function Profile() {
                         </div>
                         <div>
                         </div>
-                        <div className='grid place-items-center'>
+                        <div className=' grid place-items-center'>
                             <div onClick={() => setModalOpen(true)} onMouseEnter={() => setIsHovered(true)}
                                 onMouseLeave={() => setIsHovered(false)}>
                                 {
@@ -568,32 +590,32 @@ function Profile() {
                             </div>
                             <div className='pb-[10px] pt-[15px]'>
                                 {data && data.name ? (
-                                    <h1 style={Username} className='text-[18px] md:text-[20px] lg:text-[20px] xl:text-[20px] 2xl:text-[24px]' >{data?.name}</h1>
+                                    <h1 style={Username} className='dark:text-[#FFF] text-[18px] md:text-[20px] lg:text-[20px] xl:text-[20px] 2xl:text-[24px]' >{data?.name}</h1>
                                 ) : (
-                                    <h1 style={Username} className='text-[18px] md:text-[20px] lg:text-[20px] xl:text-[20px] 2xl:text-[24px]' >NA</h1>
+                                    <h1 style={Username} className='dark:text-[#FFF] text-[18px] md:text-[20px] lg:text-[20px] xl:text-[20px] 2xl:text-[24px]' >NA</h1>
                                 )}
                             </div>
                         </div>
-                        <div className='space-y-[5px]'>
+                        <div className='dark:bg-[#18191a] space-y-[5px]'>
                             <div className='pb-[10px]'>
                                 <ul className='flex justify-center items-center space-x-[20px] md:space-x-[40px] lg:space-x-[40px] xl:space-x-[40px] 2xl:space-x-[40px]'>
                                     <li>
                                         <div className='flex items-center space-x-[10px]'>
                                             <Image loading='lazy' alt='heartIcon' width={16} height={14} src='/assests/dashboard/icon/heart-icon.svg' />
                                             {/* <h1 style={Text3} className='text-[12px] md:text-[14px] lg:text-[14px] 2xl:text-[14px] xl:text-[13px]'>{totalLikes}<span style={Text2} className='pl-[5px] text-[14px] text-[#8B8B8B]'> Likes </span></h1> */}
-                                            <h1 style={Text3} className='text-[12px] md:text-[14px] lg:text-[14px] 2xl:text-[14px] xl:text-[13px]'>{LiveLikeCount}<span style={Text2} className='pl-[5px] text-[14px] text-[#8B8B8B]'> Likes </span></h1>
+                                            <h1 style={Text3} className='dark:text-[#FFF] text-[12px] md:text-[14px] lg:text-[14px] 2xl:text-[14px] xl:text-[13px]'>{LiveLikeCount}<span style={Text2} className='pl-[5px] text-[14px] text-[#8B8B8B]'> Likes </span></h1>
                                         </div>
                                     </li>
                                     <li>
                                         <div className='flex items-center space-x-[10px]'>
                                             <Image loading='lazy' alt='upIcon' width={14} height={14} src='/assests/dashboard/icon/up-arrow.svg' />
-                                            <h1 style={Text3} className='text-[12px] md:text-[14px] lg:text-[14px] 2xl:text-[14px] xl:text-[13px]'>{TotalSentRequest?.length}<span style={Text2} className='pl-[5px] text-[14px] text-[#8B8B8B]'>Sent</span></h1>
+                                            <h1 style={Text3} className='dark:text-[#FFF] text-[12px] md:text-[14px] lg:text-[14px] 2xl:text-[14px] xl:text-[13px]'>{TotalSentRequest?.length}<span style={Text2} className='pl-[5px] text-[14px] text-[#8B8B8B]'>Sent</span></h1>
                                         </div>
                                     </li>
                                     <li>
                                         <div className='flex items-center space-x-[10px]'>
                                             <Image loading='lazy' alt='downIcon' width={14} height={14} src='/assests/dashboard/icon/down-arrow.svg' />
-                                            <h1 style={Text3} className='text-[12px] md:text-[14px] lg:text-[14px] 2xl:text-[14px] xl:text-[13px]'>{0}<span style={Text2} className='pl-[5px] text-[14px] text-[#8B8B8B]'>Received</span></h1>
+                                            <h1 style={Text3} className='dark:text-[#FFF] text-[12px] md:text-[14px] lg:text-[14px] 2xl:text-[14px] xl:text-[13px]'>{0}<span style={Text2} className='pl-[5px] text-[14px] text-[#8B8B8B]'>Received</span></h1>
                                         </div>
                                     </li>
                                 </ul>
@@ -605,19 +627,19 @@ function Profile() {
                                     <li>
                                         <div className='flex items-center space-x-[10px]'>
 
-                                            <h1 style={Text2} className='lg:text-[12px] md:text-[12px] text-[11px]'>{data?.gender ? data?.gender?.charAt(0).toUpperCase() + data?.gender.slice(1) : "NA"}</h1>
+                                            <h1 style={Text2} className='dark:text-[#FFF] lg:text-[12px] md:text-[12px] text-[11px]'>{data?.gender ? data?.gender?.charAt(0).toUpperCase() + data?.gender.slice(1) : "NA"},{calculateAge(data?.dateOfBirth)}</h1>
                                         </div>
                                     </li>
                                     <li>
                                         <div className='flex items-center space-x-[10px]'>
                                             <Image loading='lazy' alt='bagIcon' width={14} height={12} src='/assests/dashboard/icon/bag-icon.svg' />
-                                            <h1 style={Text2} className='lg:text-[12px] md:text-[12px] text-[11px]'>{data && data.proffesion ? (data?.proffesion && data.proffesion) : "NA"}</h1>
+                                            <h1 style={Text2} className='dark:text-[#FFF] lg:text-[12px] md:text-[12px] text-[11px]'>{data && data.proffesion ? (data?.proffesion && data.proffesion) : "NA"}</h1>
                                         </div>
                                     </li>
                                     <li>
                                         <div className='flex items-center space-x-[10px]'>
                                             <Image loading='lazy' alt='loactionIcon' width={10} height={12} src='/assests/dashboard/icon/location-icon.svg' />
-                                            <h1 style={Text2} className='lg:text-[12px] md:text-[12px] text-[11px]'>{"NA"}</h1>
+                                            <h1 style={Text2} className='dark:text-[#FFF] lg:text-[12px] md:text-[12px] text-[11px]'>{"NA"}</h1>
                                         </div>
                                     </li>
                                 </ul>
@@ -626,10 +648,10 @@ function Profile() {
 
                             </div>
                             <div className='text-center pt-[10px]'>
-                                <p className='text-[12px] lg:text-[14px] md:text-[14px] 2xl:text-[14px] xl:text-[12px]' style={Text2}>{data && data.writeBoutYourSelf ? (data?.writeBoutYourSelf && data.writeBoutYourSelf) : "About yourSelf"}</p>
+                                <p className='dark:text-[#FFF] text-[12px] lg:text-[14px] md:text-[14px] 2xl:text-[14px] xl:text-[12px]' style={Text2}>{data && data.writeBoutYourSelf ? (data?.writeBoutYourSelf && data.writeBoutYourSelf) : "About yourSelf"}</p>
                             </div>
 
-                            <div className='hidden lg:flex space-x-[25px] 2xl:space-x-[18px] xl:space-x-[13px] lg:space-x-[35px] pt-[20px]'>
+                            <div className='dark:bg-[#18191a] hidden lg:flex space-x-[25px] 2xl:space-x-[18px] xl:space-x-[13px] lg:space-x-[35px] pt-[20px]'>
 
                                 <div id={ActiveTab === 1 ? "grad-btn" : ""} onClick={() => SetActiveTab(1)} className={`${ActiveTab === 1 ? "bg-[#0F52BA]" : "bg-[#F8F8F8]"} w-[50px] h-[50px] 2xl:w-[54px] 2xl:h-[54px] xl:w-[45px] xl:h-[45px] cursor-pointer  flex items-center justify-center rounded-[27px] hover:bg-[#F3F8FF]`}>
                                     <svg width="18" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -672,7 +694,7 @@ function Profile() {
 
                             </div>
 
-                            <div className='hidden lg:block pt-[10px] pb-[30px] h-[480px]'>
+                            <div className='dark:bg-[#18191a] hidden lg:block pt-[10px] pb-[30px] h-[480px]'>
                                 {RenderTab()}
                             </div>
                             <div className='block lg:hidden pt-[10px] pb-[30px]'>

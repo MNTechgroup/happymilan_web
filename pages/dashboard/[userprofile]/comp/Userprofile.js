@@ -6,12 +6,15 @@ import { fetchUserById } from "../../../../store/actions/GetingUserById";
 import SkeletonProfileSec from "./SkeletonProfileSec";
 import { Dialog, Popover } from "@mui/material";
 import moment from "moment";
-import UserLikesbtn from "../../../components/Buttons/UserLikesbtn";
+// import UserLikesbtn from "../../../components/Buttons/UserLikesbtn";
 import { addToShortlist } from "../../../../store/actions/GetingAlluser";
 import { sendRequest } from "../../../../store/actions/UsersAction";
 import RegisterAlertModal from "../../../components/Models/RegisterAlertModal";
+import GridLikeUser from "../../../components/Buttons/GridLikeUser";
+import UpgradeButton from "../../../components/Buttons/UpgradeButton";
+import calculateAge from "../../../../utils/helpers/CalculateAge";
 
-function Userprofile() {
+function Userprofile({ toggleDrawer }) {
   const Username = {
     color: "#000",
     fontFamily: "Poppins",
@@ -49,6 +52,25 @@ function Userprofile() {
     lineHeight: "normal"
   }
 
+  const RulesText = {
+    color: "#000",
+    fontFamily: "Poppins",
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: "normal"
+  }
+
+  //   color: #000;
+  // text-align: center;
+  // font-family: Poppins;
+  // font-size: 14px;
+  // font-style: normal;
+  // font-weight: 400;
+  // line-height: normal;
+
+
+  const upgradeDone = true
+
   const GeneralTab = ({ data }) => {
 
     let formattedDateOfBirth;
@@ -69,6 +91,10 @@ function Userprofile() {
     } else {
       formattedDateOfBirthTime = 'NA'
     }
+
+
+
+
     return (
       <>
         <div
@@ -88,7 +114,12 @@ function Userprofile() {
           <div className="flex justify-center ">
             <div className="grid place-items-center w-[90%] h-[1px] bg-[#F1F1F1]"></div>
           </div>
+
+
+
           <div className="grid place-items-center">
+
+
             <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
               <div>
                 <p
@@ -202,7 +233,7 @@ function Userprofile() {
     return (
       <>
         <div
-          className={`w-full 2xl:h-[353px] xl:h-[353px] lg:h-[353px] md:h-[353px] h-[370px] border-[1px] border-[#F1F1F1] rounded-[10px]  2xl:space-y-[20px] xl:space-y-[20px] lg:space-y-[20px] md:space-y-[20px] space-y-[10px]`}
+          className={upgradeDone ? `w-full 2xl:h-[353px] xl:h-[353px] lg:h-[353px] md:h-[353px] h-[370px] border-[1px] border-[#F1F1F1] rounded-[10px]  2xl:space-y-[20px] xl:space-y-[20px] lg:space-y-[20px] md:space-y-[20px] space-y-[10px]` : `w-full 2xl:h-[353px] xl:h-[353px] lg:h-[353px] md:h-[353px] h-[370px] border-[1px] border-[#F1F1F1] rounded-[10px]  2xl:space-y-[20px] xl:space-y-[20px] lg:space-y-[20px] md:space-y-[20px] space-y-[10px]`}
         >
           <div className="pt-[10px] grid place-items-center">
             <ul className="w-[90%] flex justify-between items-center m-[10px]">
@@ -218,82 +249,108 @@ function Userprofile() {
           <div className="flex justify-center ">
             <div className="grid place-items-center w-[90%] h-[1px] bg-[#F1F1F1]"></div>
           </div>
-          <div className="grid place-items-center">
-            <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 2xl:gap-[32px] xl:gap-[32px] lg:gap-[32px] md:gap-[32px] gap-[30px]">
-              <div>
-                <p
-                  style={Text2}
-                  className="2xl:text-[14px] xl:text-[12px] text-[12px]"
-                >
-                  Current Residing Address
-                </p>
-                <h1
-                  style={Text5}
-                  className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
-                >
-                  {data && data.address?.currentResidenceAddress
-                    ? data.address.currentResidenceAddress.charAt(0).toUpperCase() + data.address.currentResidenceAddress.slice(1)
-                    : "NA"}
-                </h1>
-              </div>
-              <div className=" ">
-                <p
-                  style={Text2}
-                  className="2xl:text-[14px] xl:text-[12px] text-[14px]"
-                ></p>
-                <h1
-                  style={Text5}
-                  className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
-                ></h1>
-              </div>
-              <div>
-                <p
-                  style={Text2}
-                  className="2xl:text-[14px] xl:text-[12px] text-[12px]"
-                >
-                  Current City
-                </p>
-                <h1
-                  style={Text5}
-                  className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
-                >
-                  {data && data.address?.currentCity
-                    ? data.address.currentCity.charAt(0).toUpperCase() + data.address.currentCity.slice(1)
-                    : "NA"}
-                </h1>
-              </div>
-              <div>
-                <p
-                  style={Text2}
-                  className="2xl:text-[14px] xl:text-[12px] text-[12px]"
-                >
-                  Current Residing Country
-                </p>
-                <h1
-                  style={Text5}
-                  className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
-                >
-                  {data && data.address?.currentCountry
-                    ? data.address.currentCountry.charAt(0).toUpperCase() + data.address.currentCountry.slice(1)
-                    : "NA"}
-                </h1>
-              </div>
-              <div>
-                <p
-                  style={Text2}
-                  className="2xl:text-[14px] xl:text-[12px] text-[12px]"
-                >
-                  Permanent Address
-                </p>
-                <h1
-                  style={Text5}
-                  className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
-                >
-                  {"NA"}
-                </h1>
-              </div>
-            </div>
-          </div>
+          {
+            upgradeDone
+              ?
+              <>
+                <div className="grid place-items-center">
+                  <div className="text-center mt-[10%]">
+                    <ul className="flex flex-col justify-center items-center w-full space-y-[10px]">
+                      <li>
+                        <Image width={0} height={0} alt="lock" src={"/assests/profile/Lock-gradient.svg"} loading="lazy" className="w-[18.151px] h-[24px]" />
+                      </li>
+                      <li>
+                        <h1 style={RulesText} className="text-[14px] text-center text-[#000] dark:text-[#FFF]]">Only for Premium Member. Unlock now!</h1>
+                      </li>
+                      <li>
+                        <div>
+                          <UpgradeButton IconSize={17} BtnSizeH={40} BtnSizeW={110} />
+                        </div>
+                      </li>
+                    </ul>
+
+                  </div>
+                </div>
+              </>
+              : <>
+                <div className="grid place-items-center">
+                  <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 2xl:gap-[32px] xl:gap-[32px] lg:gap-[32px] md:gap-[32px] gap-[30px]">
+                    <div>
+                      <p
+                        style={Text2}
+                        className="2xl:text-[14px] xl:text-[12px] text-[12px]"
+                      >
+                        Current Residing Address
+                      </p>
+                      <h1
+                        style={Text5}
+                        className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
+                      >
+                        {data && data.address?.currentResidenceAddress
+                          ? data.address.currentResidenceAddress.charAt(0).toUpperCase() + data.address.currentResidenceAddress.slice(1)
+                          : "NA"}
+                      </h1>
+                    </div>
+                    <div className=" ">
+                      <p
+                        style={Text2}
+                        className="2xl:text-[14px] xl:text-[12px] text-[14px]"
+                      ></p>
+                      <h1
+                        style={Text5}
+                        className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
+                      ></h1>
+                    </div>
+                    <div>
+                      <p
+                        style={Text2}
+                        className="2xl:text-[14px] xl:text-[12px] text-[12px]"
+                      >
+                        Current City
+                      </p>
+                      <h1
+                        style={Text5}
+                        className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
+                      >
+                        {data && data.address?.currentCity
+                          ? data.address.currentCity.charAt(0).toUpperCase() + data.address.currentCity.slice(1)
+                          : "NA"}
+                      </h1>
+                    </div>
+                    <div>
+                      <p
+                        style={Text2}
+                        className="2xl:text-[14px] xl:text-[12px] text-[12px]"
+                      >
+                        Current Residing Country
+                      </p>
+                      <h1
+                        style={Text5}
+                        className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
+                      >
+                        {data && data.address?.currentCountry
+                          ? data.address.currentCountry.charAt(0).toUpperCase() + data.address.currentCountry.slice(1)
+                          : "NA"}
+                      </h1>
+                    </div>
+                    <div>
+                      <p
+                        style={Text2}
+                        className="2xl:text-[14px] xl:text-[12px] text-[12px]"
+                      >
+                        Permanent Address
+                      </p>
+                      <h1
+                        style={Text5}
+                        className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
+                      >
+                        {"NA"}
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+              </>
+          }
         </div>
       </>
     );
@@ -301,7 +358,7 @@ function Userprofile() {
   const ContactTab = ({ data }) => {
     return (
       <>
-        <div className="w-full h-[270px] lg:h-[369px]  border-[1px] border-[#F1F1F1] rounded-[10px] 2xl:space-y-[20px] xl:space-y-[20px] lg:space-y-[20px] md:space-y-[20px] space-y-[10px]">
+        <div className={upgradeDone ? `w-full 2xl:h-[353px] xl:h-[353px] lg:h-[353px] md:h-[353px] h-[370px] border-[1px] border-[#F1F1F1] rounded-[10px]  2xl:space-y-[20px] xl:space-y-[20px] lg:space-y-[20px] md:space-y-[20px] space-y-[10px]` : `w-full h-[270px] lg:h-[369px]  border-[1px] border-[#F1F1F1] rounded-[10px] 2xl:space-y-[20px] xl:space-y-[20px] lg:space-y-[20px] md:space-y-[20px] space-y-[10px]`}>
           <div className="pt-[10px] grid place-items-center">
             <ul className="w-[90%] flex justify-between items-center m-[10px]">
               <li>
@@ -318,58 +375,87 @@ function Userprofile() {
           <div className="flex justify-center ">
             <div className="grid place-items-center w-[90%] h-[1px] bg-[#F1F1F1]"></div>
           </div>
-          <div className="grid place-items-center">
-            <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
-              <div>
-                <p
-                  style={Text2}
-                  className="2xl:text-[14px] xl:text-[12px] text-[12px]"
-                >
-                  Mobile Number
-                </p>
-                <h1
-                  style={Text5}
-                  className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
-                >
-                  +{" "}
-                  {data && data?.mobileNumber
-                    ? data?.mobileNumber && data.mobileNumber
-                    : "NA"}
-                </h1>
-              </div>
-              <div>
-                <p
-                  style={Text2}
-                  className="2xl:text-[14px] xl:text-[12px] text-[12px]"
-                >
-                  Home Number
-                </p>
-                <h1
-                  style={Text5}
-                  className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
-                >
-                  +{" "}
-                  {data && data?.homeMobileNumber
-                    ? data?.homeMobileNumber && data.homeMobileNumber
-                    : "NA"}
-                </h1>
-              </div>
-              <div className="w-full">
-                <p
-                  style={Text2}
-                  className="2xl:text-[14px] xl:text-[12px] text-[12px]"
-                >
-                  Email Address
-                </p>
-                <h1
-                  style={Text5}
-                  className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
-                >
-                  {data && data?.email ? data?.email && data.email : "NA"}
-                </h1>
-              </div>
-            </div>
-          </div>
+
+          {
+            upgradeDone
+              ?
+              <>
+                <div className="grid place-items-center">
+                  <div className="text-center mt-[10%]">
+                    <ul className="flex flex-col justify-center items-center w-full space-y-[10px]">
+                      <li>
+                        <Image width={0} height={0} alt="lock" src={"/assests/profile/Lock-gradient.svg"} loading="lazy" className="w-[18.151px] h-[24px]" />
+                      </li>
+                      <li>
+                        <h1 style={RulesText} className="text-[14px] text-center text-[#000] dark:text-[#FFF]]">Only for Premium Member. Unlock now!</h1>
+                      </li>
+                      <li>
+                        <div>
+                          <UpgradeButton IconSize={17} BtnSizeH={40} BtnSizeW={110} />
+                        </div>
+                      </li>
+                    </ul>
+
+                  </div>
+                </div>
+              </>
+              :
+              <>
+                <div className="grid place-items-center">
+                  <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
+                    <div>
+                      <p
+                        style={Text2}
+                        className="2xl:text-[14px] xl:text-[12px] text-[12px]"
+                      >
+                        Mobile Number
+                      </p>
+                      <h1
+                        style={Text5}
+                        className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
+                      >
+                        +{" "}
+                        {data && data?.mobileNumber
+                          ? data?.mobileNumber && data.mobileNumber
+                          : "NA"}
+                      </h1>
+                    </div>
+                    <div>
+                      <p
+                        style={Text2}
+                        className="2xl:text-[14px] xl:text-[12px] text-[12px]"
+                      >
+                        Home Number
+                      </p>
+                      <h1
+                        style={Text5}
+                        className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
+                      >
+                        +{" "}
+                        {data && data?.homeMobileNumber
+                          ? data?.homeMobileNumber && data.homeMobileNumber
+                          : "NA"}
+                      </h1>
+                    </div>
+                    <div className="w-full">
+                      <p
+                        style={Text2}
+                        className="2xl:text-[14px] xl:text-[12px] text-[12px]"
+                      >
+                        Email Address
+                      </p>
+                      <h1
+                        style={Text5}
+                        className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
+                      >
+                        {data && data?.email ? data?.email && data.email : "NA"}
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+              </>
+          }
+
         </div>
       </>
     );
@@ -1185,7 +1271,7 @@ function Userprofile() {
                   width={184}
                   height={184}
                   className="rounded-[50%] mt-[5px] lg:mt-0 w-[80px] h-[80px] md:w-[100px] md:h-[100px] lg:w-[184px] lg:h-[184px] 2xl:w-[184px] 2xl:h-[184px] xl:w-[160px] xl:h-[160px]"
-                  src={user.profilePic}
+                  src={user?.profilePic}
                 />
               ) : (
                 <div
@@ -1231,7 +1317,7 @@ function Userprofile() {
                         {user && user?.gender
                           ? user?.gender && user.gender
                           : "NA"}
-                        , 36
+                        , {calculateAge(user?.dateOfBirth)}
                       </h1>
                     </div>
                   </li>
@@ -1273,11 +1359,12 @@ function Userprofile() {
                 </ul>
               </div>
               <div>
-                <UserLikesbtn
+                {/* <UserLikesbtn
                   RequestId={sentrequest[user?.id]}
                   HandleRequestModal={() => HandleRequestModal(user)}
                   HandleShortlistUser={() => HandleShortlistUser(user?.id)}
-                  user={user} />
+                  user={user} /> */}
+                <GridLikeUser toggleDrawer={toggleDrawer} from={"UserProfile"} user={user} theid={user?.id} />
               </div>
               <div className="text-center pt-[10px]">
                 <p

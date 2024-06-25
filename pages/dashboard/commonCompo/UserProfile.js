@@ -217,16 +217,6 @@ function SampleUserProfile({ users }) {
         dispatch(Postrecentuserprofile(res));
     };
 
-    const MAX_CHARACTERS = 100; // Define your maximum character limit
-
-    const handleTextOverflow = (text) => {
-        if (text.length > MAX_CHARACTERS) {
-            return text.slice(0, MAX_CHARACTERS) + "..."; // Truncate the text if it exceeds the limit
-        } else {
-            return text; // Return the original text if it doesn't exceed the limit
-        }
-    };
-
 
     if (loading) {
         return <UserprofileSkeleton />;
@@ -358,7 +348,7 @@ function SampleUserProfile({ users }) {
                                                             {/* <ul className="flex justify-evenly space-x-[20px] pr-[10px] pt-[10px]"> */}
                                                             <ul className='flex justify-evenly space-x-[10px] pr-[10px] pt-[10px]'>
 
-                                                                <li className="cursor-pointer hover:bg-[#F2F7FF] items-center rounded-[17px] p-[10px] flex space-x-[10px] top-[-12px] relative left-[5px]">
+                                                                <li className={`cursor-pointer hover:bg-[#F2F7FF] dark:hover:bg-[#383838]  items-center rounded-[17px] p-[10px] flex space-x-[10px] top-[-12px] relative left-[5px]`}>
 
                                                                     <MatchScoreModal user={res} />
 
@@ -369,7 +359,7 @@ function SampleUserProfile({ users }) {
                                                                     className="cursor-pointer"
                                                                     onClick={() => HandleShortlist(res.id)}
                                                                 >
-                                                                    <div className="cursor-pointer hover:bg-[#F2F7FF] p-[5px] rounded-[50%] relative top-[-5px]">
+                                                                    <div className="cursor-pointer hover:bg-[#F2F7FF] dark:hover:bg-[#383838] p-[5px] rounded-[50%] relative top-[-5px]">
                                                                         <Image
                                                                             loading="lazy"
                                                                             width={15}

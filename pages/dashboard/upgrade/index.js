@@ -35,12 +35,10 @@ function index() {
 
     const HandleCheckout = async (e) => {
         console.log("🚀 ~ HandleCheckout ~ e:", e)
-        // router.push("/dashboard/upgrade/1")
+        router.push("/dashboard/upgrade/1")
 
         try {
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/razorpay/order`, {
-                "planId": "667a53da5f57120e070eeed7"
-            });
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/razorpay/order`, { "planId": "667a53da5f57120e070eeed7" });
             console.log("🚀 ~ HandleCheckout ~ response:", response)
 
             // Handle successful response (e.g., initiate Razorpay checkout)

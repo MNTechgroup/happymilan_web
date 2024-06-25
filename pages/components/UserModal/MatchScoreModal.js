@@ -117,10 +117,10 @@ function MatchScoreModal({ user }) {
                     },
                 }}
             >
-                <Box sx={{ ...style, outline: "none", borderRadius: "21px" }}>
+                <Box  sx={{ ...style, outline: "none", borderRadius: "21px" }}>
 
                     <div>
-                        <div className='w-full space-y-[20px]'>
+                        <div className='w-full space-y-[20px] 2xl:space-y-[20px] xl:space-y-[15px] lg:space-y-[20px]'>
                             <div>
                                 <span style={ScoreMatchText} className='text-[#000]'>Your Match : <span className='text-[#0F52BA]'>85%</span></span>
                             </div>
@@ -171,13 +171,13 @@ function MatchScoreModal({ user }) {
                             <div className=' w-full h-[1px] bg-[#EAEAEA]'></div>
 
                         </div>
-                        <Stack className='mt-[28px]'>
+                        <Stack className='mt-[28px] 2xl:mt-[28px] xl:mt-[24px] lg:mt-[24px]'>
                             <div>
                                 <span className='text-[#0F52BA]' style={Text5}>Based on Your Partner Preference</span>
                             </div>
 
                             <Stack>
-                                <ul className='mt-[24px] flex flex-col space-y-[18px]'>
+                                <ul className='mt-[24px] 2xl:mt-[24px] xl:mt-[20px] lg:mt-[20px] flex flex-col space-y-[18px]'>
                                     <li className='flex justify-between items-center'>
                                         <div className='flex flex-col'>
                                             <div style={variable}>Religion</div>
