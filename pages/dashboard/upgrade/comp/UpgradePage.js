@@ -101,7 +101,6 @@ function UpgradePage() {
             //     }
             // };
 
-            console.log("���� ~ HandleCheckout ~ response:", response);
             const callbackUrl = `${process.env.NEXT_PUBLIC_API_URL}/v1/user/razorpay/is-order-complete?authToken=${token}&paymentHistoryToken=${response.data.paymentHistoryToken}`
             const options = {
                 "key": "rzp_live_2SoKzqAUA6FY69",
