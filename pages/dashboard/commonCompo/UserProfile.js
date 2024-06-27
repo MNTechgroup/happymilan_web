@@ -229,7 +229,7 @@ function SampleUserProfile({ users }) {
                     <div className=" grid place-items-center w-[10px] lg:w-[40px] 2xl:w-[40px] xl:w-[40px] h-[294px]">
                         <button
                             id="custom-prev-button"
-                            className=" relative left-[20px] 2xl:left-0 xl:left-[20px] w-[35px] h-[70px]"
+                            className=" relative left-[20px] md:left-[10px]  2xl:left-0 xl:left-[20px] w-[35px] h-[70px]"
                         >
                             <Image
                                 loading="lazy"
@@ -245,7 +245,7 @@ function SampleUserProfile({ users }) {
                     <Swiper
                         ref={swiperRef}
                         modules={[Navigation]}
-                        className=" w-[600px] relative 2xl:left-[0px] xl:left-[10px] 2xl:w-[650px] 2xl:h-full xl:w-[560px]  xl:h-full"
+                        className=" w-[600px] relative lg:left-[-10px] 2xl:left-[0px] xl:left-[10px] 2xl:w-[650px] 2xl:h-full xl:w-[560px] lg:w-[560px]  xl:h-full"
                         navigation={{
                             prevEl: "#custom-prev-button",
                             nextEl: "#custom-next-button",
@@ -258,16 +258,16 @@ function SampleUserProfile({ users }) {
                                         <div className="">
                                             <div
                                                 style={Box}
-                                                className={`bg-[#FFF] dark:bg-[#242526] relative left-[-4px]  xl:left-[-3px] 2xl:left-[-3px]  flex m-[10px] lg:w-[590px]  2xl:w-[631px] 2xl:h-[294px] xl:w-[540px] xl:h-[284px] bg-[#FFF]`}
+                                                className={`bg-[#FFF] dark:bg-[#242526] relative left-[-4px]  xl:left-[-3px] 2xl:left-[-3px]  flex m-[10px] lg:w-[530px]  2xl:w-[631px] 2xl:h-[294px] xl:w-[540px] xl:h-[284px] lg:h-[270px] lg:w-[530px] md:w-[400px] bg-[#FFF]`}
                                             >
-                                                <div className="w-[350px]">
+                                                <div className="w-[350px] 2xl:w-[350px] xl:w-[350px] lg:w-[250px] md:w-[300px]">
                                                     <div className="p-[15px] w-full ">
                                                         {res.userProfilePic &&
                                                             res.userProfilePic.length > 0 ? (
                                                             <Swiper
                                                                 pagination={{ clickable: true }}
                                                                 modules={[Pagination]}
-                                                                className="mySwiper relative 2xl:w-[197px] xl:w-[187px] w-[185px] h-[260px]"
+                                                                className="mySwiper relative 2xl:w-[197px] xl:w-[187px] lg:w-[170px] w-[185px] h-[260px]"
                                                             >
                                                                 {res.userProfilePic
                                                                     .slice(0, 3)
@@ -280,12 +280,12 @@ function SampleUserProfile({ users }) {
                                                                                 width={197}
                                                                                 height={258}
                                                                                 style={{
-                                                                                    width: "197px",
-                                                                                    height: "258px",
+                                                                                    // width: "197px",
+                                                                                    // height: "258px",
                                                                                     borderRadius: "10px",
                                                                                     objectFit: "cover",
                                                                                 }}
-                                                                                className="w-[197px] h-[258px]"
+                                                                                className="2xl:w-[197px] 2xl:h-[258px] xl:w-[197px] xl:h-[258px] lg:w-[180px] lg:h-[240px] w-[180px] h-[240px]"
                                                                                 src={Imageres.url}
                                                                                 loading="lazy"
                                                                                 quality={45}
@@ -499,7 +499,7 @@ function SampleUserProfile({ users }) {
                         })}
                     </Swiper>
 
-                    <div className="z-5 relative  right-[20px] xl:right-[10px] 2xl:right-[10px]  grid place-items-center w-[10px] lg:w-[40px] h-[294px]">
+                    <div className="z-8 relative  right-[20px] xl:right-[10px] 2xl:right-[10px]  grid place-items-center w-[10px] lg:w-[40px] h-[294px]">
                         <button id="custom-next-button" className="w-[35px] h-[70px]">
                             <Image
                                 loading="lazy"

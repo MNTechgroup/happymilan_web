@@ -99,7 +99,7 @@ function UserGridProfile() {
         // Render pagination buttons within the range of startPage to endPage
         for (let i = startPage; i <= endPage; i++) {
             buttons.push(
-                <Link key={i} href={`/dashboard?page=${i}`}>
+                <Link key={i} href={`/dashboard?page=${i}`} className='inline-block'>
                     <div id={currentPage === i ? "grid-active-btn" : (darkMode ? "DarkPagination" : "pagination-count")} onClick={() => setCurrentPage(i)} className='duration-300 cursor-pointer w-[44px] h-[44px] border-[1px] border-[black] grid place-items-center rounded-full'>{i}</div>
                 </Link>
             );
@@ -183,7 +183,7 @@ function UserGridProfile() {
     const closeModal = () => {
         setIsModalOpen(false);
     };
-
+    
     const OpenRegisterModal = (res) => {
         setData(res);
         setisRegisterModalOpen(true);
@@ -314,7 +314,7 @@ function UserGridProfile() {
                             </>
                     }
 
-                    <div className='relative left-[-20px] flex pt-[50px] space-x-[40px] justify-center items-center w-auto 2xl:w-full xl:w-full'>
+                    <div className='relative left-[-5px] lg:left-[-20px] flex pt-[50px] space-x-[40px] justify-center items-center w-auto 2xl:w-full xl:w-full'>
                         {/* <button disabled={pagesdata?.hasPrevPage != true} onClick={HandlePrevPage} className='cursor-pointer w-[80px] h-[30px] rounded-[10px]' id='active-no'>Prev</button> */}
                         <button disabled={pagesdata?.hasPrevPage != true} onClick={HandlePrevPage} className='duration-300 cursor-pointer w-[44px] h-[44px] border-[1px] dark:border-[#FFF] border-[black] grid place-items-center rounded-full'>
                             {darkMode ?

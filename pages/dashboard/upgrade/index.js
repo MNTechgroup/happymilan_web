@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import NavBar from '../NavBar'
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -33,6 +33,12 @@ function index() {
     const [currentTab, setCurrentTab] = useState(1)
 
     const router = useRouter();
+
+    const [Uname,setUname] = useState("User")
+
+    useEffect(()=>{
+        setUname(getCookie("userName"))
+    },[])
 
     // const [Razorpay] = useRazorpay();
 
@@ -124,12 +130,12 @@ function index() {
                         <div className='flex flex-col justify-center items-center relative top-[90px] 2xl:top-[90px] xl:top-[90px] lg:top-[80px]  z-[10]  w-full h-full '>
                             <div className='flex justify-between'>
                                 <div>
-                                    <h1 style={UserText} className='2xl:text-[20px] xl:text-[18px] text-[#000]'>Hi Riya, Upgrade Your Profile</h1>
+                                    <h1 style={UserText} className='2xl:text-[20px] xl:text-[18px] text-[#000]'>Hi {Uname}, Upgrade Your Profile</h1>
                                 </div>
                                 <div>
 
                                     <div style={TabsText} id='doItText' className=' cursor-pointer text-[black] absolute 2xl:right-[-210px] xl:right-[-180px] lg:right-[-140px] right-[0px]'>
-                                        <button id='Gradient-btn' onClick={() => router.back()} className='w-[95px] h-[27px] '>
+                                        <button  onClick={() => router.back()} className='cursor-pointer border-[1px] border-[#8225AF] rounded-[23px] hover:bg-[#F3F8FF] w-[95px] h-[27px] '>
                                             <span className='text-[12px] w-[72px] h-[18px]'>I’ll do it later</span>
                                         </button></div>
                                 </div>

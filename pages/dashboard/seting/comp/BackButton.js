@@ -8,7 +8,7 @@ function BackButton() {
 
     return (
         <>
-            <div>
+            <div className='p-[5px] rounded-full hover:bg-[#F3F8FF]'>
 
                 <Image alt="back" loading="lazy" width={32} height={32} onClick={() => router.push("/dashboard")} className='cursor-pointer' src='/assests/common/arrow-back.svg' />
 

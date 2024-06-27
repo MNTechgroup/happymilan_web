@@ -87,27 +87,30 @@ function index() {
         <div className="  mt-[100px] w-full md:w-full 2xl:w-[1200px] xl:w-[1200px]  lg:w-full">
           <div className="w-full grid place-items-center">
             <div className="  2xl:w-[1110px] lg:w-full xl:w-[1110px] md:w-full flex flex-col lg:flex-row w-full justify-between">
-              <div className="2xl:w-auto xl:w-auto w-full grid place-items-center">
-                <h1 className="text-[18px]" style={TitleText}>
-                  Happy Milan Stories
-                </h1>
-              </div>
-              <div className="hidden lg:block w-full 2xl:w-auto xl:w-auto  lg:w-full lg:block grid place-items-end lg:mt-[0px] mt-[10px]">
-                
-                <button
-                  id="success-story-btn-style"
-                  onClick={() => router.push("/successstories/addstories")}
-                  className="w-[144px]  h-[40px] rounded-[10px]   border-[1px] border-[#0F52BA]"
-                  style={TitleText}
-                >
+              <div className="pl-[10%] pr-[10%] md:pl-[5%] md:pr-[5%] lg:pl-[10%] lg:pr-[10%] xl:pl-[0] xl:pr-[0] w-full grid place-items-center hidden sm:block">
+                <ul className="flex justify-between w-full">
+                  <li>
+                    <h1 className="text-[18px]" style={TitleText}>
+                      Happy Milan Stories
+                    </h1>
+                  </li>
+                  <li>
+                    <button
+                      
+                      onClick={() => router.push("/successstories/addstories")}
+                      className="w-[144px]  h-[40px] rounded-[23px] hover:bg-[#F3F8FF]  border-[1px] border-[#8225AF]"
+                      style={TitleText}
+                    >
 
-                  <span className=" text-[14px] mr-[5px]" style={TitleText}>
-                    Share Your Story
-                  </span>
+                      <span className=" text-[14px] mr-[5px]" style={TitleText}>
+                        Share Your Story
+                      </span>
 
-                </button>
+                    </button>
+                  </li>
+                </ul>
               </div>
-              <div className="lg:hidden flex w-full justify-end mt-[10px] pr-[25px]">
+              <div className="sm:hidden flex w-full justify-end mt-[10px] pr-[25px]">
                 <button
                   onClick={() => router.push("/successstories/addstories")}
                   className="w-[50px]  h-[50px] rounded-[10px]   border-[1px] border-[#0F52BA]"
@@ -142,11 +145,11 @@ function index() {
                       width={260}
                       height={381}
                       src={res.img}
-                      className="rounded-[10px] md:rounded-none relative  top-[50px] lg:top-[0px] w-[150px] md:w-[180px] lg:w-[260px] h-[270px] md:h-[320px] lg:h-[381px] object-cover"
+                      className="rounded-[10px] md:rounded-[10px] relative  top-[50px] lg:top-[0px] w-[150px] md:w-[180px] lg:w-[260px] h-[220px] md:h-[320px] lg:h-[381px] object-cover"
                     />
                     <div className=" lg:my-[-100px] my-[-50px] rounded-[10px] md:rounded-t-none md:rounded-b-3xs [background:linear-gradient(0deg,_#000,_rgba(0,_0,_0,_0))] w-[150px] md:w-[180px] lg:w-[260px] h-[100px] opacity-[0.9]">
                       <div className="flex justify-between">
-                        <div className="relative left-[18px]  md:left-[10px] lg:left-[28px] top-[20px] border-black text-white font-poppins">
+                        <div className="relative left-[18px]  md:left-[10px] lg:left-[28px] top-[40px] md:top-[20px] border-black text-white font-poppins">
                           <p className="m-0">
                             <span>
                               <span

@@ -117,10 +117,10 @@ function index() {
                                 <div className="w-full h-full">
                                     <ul className="flex justify-between">
                                         <li>
-                                            <button onClick={() => router.back()} id="Publish-stry-button" className="w-[104px] h-[50px] bg-[#FFF] outline-none rounded-[10px]">Back</button>
+                                            <button onClick={() => router.back()}  className="w-[104px] h-[50px] bg-[#FFF] outline-none rounded-[23px]  hover:bg-[#F3F8FF]  border-[1px] border-[#8225AF] ">Back</button>
                                         </li>
                                         <li>
-                                            <button onClick={() => router.push("/successstories")} id="grad-button" className="w-[104px] h-[50px]  outline-none border-none rounded-[10px]">Publish</button>
+                                            <button onClick={() => router.push("/successstories")} id="grad-button" className="w-[104px] h-[50px]  outline-none border-none rounded-[23px]">Publish</button>
                                         </li>
                                     </ul>
 

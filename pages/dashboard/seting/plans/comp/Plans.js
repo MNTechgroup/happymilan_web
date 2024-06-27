@@ -207,7 +207,7 @@ function Plans() {
 
                                 <div className='flex h-full items-center relative top-[50px] space-x-[20px]'>
                                     <div>
-                                        <button id='Gradient-cancel-btn' style={btnText} className='hover:bg-[#F3F8FF] text-[#000] border-[1px] border-[black] w-[137px] h-[50px] rounded-[50px]'>
+                                        <button  style={btnText} className='border-[#8225AF] hover:bg-[#F3F8FF] text-[#000] border-[1px] w-[137px] h-[50px] rounded-[23px]'>
                                             Cancel Plan
                                         </button>
                                     </div>

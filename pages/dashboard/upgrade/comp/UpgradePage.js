@@ -78,7 +78,7 @@ function UpgradePage() {
 
         try {
 
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/razorpay/order`, { "planId": "667a53da5f57120e070eeed7" },
+            const response = await axios.post(`https://4400-2405-201-200c-b0aa-daf-a889-fd13-2eb7.ngrok-free.app/v1/user/razorpay/order`, { "planId": "667a53da5f57120e070eeed7" },
                 {
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -87,24 +87,42 @@ function UpgradePage() {
                 }
             );
 
-            console.log("🚀 ~ HandleCheckout ~ response:", response)
-
             // Handle successful response (e.g., initiate Razorpay checkout)
-            var options = {
+            // const callbackUrl = `https://4400-2405-201-200c-b0aa-daf-a889-fd13-2eb7.ngrok-free.app/v1/user/razorpay/is-order-complete?authToken=${token}`;
+            // var options = {
+            //     "key": "rzp_live_2SoKzqAUA6FY69",
+            //     "name": "HappyMilan",
+            //     "description": "Test Transaction",
+            //     "image": "https://example.com/your_logo",
+            //     "order_id": response.data.data.id,
+            //     "callback_url": callbackUrl,
+            //     "theme": {
+            //         "color": "#3399cc"
+            //     }
+            // };
+
+            console.log("���� ~ HandleCheckout ~ response:", response);
+            const callbackUrl = `${process.env.NEXT_PUBLIC_API_URL}/v1/user/razorpay/is-order-complete?authToken=${token}&paymentHistoryToken=${response.data.paymentHistoryToken}`
+            const options = {
                 "key": "rzp_live_2SoKzqAUA6FY69",
                 "name": "Acme Corp",
                 "description": "Test Transaction",
-                "image": "https://example.com/your_logo",
+                "order_id": response.data.data.id,
                 "order_id": response.data.id,
-                "callback_url": "/is-order-complete",
+                "callback_url": callbackUrl, // Include the token in the callback URL
                 "theme": {
                     "color": "#3399cc"
                 }
             };
-            var rzp1 = new Razorpay(options);
+
+            const rzp1 = new Razorpay(options);
+            rzp1.on('payment.failed', (response) => {
+                console.log(response.error);
+                // Handle payment failure here
+            });
 
             rzp1.open();
-            e.preventDefault();
+            // e.preventDefault();
 
         } catch (error) {
             // Handle error
@@ -150,7 +168,7 @@ function UpgradePage() {
                             <button
                                 onClick={() => router.back()}
                                 style={btnText2}
-                                className="hover:bg-[#F3F8FF] w-[112px] h-[27px] border-[1px] border-[#0F52BA] rounded-[25px]"
+                                className="cursor-pointer hover:bg-[#F3F8FF] w-[112px] h-[27px] border-[1px] border-[#8225AF] rounded-[25px]"
                             >
                                 Change Plan
                             </button>

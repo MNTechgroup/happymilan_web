@@ -2,13 +2,12 @@
 
 import React, { useEffect, useState } from 'react';
 import ProtectedRoutes from '../routes/ProtectedRoutes';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import NavBar from './NavBar';
 import SideBar from './SideBar';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { getCookie } from 'cookies-next';
-import { getSentrequestData } from '../../store/actions/UsersAction';
 import Image from 'next/image';
 import { useDarkMode } from '../../ContextProvider/DarkModeContext';
 import UserProfile from './commonCompo/UserProfile'
@@ -27,7 +26,7 @@ const Footer = dynamic(() => import('../components/Footer'));
 
 function index() {
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const { darkMode, toggleDarkMode } = useDarkMode();
 
@@ -113,7 +112,7 @@ function index() {
             </div>
 
             <div id='centerlized-content' className='dark:bg-[#18191a] 2xl:block xl:block lg:block hidden'>
-              <div className=' relative 2xl:w-[715px] xl:w-[635px] lg:w-[650px] m-[10px] flex justify-between'>
+              <div className='xl:left-0 lg:left-[10px] relative 2xl:w-[720px] xl:w-[645px] lg:w-[600px] m-[10px] flex justify-between'>
 
                 <h1 className='text-[#000] dark:text-[#FFF] p-[5px] relative lg:left-[15px] 2xl:left-[40px] xl:left-[55px]'><span style={Text6} >New Requests</span></h1>
                 <div className={`justify-center  w-[62px] h-[30px] rounded-[17.5px] border-[1px] ${darkMode ? "border-[#73757b]" : "border-[#F3F3F3]"} flex  relative right-[50px]`}>
@@ -155,16 +154,16 @@ function index() {
             </div>
 
 
-            {/* <div className="block lg:block 2xl:hidden xl:hidden relative top-[60px] pl-[15px]">
+            <div className="block md:block lg:hidden 2xl:hidden xl:hidden relative top-[60px] pl-[15px]">
               <h1 className="p-[5px] relative 2xl:left-[40px] xl:left-[55px]">
                 <span className='text-[#000] dark:text-[#FFF]' style={Text6}>New Matches</span>
-                <span style={Text5} className="pl-[10px]">06</span>
+                
               </h1>
-            </div> */}
+            </div>
 
-            {/* <div  className="block lg:block 2xl:hidden xl:hidden ">
+            <div className="block lg:block 2xl:hidden xl:hidden lg:hidden md:block">
               <UserGridProfile />
-            </div> */}
+            </div>
 
             <div id="centerlized-content" className=" hidden lg:block mt-[50px] ">
               <RecentlyView />
@@ -176,7 +175,8 @@ function index() {
 
           </div>
 
-          <div className=" hidden  absolute 2xl:top-[250px] xl:top-[245px] right-10 2xl:flex xl:flex flex-col space-y-[30px] justify-center items-end w-full 2xl:w-[380px] xl:w-[350px]">
+          {/* <div className="border-[1px] border-[black] hidden  absolute 2xl:top-[250px] xl:top-[245px] right-10 2xl:flex xl:flex flex-col space-y-[30px] justify-center items-end w-full 2xl:w-[380px] xl:w-[300px]"> */}
+          <div className=" hidden  absolute 2xl:top-[250px] xl:top-[245px] right-10 xl:flex flex-col space-y-[30px]">
 
             <ProfileComplete />
 

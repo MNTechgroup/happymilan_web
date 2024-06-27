@@ -68,7 +68,7 @@ const index = ({ children }) => {
                 <div className='hidden md:block w-[90%] mt-[120px] '>
 
                     <h1 className='fixed left-10 text-[16px] text-[#716969] font-medium'>Account Setting</h1>
-                    <div className='fixed right-10'>
+                    <div className='fixed right-10 border-[1px] border-[#000] p-[5px]'>
                         <Image alt='back' loading="lazy" width={32} height={32} onClick={() => router.back()} className='cursor-pointer' src='/assests/common/arrow-back.svg' />
                     </div>
                     <div className='flex mt-[20px]'>

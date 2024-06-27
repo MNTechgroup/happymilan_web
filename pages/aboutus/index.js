@@ -32,6 +32,9 @@ const Text3 = {
 }
 
 
+
+
+
 const Box = {
     boxShadow: "0px 10px 40px 0px rgba(158, 158, 158, 0.19)"
 }
@@ -74,6 +77,22 @@ function index() {
         fontWeight: "400",
         lineHeight: "normal",
     }
+
+
+    const Text = {
+        color: "#FFF",
+        fontFamily: "Poppins",
+        fontStyle: "normal",
+        fontWeight: "600",
+        lineHeight: "normal",
+    };
+    const ReadMoreText = {
+        color: "#FFF",
+        fontFamily: "Poppins",
+        fontStyle: "normal",
+        fontWeight: "400",
+        lineHeight: "normal",
+    };
 
     return (
         <>
@@ -163,7 +182,7 @@ function index() {
                                 <h1 className='lg:text-left text-center  2xl:w-[403px] xl:w-[403px] lg:w-[320px] text-[20px] md:text-[32px] lg:text-[25px] 2xl:text-[32px] xl:text-[32px]  mb-10' id='sec-3-h1'>Why you should register with us?</h1>
                                 <p className='mb-10 lg:text-[16px] 2xl:text-[20px] xl:text-[20px]  text-[15px] text-center lg:text-left'>Welcome to Matrimoney, the premier online platform for finding your perfect life partner! We understand that finding a compatible partner is one of life's most important journeys</p>
                                 <div className='w-full lg:block flex justify-center'>
-                                   <UIbuttons.CreateNewProfileBTN Textstyle={BTNText}/>
+                                    <UIbuttons.CreateNewProfileBTN Textstyle={BTNText} />
                                 </div>
 
                             </div>
@@ -207,65 +226,80 @@ function index() {
                     <div className=' w-full pb-[90px] lg:pb-0 md:pb-0 sm:pb-0 flex  md:items-center flex-col md:flex-col lg:flex-row  justify-center lg:my-[90px] xl:my-[80px] 2xl:my-[90px] md:my-[0px] 2xl:p-[15px] xl:p-[15px] lg:p-[0px]'>
                         <div className='flex flex-col md:flex-row p-10'>
                             <div className='block sm:hidden lg:m-5 md:m-5 lg:my-10'>
-                                <Image alt="back" width={260} height={381} loading="lazy" className='cursor-pointer' onClick={() => router.push("/successstories")} src='/heroSec/landing-storyimg-1.svg' />
+                                <Image alt="back" width={260} height={381} loading="lazy" className='cursor-pointer' onClick={() => router.push("/successstories")} src='/assests/stories/stories-1.svg' />
                             </div>
                             <div className='hidden sm:block lg:m-5 md:m-5 lg:my-10'>
                                 <Image alt="img" width={260} height={381} id='story-img' src='/rectangle-369@2x.png' className='2xl:rounded-none xl:rounded-none lg:rounded-[10px] relative md:w-[260px] w-[260px] lg:w-[220px] 2xl:w-[260px] xl:w-[260px]  top-[100px] lg:top-[0px] 2xl:h-[381px] xl:h-[381px] lg:h-[360px] md:h-[381px] h-[381px] object-cover' />
-                                <div id='story-img-background' className=' lg:my-[-100px] rounded-t-none rounded-b-3xs [background:linear-gradient(0deg,_#000,_rgba(0,_0,_0,_0))] w-[260px] 2xl:w-[260px] xl:w-[260px] lg:w-[220px] md:w-[260px] w-[200px] h-[100px] opacity-[0.9]'>
-                                    <div className='flex justify-between'>
-                                        <div className='relative  left-[28px] top-[20px] border-black text-white font-poppins'>
-
+                                <div className=" lg:my-[-100px] my-[-50px] rounded-[10px] md:rounded-t-none md:rounded-b-3xs [background:linear-gradient(0deg,_#000,_rgba(0,_0,_0,_0))] w-[150px] md:w-[180px] lg:w-[260px] h-[100px] opacity-[0.9]">
+                                    <div className="flex justify-between">
+                                        <div className="relative left-[18px]  md:left-[10px] lg:left-[28px] top-[40px] md:top-[20px] border-black text-white font-poppins">
                                             <p className="m-0">
                                                 <span>
-                                                    <span className="font-semibold">{`Riya & Rohan`}</span>
+                                                    <span
+                                                        style={Text}
+                                                        className="text-[9px] md:text-[12px] lg:text-[18px] font-semibold"
+                                                    >{`Riya & Rohan`}</span>
                                                     <b className="font-poppins">{` `}</b>
                                                 </span>
                                             </p>
-                                            <p className="m-0 text-xs">(Married on 19 Apr 2023)</p>
+                                            <p
+                                                style={ReadMoreText}
+                                                className="m-0 text-[8px] md:text-[12px]"
+                                            >
+                                                Read story
+                                            </p>
                                         </div>
-                                        <div onClick={() => router.push("/successstories")} className='cursor-pointer m-5'>
+                                        <div className="m-5 relative top-[30px]">
                                             <Image
+                                                loading="lazy"
+                                                alt="img"
                                                 width={8}
                                                 height={8}
-                                                className="w-8 h-8"
-                                                alt="icon"
+                                                className="cursor-pointer w-[18px] h-[18px]"
                                                 src="/group-1061.svg"
                                             />
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
 
                             <div className='block sm:hidden lg:m-5 md:m-5 lg:my-10 my-[10%]'>
                                 {/* <img className='cursor-pointer' onClick={() => router.push("/successstories")} src='/heroSec/landing-storyimg-2.svg' /> */}
-                                <Image alt="img" width={260} height={381} loading="lazy" className='cursor-pointer' onClick={() => router.push("/successstories")} src='/heroSec/landing-storyimg-2.svg' />
+                                <Image alt="img" width={260} height={381} loading="lazy" className='cursor-pointer' onClick={() => router.push("/successstories")} src='/assests/stories/stories-2.svg' />
 
                             </div>
 
                             <div className='hidden sm:block lg:m-5 md:m-5 lg:my-10'>
                                 <Image alt="img" width={260} height={381} id='story-img' src='/rectangle-492@2x.png' className='2xl:rounded-none xl:rounded-none lg:rounded-[10px] relative md:w-[260px] w-[260px] lg:w-[220px] 2xl:w-[260px] xl:w-[260px] top-[100px] lg:top-[0px] 2xl:h-[381px] xl:h-[381px] lg:h-[360px] h-[381px] object-cover' />
-                                <div id='story-img-background' className=' lg:my-[-100px] rounded-t-none rounded-b-3xs [background:linear-gradient(0deg,_#000,_rgba(0,_0,_0,_0))] w-[260px] 2xl:w-[260px] xl:w-[260px] lg:w-[220px] md:w-[260px] w-[200px] h-[100px] opacity-[0.9]'>
-                                    <div className='flex justify-between'>
-                                        <div className='relative  left-[28px] top-[20px] border-black text-white font-poppins'>
+                                <div className=" lg:my-[-100px] my-[-50px] rounded-[10px] md:rounded-t-none md:rounded-b-3xs [background:linear-gradient(0deg,_#000,_rgba(0,_0,_0,_0))] w-[150px] md:w-[180px] lg:w-[260px] h-[100px] opacity-[0.9]">
+                                    <div className="flex justify-between">
+                                        <div className="relative left-[18px]  md:left-[10px] lg:left-[28px] top-[40px] md:top-[20px] border-black text-white font-poppins">
                                             <p className="m-0">
                                                 <span>
-                                                    <span className="font-semibold">{`Mahesh & Priya`}</span>
+                                                    <span
+                                                        style={Text}
+                                                        className="text-[9px] md:text-[12px] lg:text-[18px] font-semibold"
+                                                    >{`Mahesh & Priya`}</span>
                                                     <b className="font-poppins">{` `}</b>
                                                 </span>
                                             </p>
-                                            <p className="m-0 text-xs">(Married on 02 March 2023)</p>
+                                            <p
+                                                style={ReadMoreText}
+                                                className="m-0 text-[8px] md:text-[12px]"
+                                            >
+                                                Read story
+                                            </p>
                                         </div>
-                                        <div onClick={() => router.push("/successstories")} className='cursor-pointer m-5 relative top-[10px]'>
+                                        <div className="m-5 relative top-[30px]">
                                             <Image
+                                                loading="lazy"
+                                                alt="img"
                                                 width={8}
                                                 height={8}
-                                                className="w-8 h-8"
-                                                alt="icon"
+                                                className="cursor-pointer w-[18px] h-[18px]"
                                                 src="/group-1061.svg"
                                             />
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -285,7 +319,7 @@ function index() {
                                     </div>
 
                                     {/* <button onClick={() => router.push("/successstories")} id='sec-2-explore-story' className='mt-[10%] md:mt-[10%] lg:mt-[18.5%] 2xl:mt-[15.5%] xl:mt-[15.5%]'><span>Explore All Stories</span></button> */}
-                                    <UIbuttons.ExploreBTN/>
+                                    <UIbuttons.ExploreBTN />
                                 </div>
                             </section>
                             {/* <!-- Section: 2  End--> */}

@@ -125,6 +125,14 @@ function Sidebar() {
         lineHeight: "30px"
     }
 
+    const LoginText = {
+        fontFamily: "Poppins",
+        fontSize: "14px",
+        fontStyle: "normal",
+        fontWeight: "400",
+        lineHeight: "normal"
+    }
+
 
     const dispatch = useDispatch();
 
@@ -280,19 +288,16 @@ function Sidebar() {
                     variant="small"
                     className="p-1 font-normal rounded-[10px] p-[7px] rounded-[10px]"
                 >
-                    <Link
-                        style={{ color: "white" }}
-                        href="/login"
-                        className="flex items-center"
-                    >
-                        Member Login{" "}
-                        <Image loading="lazy" width={16} height={16}
-                            alt="icon"
-                            src="/assests/Black/Vector-2.svg"
-                            className="mr-4  relative left-[15px]"
-                        />
-
-                    </Link>
+                    
+                    <div className="">
+                        <Link href="/login" passHref>
+                            <button style={LoginText} className="flex items-center justify-evenly rounded-full text-[#000] hover:bg-[#F2F7FF]  bg-[#FFF] w-[92px] h-[39px]">
+                                {/* <Link href="/login" className="flex items-center">Member Login</Link> */}
+                                Login
+                                <Image width={18} height={18} alt="" src={"/assests/navbar/Profile-icon-grad.svg"} className="" />
+                            </button>
+                        </Link>
+                    </div>
                 </Typography>
 
             </> :
@@ -433,6 +438,7 @@ function Sidebar() {
         <>
             <div className="h-[20px] w-full">
                 <AppBar
+                    sx={{ boxShadow: "none" }}
                     className={`z-10 border-none fixed top-0 left-0 top-0 h-max shadow-none  max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4 p-4 text-white `}
                     id="landing-navigation-bg"
 
@@ -441,7 +447,7 @@ function Sidebar() {
                     <div className="flex items-center justify-between">
 
                         <Typography
-                          
+
 
                             className="mr-4 cursor-pointer py-1.5 lg:ml-[50px] font-medium"
                         >
@@ -449,7 +455,7 @@ function Sidebar() {
                         </Typography>
 
                         <div className="flex items-center gap-4">
-                            <div className={`${token ? "w-[100%]" : "w-[600px]"} hidden lg:block `}>{navList}</div>
+                            <div className={`${token ? "w-[100%]" : "w-[100%]"} hidden lg:block `}>{navList}</div>
 
                             <IconButton
                                 variant="text"

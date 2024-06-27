@@ -62,12 +62,12 @@ function ModifySearch({ state, updateSearchData, setFormOpen }) {
         multiValueLabel: (provided) => ({
             ...provided,
             backgroundColor: "#F9F9F9",
-            borderRadius:"5px"
+            borderRadius: "5px"
         }),
         multiValueRemove: (provided) => ({
             ...provided,
             backgroundColor: "#F9F9F9",
-            borderRadius:"5px"
+            borderRadius: "5px"
         }),
         // option : (provided) => ({
         //     ...provided,
@@ -506,7 +506,7 @@ function ModifySearch({ state, updateSearchData, setFormOpen }) {
                     <div className='flex flex-col space-y-[20px]'>
                         <div className='flex items-center'>
                             <h1 className='text-[#000] dark:text-[#FFF]'>Age</h1>
-                            <div className='flex justify-between items-center relative left-[48px] md:left-[118px] rounded-[8px] border-[1px] border-[#D8D8D8] w-[140px] h-[50px]'>
+                            <div className='flex justify-between items-center relative left-[48px] md:left-[118px] rounded-[8px] hover:border-[black] border-[1px] border-[#D8D8D8] w-[140px] h-[50px]'>
 
                                 <input onChange={HanldeInputChange} value={Userage.minAge} name='minAge' type='number' placeholder='From' className='dark:bg-[#141516] dark:text-[#FFF] rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
                                 <div className='w-[1px] h-[20px] bg-[#D8D8D8]'></div>
@@ -516,7 +516,7 @@ function ModifySearch({ state, updateSearchData, setFormOpen }) {
                         <div className='flex space-y-[20px] md:space-y-0 flex-col md:flex-row justify-between'>
                             <div className='flex items-center'>
                                 <h1 className='text-[#000] dark:text-[#FFF]'>Height</h1>
-                                <div className='flex justify-between items-center relative left-[48px] md:left-[100px] rounded-[8px] border-[1px] border-[#D8D8D8] w-[140px] h-[50px]'>
+                                <div className='hover:border-[black] flex justify-between items-center relative left-[48px] md:left-[100px] rounded-[8px] border-[1px] border-[#D8D8D8] w-[140px] h-[50px]'>
 
                                     <input name='minHeight' value={Userage.minHeight} onChange={HanldeInputChange} type='number' placeholder='From' className='dark:bg-[#141516] dark:text-[#FFF] rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
                                     <div className='w-[1px] h-[20px] bg-[#D8D8D8]'></div>
@@ -525,7 +525,7 @@ function ModifySearch({ state, updateSearchData, setFormOpen }) {
                             </div>
                             <div className='flex items-center space-x-[30px] '>
                                 <h1 className='text-[#000] dark:text-[#FFF]'>weight</h1>
-                                <div className='flex justify-between items-center rounded-[8px] border-[1px] border-[#D8D8D8] w-[140px] h-[50px]'>
+                                <div className='hover:border-[black] flex justify-between items-center rounded-[8px] border-[1px] border-[#D8D8D8] w-[140px] h-[50px]'>
                                     <input name='minWeight' value={Userage.minWeight} onChange={HanldeInputChange} type='number' placeholder='From' className='dark:bg-[#141516] dark:text-[#FFF] rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
                                     <div className='w-[1px] h-[20px] bg-[#D8D8D8]'></div>
                                     <input name='maxWeight' value={Userage.maxWeight} onChange={HanldeInputChange} type='number' placeholder='To' className='dark:bg-[#141516] dark:text-[#FFF] rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
@@ -647,7 +647,7 @@ function ModifySearch({ state, updateSearchData, setFormOpen }) {
 
 
                         <div className='w-full flex justify-end space-x-[20px]'>
-                            <button onClick={CLearAllData} className={` border-[1px] border-[#0F52BA] hover:bg-[#F2F7FF] dark:hover:bg-[#141516] w-[104px] h-[50px] dark:text-[#FFF] text-[black] rounded-[25px]`}>Clear All</button>
+                            <button onClick={CLearAllData} className={` border-[1px] border-[#8225AF] hover:bg-[#F2F7FF] dark:hover:bg-[#141516] w-[104px] h-[50px] dark:text-[#FFF] text-[black] rounded-[25px]`}>Clear All</button>
                             <button id='grad-btn' className={` border-[1px] border-[#0F52BA] bg-[#0F52BA] text-[white] w-[104px] h-[50px] rounded-[25px]`} onClick={SearchDataHandle} >Search</button>
                         </div>
                     </div>

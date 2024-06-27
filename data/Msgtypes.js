@@ -229,13 +229,13 @@ const MediaMsg = ({ menu, userMessage, Outgoing, sendAt, Top, setTop, onDeleteMe
     const handleImageClick = () => {
         if (imgRef.current.requestFullscreen) {
             imgRef.current.requestFullscreen();
-          } else if (imgRef.current.mozRequestFullScreen) { // Firefox
+        } else if (imgRef.current.mozRequestFullScreen) { // Firefox
             imgRef.current.mozRequestFullScreen();
-          } else if (imgRef.current.webkitRequestFullscreen) { // Chrome, Safari, and Opera
+        } else if (imgRef.current.webkitRequestFullscreen) { // Chrome, Safari, and Opera
             imgRef.current.webkitRequestFullscreen();
-          } else if (imgRef.current.msRequestFullscreen) { // IE/Edge
+        } else if (imgRef.current.msRequestFullscreen) { // IE/Edge
             imgRef.current.msRequestFullscreen();
-          }
+        }
     };
 
 
@@ -482,21 +482,26 @@ const MessageOptions = ({ data, onDeleteMessage }) => {
     };
 
 
-    const HanldeEvent = () => {
+    const HanldeEvent = (e) => {
 
-        onDeleteMessage(data.id);
 
-        const objectdata = {
-            "from": data.from,
-            "to": data.to,
-            "messageId": data.id,
-            "messageDeletedAll": true
+        if (e.title == "Delete Message") {
+            onDeleteMessage(data.id);
+
+            const objectdata = {
+                "from": data.from,
+                "to": data.to,
+                "messageId": data.id,
+                "messageDeletedAll": true
+            }
+
+            socket.emit("DeleteMessage", objectdata)
+
+            socket.emit("getLastConversation", { from: data.from, to: data.to });
+            socket.emit("getLastConversation", { to: data.from, from: data.to });
+            setAnchorEl(null);
         }
 
-        socket.emit("DeleteMessage", objectdata)
-
-        socket.emit("getLastConversation", { from: data.from, to: data.to });
-        socket.emit("getLastConversation", { to: data.from, from: data.to });
 
     }
 
@@ -526,7 +531,7 @@ const MessageOptions = ({ data, onDeleteMessage }) => {
             >
                 <Stack spacing={1} px={1}>
                     {Message_options.map((el) => (
-                        <MenuItem onClick={HanldeEvent}>{el.title}</MenuItem>
+                        <MenuItem onClick={() => HanldeEvent(el)}>{el.title}</MenuItem>
                     ))}
                 </Stack>
             </Menu>

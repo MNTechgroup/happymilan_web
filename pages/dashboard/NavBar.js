@@ -24,6 +24,7 @@ import { useDarkMode } from "../../ContextProvider/DarkModeContext";
 import icons from "../../utils/icons/icons";
 import { useChatSettings } from "../../ContextProvider/ChatSetingContext";
 import DarkModeToggle from '../emoji'
+import ProductsListModal from "../components/Models/ProductsListModal";
 
 const RequestNotification = dynamic(() => import("../components/Notification/RequestNotification"), {
     ssr: false
@@ -296,25 +297,27 @@ function NavBar({ handleSearch }) {
 
             <div className="min-h-screen flex flex-row bg-gray-100">
                 <div className="flex flex-col w-56 bg-white rounded-r-3xl overflow-hidden">
-                    <div className="flex items-center justify-center">
+                    <div className="ml-[5%]">
 
 
-                        <div className="flex space-x-[20px] pl-[10px] pr-[10px] pt-[20px] pb-[20px] border-b-[1px] border-gray-200">
+                        <div className="flex space-x-[20px]   pt-[20px] pb-[20px]">
                             <div>
-                                <Image alt="img" width={40} height={40} onClick={() => router.push("/dashboard/profile")} className="cursor-pointer" src="/assests/dashboard/user/userProfile.svg" />
+                                {/* <Image alt="img" width={40} height={40} onClick={() => router.push("/dashboard/profile")} className="cursor-pointer" src="/assests/dashboard/user/userProfile.svg" /> */}
+                                <ProfileImage size={40} />
                             </div>
                             <div>
                                 <h1 style={Username2}>{Uname}</h1>
                                 <p style={userStatus} className="text-[#0091FF]">Online</p>
 
                             </div>
-                            <div className="grid place-items-center">
+                            <div className="grid place-items-center relative left-[10%]">
                                 <span className=""><i className={`bx bx-dots-horizontal-rounded`}></i></span>
                             </div>
                         </div>
 
 
                     </div>
+                    <div className="relative left-[5%] h-[1px] w-[90%] bg-gray-100"></div>
                     <ul className="flex flex-col py-0 border-b-[1px] border-gray-200">
                         <li>
 
@@ -465,17 +468,14 @@ function NavBar({ handleSearch }) {
             </div>
             <div
                 id="nav-links"
-                className="p-1 p-[5px]  font-normal poppins rounded-[100%] dark:hover:bg-[#383838] hover:bg-[#F2F7FF] w-[40px] h-[40px] grid place-items-center"
-
+                className="p-1 p-[5px]  font-normal poppins rounded-[100%] dark:hover:bg-[#383838] hover:bg-[#F3F8FF] w-[40px] h-[40px] grid place-items-center"
             >
-
-
                 <Image alt="img" width={26} height={20} className="cursor-pointer" onClick={toggleDrawer('right', true)} src={darkMode ? "/assests/dashboard/icon/notification-white.svg" : "/assests/dashboard/icon/notification.svg"} />
 
             </div>
             <div
                 id="nav-links"
-                className="p-1 font-normal poppins p-[5px] rounded-[100%] dark:hover:bg-[#383838] hover:bg-[#F2F7FF] w-[40px] h-[40px] grid place-items-center"
+                className="p-1 font-normal poppins p-[5px] rounded-[100%] dark:hover:bg-[#383838] hover:bg-[#F3F8FF] w-[40px] h-[40px] grid place-items-center"
             >
                 <Badge badgeContent={notificationCount} color="primary">
                     <Image alt="img" width={17} height={20} className="cursor-pointer" onClick={handleNotificationOpen} src={darkMode ? "/assests/dashboard/icon/notification-icon-white.svg" : "/assests/dashboard/icon/notification-icon.svg"} />
@@ -486,7 +486,7 @@ function NavBar({ handleSearch }) {
                 className="p-1 font-normal rounded-[10px] p-[7px]"
 
             >
-                {darkMode ? icons["nav-dots-menu"].dark : icons["nav-dots-menu"].light}
+                <ProductsListModal />
 
             </div>
             <div
@@ -609,10 +609,10 @@ function NavBar({ handleSearch }) {
                                         </DialogContent>
                                         <div className="flex justify-evenly p-[20px] mb-[20px]">
                                             <div>
-                                                <button onClick={HandleLogout} name="stay" id="grad-button" className="rounded-[10px] w-[122px] h-[50px]">Stay</button>
+                                                <button onClick={HandleLogout} name="stay" id="grad-button" className="rounded-[23px] w-[122px] h-[50px]">Stay</button>
                                             </div>
                                             <div>
-                                                <button onClick={HandleLogout} name="exit" className="border-[black] border-[1px] rounded-[10px] w-[122px] h-[50px]">Log out</button>
+                                                <button onClick={HandleLogout} name="exit" className="border-[#8225AF] hover:bg-[#F3F8FF] border-[1px] rounded-[23px] w-[122px] h-[50px]">Log out</button>
                                             </div>
                                         </div>
                                     </Dialog>
@@ -645,12 +645,12 @@ function NavBar({ handleSearch }) {
                     >
                         {
                             isUpgradeActive ? "" : <>
-                                <div className="hover:bg-[#F2F7FF] h-[30px] w-[30px] rounded-[100%] absolute mt-[5px] ml-[5px] grid place-items-center">
+                                <div className="hover:bg-[#F3F8FF] h-[30px] w-[30px] rounded-[100%] absolute mt-[5px] ml-[5px] grid place-items-center">
                                     <Image width={15} height={15} alt="search" src="/assests/dashboard/icon/Search-grad.svg" loading="lazy" />
                                 </div>
                                 <input type='search'
                                     value={searchTerm}
-                                    onChange={handleChange} className='text-[#000] dark:text-[#FFF] outline-none   pl-[40px] w-[200px] h-[40px] rounded-[23px] bg-none border-[1px] border-[#E3E3E3]  dark:bg-[#242526]  ouline-none focus:border-[1px] focus:border-[black] pr-[10px]' placeholder='Profile ID Search' />
+                                    onChange={handleChange} className='hover:border-[black] text-[#000] dark:text-[#FFF] outline-none   pl-[40px] w-[200px] h-[40px] rounded-[23px] bg-none border-[1px] border-[#E3E3E3]  dark:bg-[#242526]  ouline-none focus:border-[1px] focus:border-[black] pr-[10px]' placeholder='Profile ID Search' />
 
                             </>
                         }
@@ -674,7 +674,7 @@ function NavBar({ handleSearch }) {
                                     style={{ color: "black" }}
                                     strokeWidth={2}
                                 >
-                                    <clipPath
+                                    <path
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                         d="M6 18L18 6M6 6l12 12"
@@ -689,7 +689,7 @@ function NavBar({ handleSearch }) {
                                     style={{ color: "black" }}
                                     strokeWidth={2}
                                 >
-                                    <clipPath
+                                    <path
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                         d="M4 6h16M4 12h16M4 18h16"

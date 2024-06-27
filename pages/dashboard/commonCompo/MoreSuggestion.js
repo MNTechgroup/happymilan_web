@@ -200,7 +200,7 @@ function MoreSuggestion() {
 
                     </div>
                     <div>
-                        <button id={darkMode ? 'Gradient-btn-2' : 'Gradient-border-btn'} onClick={handleLoadMoreUsers} disabled={isLoading} className='mt-[20px] w-[100%] h-[40px] rounded-[22px] text-[#000] dark:text-[#FFF]'>
+                        <button id={darkMode ? 'Gradient-btn-2' : ''} onClick={handleLoadMoreUsers} disabled={isLoading} className={`${darkMode ? "" : "border-[1px] border-[#8225AF]"} hover:bg-[#F3F8FF] mt-[20px] w-[100%] h-[40px] rounded-[22px] text-[#000] dark:text-[#FFF]`}>
                             {isLoading ? 'Loading...' : 'Load More'}
                         </button>
                     </div>

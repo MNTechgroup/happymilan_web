@@ -135,6 +135,14 @@ function CommonNavbar() {
         setUname(getCookie('userName'))
     }, [])
 
+    const LoginText = {
+        fontFamily: "Poppins",
+        fontSize: "14px",
+        fontStyle: "normal",
+        fontWeight: "400",
+        lineHeight: "normal"
+    }
+
     const navList = (
         <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
             <Typography
@@ -189,7 +197,7 @@ function CommonNavbar() {
                     style={{ color: `${isLoginActive ? "#0F52BA" : ""}`, backgroundColor: `${isLoginActive ? "rgba(15, 82, 186, 0.05)" : ""}`, fontFamily: "Poppins", fontSize: "14px", fontStyle: "normal", fontWeight: "400", lineHeight: "normal", }}
 
                 >
-                    <Link
+                    {/* <Link
                         href="/login"
                         className="flex items-center"
                         style={{ color: `${isLoginActive ? "#0F52BA" : "#000"}` }}
@@ -208,7 +216,22 @@ function CommonNavbar() {
                             </svg>
                         }
 
-                    </Link>
+                    </Link> */}
+
+                    <div className="">
+                        <Link href="/login" passHref>
+                            <button style={LoginText} id="grad-button" className="flex items-center justify-evenly rounded-full w-[92px] h-[39px]">
+                                {/* <Link href="/login" className="flex items-center">Member Login</Link> */}
+                                Login
+                                {/* <Image width={18} height={18} alt="" src={"/assests/navbar/Profile-icon-grad.svg"} className="" /> */}
+                                <Image loading="lazy" width={18} height={18}
+                                    alt="icon"
+                                    src="/assests/Black/Vector-2.svg"
+                                    className=""
+                                />
+                            </button>
+                        </Link>
+                    </div>
                 </Typography>
             </>
                 :
@@ -217,18 +240,19 @@ function CommonNavbar() {
                 </>
             }
 
-        </ul>
+        </ul >
     );
     return (
         <>
             <AppBar
+                sx={{ boxShadow: "none" }}
                 className={`z-10 border-none fixed top-0 left-0 top-0 h-max shadow-none  max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4 p-4 text-white `}
                 style={{ backgroundColor: "#FFF" }}
 
             >
                 <div className="flex items-center justify-between">
                     <Typography
-                      
+
 
                         className="mr-4 cursor-pointer py-1.5 lg:ml-[50px] font-medium"
                     >
@@ -236,7 +260,7 @@ function CommonNavbar() {
                     </Typography>
                     <div className="flex items-center gap-4">
                         {/* <div className={` w-[600px] hidden lg:block `}>{navList}</div> */}
-                        <div className={`${token ? "w-[100%]" : "w-[600px]"} hidden lg:block `}>{navList}</div>
+                        <div className={`${token ? "w-[100%]" : "w-[100%]"} hidden lg:block `}>{navList}</div>
 
                         <IconButton
                             variant="text"

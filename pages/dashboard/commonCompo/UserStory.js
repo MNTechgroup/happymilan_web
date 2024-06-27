@@ -282,9 +282,6 @@ function UserStory({ formData, updateFormData }) {
                                     <h1 style={Text3}>Add Story</h1>
                                 </div>
 
-                                <div>
-                                    <img alt='close-icon' className="w-[24px] h-[24px] cursor-pointer" onClick={handleClose} src="/assests/social/close.svg" />
-                                </div>
 
                             </div>
 
@@ -349,7 +346,7 @@ function UserStory({ formData, updateFormData }) {
                                                             <div className='absolute z-[110] left-[30px] h-[300px] top-[0px]'>
                                                                 {/* <EmojiPicker data={EmojiData} emojiSize={20}
                                                                     emojiButtonSize={28} onEmojiSelect={hanldeEmojiInput} /> */}
-                                                                <EmojiPicker onEmojiClick={hanldeEmojiInput} />
+                                                                    <EmojiPicker onEmojiClick={hanldeEmojiInput} />
                                                             </div>
                                                             : null}
                                                     </div>

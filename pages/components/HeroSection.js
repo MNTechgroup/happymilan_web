@@ -50,6 +50,8 @@ function HeroSection() {
         lineHeight: "normal",
     }
 
+
+
     const data = [{ id: 1, text: "100% Privacy" }, { id: 2, text: "0% Fake Profile" }, { id: 3, text: "Fully Secured" }, { id: 4, text: "Verified Profiles" }]
 
     const StarCard = ({ data }) => {
@@ -72,6 +74,21 @@ function HeroSection() {
     useEffect(() => {
         setToken(getCookie("jwtToken"))
     }, [])
+
+    const Text = {
+        color: "#FFF",
+        fontFamily: "Poppins",
+        fontStyle: "normal",
+        fontWeight: "600",
+        lineHeight: "normal",
+    };
+    const Text2 = {
+        color: "#FFF",
+        fontFamily: "Poppins",
+        fontStyle: "normal",
+        fontWeight: "400",
+        lineHeight: "normal",
+    };
 
 
     return (
@@ -117,11 +134,9 @@ function HeroSection() {
                                 <div className='relative py-[80px]  lg:p-10'>
                                     <h1 className='text-[#fff]  lg:leading-[50px] p-1 text-[20px] w-full md:text-[44px] md:w-full lg:w-full lg:text-[44px]'>Discover Your Perfect Match with HappyMilan.</h1>
                                     <p className='w-full lg:w-[432px] text-[#fff] lg:h-[76px] mt-[30px]'>Welcome to Matrimoney, the premier online platform for finding your perfect life partner! We understand that finding a compatible partner is one of life's most important journeys, and we are here to make that process seamless, enjoyable, and successful.</p>
-                                    {!token ?
-                                        <button className='w-[231px] h-[60px] lg:w-[231px] lg:h-[60px] 2xl:w-[231px] 2xl:h-[60px] xl:w-[220px]  mt-[40px] xl:mt-[30px] flex items-center justify-center' onClick={() => router.push("/login")} > Free Registration <Image quality={40} alt='icon' width={18} height={20} className='ml-[15px]' src='/assests/Blue/RegisterNow-icon.svg' /></button>
-                                        :
-                                        <button className='w-[231px] h-[60px] lg:w-[231px] lg:h-[60px] 2xl:w-[231px] 2xl:h-[60px] xl:w-[220px]  mt-[40px] xl:mt-[30px] flex items-center justify-center' onClick={() => router.push("/login")} > Free Registration <Image quality={40} alt='icon' width={18} height={20} className='ml-[15px]' src='/assests/Blue/RegisterNow-icon.svg' /></button>
-                                    }
+
+                                    <button className='w-[231px] h-[60px] lg:w-[231px] lg:h-[60px] 2xl:w-[231px] 2xl:h-[60px] xl:w-[220px]  mt-[40px] xl:mt-[30px] flex items-center justify-center' onClick={!token ? () => router.push("/login") : () => router.push("/dashboard")} >{!token ? "Free Registration" : "Explore Now"} <Image quality={40} alt='icon' width={18} height={20} className='ml-[15px]' src='/assests/Blue/RegisterNow-icon.svg' /></button>
+
                                 </div>
                             </div>
                         </div>
@@ -138,11 +153,11 @@ function HeroSection() {
                 <div className=' w-full pb-[90px] lg:pb-0 md:pb-0 sm:pb-0 flex  md:items-center flex-col md:flex-col lg:flex-row  justify-center lg:my-[90px] xl:my-[80px] 2xl:my-[90px] md:my-[0px] p-[15px]'>
                     <div className='flex flex-col md:flex-row p-10'>
                         <div className='block sm:hidden lg:m-5 md:m-5 lg:my-10'>
-                            <Image quality={40} loading='lazy' alt='icon' width={260} height={381} className='cursor-pointer' onClick={() => router.push("/successstories")} src='/heroSec/landing-storyimg-1.svg' />
+                            <Image quality={40} loading='lazy' alt='icon' width={260} height={381} className='cursor-pointer' onClick={() => router.push("/successstories")} src='/assests/storySec/stry-1.svg' />
                         </div>
                         <div className='hidden sm:block lg:m-5 md:m-5 lg:my-10'>
                             <Image quality={40} loading='lazy' alt='story-img-1' width={260} height={381} id='story-img' src='/rectangle-369@2x.png' className='2xl:rounded-none xl:rounded-none lg:rounded-[10px] relative md:w-[260px] w-[260px] lg:w-[220px] 2xl:w-[260px] xl:w-[260px]  top-[100px] lg:top-[0px] 2xl:h-[381px] xl:h-[381px] lg:h-[360px] md:h-[381px] h-[381px] object-cover' />
-                            <div id='story-img-background' className=' lg:my-[-100px] rounded-t-none rounded-b-3xs [background:linear-gradient(0deg,_#000,_rgba(0,_0,_0,_0))] w-[260px] 2xl:w-[260px] xl:w-[260px] lg:w-[220px] md:w-[260px] w-[200px] h-[100px] opacity-[0.9]'>
+                            {/* <div id='story-img-background' className=' lg:my-[-100px] rounded-t-none rounded-b-3xs [background:linear-gradient(0deg,_#000,_rgba(0,_0,_0,_0))] w-[260px] 2xl:w-[260px] xl:w-[260px] lg:w-[220px] md:w-[260px] w-[200px] h-[100px] opacity-[0.9]'>
                                 <div className='flex justify-between'>
                                     <div className='relative  left-[28px] top-[20px] border-black text-white font-poppins'>
 
@@ -166,16 +181,47 @@ function HeroSection() {
                                     </div>
 
                                 </div>
+                            </div> */}
+                            <div className=" lg:my-[-100px] my-[-50px] rounded-[10px] md:rounded-t-none md:rounded-b-3xs [background:linear-gradient(0deg,_#000,_rgba(0,_0,_0,_0))] w-[150px] md:w-[180px] lg:w-[260px] h-[100px] opacity-[0.9]">
+                                <div className="flex justify-between">
+                                    <div className="relative left-[18px]  md:left-[10px] lg:left-[28px] top-[40px] md:top-[20px] border-black text-white font-poppins">
+                                        <p className="m-0">
+                                            <span>
+                                                <span
+                                                    style={Text}
+                                                    className="text-[9px] md:text-[12px] lg:text-[18px] font-semibold"
+                                                >{`Riya & Rohan`}</span>
+                                                <b className="font-poppins">{` `}</b>
+                                            </span>
+                                        </p>
+                                        <p
+                                            style={Text2}
+                                            className="m-0 text-[8px] md:text-[12px]"
+                                        >
+                                            Read story
+                                        </p>
+                                    </div>
+                                    <div className="m-5 relative top-[30px]">
+                                        <Image
+                                            loading="lazy"
+                                            alt="img"
+                                            width={8}
+                                            height={8}
+                                            className="cursor-pointer w-[18px] h-[18px]"
+                                            src="/group-1061.svg"
+                                        />
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <div className='block sm:hidden lg:m-5 md:m-5 lg:my-10 my-[10%]'>
-                            <Image quality={40} loading='lazy' alt='icon' width={260} height={381} className='cursor-pointer' onClick={() => router.push("/successstories")} src='/heroSec/landing-storyimg-2.svg' />
+                            <Image quality={40} loading='lazy' alt='icon' width={260} height={381} className='cursor-pointer' onClick={() => router.push("/successstories")} src='/assests/storySec/stry-2.svg' />
                         </div>
 
                         <div className='hidden sm:block lg:m-5 md:m-5 lg:my-10'>
                             <Image quality={40} loading='lazy' alt='story-img-1' width={260} height={381} id='story-img' src='/rectangle-492@2x.png' className='2xl:rounded-none xl:rounded-none lg:rounded-[10px] relative md:w-[260px] w-[260px] lg:w-[220px] 2xl:w-[260px] xl:w-[260px] top-[100px] lg:top-[0px] 2xl:h-[381px] xl:h-[381px] lg:h-[360px] h-[381px] object-cover' />
-                            <div id='story-img-background' className=' lg:my-[-100px] rounded-t-none rounded-b-3xs [background:linear-gradient(0deg,_#000,_rgba(0,_0,_0,_0))] w-[260px] 2xl:w-[260px] xl:w-[260px] lg:w-[220px] md:w-[260px] w-[200px] h-[100px] opacity-[0.9]'>
+                            {/* <div id='story-img-background' className=' lg:my-[-100px] rounded-t-none rounded-b-3xs [background:linear-gradient(0deg,_#000,_rgba(0,_0,_0,_0))] w-[260px] 2xl:w-[260px] xl:w-[260px] lg:w-[220px] md:w-[260px] w-[200px] h-[100px] opacity-[0.9]'>
                                 <div className='flex justify-between'>
                                     <div className='relative  left-[28px] top-[20px] border-black text-white font-poppins'>
                                         <p className="m-0">
@@ -197,6 +243,37 @@ function HeroSection() {
                                         />
                                     </div>
 
+                                </div>
+                            </div> */}
+                            <div className=" lg:my-[-100px] my-[-50px] rounded-[10px] md:rounded-t-none md:rounded-b-3xs [background:linear-gradient(0deg,_#000,_rgba(0,_0,_0,_0))] w-[150px] md:w-[180px] lg:w-[260px] h-[100px] opacity-[0.9]">
+                                <div className="flex justify-between">
+                                    <div className="relative left-[18px]  md:left-[10px] lg:left-[28px] top-[40px] md:top-[20px] border-black text-white font-poppins">
+                                        <p className="m-0">
+                                            <span>
+                                                <span
+                                                    style={Text}
+                                                    className="text-[9px] md:text-[12px] lg:text-[18px] font-semibold"
+                                                >{`Mahesh & Priya`}</span>
+                                                <b className="font-poppins">{` `}</b>
+                                            </span>
+                                        </p>
+                                        <p
+                                            style={Text2}
+                                            className="m-0 text-[8px] md:text-[12px]"
+                                        >
+                                            Read story
+                                        </p>
+                                    </div>
+                                    <div className="m-5 relative top-[30px]">
+                                        <Image
+                                            loading="lazy"
+                                            alt="img"
+                                            width={8}
+                                            height={8}
+                                            className="cursor-pointer w-[18px] h-[18px]"
+                                            src="/group-1061.svg"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -188,28 +188,28 @@ function Credentials() {
 
           </div>
           <h1 className="text-[10px] xl:text-[12px] mt-[30px] lg:mt-[35px] xl:mt-[40px] font-medium">Current Email</h1>
-          <div className="flex place-items-center w-[100%]  h-[37px] lg:h-[43px] xl:h-[50px] mt-[1%]  border-[1px] border-[#E6E6E6] rounded-[8px] px-[15px] ">
-            <input className="outline-none text-[12px] lg:text-[14px]  xl:text-[16px] placeholder:text-[black]"
-              // placeholder="jit*****@gmail.com" 
-              value={Email}
-            />
-          </div>
+          {/* <div className="flex place-items-center w-[100%]  h-[37px] lg:h-[43px] xl:h-[50px] mt-[1%]  border-[1px] border-[#E6E6E6] rounded-[8px] px-[15px] "> */}
+          <input className="h-[37px] lg:h-[43px] xl:h-[50px] mt-[1%] w-full hover:border-[black]  border-[1px] border-[#E6E6E6] rounded-[8px] px-[15px] outline-none text-[12px] lg:text-[14px]  xl:text-[16px] placeholder:text-[black]"
+            // placeholder="jit*****@gmail.com" 
+            value={Email}
+          />
+          {/* </div> */}
           <h1 className="text-[10px] xl:text-[12px] mt-[20px] lg:mt-[25px] xl:mt-[30px] font-medium">New Email</h1>
-          <div className="flex place-items-center w-[100%]  h-[37px] lg:h-[43px] xl:h-[50px] mt-[1%]  border-[1px] border-[#E6E6E6] rounded-[8px] px-[15px] ">
-            <input type="email" onChange={handleEmailChange} className=" w-full h-full outline-none text-[12px] lg:text-[14px]  xl:text-[16px] " />
-          </div>
+          {/* <div className="flex place-items-center w-[100%]  h-[37px] lg:h-[43px] xl:h-[50px] mt-[1%]  border-[1px] border-[#E6E6E6] rounded-[8px] px-[15px] "> */}
+          <input type="email" onChange={handleEmailChange} className=" rounded-[10px] px-[15px] h-[37px] lg:h-[43px] mt-[1%] xl:h-[50px] border-[1px] border-[#E6E6E6] hover:border-[black] w-full h-full outline-none text-[12px] lg:text-[14px]  xl:text-[16px] " />
+          {/* </div> */}
 
           <div className="flex gap-x-[5%] mt-[15px] lg:mt-[25px] xl:mt-[30px] ">
             <button
               onClick={handleClose}
-              className="text-[12px] lg:text-[14px] xl:text-[16px] w-[100%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px] border-[1px] border-[#0F52BA]"
+              className="text-[12px] lg:text-[14px] xl:text-[16px] w-[100%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[23px] border-[1px] border-[#8225AF] hover:bg-[#F3F8FF]"
             >
               Not Now
             </button>
             <button
               id="grad-button"
               onClick={HandleTabclick}
-              className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white] w-[100%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px]"
+              className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white] w-[100%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[23px]"
             >
               {Loading ? <>
                 <Image loading="lazy" alt="loader" width={25} height={25} className='animate-spin inline ' src='/assests/animation/loaderIcon.svg' />
@@ -258,7 +258,7 @@ function Credentials() {
               <button
                 id="grad-button"
                 onClick={HandleTabclick}
-                className="w-[45%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px] text-[12px] lg:text-[14px] xl:text-[16px] text-[white]"
+                className="w-[45%] h-[37px] lg:h-[43px] xl:h-[50px]  rounded-[23px]  text-[12px] lg:text-[14px] xl:text-[16px] text-[white]"
               >
                 {Loading ? <>
                   <Image loading="lazy" alt="loader" width={25} height={25} className='animate-spin inline ' src='/assests/animation/loaderIcon.svg' />
@@ -289,7 +289,7 @@ function Credentials() {
               <button
                 id="grad-button"
                 onClick={handleClose}
-                className="w-[30%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px]"
+                className="w-[30%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[23px] "
               >
                 <h1 className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white]">OK</h1>
               </button>
@@ -468,14 +468,14 @@ function Credentials() {
             <button
 
               onClick={handleCloseModal}
-              className="w-[100%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px] border-[1px] border-[#0F52BA]"
+              className="w-[100%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[23px] border-[1px] border-[#8225AF] hover:bg-[#F3F8FF]"
             >
               <h1 className="text-[12px] lg:text-[14px] xl:text-[16px] ">Not Now</h1>
             </button>
             <button
               id="grad-button"
               onClick={HandleActiveTab2}
-              className="w-[100%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px]"
+              className="w-[100%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[23px]"
             >
               <h1 className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white]">Continue</h1>
             </button>
@@ -524,7 +524,7 @@ function Credentials() {
                 <button
                   id="grad-button"
                   onClick={HandleActiveTab2}
-                  className="w-[45%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px] text-[12px] lg:text-[14px] xl:text-[16px] text-[white]"
+                  className="w-[45%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[23px]  text-[12px] lg:text-[14px] xl:text-[16px] text-[white]"
                 >
                   {Loading ? <>
                     <Image loading="lazy" alt="loader" width={25} height={25} className='animate-spin inline ' src='/assests/animation/loaderIcon.svg' />
@@ -559,7 +559,7 @@ function Credentials() {
               <button
                 id="grad-button"
                 onClick={handleCloseModal}
-                className="w-[30%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px]"
+                className="w-[30%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[23px] "
               >
                 <h1 className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white]">OK</h1>
               </button>
@@ -610,9 +610,6 @@ function Credentials() {
       }
     };
 
-
-
-    const [Email2, setEmail2] = useState(null)
     const [ChnagedEmail, SetChangedEmail] = useState({
       currentEmail: "",
       mobileNumber: "",
@@ -728,7 +725,7 @@ function Credentials() {
           </div>
           <h1 className="text-[10px] xl:text-[12px] mt-[30px] lg:mt-[35px] xl:mt-[40px] font-medium">Current Mobile Number</h1>
           <div className="flex place-items-center w-[100%]  h-[37px] lg:h-[43px] xl:h-[50px] mt-[1%]  border-[1px] border-[#E6E6E6] rounded-[8px] px-[15px] ">
-            <input value={ChnagedEmail.currentMobileNumber} className="outline-none text-[12px] lg:text-[14px]  xl:text-[16px] placeholder:text-[black]" placeholder="********92" />
+            <input value={ChnagedEmail?.currentMobileNumber} className="outline-none text-[12px] lg:text-[14px]  xl:text-[16px] placeholder:text-[black]" placeholder="********92" />
           </div>
           <h1 className="text-[10px] xl:text-[12px] mt-[20px] lg:mt-[25px] xl:mt-[30px] font-medium">New Mobile Number</h1>
           <div className="flex place-items-center w-[100%]  h-[37px] lg:h-[43px] xl:h-[50px] mt-[1%]  border-[1px] border-[#E6E6E6] rounded-[8px] px-[15px] ">
@@ -739,14 +736,14 @@ function Credentials() {
             <button
 
               onClick={handleHideModel}
-              className="w-[100%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px] border-[1px] border-[#0F52BA]"
+              className="w-[100%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[23px] border-[1px] border-[#8225AF] hover:bg-[#F3F8FF]"
             >
               <h1 className="text-[12px] lg:text-[14px] xl:text-[16px] ">Not Now</h1>
             </button>
             <button
               id="grad-button"
               onClick={HandleTabclick3}
-              className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white] w-[100%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px]"
+              className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white] w-[100%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[23px]"
             >
               {/* <h1 className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white]">Submit</h1> */}
               {Loading ? <>
@@ -795,7 +792,7 @@ function Credentials() {
               <button
                 id="grad-button"
                 onClick={HandleTabclick3}
-                className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white] w-[45%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px]"
+                className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white] w-[45%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[23px]"
               >
                 {/* <h1 className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white]">Confirm</h1> */}
                 {Loading ? <>
@@ -826,7 +823,7 @@ function Credentials() {
               <button
                 id="grad-button"
                 onClick={handleHideModel}
-                className="w-[30%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[8px] lg:rounded-[10px]"
+                className="w-[30%] h-[37px] lg:h-[43px] xl:h-[50px] rounded-[23px]"
               >
                 <h1 className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white]">OK</h1>
               </button>
@@ -853,16 +850,18 @@ function Credentials() {
           <h1 id="setting-text-grad" className="text-[15px] xl:text-[16px]  ml-[0px]">Login Details</h1>
         </div>
         <div className="w-[500px] lg:w-[640px] xl:w-[700px]">
-        <h1 style={TextHeading} className=" mt-[20px]">
-          This menu enables users to update and manage authentication info, ensuring secure access to the account or system
-        </h1>
+          <h1 style={TextHeading} className=" mt-[20px]">
+            This menu enables users to update and manage authentication info, ensuring secure access to the account or system
+          </h1>
         </div>
         <div className=" mt-[20px] xl:mt-[25px] w-[500px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
         {/* Email */}
         <div>
           <div className="mt-[15px] xl:mt-[20px] flex  ">
             <h1 className="text-[15px] xl:text-[16px] mb-[5px] w-[550px] lg:w-[620px] xl:w-[680px] font-medium">Email</h1>
-            <Image alt="edit" loading="lazy" className="cursor-pointer" onClick={handleClickOpen} width={20} height={20} src="/assests/dashboard/icon/edit-details-icon.svg" />
+            <div onClick={handleClickOpen} className="cursor-pointer hover:bg-[#F3F8FF] p-[6px] rounded-full">
+              <Image alt="edit" loading="lazy" className="" onClick={handleClickOpen} width={20} height={20} src="/assests/dashboard/icon/edit-details-icon.svg" />
+            </div>
           </div>
           <Modal
             className="focus:outline-none"
@@ -893,7 +892,9 @@ function Credentials() {
           {/* Password */}
           <div className="mt-[20px] flex  ">
             <h1 className="text-[15px] xl:text-[16px] mb-[5px] w-[550px] lg:w-[620px] xl:w-[680px] font-medium">Password</h1>
-            <Image alt="icon" loading="lazy" onClick={handleClickOpenModal} width={20} height={20} src="/assests/dashboard/icon/edit-details-icon.svg" />
+            <div onClick={handleClickOpenModal} className="cursor-pointer hover:bg-[#F3F8FF] p-[6px] rounded-full">
+              <Image alt="icon" loading="lazy" onClick={handleClickOpenModal} width={20} height={20} src="/assests/dashboard/icon/edit-details-icon.svg" />
+            </div>
           </div>
           <Modal
             className="focus:outline-none "
@@ -919,7 +920,9 @@ function Credentials() {
         <div>
           <div className="mt-[20px] flex  ">
             <h1 className="text-[15px] xl:text-[16px] mb-[5px] w-[550px] lg:w-[620px] xl:w-[680px] font-medium">Mobile Number</h1>
-            <Image alt="icon" loading="lazy" onClick={handleClickShow} width={20} height={20} src="/assests/dashboard/icon/edit-details-icon.svg" />
+            <div onClick={handleClickShow} className="cursor-pointer hover:bg-[#F3F8FF] p-[6px] rounded-full">
+              <Image alt="icon" loading="lazy" onClick={handleClickShow} width={20} height={20} src="/assests/dashboard/icon/edit-details-icon.svg" />
+            </div>
           </div>
           <Modal
             className="focus:outline-none "

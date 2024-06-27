@@ -28,7 +28,7 @@ body {
   background: linear-gradient(90deg, rgba(15, 82, 186, 0.10) 0%, rgba(130, 37, 175, 0.10) 100%);
 }
 
-/* grad-btn */
+/* grad-btn  success-story-btn-style*/
 
 
 
@@ -137,46 +137,6 @@ body {
   color: white;
 }
 
-
-
-#Add-details-btn:hover::before {
-  content: "";
-  position: absolute;
-  left: 0.8px;
-  right: 1px;
-  top: 1px;
-  bottom: 0.7px;
-  border-radius: 23px;
-  background-color: #F3F8FF;
-  z-index: -1;
-  transition: 200ms;
-}
-
-
-
-#Add-details-btn {
-  border: none;
-  outline: none;
-  position: relative;
-  z-index: 1;
-  border-radius: 23px;
-  /* background: linear-gradient(to right, #00FFA3, #DC1FFF); */
-  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
-  cursor: pointer;
-}
-
-#Add-details-btn::before {
-  content: "";
-  position: absolute;
-  left: 0.8px;
-  right: 1px;
-  top: 1px;
-  bottom: 0.7px;
-  border-radius: 23px;
-  background-color: white;
-  z-index: -1;
-  transition: 200ms
-}
 
 
 
@@ -1500,63 +1460,6 @@ input[type="range"] {
 
 
 
-#success-story-btn-style {
-  border: none;
-  outline: none;
-  position: relative;
-  z-index: 1;
-  border-radius: 23px;
-  /* background: linear-gradient(to right, #00FFA3, #DC1FFF); */
-  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
-  cursor: pointer;
-}
-
-#success-story-btn-style::before {
-  content: "";
-  position: absolute;
-  left: 0.8px;
-  right: 1px;
-  top: 1px;
-  bottom: 0.7px;
-  border-radius: 23px;
-  background-color: white;
-  z-index: -1;
-  transition: 200ms
-}
-
-#success-story-btn-style:hover::before {
-  background-color: #F3F8FF;
-}
-
-#Publish-stry-button:hover::before {
-  background-color: #F3F8FF;
-}
-
-/* success-story-btn-style */
-
-#Publish-stry-button {
-  border: none;
-  outline: none;
-  position: relative;
-  z-index: 1;
-  border-radius: 10px;
-  /* background: linear-gradient(to right, #00FFA3, #DC1FFF); */
-  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
-  cursor: pointer;
-}
-
-#Publish-stry-button::before {
-  content: "";
-  position: absolute;
-  left: 1.8px;
-  right: 1.5px;
-  top: 1.8px;
-  bottom: 1.5px;
-  border-radius: 10px;
-  background-color: white;
-  z-index: -1;
-  transition: 200ms
-}
 
 
 #Search-Member-Box {
