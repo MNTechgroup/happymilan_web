@@ -1,20 +1,20 @@
 
 import React, { useEffect, useState } from 'react'
-import NavBar from '../NavBar'
-import SideBar from '../SideBar'
-import Footer from '../../components/Footer'
+import NavBar from '../../_components/layout/NavBar'
+import SideBar from '../../_components/layout/SideBar'
+import Footer from '../../_components/layout/Footer'
 import ProtectedRoutes from '../../routes/ProtectedRoutes'
 import { useDispatch, useSelector } from 'react-redux'
 import { Getcancelrequestdata } from '../../../store/actions/UsersAction'
 import Image from 'next/image'
-import UserprofileSkeleton from '../../components/Loader/UserprofileSkeleton'
+import UserprofileSkeleton from '../../_components/common/shader/UserprofileSkeleton'
 import { getCookie } from 'cookies-next'
 import dynamic from 'next/dynamic'
 
-const UserStory = dynamic(() => import('../commonCompo/UserStory'));
+const UserStory = dynamic(() => import('../../_components/Container/UserStory'));
 const CanceledProfile = dynamic(() => import('./comp/CanceledProfile'));
-const ProfileComplete = dynamic(() => import('../commonCompo/ProfileComplete'));
-const MoreSuggestion = dynamic(() => import('../commonCompo/MoreSuggestion'));
+const ProfileComplete = dynamic(() => import('../../_components/Container/ProfileComplete'));
+const MoreSuggestion = dynamic(() => import('../../_components/Container/MoreSuggestion'));
 const GridUserCancel = dynamic(() => import('./comp/GridUserCancel'));
 function index() {
 

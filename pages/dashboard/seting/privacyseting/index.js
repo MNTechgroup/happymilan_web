@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import NavBar from "../../NavBar";
 import SideBar from "../comp/Sidebar";
 import { useDispatch } from "react-redux";
 import { Getprivacyquestions } from "../../../../store/actions/UserSettingAction";
@@ -15,7 +14,6 @@ function index() {
     dispatch(Getprivacyquestions())
   }, [])
 
-  const handleSearch = (searchTerm) => { }
 
   return (
     <>

@@ -2,25 +2,7 @@ import { useRouter } from 'next/router'
 import React from 'react'
 
 function index() {
-
-    const Text4 = {
-        fontFamily: "Poppins",
-        fontStyle: "normal",
-        fontWeight: "500",
-        lineHeight: "normal"
-    }
-    const Text1 = {
-        fontFamily: "Poppins",
-        fontStyle: "normal",
-        fontWeight: "400",
-        lineHeight: "normal"
-    }
-    const Text3 = {
-        fontFamily: "Poppins",
-        fontStyle: "normal",
-        fontWeight: "600",
-        lineHeight: "normal"
-    }
+    
     const Text2 = {
         fontFamily: "Poppins",
         fontStyle: "normal",

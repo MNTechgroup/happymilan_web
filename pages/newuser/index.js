@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import Navbar from '../components/Navbar'
 import { useRouter } from 'next/router'
-import dynamic from 'next/dynamic';
 import GeneralSection from './tabs/GeneralSection';
 import HobbySection from './tabs/HobbySection';
 import Image from 'next/image';
@@ -58,10 +56,8 @@ const Text1 = {
     return (
         <>
 
-            <Navbar />
 
-          
-
+        
             <div className='w-full h-full grid place-items-center pt-[100px]'>
 
                 <div className='block lg:flex  2xl:gap-x-[70px] xl:gap-x-[0px]'>

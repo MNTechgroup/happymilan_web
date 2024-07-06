@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { DeleteSaveSearchData, FetchSaveSearchData, GetSearchUsersData, SaveUserSearchPost, updateSearchData } from '../../../../store/actions/SearchUsersActions';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useDarkMode } from '../../../../ContextProvider/DarkModeContext';
-import { Dialog, DialogContent } from '@mui/material';
+import { Dialog, DialogContent, Skeleton } from '@mui/material';
 import Image from 'next/image';
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
@@ -143,7 +143,7 @@ function ModifySearch({ state, updateSearchData, setFormOpen }) {
         minHeight: null,
         maxHeight: null,
         minWeight: null,
-        maxWeight: null
+        maxWeight: null,
     })
 
     const [SearchSave, SetSearchSave] = useState("")
@@ -202,6 +202,9 @@ function ModifySearch({ state, updateSearchData, setFormOpen }) {
             maxAge: res?.minAge?.max,
             minHeight: res?.height?.min,
             maxHeight: res?.height?.max,
+            maxWeight : res?.weight?.max,
+            minWeight : res?.weight?.min,
+            
 
 
         })
@@ -378,15 +381,6 @@ function ModifySearch({ state, updateSearchData, setFormOpen }) {
 
     const SearchDataHandle = () => {
         handleClickDeleteImageModal()
-        // dispatch(GetSearchUsersData(SearchData))
-
-        // setFormOpen(false)
-
-        // setTimeout(() => {
-        //     CLearAllData()
-        // }, 2000)
-
-
 
     }
 
@@ -415,7 +409,6 @@ function ModifySearch({ state, updateSearchData, setFormOpen }) {
             dispatch(GetSearchUsersData(SearchData))
 
             setFormOpen(false)
-            // dispatch(GetSearchUsersData(SearchData))
             setTimeout(() => {
                 CLearAllData()
             }, 2000)
@@ -475,11 +468,6 @@ function ModifySearch({ state, updateSearchData, setFormOpen }) {
 
     const totalPage = Math.ceil(data.length / DataperPage)
 
-    // const currentData = data.slice(
-    //     (currentPage - 1) * itemsPerPage,
-    //     currentPage * itemsPerPage
-    // );
-
     const currentData = data.slice(
         (currentPage - 1) * DataperPage,
         currentPage * DataperPage
@@ -508,9 +496,9 @@ function ModifySearch({ state, updateSearchData, setFormOpen }) {
                             <h1 className='text-[#000] dark:text-[#FFF]'>Age</h1>
                             <div className='flex justify-between items-center relative left-[48px] md:left-[118px] rounded-[8px] hover:border-[black] border-[1px] border-[#D8D8D8] w-[140px] h-[50px]'>
 
-                                <input onChange={HanldeInputChange} value={Userage.minAge} name='minAge' type='number' placeholder='From' className='dark:bg-[#141516] dark:text-[#FFF] rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
+                                <input onChange={HanldeInputChange} value={Userage.minAge} name='minAge' type='number' placeholder='Min' className='dark:bg-[#141516] dark:text-[#FFF] rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
                                 <div className='w-[1px] h-[20px] bg-[#D8D8D8]'></div>
-                                <input onChange={HanldeInputChange} value={Userage.maxAge} name='maxAge' type='number' placeholder='To' className='dark:bg-[#141516] dark:text-[#FFF] rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
+                                <input onChange={HanldeInputChange} value={Userage.maxAge} name='maxAge' type='number' placeholder='Max' className='dark:bg-[#141516] dark:text-[#FFF] rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
                             </div>
                         </div>
                         <div className='flex space-y-[20px] md:space-y-0 flex-col md:flex-row justify-between'>
@@ -518,17 +506,17 @@ function ModifySearch({ state, updateSearchData, setFormOpen }) {
                                 <h1 className='text-[#000] dark:text-[#FFF]'>Height</h1>
                                 <div className='hover:border-[black] flex justify-between items-center relative left-[48px] md:left-[100px] rounded-[8px] border-[1px] border-[#D8D8D8] w-[140px] h-[50px]'>
 
-                                    <input name='minHeight' value={Userage.minHeight} onChange={HanldeInputChange} type='number' placeholder='From' className='dark:bg-[#141516] dark:text-[#FFF] rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
+                                    <input name='minHeight' value={Userage.minHeight} onChange={HanldeInputChange} type='number' placeholder='Min' className='dark:bg-[#141516] dark:text-[#FFF] rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
                                     <div className='w-[1px] h-[20px] bg-[#D8D8D8]'></div>
-                                    <input name='maxHeight' value={Userage.maxHeight} onChange={HanldeInputChange} type='number' placeholder='To' className='dark:bg-[#141516] dark:text-[#FFF] rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
+                                    <input name='maxHeight' value={Userage.maxHeight} onChange={HanldeInputChange} type='number' placeholder='Max' className='dark:bg-[#141516] dark:text-[#FFF] rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
                                 </div>
                             </div>
                             <div className='flex items-center space-x-[30px] '>
                                 <h1 className='text-[#000] dark:text-[#FFF]'>weight</h1>
                                 <div className='hover:border-[black] flex justify-between items-center rounded-[8px] border-[1px] border-[#D8D8D8] w-[140px] h-[50px]'>
-                                    <input name='minWeight' value={Userage.minWeight} onChange={HanldeInputChange} type='number' placeholder='From' className='dark:bg-[#141516] dark:text-[#FFF] rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
+                                    <input name='minWeight' value={Userage.minWeight} onChange={HanldeInputChange} type='number' placeholder='Min' className='dark:bg-[#141516] dark:text-[#FFF] rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
                                     <div className='w-[1px] h-[20px] bg-[#D8D8D8]'></div>
-                                    <input name='maxWeight' value={Userage.maxWeight} onChange={HanldeInputChange} type='number' placeholder='To' className='dark:bg-[#141516] dark:text-[#FFF] rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
+                                    <input name='maxWeight' value={Userage.maxWeight} onChange={HanldeInputChange} type='number' placeholder='Max' className='dark:bg-[#141516] dark:text-[#FFF] rounded-[8px] pl-[10px] h-[40px] w-[60px] border-none outline-none bg-none focus:outline-none' />
                                 </div>
                             </div>
                         </div>
@@ -664,69 +652,59 @@ function ModifySearch({ state, updateSearchData, setFormOpen }) {
                         </div>
                         <div className='h-[160px] flex justify-center'>
 
-                            {data.length > 0 ? <>
-
-                                <ul className='flex flex-col justify-start items-start space-y-[15px]'>
-
-                                    {currentData?.map((res) => {
-                                        return (
-                                            <>
-                                                <li className='text-[#000] dark:hover:text-[#e3e3e3] dark:text-[#FFF] cursor-pointer flex justify-between p-[10px] h-[40px] w-[264px] rounded-[22px] dark:hover:bg-[#383838] hover:bg-[#F2F7FF] '>
-                                                    <div onClick={() => SaveButtonClick(res)}><span className='' style={SaveText}>{res?.saveSearch}</span></div>
-                                                    <div onClick={() => DeleteList(res)}>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-                                                            <g clip-path="url(#clip0_1066_324)">
-                                                                <path d="M4.5 14.25C4.5 15.075 5.175 15.75 6 15.75H12C12.825 15.75 13.5 15.075 13.5 14.25V5.25H4.5V14.25ZM6 6.75H12V14.25H6V6.75ZM11.625 3L10.875 2.25H7.125L6.375 3H3.75V4.5H14.25V3H11.625Z" fill="#5F6368" />
-                                                            </g>
-                                                            <defs>
-                                                                <clipPath id="clip0_1066_324">
-                                                                    <rect width="18" height="18" fill="white" />
-                                                                </clipPath>
-                                                            </defs>
-                                                        </svg>
-                                                    </div>
-                                                </li>
-                                            </>
-                                        )
-                                    })}
-
-
-                                    {/* <li className='text-[#000] dark:hover:text-[#e3e3e3] dark:text-[#FFF] cursor-pointer flex justify-between p-[10px] h-[40px] w-[264px] rounded-[22px] dark:hover:bg-[#383838]  hover:bg-[#F2F7FF] '>
-                                    <div><span className='' style={SaveText}>My Matches 2</span></div>
-                                    <div>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-                                            <g clip-path="url(#clip0_1066_324)">
-                                                <path d="M4.5 14.25C4.5 15.075 5.175 15.75 6 15.75H12C12.825 15.75 13.5 15.075 13.5 14.25V5.25H4.5V14.25ZM6 6.75H12V14.25H6V6.75ZM11.625 3L10.875 2.25H7.125L6.375 3H3.75V4.5H14.25V3H11.625Z" fill="#5F6368" />
-                                            </g>
-                                            <defs>
-                                                <clipPath id="clip0_1066_324">
-                                                    <rect width="18" height="18" fill="white" />
-                                                </clipPath>
-                                            </defs>
-                                        </svg>
-                                    </div>
-                                </li> */}
-                                </ul>
-                            </>
-                                :
+                            {status ?
                                 <>
-                                    <div className='h-[full] grid place-items-center mt-[10%]'>
-                                        <div className='grid place-items-center space-y-[5px]'>
-                                            <Image alt='not-found' width={34} height={34} src={"/assests/dashboard/icon/NotFound-img.svg"} />
-                                            <h1 className='inline' style={ImageNotFoundText}>No Data Found</h1>
-                                        </div>
-                                    </div>
-                                </>
-                            }
+                                    <ul className='flex flex-col justify-start items-start space-y-[15px]'>
+                                        <Skeleton className='text-[#000] dark:hover:text-[#e3e3e3] dark:text-[#FFF] cursor-pointer flex justify-between p-[10px] h-[40px] w-[264px] rounded-[22px]'>                            </Skeleton>
+                                    </ul>
+                                </> : <>
+
+                                    {data.length > 0 ? <>
+
+
+
+                                        <ul className='flex flex-col justify-start items-start space-y-[15px]'>
+
+
+
+                                            {currentData?.map((res) => {
+                                                return (
+                                                    <>
+                                                        <li className='text-[#000] dark:hover:text-[#e3e3e3] dark:text-[#FFF] cursor-pointer flex justify-between p-[10px] h-[40px] w-[264px] rounded-[22px] dark:hover:bg-[#383838] hover:bg-[#F2F7FF] '>
+                                                            <div onClick={() => SaveButtonClick(res)}><span className='' style={SaveText}>{res?.saveSearch}</span></div>
+                                                            <div onClick={() => DeleteList(res)}>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                                                    <g clip-path="url(#clip0_1066_324)">
+                                                                        <path d="M4.5 14.25C4.5 15.075 5.175 15.75 6 15.75H12C12.825 15.75 13.5 15.075 13.5 14.25V5.25H4.5V14.25ZM6 6.75H12V14.25H6V6.75ZM11.625 3L10.875 2.25H7.125L6.375 3H3.75V4.5H14.25V3H11.625Z" fill="#5F6368" />
+                                                                    </g>
+                                                                    <defs>
+                                                                        <clipPath id="clip0_1066_324">
+                                                                            <rect width="18" height="18" fill="white" />
+                                                                        </clipPath>
+                                                                    </defs>
+                                                                </svg>
+                                                            </div>
+                                                        </li>
+                                                    </>
+                                                )
+                                            })}
+
+                                        </ul>
+                                    </>
+                                        :
+                                        <>
+                                            <div className='h-[full] grid place-items-center mt-[10%]'>
+                                                <div className='grid place-items-center space-y-[5px]'>
+                                                    <Image alt='not-found' width={34} height={34} src={"/assests/dashboard/icon/NotFound-img.svg"} />
+                                                    <h1 className='inline' style={ImageNotFoundText}>No Data Found</h1>
+                                                </div>
+                                            </div>
+                                        </>
+                                    }
+                                </>}
                         </div>
                         {data.length > 0 ? <>
                             <div className='flex justify-between'>
-                                {/* <div>
-                                    <button onClick={handlePrev} disabled={currentPage === 1} className='w-[50px] h-[20px] text-[14px] border-[1px] border-[black]'>Prev</button>
-                                </div>
-                                <div>
-                                    <button onClick={handleNext} disabled={currentPage === totalPage} className='w-[50px] h-[20px] text-[14px] border-[1px] border-[black]'>Next</button>
-                                </div> */}
 
                                 <div>
                                     <div onClick={handlePrev} style={{ display: currentPage === 1 ? "none" : "" }} className='relative left-[15px] hover:bg-[#F2F7FF] cursor-pointer w-[30px] h-[30px] rounded-full grid place-items-center'>
@@ -745,8 +723,8 @@ function ModifySearch({ state, updateSearchData, setFormOpen }) {
                         }
                     </div>
 
-                </div>
-            </div>
+                </div >
+            </div >
 
 
 
@@ -772,7 +750,7 @@ function ModifySearch({ state, updateSearchData, setFormOpen }) {
                         <button onClick={HandleLogout} name="exit" className="border-[black] border-[1px] rounded-[24px] w-[122px] h-[50px]">Yes</button>
                     </div>
                 </div>
-            </Dialog>
+            </Dialog >
 
 
 

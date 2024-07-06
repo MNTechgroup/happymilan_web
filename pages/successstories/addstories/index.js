@@ -1,6 +1,6 @@
 import React from "react";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+import Navbar from "../../_components/layout/AuthNavbar";
+import Footer from "../../_components/layout/Footer";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
@@ -29,14 +29,6 @@ function index() {
         fontWeight: "400",
         lineHeight: "normal",
     }
-
-    //     color: #6A6A6A;
-    // text-align: center;
-    // font-family: Poppins;
-    // font-size: 10px;
-    // font-style: normal;
-    // font-weight: 400;
-    // line-height: normal;
 
     const Text3 = {
         color: "#6A6A6A",

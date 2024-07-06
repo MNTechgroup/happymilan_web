@@ -17,7 +17,8 @@ import {
     GET_RECENT_USERPROFILE_DATA, GET_RECENT_USERPROFILE_DATA_FAILURE, GET_RECENT_USERPROFILE_DATA_SUCCESS, UPDATE_ADDRESS_DATA,
     UPDATE_ADDRESS_DATA_FAILURE, UPDATE_ADDRESS_DATA_SUCCESS, FETCH_GRID_USER_DATA_REQUEST, FETCH_GRID_USER_DATA_REQUEST_SUCCESS,
     LIKED_USERS_PROFILE_DATA, LIKED_USERS_PROFILE_DATA_SUCCESS, UPLOAD_MY_STORY, UPLOAD_MY_STORY_SUCCESS, UPLOAD_MY_STORY_FAILURE,
-    GET_ALL_STATUS_SUCCESS, GET_ALL_STATUS, GET_ALL_STATUS_FAILURE, UPLOAD_MY_STORY_MODAL, DELETE_MY_STATUS_SUCCESS, DELETE_STATUS_MODAL
+    GET_ALL_STATUS_SUCCESS, GET_ALL_STATUS, GET_ALL_STATUS_FAILURE, UPLOAD_MY_STORY_MODAL, DELETE_MY_STATUS_SUCCESS, DELETE_STATUS_MODAL,
+    VIEW_STORY_POST
 } from '../type';
 import { GET_REQUEST, GET_REQUEST_SUCCESS, GET_REQUEST_FAILURE } from '../type';
 import { fetchMyProfileData } from '../reducers/MyProfile';
@@ -649,25 +650,34 @@ export const FetchUserDataById = async (userId) => {
 
 }
 
-export const Sentblockrequest = (requestData, OtherUserId) => {
+export const Sentblockrequest = (requestData) => {
+    console.log("🚀 ~ Sentblockrequest ~ requestData:", requestData)
 
     return async (dispatch) => {
         dispatch({ type: SENT_BLOCK_REQUEST });
 
+        // const EnumStatusOfFriend = {
+        //     REQUESTED: 'requested',
+        //     RECEIVED: 'received',
+        //     ACCEPTED: 'accepted',
+        //     REJECTED: 'rejected',
+        //     REMOVED: 'removed',
+        //     BLOCKED: 'blocked',
+        //   };
 
         const axios = require('axios');
-        const currentuserId = getCookie("userid")
+
         const token = getCookie("authtoken")
         let data = JSON.stringify({
-            "user": OtherUserId,
-            "request": requestData,
-            "status": "blocked"
+            "user": requestData?.InitiatorUser,
+            "request": requestData?.RequestID,
+            "status": requestData?.status
 
 
         });
 
         let config = {
-            method: 'PUT',
+            method: 'POST',
             maxBodyLength: Infinity,
             url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/friend/respond-friend-req`,
             headers: {
@@ -682,6 +692,8 @@ export const Sentblockrequest = (requestData, OtherUserId) => {
                 // console.log(JSON.stringify(response.data));
                 dispatch({ type: SENT_BLOCK_REQUEST_SUCCESS, payload: response.data })
                 // dispatch({type : GET_REQUEST })
+                dispatch(getAcceptedRequestData())
+                dispatch(getblockuserdata())
             })
             .catch((error) => {
                 console.log(error);
@@ -1019,6 +1031,14 @@ export const Postrecentuserprofilefailure = (error) => (
     }
 )
 
+const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+};
+
 export const GetrecentuserprofileData = () => {
     return async (dispatch) => {
         dispatch({ type: GET_RECENT_USERPROFILE_DATA })
@@ -1041,7 +1061,7 @@ export const GetrecentuserprofileData = () => {
         axios.request(config)
             .then((response) => {
 
-                dispatch({ type: GET_RECENT_USERPROFILE_DATA_SUCCESS, payload: response.data.data })
+                dispatch({ type: GET_RECENT_USERPROFILE_DATA_SUCCESS, payload: shuffleArray(response.data.data) })
             })
             .catch((error) => {
                 console.log(error);
@@ -1180,7 +1200,7 @@ export const Uploadmystory = (requestdata, seconddata, theblob, Caption) => {
                 "contentType": requestdata.imagesdata.contentType,
                 "isProfilePic": false,
                 // "caption": Caption ? Caption : "",
-                "caption": Caption ,
+                "caption": Caption,
                 "profileType": "statusImage"
             }
 
@@ -1349,4 +1369,7 @@ export const DeleteMystatus = (StatusID) => {
 
     }
 }
+
+
+
 // GET_ALL_STATUS_SUCCESS

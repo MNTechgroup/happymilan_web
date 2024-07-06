@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React from 'react'
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import NavBar from '../../NavBar';
+import NavBar from '../../../_components/layout/NavBar';
 
 function SideBar() {
 

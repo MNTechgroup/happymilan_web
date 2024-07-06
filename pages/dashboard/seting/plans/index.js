@@ -10,7 +10,6 @@ const Sidebar2 = dynamic(() => import('../comp/Sidebar2'));
 const index = ({ children }) => {
 
 
-    const handleSearch = (searchTerm) => { }
 
     return (
         <>

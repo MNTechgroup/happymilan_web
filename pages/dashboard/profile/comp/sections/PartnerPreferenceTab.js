@@ -305,7 +305,7 @@ const PartnerPreferenceTab = ({ partnerPrefID, formData, updateFormData }) => {
 
     return (
         <>
-            <div className={`w-full ${showForm ? "h-[100vh]" : "h-[400px]"} border-[1px] border-[#F1F1F1] rounded-[10px] space-y-[20px]`}>
+            <div className={`w-full ${showForm ? "h-[900px]" : "h-[400px]"} border-[1px] border-[#F1F1F1] rounded-[10px] space-y-[20px]`}>
                 <div className='pt-[10px] grid place-items-center'>
                     <ul className='w-[90%] flex justify-between items-center m-[10px]'>
                         <li><h1 style={Text2} className='dark:text-[#FFF] text-[16px]'>{showForm ? "Modify Partner Preference" : "Partner Preference"}</h1></li>
@@ -338,15 +338,17 @@ const PartnerPreferenceTab = ({ partnerPrefID, formData, updateFormData }) => {
 
                                     <div className='w-[90%] flex justify-between'>
                                         <div>
-                                            <h1 className='text-[#000] pb-[10px]' style={Text2}>Choose Age</h1>
+                                            <h1 className='text-[#000] pb-[10px]' style={labelText}>Choose Age</h1>
                                             <div className="flex flex-col md:flex-row justify-center 2xl:items-center xl:items-center lg:gap-y-0  gap-y-[10px] gap-x-[60px]">
                                                 <div className="flex items-center space-x-[10px]">
                                                     <DynamicSelect styles={customStyles2} options={options}
+                                                        placeholder="min"
                                                         onChange={(selectedOption) => handleInputChange({ target: { name: "agemin", value: selectedOption?.value } })}
 
                                                     />
                                                     <h1 style={labelText}>To</h1>
                                                     <DynamicSelect styles={customStyles2} options={options}
+                                                     placeholder="max"
                                                         onChange={(selectedOption) => handleInputChange({ target: { name: "agemax", value: selectedOption?.value } })}
 
                                                     />
@@ -358,16 +360,18 @@ const PartnerPreferenceTab = ({ partnerPrefID, formData, updateFormData }) => {
                                         </div>
 
                                         <div>
-                                            <h1 className='text-[#000] pb-[10px]' style={Text2}>Choose Height</h1>
+                                            <h1 className='text-[#000] pb-[10px]' style={labelText}>Choose Height</h1>
                                             <div className="flex flex-col md:flex-row justify-center 2xl:items-center xl:items-center lg:gap-y-0  gap-y-[10px] gap-x-[60px]">
                                                 <div className="flex items-center space-x-[10px]">
                                                     <DynamicSelect
                                                         styles={customStyles2}
                                                         options={options}
+                                                        placeholder="min"
                                                         onChange={(selectedOption) => handleInputChange({ target: { name: "heightmin", value: selectedOption?.value } })}
                                                     />
                                                     <h1 style={labelText}>To</h1>
                                                     <DynamicSelect styles={customStyles2} options={options}
+                                                     placeholder="max"
                                                         onChange={(selectedOption) => handleInputChange({ target: { name: "heightmax", value: selectedOption?.value } })}
                                                     />
 
@@ -378,7 +382,7 @@ const PartnerPreferenceTab = ({ partnerPrefID, formData, updateFormData }) => {
                                         </div>
                                     </div>
 
-                                    <div className='w-[90%]'>
+                                    <div className='w-[90%] h-full'>
                                         <div className='space-y-[15px] py-[15px]'>
                                             <div className=''>
                                                 <h1 className='text-[#000] pb-[10px]' style={labelText}>Choose country</h1>
@@ -425,7 +429,7 @@ const PartnerPreferenceTab = ({ partnerPrefID, formData, updateFormData }) => {
                                                 />
                                             </div>
                                             <div>
-                                                <h1 style={Text2} className="pb-[10px]">Creative</h1>
+                                                <h1 style={labelText} className="pb-[10px]">Creative</h1>
                                                 <DynamicSelect
                                                     options={creativeOption}
                                                     placeholder="Select.."
@@ -436,7 +440,7 @@ const PartnerPreferenceTab = ({ partnerPrefID, formData, updateFormData }) => {
                                                 />
                                             </div>
                                             <div>
-                                                <h1 style={Text2} className="pb-[10px]">Fun</h1>
+                                                <h1 style={labelText} className="pb-[10px]">Fun</h1>
                                                 <DynamicSelect
                                                     options={FunOptions}
                                                     placeholder="Select.."
@@ -447,7 +451,7 @@ const PartnerPreferenceTab = ({ partnerPrefID, formData, updateFormData }) => {
                                                 />
                                             </div>
                                             <div>
-                                                <h1 style={Text2} className="pb-[10px]">Prefer Diet</h1>
+                                                <h1 style={labelText} className="pb-[10px]">Prefer Diet</h1>
                                                 <DynamicSelect
                                                     options={dietOptions}
                                                     placeholder="Select.."

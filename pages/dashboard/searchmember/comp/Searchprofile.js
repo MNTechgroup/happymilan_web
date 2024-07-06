@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 
 // import required modules
-const ShareModal = dynamic(() => import('../../../components/Models/ShareModal'));
+const ShareModal = dynamic(() => import('../../../_components/Model/Models/ShareModal'));
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -15,19 +15,18 @@ import {
     addToShortlist,
 } from "../../../../store/actions/GetingAlluser";
 import {
-    Getlikeduserdata,
     Postrecentuserprofile,
     sendRequest,
 } from "../../../../store/actions/UsersAction";
-import UserprofileSkeleton from "../../../components/Loader/UserprofileSkeleton";
+import UserprofileSkeleton from "../../../_components/common/shader/UserprofileSkeleton";
 import { useRouter } from "next/router";
-import SendRequestBtn from "../../../components/Buttons/SendRequestBtn";
+import SendRequestBtn from "../../../_components/common/Buttons/SendRequestBtn";
 import { useDarkMode } from "../../../../ContextProvider/DarkModeContext";
 import dynamic from "next/dynamic";
-import ProfileMenu from "../../../components/popover/MenuPop";
-import BlockUserModal from "../../../components/Models/BlockModal";
-import RegisterAlertModal from '../../../components/Models/RegisterAlertModal';
-import ReportModal from '../../../components/Models/ReportModal';
+import ProfileMenu from "../../../_components/Model/popover/MenuPop";
+import BlockUserModal from "../../../_components/Model/Models/BlockModal";
+import RegisterAlertModal from '../../../_components/Model/Models/RegisterAlertModal';
+import ReportModal from '../../../_components/Model/Models/ReportModal';
 
 
 function Searchprofile() {
@@ -74,7 +73,7 @@ function Searchprofile() {
         boxShadow: "0px 0px 14px 0px rgba(0, 0, 0, 0.07)",
     };
 
-    const [sentrequest, setsentRequest] = useState({});
+    const [sentrequest, setsentRequest] = useState(false);
     const [CurrURL, SetCurURL] = useState("");
 
 
@@ -95,10 +94,7 @@ function Searchprofile() {
         setIsModalOpen(false);
     };
 
-    const OpenRegisterModal = (res) => {
-        setData(res);
-        setisRegisterModalOpen(true);
-    };
+
 
     const CloseRegisterModal = () => {
         setisRegisterModalOpen(false);
@@ -126,15 +122,7 @@ function Searchprofile() {
         lineHeight: "normal",
     };
 
-    const likeloading = useSelector(
-        (state) => state.usersact.LikedUsersData.likeloading
-    );
-
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(Getlikeduserdata())
-    }, [])
 
 
     const [openShortlistModal, setopenShortlistModal] = React.useState(false);
@@ -155,14 +143,15 @@ function Searchprofile() {
     };
 
     const HandleRequestModal = (res) => {
-        dispatch(sendRequest(res?.id))
+        // if (data?.data?.userProfileCompleted) {
+        dispatch(sendRequest(res._id));
 
         setsentRequest((prevState) => ({
             ...prevState,
-            [res.id]: !prevState[res.id], // Update the sentRequests state for the specific user ID
+            [res._id]: !prevState[res._id], // Update the sentRequests state for the specific user ID
         }));
 
-        if (!sentrequest[res.id]) {
+        if (!sentrequest[res._id]) {
             setshortlistText("Request Sent..");
             setopenShortlistModal(true);
         } else {
@@ -173,7 +162,11 @@ function Searchprofile() {
         setTimeout(() => {
             setopenShortlistModal(false);
         }, 800);
-    }
+
+    };
+
+
+
 
     const imageFoundText = {
         color: "#B3CBF1",
@@ -464,14 +457,11 @@ function Searchprofile() {
                                             </div>
 
                                             <div className="absolute right-0 mt-[0px]">
-                                                {/* <SendRequestBtn
-                                                    RequestId={sentrequest[res?.id]}
-                                                    HandleRequestModal={() => HandleRequestModal(res)}
-                                                /> */}
                                                 <SendRequestBtn
-                                                    RequestId={sentrequest[res?.id]}
+                                                    RequestId={sentrequest[res?._id]}
                                                     HandleRequestModal={() => HandleRequestModal(res)}
                                                 />
+                                                {/* <button onClick={()=>alert(res?.name)}>Send Request</button> */}
                                             </div>
                                         </div>
                                     </div>

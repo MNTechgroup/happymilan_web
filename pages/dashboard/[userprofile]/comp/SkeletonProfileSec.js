@@ -123,7 +123,7 @@ function SkeletonProfileSec() {
                         <div>
                         </div>
                         <div className='grid place-items-center'>
-                        <Skeleton variant="circular" width={184} height={184} className='mt-[5px] lg:mt-0 w-[80px] h-[80px] md:w-[100px] md:h-[100px] lg:w-[184px] lg:h-[184px] 2xl:w-[184px] 2xl:h-[184px] xl:w-[160px] xl:h-[160px]' src='/assests/dashboard/user/userProfile.svg' />
+                        <Skeleton variant="circular" width={184} height={184} className='mt-[5px] lg:mt-0 w-[80px] h-[80px] md:w-[100px] md:h-[100px] lg:w-[184px] lg:h-[184px] 2xl:w-[184px] 2xl:h-[184px] xl:w-[160px] xl:h-[160px]' />
                             <Skeleton className='pb-[10px] pt-[15px]'>
                                 <h1 style={Username} className='text-[18px] md:text-[20px] lg:text-[20px] xl:text-[20px] 2xl:text-[24px]'>{"Rohan Patel"}</h1>
                             </Skeleton>

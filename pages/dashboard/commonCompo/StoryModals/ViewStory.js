@@ -1,8 +1,10 @@
 import { Box, Popover } from '@mui/material'
 import Image from 'next/image'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { DeleteMystatus } from '../../../../store/actions/UsersAction'
+import getStatusTime from '../../../../utils/helpers/GetStoryTime'
+import { useRouter } from 'next/router'
 
 function ViewStory({ CloseBtn, Storyimagesrc }) {
 
@@ -15,6 +17,12 @@ function ViewStory({ CloseBtn, Storyimagesrc }) {
     }
 
     const Username = {
+        fontFamily: "Poppins",
+        fontStyle: "normal",
+        fontWeight: "600",
+        lineHeight: "normal"
+    }
+    const NoVieweYet = {
         fontFamily: "Poppins",
         fontStyle: "normal",
         fontWeight: "600",
@@ -69,6 +77,11 @@ function ViewStory({ CloseBtn, Storyimagesrc }) {
 
     const [ShowViewer, SetShowViewer] = useState(false)
 
+    const router = useRouter();
+
+    const { data, loading } = useSelector((state) => state.storyviews)
+
+
 
     return (
         <>
@@ -85,7 +98,8 @@ function ViewStory({ CloseBtn, Storyimagesrc }) {
 
                             <div className='text-left text-[#FFF]'>
                                 <h1 style={Username} className='text-[14px]'>{Storyimagesrc?.Data ? Storyimagesrc?.Data.userId.name : "NA"}</h1>
-                                <p style={Activity}>27, Designer</p>
+                                {/* <p style={Activity}>27, Designer</p> */}
+                                <p style={Activity}>{getStatusTime(Storyimagesrc?.Data ? Storyimagesrc.Data?.statusAddTime : "NA")}</p>
                             </div>
                         </div>
 
@@ -172,7 +186,7 @@ function ViewStory({ CloseBtn, Storyimagesrc }) {
                                                     <div className='absolute opacity-[0.2] h-[40px] w-[40px] right-[30px] mt-[-9px] rounded-full group-hover:bg-[#F2F7FF] p-[5px]'>
                                                     </div>
                                                     <Image alt='cross-icon' width={20} height={20} className='cursor-pointer'
-                                                       
+
                                                         src='/assests/dashboard/story/cross-icon.svg' />
                                                 </div>
                                             </>
@@ -183,22 +197,38 @@ function ViewStory({ CloseBtn, Storyimagesrc }) {
                     {ShowViewer ?
                         <>
                             <div className='pt-[16px]'>
-                                {/* <div>
-                                    <p style={ViewUserTitle}>Who views it</p>
-                                </div> */}
+
+                                {data?.results?.length > 0 ? <>
                                 <div className='h-full lg:h-[full] 2xl:w-auto 2xl:h-[500px] xl:h-[350px]'>
-                                    <div className='flex justify-center'>
-                                        <div className='flex justify-between items-center w-[80%] bg-[#1E1E1E] rounded-[10px] p-[20px]'>
-                                            <div className='flex items-center space-x-[29px]'>
-                                                <div className='ml-[12px]'><Image width={47} height={47} src={"/assests/dashboard/request/req-3.svg"} /></div>
-                                                <div><h1 style={ViewerUser}>Rohan Patel</h1></div>
-                                            </div>
-                                            <div>
-                                                <Image width={30} height={30} src={"/assests/stories/Stories-UserIcon.svg"} />
-                                            </div>
-                                        </div>
+                                    <div className='flex flex-col items-center space-y-[10px]'>
+                                        {
+                                            data?.results?.map((res, index) => {
+                                                return (
+                                                    <div className='flex justify-between items-center w-[80%] cursor-pointer duration-100 hover:opacity-90 hover:bg-[#383838] bg-[#1E1E1E] rounded-[10px] p-[20px]'>
+                                                        <div className='flex items-center space-x-[29px]'>
+                                                            <div className='ml-[12px]'><Image width={47} height={47} src={res?.viewerId?.profilePic} style={{ objectFit: "cover", borderRadius: "50%", width: "45px", height: "45px" }} /></div>
+                                                            <div><h1 style={ViewerUser}>{res?.viewerId?.name}</h1></div>
+                                                        </div>
+                                                        <div className='group' onClick={() => router.push(`/dashboard/${res?.viewerId?.id}`)}>
+                                                            <Image width={30} height={30} src={"/assests/stories/Stories-UserIcon.svg"} />
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+
                                     </div>
                                 </div>
+                                </> : 
+                                <>
+                                <div className='w-full 2xl:h-[50vh] xl:h-[40vh] h-[50vh] grid place-items-center'>
+
+                                    <div>
+                                        <p style={NoVieweYet} className='text-[12px] text-center text-[#FFF]'>No one views Yet</p>
+                                    </div>
+
+                                </div>
+                                </>}
                             </div>
                         </> : <>
                             <div className='flex justify-center space-x-[90px] pt-[20px]'>
@@ -222,12 +252,11 @@ function ViewStory({ CloseBtn, Storyimagesrc }) {
                             </div>
                         </>}
                     {Storyimagesrc?.storyViewType == "currentUser" ? <>
-                        {/* <div className='flex justify-center relative top-[10px] space-x-[10px]'> */}
                         <div className='w-full grid place-items-center'>
                             <div className='cursor-pointer flex justify-center absolute items-center bottom-[30px] space-x-[10px]'>
                                 <Image onClick={() => SetShowViewer(!ShowViewer)} width={22} height={15} src={"/assests/stories/Story-countview.svg"} />
                                 <div>
-                                    <span className='text-[white]'>01</span>
+                                    <span className='text-[white]'>{data?.totalResults}</span>
                                 </div>
                             </div>
                         </div>

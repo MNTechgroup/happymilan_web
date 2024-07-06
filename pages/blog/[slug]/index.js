@@ -1,10 +1,10 @@
 'use client'
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+import Navbar from "../../_components/layout/Navbar";
+import Footer from "../../_components/layout/Footer";
 import Image from "next/image";
-import ShareModal from "../../components/Models/ShareModal";
+import ShareModal from "../../_components/Model/Models/ShareModal";
 
 
 function Page() {

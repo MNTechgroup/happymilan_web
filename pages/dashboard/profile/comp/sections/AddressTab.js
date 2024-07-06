@@ -126,7 +126,7 @@ const AddressTab = ({ AddressID }) => {
 
     return (
         <>
-            <div className={`w-full ${showForm ? "h-[450px]" : "2xl:h-[353px] xl:h-[353px] lg:h-[353px] md:h-[353px] h-[370px]"} border-[1px] border-[#F1F1F1] rounded-[10px]  2xl:space-y-[20px] xl:space-y-[20px] lg:space-y-[20px] md:space-y-[20px] space-y-[10px]`}>
+            <div className={`w-full ${showForm ? "h-[460px]" : "2xl:h-[353px] xl:h-[353px] lg:h-[353px] md:h-[353px] h-[370px]"} border-[1px] border-[#F1F1F1] rounded-[10px]  2xl:space-y-[20px] xl:space-y-[20px] lg:space-y-[20px] md:space-y-[20px] space-y-[10px]`}>
                 <div className='pt-[10px] grid place-items-center'>
                     <ul className='w-[90%] flex justify-between items-center m-[10px]'>
                         <li><h1 style={Text2} className='dark:text-[#FFF] text-[16px]'>{showForm ? "Modify Address Details" : "Address Details"}</h1></li>

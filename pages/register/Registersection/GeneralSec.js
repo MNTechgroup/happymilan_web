@@ -78,6 +78,19 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
         { label: 'Married', value: 'married' },
     ]
 
+
+    const heightoption = Array.from({ length: 23 }, (v, k) => {
+        const value = k + 5;
+        return { value, label: value.toString() };
+    });
+
+    const weightoption = Array.from({ length: 23 }, (v, k) => {
+        const value = k + 40;
+        return { value, label: value.toString() };
+    });
+
+
+
     const [selectedProfile, setselectedProfile] = useState(0)
     const HandleSelectProfile = (val) => {
         console.log("🚀 ~ HandleSelectProfile ~ val:", val.id)
@@ -421,6 +434,75 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
                     <h1 className='text-[#000] pb-[10px]' style={Text2}>Caste / Sub Caste</h1>
                     <input name="cast" style={{ border: isFieldNull("cast") ? "1px solid red" : "1px solid #e6e6e6" }} value={formData?.general.cast} onChange={handleInputChange} type='text' className={`hover:border-[black] outline-none focus:border-[1px] focus:border-[black] pr-[10px] h-[50px] w-[300px] border-[1px] border-${'[#e6e6e6]'}  pl-[10px] rounded-[8px]`} />
 
+                </div>
+
+                <div className='flex justify-between w-[300px] 2xl:w-[300px] xl:w-[300px] lg:w-[300px]'>
+                    <div>
+                        <h1 className='dark:text-[#FFF] text-[#000] pb-[10px]' style={Text2}>Height</h1>
+
+                        <DynamicSelect
+                            className="h-[50px] w-[140px] 2xl:w-[140px] xl:w-[140px] lg:w-[140px] flex justify-end"
+                            styles={{
+                                control: (provided, state) => ({
+                                    ...provided,
+                                    paddingRight: '10px',
+                                    paddingLeft: "8px",
+                                    width: "300px",
+                                    height: "50px",
+                                    borderRadius: "8px",
+                                    borderColor: "red",
+                                    borderColor: isFieldNull("height") ? "red" : "",
+                                    '&:hover': {
+                                        borderColor: isFieldNull("height") ? "red" : "black",
+                                    },
+                                    boxShadow: state.isFocused ? 'none' : provided.boxShadow, // Add padding on the right side
+                                }),
+
+                                indicatorSeparator: (provided) => ({
+                                    ...provided,
+                                    display: 'none',
+                                    paddingRight: "20px"
+                                    // Hide the vertical line behind the arrow
+                                }),
+                            }}
+                            options={heightoption}
+                            onChange={(selectedOption) => handleInputChange({ target: { name: "height", value: JSON.stringify(selectedOption?.value) } })}
+
+                        />
+                    </div>
+                    <div>
+                        <h1 className='dark:text-[#FFF] text-[#000] pb-[10px]' style={Text2}>Weight</h1>
+
+                        <DynamicSelect
+                            className="h-[50px] w-[140px] 2xl:w-[140px] xl:w-[140px] lg:w-[140px] flex justify-end"
+                            styles={{
+                                control: (provided, state) => ({
+                                    ...provided,
+                                    paddingRight: '10px',
+                                    paddingLeft: "8px",
+                                    width: "300px",
+                                    height: "50px",
+                                    borderRadius: "8px",
+                                    borderColor: "red",
+                                    borderColor: isFieldNull("weight") ? "red" : "",
+                                    '&:hover': {
+                                        borderColor: isFieldNull("weight") ? "red" : "black",
+                                    },
+                                    boxShadow: state.isFocused ? 'none' : provided.boxShadow, // Add padding on the right side
+                                }),
+
+                                indicatorSeparator: (provided) => ({
+                                    ...provided,
+                                    display: 'none',
+                                    paddingRight: "20px"
+                                    // Hide the vertical line behind the arrow
+                                }),
+                            }}
+                            options={weightoption}
+                            onChange={(selectedOption) => handleInputChange({ target: { name: "weight", value: JSON.stringify(selectedOption?.value) } })}
+
+                        />
+                    </div>
                 </div>
 
                 <div>

@@ -1,16 +1,16 @@
 
 import React, { useState } from 'react'
-import NavBar from '../NavBar'
-import SideBar from '../SideBar'
-import UserStory from '../commonCompo/UserStory'
+import NavBar from '../../_components/layout/NavBar'
+import SideBar from '../../_components/layout/SideBar'
+import UserStory from '../../_components/Container/UserStory'
 import ProtectedRoutes from '../../routes/ProtectedRoutes'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 
 const GridUserProfile = dynamic(() => import('./comp/GridUserProfile'));
-const Footer = dynamic(() => import('../../components/Footer'));
-const ProfileComplete = dynamic(() => import('../commonCompo/ProfileComplete'));
-const MoreSuggestion = dynamic(() => import('../commonCompo/MoreSuggestion'));
+const Footer = dynamic(() => import('../../_components/layout/Footer'));
+const ProfileComplete = dynamic(() => import('../../_components/Container/ProfileComplete'));
+const MoreSuggestion = dynamic(() => import('../../_components/Container/MoreSuggestion'));
 const UserProfile = dynamic(() => import('./comp/UserProfile'))
 
 

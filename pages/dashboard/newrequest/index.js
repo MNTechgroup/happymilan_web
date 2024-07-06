@@ -1,8 +1,8 @@
 
 import React, { useEffect, useState } from 'react'
-import NavBar from '../NavBar'
-import SideBar from '../SideBar'
-import Footer from '../../components/Footer'
+import NavBar from '../../_components/layout/NavBar'
+import SideBar from '../../_components/layout/SideBar'
+import Footer from '../../_components/layout/Footer'
 
 import ProtectedRoutes from '../../routes/ProtectedRoutes'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,11 +11,11 @@ import dynamic from 'next/dynamic'
 import Image from 'next/image'
 
 
-const UserStory = dynamic(() => import('../commonCompo/UserStory'));
+const UserStory = dynamic(() => import('../../_components/Container/UserStory'));
 const Request = dynamic(() => import('./comp/Request'));
 const GridList = dynamic(() => import('./comp/GridList'));
-const ProfileComplete = dynamic(() => import('../commonCompo/ProfileComplete'));
-const MoreSuggestion = dynamic(() => import('../commonCompo/MoreSuggestion'));
+const ProfileComplete = dynamic(() => import('../../_components/Container/ProfileComplete'));
+const MoreSuggestion = dynamic(() => import('../../_components/Container/MoreSuggestion'));
 function index() {
 
 

@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { DELETE_SAVESEARCH_DATA, DELETE_SAVESEARCH_DATA_SUCCESS, FETCH_SAVESEARCH_DATA, FETCH_SAVESEARCH_DATA_FAILURE, FETCH_SAVESEARCH_DATA_SUCCESS } from '../type';
-import { data } from 'autoprefixer';
 
 const initialState = {
     minAge: 0,

@@ -1,27 +1,49 @@
 import React, { useEffect, useState } from 'react'
 // import required modules
 import { Swiper, SwiperSlide } from 'swiper/react';
-
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
-
-
 // import required modules
 import { Pagination } from 'swiper';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
-const ShareModal = dynamic(() => import('../../../components/Models/ShareModal'))
+const ShareModal = dynamic(() => import('../../../_components/Model/Models/ShareModal'))
 import Popover from '@mui/material/Popover';
 import { Dialog, DialogContent } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { acceptRequest, getblockuserdata } from '../../../../store/actions/UsersAction';
-import UserprofileSkeleton from '../../../components/Loader/UserprofileSkeleton';
-import MatchScoreModal from '../../../components/UserModal/MatchScoreModal';
+import UserprofileSkeleton from '../../../_components/common/shader/UserprofileSkeleton';
+import { getCookie } from 'cookies-next';
+import ShowMore from '../../../_components/common/profile/UserBio';
+const MatchScoreModal = dynamic(() => import('../../../_components/Model/Models/MatchScoreModal'), { ssr: false });
+import { useDarkMode } from '../../../../ContextProvider/DarkModeContext';
+const BlockUserModal = dynamic(() => import('../../../_components/Model/Models/BlockModal'), { ssr: false });
+
+
+
 
 function BlockedUser() {
 
+    const { darkMode, toggleDarkMode } = useDarkMode();
+
+    const [isBlockModalOpen, setisBlockModalOpen] = useState(false);
+
+    const [UserData, SetUserData] = useState("")
+
+    const openBlockModal = () => {
+        // SetUserData(res)
+        setisBlockModalOpen(true);
+        // console.log(res)
+    }
+
+    const closeBlockModal = () => { setisBlockModalOpen(false) }
+
+
+
     const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const isCurrentUser = getCookie("userid")
 
     const handleClose = () => {
         setAnchorEl(null);
@@ -126,9 +148,9 @@ function BlockedUser() {
 
 
     const handleClick = (event, res) => {
-        console.log("🚀 ~ handleClick ~ res:", res.id)
         setAnchorEl(event.currentTarget);
-        SetCurrentUserID(res)
+        SetUserData(res)
+        console.log(res)
     };
 
     const dispatch = useDispatch();
@@ -141,28 +163,7 @@ function BlockedUser() {
 
 
     const HandleUnblockUser = (res) => {
-        console.log("🚀 ~ HandleBlockUser ~ res:", res)
 
-
-        const isConfirmed = window.confirm('Are you sure you want to unblock this user?');
-
-        // Check if user confirmed
-        if (isConfirmed) {
-            // Perform blocking action
-            // Add your logic here to block the user
-            console.log('User Unblocked successfully');
-            setAnchorEl(null);
-            dispatch(acceptRequest(CurrentUserID))
-
-            setTimeout(() => {
-                dispatch(getblockuserdata())
-            }, 800);
-
-
-        } else {
-            // User canceled the action
-            console.log('Blocking action canceled');
-        }
     }
 
 
@@ -186,6 +187,8 @@ function BlockedUser() {
 
                             data?.blockedusersdata?.data.map((res, index) => {
                                 // const { images } = res
+
+                                const IsUser = res?.friend?.id === isCurrentUser;
                                 return (
                                     <>
 
@@ -203,30 +206,21 @@ function BlockedUser() {
                                                             {/* {res.user.userProfilePic.slice(0, 3).map((Imageres, theindex) => ( */}
 
                                                             <SwiperSlide>
-                                                                <Image placeholder="blur" blurDataURL="data:..." alt={`img`} width={197} height={258} style={{ width: "197px", height: "258px", borderRadius: "10px", objectFit: "cover" }} className='w-[197px] h-[258px]' src={res.user.profilePic} loading="lazy" />
+                                                                <Image placeholder="blur" blurDataURL="data:..." alt={`img`} width={197} height={258} style={{ width: "197px", height: "258px", borderRadius: "10px", objectFit: "cover" }} className='w-[197px] h-[258px]'
+                                                                    // src={res.user.profilePic} 
+                                                                    src={IsUser ? res?.user?.profilePic : res?.friend?.profilePic}
+                                                                    loading="lazy" />
                                                             </SwiperSlide>
 
                                                             {/* ))} */}
 
                                                         </Swiper>
-
-
-                                                        {/* ) : (
-                                                            <div>
-                                                                <div style={{ backgroundColor: "#F8FBFF", width: "197px", height: "258px", display: "flex", justifyContent: "center", alignItems: "center" }} >
-                                                                    <div className='grid place-items-center space-y-[5px]'>
-                                                                        <Image alt='not-Found' width={34} height={34} src={"/assests/dashboard/icon/NotFound-img.svg"} />
-                                                                        <h1 className='inline' style={ImageNotFoundText}>No Image</h1>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        )} */}
                                                     </div>
                                                 </div>
                                                 <div className='w-full pt-[15px] 2xl:pt-[15px] xl:pt-[20px]'>
                                                     <div className='flex justify-between  h-[50px]'>
                                                         <div>
-                                                            <h1 className='2xl:text-[20px] xl:text-[15px] text-[15px]' style={ProfileName}>{res.user.name}</h1>
+                                                            <h1 className='2xl:text-[20px] xl:text-[15px] text-[15px]' style={ProfileName}>{IsUser ? res?.user?.name : res?.friend?.name}</h1>
                                                             <h1 style={statusText} className={res.Activestatus ? `text-[#17C270]` : `text-[#7A7A7A]`}>{res.Activestatus ? "Online now" : "Offline"}</h1>
                                                         </div>
                                                         <div className='pr-[8px]'>
@@ -236,7 +230,7 @@ function BlockedUser() {
                                                                 </li>
                                                                 <li
                                                                     className="cursor-pointer"
-                                                                    // onClick={() => HandleShortlist(res.id)}
+                                                                // onClick={() => HandleShortlist(res.id)}
                                                                 >
                                                                     <div className="cursor-pointer hover:bg-[#F2F7FF] dark:hover:bg-[#383838] p-[5px] rounded-[50%] relative top-[-5px]">
                                                                         <Image
@@ -273,7 +267,7 @@ function BlockedUser() {
 
                                                                             <ul className='flex flex-col justify-center space-y-[12px] ml-[12px] '>
                                                                                 <li style={Text3} onClick={openModal} className='cursor-pointer flex  items-center space-x-[12px] text-[14px] mt-[15px]'> <Image loading="lazy" alt='share-icon' width={13} height={14} src='/assests/dashboard/icon/share-icon.svg' /> <p>Share</p></li>
-                                                                                <li style={Text3} onClick={() => HandleUnblockUser(res)} className='cursor-pointer flex  items-center space-x-[12px] text-[14px]'><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                                <li style={Text3} onClick={openBlockModal} className='cursor-pointer flex  items-center space-x-[12px] text-[14px]'><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                                     <path id="Vector" d="M7 14C6.03167 14 5.12167 13.8162 4.27 13.4488C3.41833 13.0813 2.6775 12.5825 2.0475 11.9525C1.4175 11.3225 0.91875 10.5817 0.55125 9.73C0.18375 8.87833 0 7.96833 0 7C0 6.03167 0.18375 5.12167 0.55125 4.27C0.91875 3.41833 1.4175 2.6775 2.0475 2.0475C2.6775 1.4175 3.41833 0.91875 4.27 0.55125C5.12167 0.18375 6.03167 0 7 0C7.96833 0 8.87833 0.18375 9.73 0.55125C10.5817 0.91875 11.3225 1.4175 11.9525 2.0475C12.5825 2.6775 13.0813 3.41833 13.4488 4.27C13.8162 5.12167 14 6.03167 14 7C14 7.96833 13.8162 8.87833 13.4488 9.73C13.0813 10.5817 12.5825 11.3225 11.9525 11.9525C11.3225 12.5825 10.5817 13.0813 9.73 13.4488C8.87833 13.8162 7.96833 14 7 14ZM7 12.95C8.66104 12.95 10.068 12.3736 11.2208 11.2208C12.3736 10.068 12.95 8.66104 12.95 7C12.95 6.29228 12.8275 5.61076 12.5825 4.95546C12.3375 4.30015 11.9933 3.70417 11.55 3.1675L3.1675 11.55C3.6925 12.005 4.28454 12.3521 4.94363 12.5913C5.60272 12.8304 6.28818 12.95 7 12.95ZM2.4675 10.8325L10.8325 2.4675C10.2958 2.0125 9.69985 1.6625 9.04454 1.4175C8.38924 1.1725 7.70772 1.05 7 1.05C5.33896 1.05 3.93203 1.6264 2.77921 2.77921C1.6264 3.93203 1.05 5.33896 1.05 7C1.05 7.71182 1.17833 8.39727 1.435 9.05637C1.69167 9.71546 2.03583 10.3075 2.4675 10.8325Z"
                                                                                         fill="red" />
                                                                                 </svg>
@@ -291,16 +285,34 @@ function BlockedUser() {
                                                     <div className='mt-[10px] 2xl:mt-[10px] xl:mt-[5px] pl-[2px]'>
                                                         <div id="user-card">
                                                             <ul id="user-card-grid">
-                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image loading="lazy" alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{`'32,5'3`}</li>
-                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image loading="lazy" alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{`${res.religion ? res.religion : 'NA'}, ${res.cast ? res.cast : 'NA'}`}</li>
-                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image loading="lazy" alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{`${res.motherTongue ? res.motherTongue : "NA , NA"}  `}</li>
-                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image loading="lazy" alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{res.maritalStatus ? res.maritalStatus : "NA , NA"}</li>
-                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image loading="lazy" alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{`${res.address ? res.address.currentCity : "NA"} , ${res.address ? res.address.currentCountry : "NA"}`}</li>
-                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image loading="lazy" alt='mark' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{res.userProfessional ? res.userProfessional.currentDesignation : "NA , NA"}</li>
+                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px] text-[#000] dark:text-[#FFF]' style={ListText}>
+                                                                    <Image loading='lazy' alt='mark' width={15} height={14} src={darkMode ? "/assests/Black/RightTickWhite.svg" : '/assests/Black/RightTick.svg'} className='inline pr-[5px]' />
+                                                                    32, 5'3
+                                                                </li>
+                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px] text-[#000] dark:text-[#FFF]' style={ListText}>
+                                                                    <Image loading='lazy' alt='mark' width={15} height={14} src={darkMode ? "/assests/Black/RightTickWhite.svg" : '/assests/Black/RightTick.svg'} className='inline pr-[5px]' />
+                                                                    {IsUser ? (res?.user?.religion ? res.user.religion : 'NA') : (res?.friend?.religion ? res.friend.religion : 'NA')}, {IsUser ? (res?.user?.cast ? res.user.cast : 'NA') : (res?.friend?.cast ? res.friend.cast : 'NA')}
+                                                                </li>
+                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px] text-[#000] dark:text-[#FFF]' style={ListText}>
+                                                                    <Image loading='lazy' alt='mark' width={15} height={14} src={darkMode ? "/assests/Black/RightTickWhite.svg" : '/assests/Black/RightTick.svg'} className='inline pr-[5px]' />
+                                                                    {IsUser ? (res?.user?.motherTongue ? res.user.motherTongue : "NA, NA") : (res?.friend?.motherTongue ? res.friend.motherTongue : "NA, NA")}
+                                                                </li>
+                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px] text-[#000] dark:text-[#FFF]' style={ListText}>
+                                                                    <Image loading='lazy' alt='mark' width={15} height={14} src={darkMode ? "/assests/Black/RightTickWhite.svg" : '/assests/Black/RightTick.svg'} className='inline pr-[5px]' />
+                                                                    {IsUser ? (res?.user?.maritalStatus ? res.user.maritalStatus : "NA, NA") : (res?.friend?.maritalStatus ? res.friend.maritalStatus : "NA, NA")}
+                                                                </li>
+                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px] text-[#000] dark:text-[#FFF]' style={ListText}>
+                                                                    <Image loading='lazy' alt='mark' width={15} height={14} src={darkMode ? "/assests/Black/RightTickWhite.svg" : '/assests/Black/RightTick.svg'} className='inline pr-[5px]' />
+                                                                    {res?.address ? res?.address?.currentCity : "NA"}, {res?.address ? res.address.currentCountry : "NA"}
+                                                                </li>
+                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px] text-[#000] dark:text-[#FFF]' style={ListText}>
+                                                                    <Image loading='lazy' alt='mark' width={15} height={14} src={darkMode ? "/assests/Black/RightTickWhite.svg" : '/assests/Black/RightTick.svg'} className='inline pr-[5px]' />
+                                                                    {res?.userProfessional ? res?.userProfessional?.currentDesignation : "NA, NA"}
+                                                                </li>
                                                             </ul>
                                                         </div>
                                                         <div className='mt-[20px] 2xl:mt-[20px] xl:mt-[15px]'>
-                                                            <p style={Text3} className='text-[#979797] text-[14px] 2xl:text-[12px] xl:text-[12px] '>{res.writeBoutYourSelf ? res.writeBoutYourSelf : "NA"}<span className='text-[#0F52BA]'> more </span></p>
+                                                            <ShowMore userid={IsUser ? res?.user.id : res?.friend.id} text={IsUser ? (res?.user?.writeBoutYourSelf ? res?.user?.writeBoutYourSelf : "NA") : (res?.friend?.writeBoutYourSelf ? res?.friend?.writeBoutYourSelf : "NA")} maxLength={100} />
                                                         </div>
                                                     </div>
                                                     <div className='flex justify-end items-center mt-[20px] lg:mt-0 2xl:mt-[20px] xl:mt-[20px] mr-[20px] space-x-[10px]'>
@@ -336,6 +348,13 @@ function BlockedUser() {
                 </div>
 
                 <ShareModal isOpen={isModalOpen} onClose={closeModal} />
+
+                <BlockUserModal
+                    title={"Unblock"}
+                    data={UserData}
+                    isOpen={isBlockModalOpen}
+                    onClose={closeBlockModal}
+                />
 
                 <React.Fragment>
                     <Dialog

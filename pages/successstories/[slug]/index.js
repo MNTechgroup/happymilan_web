@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
-import Navbar from '../../components/Navbar'
-import Footer from '../../components/Footer'
+import Navbar from '../../_components/layout/AuthNavbar'
+import Footer from '../../_components/layout/Footer'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
-import StoryView from '../../dashboard/commonCompo/StoryView'
 
-const ShareModal = dynamic(() => import('../../components/Models/ShareModal'));
+const ShareModal = dynamic(() => import('../../_components/Model/Models/ShareModal'));
 
 export async function getStaticPaths() {
     // Generate static paths based on the data you have

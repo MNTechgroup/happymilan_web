@@ -45,8 +45,7 @@ function PricingBox({ HandleCheckout }) {
         <>
 
             <div className='flex justify-center space-x-[28px]'>
-                {/* <div className='space-y-[15px] 2xl:space-y-[15px] xl:space-y-[10px] 2xl:w-[280px] xl:w-[240px] w-[280px] bg-[#FFF] xl:h-[340px] 2xl:h-[397px] h-[397px] rounded-[20px] border-[1px] border-[#0F52BA]'> */}
-
+             
                 {
                     data?.map((res, Index) => {
                         return (

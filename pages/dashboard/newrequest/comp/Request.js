@@ -12,16 +12,16 @@ import 'swiper/css/pagination';
 import { Pagination } from 'swiper';
 import Image from 'next/image';
 import { Dialog, DialogContent } from '@mui/material';
-import UserprofileSkeleton from '../../../components/Loader/UserprofileSkeleton';
+import UserprofileSkeleton from '../../../_components/common/shader/UserprofileSkeleton';
 import { acceptRequest, getFriendsList, rejectRequest } from '../../../../store/actions/UsersAction';
 import { useDispatch } from 'react-redux';
-import ShareModal from '../../../components/Models/ShareModal';
-import ProfileMenu from '../../../components/popover/MenuPop';
-import ReportModal from '../../../components/Models/ReportModal';
-import RegisterAlertModal from '../../../components/Models/RegisterAlertModal';
-import BlockUserModal from "../../../components/Models/BlockModal";
+import ShareModal from '../../../_components/Model/Models/ShareModal';
+import ProfileMenu from '../../../_components/Model/popover/MenuPop';
+import ReportModal from '../../../_components/Model/Models/ReportModal';
+import RegisterAlertModal from '../../../_components/Model/Models/RegisterAlertModal';
+import BlockUserModal from "../../../_components/Model/Models/BlockModal";
 import { addToShortlist } from '../../../../store/actions/GetingAlluser';
-import MatchScoreModal from '../../../components/UserModal/MatchScoreModal';
+import MatchScoreModal from '../../../_components/Model/Models/MatchScoreModal';
 
 
 function Request({ data, loading }) {

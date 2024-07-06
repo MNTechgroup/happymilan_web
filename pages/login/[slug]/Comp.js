@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from 'next/router';
-import Navbar from "../../components/Navbar";
+import Navbar from "../../_components/layout/AuthNavbar";
 import Image from "next/image";
 import { updateFormData } from "../../../store/actions/registerUser";
 import { connect } from "react-redux";
@@ -49,6 +49,7 @@ function Comp({ formData, updateFormData }) {
                   },
                 })
                 localStorage.setItem("UserProfile", "marriage")
+                localStorage.setItem("UserRegister", true)
         }
         else {
             router.push("/dating")

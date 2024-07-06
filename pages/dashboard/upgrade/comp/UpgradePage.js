@@ -78,7 +78,7 @@ function UpgradePage() {
 
         try {
 
-            const response = await axios.post(`https://4400-2405-201-200c-b0aa-daf-a889-fd13-2eb7.ngrok-free.app/v1/user/razorpay/order`, { "planId": "667a53da5f57120e070eeed7" },
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/razorpay/order`, { "planId": "667a53da5f57120e070eeed7" },
                 {
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -87,26 +87,15 @@ function UpgradePage() {
                 }
             );
 
-            // Handle successful response (e.g., initiate Razorpay checkout)
-            // const callbackUrl = `https://4400-2405-201-200c-b0aa-daf-a889-fd13-2eb7.ngrok-free.app/v1/user/razorpay/is-order-complete?authToken=${token}`;
-            // var options = {
-            //     "key": "rzp_live_2SoKzqAUA6FY69",
-            //     "name": "HappyMilan",
-            //     "description": "Test Transaction",
-            //     "image": "https://example.com/your_logo",
-            //     "order_id": response.data.data.id,
-            //     "callback_url": callbackUrl,
-            //     "theme": {
-            //         "color": "#3399cc"
-            //     }
-            // };
+            console.log("🚀 ~ PayNow ~ response:", response.data.id)
 
+            console.log("<=== data ===>", response.data.paymentHistoryToken)
             const callbackUrl = `${process.env.NEXT_PUBLIC_API_URL}/v1/user/razorpay/is-order-complete?authToken=${token}&paymentHistoryToken=${response.data.paymentHistoryToken}`
             const options = {
                 "key": "rzp_live_2SoKzqAUA6FY69",
                 "name": "Acme Corp",
                 "description": "Test Transaction",
-                "order_id": response.data.data.id,
+                // "order_id": response.data.data.id,
                 "order_id": response.data.id,
                 "callback_url": callbackUrl, // Include the token in the callback URL
                 "theme": {

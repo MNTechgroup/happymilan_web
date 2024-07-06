@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import Popover from '@mui/material/Popover';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
@@ -14,14 +13,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import dynamic from 'next/dynamic';
 import { sendRequest } from '../../../../store/actions/UsersAction';
 import { addToShortlist } from '../../../../store/actions/GetingAlluser';
-import RegisterAlertModal from '../../../components/Models/RegisterAlertModal';
-import ReportModal from '../../../components/Models/ReportModal';
-import ProfileMenu from '../../../components/popover/MenuPop';
-import BlockUserModal from "../../../components/Models/BlockModal";
-import MatchScoreModal from '../../../components/UserModal/MatchScoreModal';
+import RegisterAlertModal from '../../../_components/Model/Models/RegisterAlertModal';
+import ReportModal from '../../../_components/Model/Models/ReportModal';
+import ProfileMenu from '../../../_components/Model/popover/MenuPop';
+import BlockUserModal from "../../../_components/Model/Models/BlockModal";
+import MatchScoreModal from '../../../_components/Model/Models/MatchScoreModal';
 import { useDarkMode } from '../../../../ContextProvider/DarkModeContext';
-const ShareModal = dynamic(() => import('../../../components/Models/ShareModal'));
-const SendRequestBtn = dynamic(() => import('../../../components/Buttons/SendRequestBtn'));
+const ShareModal = dynamic(() => import('../../../_components/Model/Models/ShareModal'), { ssr: false });
+const ShowMore = dynamic(() => import('../../../_components/common/profile/UserBio'), { ssr: false });
+const SendRequestBtn = dynamic(() => import('../../../_components/common/Buttons/SendRequestBtn'), { ssr: false });
 
 
 function RecentViewUser() {
@@ -32,14 +32,6 @@ function RecentViewUser() {
     const [isRegisterModalOpen, setisRegisterModalOpen] = useState(false);
     const [isReportModalOpen, setisReportModalOpen] = useState(false);
     const [isBlockModalOpen, setisBlockModalOpen] = useState(false);
-    const [Data, setData] = useState("");
-    const [CurrURL, SetCurURL] = useState("");
-
-
-    const OpenRegisterModal = (res) => {
-        setData(res);
-        setisRegisterModalOpen(true);
-    };
 
     const CloseRegisterModal = () => {
         setisRegisterModalOpen(false);
@@ -60,32 +52,14 @@ function RecentViewUser() {
     };
 
 
-
-
-
-    const [anchorEl, setAnchorEl] = React.useState(null);
-
     const dispatch = useDispatch();
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
-
-
-    const [blockprofile, setblockprofile] = useState(false);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => {
         setIsModalOpen(true);
-        handleClose();
+
     };
 
     const closeModal = () => {
@@ -124,17 +98,10 @@ function RecentViewUser() {
         lineHeight: "24px" /* 171.429% */
     }
 
-    const Text4 = {
-        color: darkMode ? "#FFF" : "#000",
-        fontFamily: "Poppins",
-        fontStyle: "normal",
-        fontWeight: "400",
-        lineHeight: "12px"
-    }
 
     const Box = {
         borderRadius: "10px",
-        background: darkMode ? "#242526" : "#000",
+        background: darkMode ? "#242526" : "#FFF",
         boxShadow: "0px 0px 14px 0px rgba(0, 0, 0, 0.07)"
     }
 
@@ -149,16 +116,6 @@ function RecentViewUser() {
 
     const [openURLModal, setOpenURLModal] = React.useState(false);
 
-    const handleClickOpen = () => {
-        setOpenURLModal(true);
-
-
-        setTimeout(() => {
-            setOpenURLModal(false);
-            handleClose()
-        }, 2000);
-    };
-
     const ImageNotFoundText = {
         color: "#B3CBF1",
         textAlign: "center",
@@ -172,15 +129,6 @@ function RecentViewUser() {
 
     const { data, loading } = useSelector((state) => state.usersact.recentusersdata)
 
-    const MAX_CHARACTERS = 100; // Define your maximum character limit
-
-    const handleTextOverflow = (text) => {
-        if (text.length > MAX_CHARACTERS) {
-            return text.slice(0, MAX_CHARACTERS) + "..."; // Truncate the text if it exceeds the limit
-        } else {
-            return text; // Return the original text if it doesn't exceed the limit
-        }
-    };
 
     const [openShortlistModal, setopenShortlistModal] = React.useState(false);
 
@@ -207,9 +155,7 @@ function RecentViewUser() {
         setTimeout(() => {
             setopenShortlistModal(false);
         }, 800);
-        // } else {
-        //     OpenRegisterModal();
-        // }
+
     };
 
 
@@ -233,8 +179,6 @@ function RecentViewUser() {
 
                     <div className='flex flex-col'>
 
-
-
                         {
 
                             data?.map((res, index) => {
@@ -244,7 +188,7 @@ function RecentViewUser() {
 
 
                                         <div key={index} className="relative 2xl:left-[40px] xl:left-[55px] lg:left-[10px] left-[40px]">
-                                            <div style={Box} className={` dark:bg-[#242526] flex m-[10px] lg:w-[590px] 2xl:w-[631px] 2xl:h-[294px] xl:w-[540px] xl:h-[284px] bg-[#FFF]`}>
+                                            <div style={Box} className={` bg-[#FFF] dark:bg-[#242526] flex m-[10px] lg:w-[590px] 2xl:w-[631px] 2xl:h-[294px] xl:w-[540px] xl:h-[284px] bg-[#FFF]`}>
                                                 <div className='w-[350px]'>
                                                     <div className='p-[15px] w-full '>
                                                         <Swiper
@@ -294,7 +238,7 @@ function RecentViewUser() {
                                                                     </div>
                                                                 </li>
                                                                 <li>
-                                                                    <ProfileMenu SetCurURL={SetCurURL} openBlockModal={openBlockModal} OpenReportModal={OpenReportModal} openModal={openModal} res={res} />
+                                                                    <ProfileMenu openBlockModal={openBlockModal} OpenReportModal={OpenReportModal} openModal={openModal} res={res} />
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -311,24 +255,9 @@ function RecentViewUser() {
                                                             </ul>
                                                         </div>
                                                         <div className='mt-[20px] 2xl:mt-[20px] xl:mt-[15px]'>
-                                                            <p style={Text3} className='text-[#979797] text-[14px] 2xl:text-[12px] xl:text-[12px] '>
+                                                            <ShowMore userid={res?.viewerId} text={res?.viewerId?.writeBoutYourSelf ? res?.viewerId?.writeBoutYourSelf : "NA"} maxLength={100} />
 
-                                                                {handleTextOverflow(
-                                                                    res?.viewerId?.writeBoutYourSelf
-                                                                        ? res?.viewerId?.writeBoutYourSelf
-                                                                        : "NA",
-                                                                )}
-                                                                {res?.viewerId?.writeBoutYourSelf &&
-                                                                    res?.viewerId?.writeBoutYourSelf.length >
-                                                                    MAX_CHARACTERS && (
-                                                                        <span className="text-[#0F52BA]">
-                                                                            {" "}
-
-                                                                        </span>
-                                                                    )}
-                                                                {/* {res?.viewerId.writeBoutYourSelf} */}
-
-                                                                <span className='text-[#0F52BA]'> more </span></p>
+                                                            {/* res?.viewerId?.writeBoutYourSelf */}
                                                         </div>
                                                     </div>
                                                     <div className='relative top-[10px]'>
@@ -384,7 +313,7 @@ function RecentViewUser() {
             }
 
             <RegisterAlertModal
-                title={Data}
+                title={""}
                 isOpen={isRegisterModalOpen}
                 onClose={CloseRegisterModal}
             />

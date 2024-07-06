@@ -75,7 +75,7 @@ function GridUser() {
             },
             description: "I'd describe myself as someone who's reliable, trendy, smart and someone who always has a smile",
             images: {
-                image1: "/assests/pic/RecentlyViewedPicSize.svg",
+                image1: "",
                 image2: "",
                 image3: "",
                 image4: ""
@@ -96,7 +96,7 @@ function GridUser() {
             },
             description: "I'd describe myself as someone who's reliable, trendy, smart and someone who always has a smile",
             images: {
-                image1: "/assests/pic/RecentlyViewedPicSize.svg",
+                image1: "",
                 image2: "",
                 image3: "",
                 image4: ""
@@ -117,7 +117,7 @@ function GridUser() {
             },
             description: "I'd describe myself as someone who's reliable, trendy, smart and someone who always has a smile",
             images: {
-                image1: "/assests/pic/RecentlyViewedPicSize.svg",
+                image1: "",
                 image2: "",
                 image3: "",
                 image4: ""
@@ -138,7 +138,7 @@ function GridUser() {
             },
             description: "I'd describe myself as someone who's reliable, trendy, smart and someone who always has a smile",
             images: {
-                image1: "/assests/pic/RecentlyViewedPicSize.svg",
+                image1: "",
                 image2: "",
                 image3: "",
                 image4: ""
@@ -159,7 +159,7 @@ function GridUser() {
             },
             description: "I'd describe myself as someone who's reliable, trendy, smart and someone who always has a smile",
             images: {
-                image1: "/assests/pic/RecentlyViewedPicSize.svg",
+                image1: "",
                 image2: "",
                 image3: "",
                 image4: ""

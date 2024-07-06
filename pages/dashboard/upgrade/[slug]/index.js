@@ -1,5 +1,5 @@
 import React from 'react'
-import NavBar from '../../NavBar'
+import NavBar from '../../../_components/layout/NavBar'
 import UpgradePage from '../comp/UpgradePage'
 
 function index() {

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
-import Navbar from "../components/Navbar";
+import Navbar from "../_components/layout/AuthNavbar";
 import { useDispatch, useSelector } from "react-redux";
 import { updateAddressData, updateEducationData, updateGeneralInfo, updatePartnerPrefData, updateProffessionalData, updatehobbiesData } from "../../store/actions/registerUser";
 import { setFormValidation } from "../../store/reducers/registerReducer";
@@ -50,12 +50,14 @@ function Home() {
     const HandleTabclick = (id) => {
 
         if (activeTab === 1) {
+            
             const isFormValid = Object.values(general).every(value => value.trim() !== '');
 
             if (isFormValid) {
                 // Proceed to the next page or perform other actions
 
                 dispatch(updateGeneralInfo(general))
+                localStorage.setItem("UserRegister", false)
                 if (status == "idle") {
                     setActiveTab(2)
                 }
@@ -186,7 +188,7 @@ function Home() {
 
         }
 
-        setActiveTab(id);
+        // setActiveTab(id);
         setFormOpen(true)
     };
 

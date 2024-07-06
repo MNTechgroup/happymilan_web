@@ -1,13 +1,13 @@
 'use client';
 
 import React from 'react'
-import NavBar from '../NavBar'
-import SideBar from '../SideBar'
+import NavBar from '../../_components/layout/NavBar'
+import SideBar from '../../_components/layout/SideBar'
 import dynamic from 'next/dynamic';
-const UserStory = dynamic(() => import('../commonCompo/UserStory'));
+const UserStory = dynamic(() => import('../../_components/Container/UserStory'));
 const Profile = dynamic(() => import('./comp/Userprofile'));
 const UploadSection = dynamic(() => import('./comp/UploadSection'));
-const MoreSuggestion = dynamic(() => import('../commonCompo/MoreSuggestion'));
+const MoreSuggestion = dynamic(() => import('../../_components/Container/MoreSuggestion'));
 const ProtectedRoutes = dynamic(() => import('../../routes/ProtectedRoutes'));
 
 // const UserProfile = dynamic(() => import('./commonCompo/UserProfile'));

@@ -1,16 +1,12 @@
 import React from "react";
-import NavBar from "../../NavBar";
-
 import SideBar from "../comp/Sidebar";
 import dynamic from "next/dynamic";
 import EmailAlert from "./comp/EmailAlert";
 const Sidebar2 = dynamic(() => import("../comp/Sidebar2"));
-// const EmailAlert = dynamic(() => import("./comp/EmailAlert"));
 const BackButton = dynamic(() => import("../comp/BackButton"));
 
 function index() {
 
-  const handleSearch = (searchTerm) => { }
 
   return (
     <>

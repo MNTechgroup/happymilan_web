@@ -1,16 +1,16 @@
 
 import React, { useState } from 'react'
-import NavBar from '../NavBar'
-import SideBar from '../SideBar'
+import NavBar from '../../_components/layout/NavBar'
+import SideBar from '../../_components/layout/SideBar'
 import ProtectedRoutes from '../../routes/ProtectedRoutes'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
-const UserStory = dynamic(() => import('../commonCompo/UserStory'));
+const UserStory = dynamic(() => import('../../_components/Container/UserStory'));
 const SentRequest = dynamic(() => import('./comp/SentRequest'));
 const GridList = dynamic(() => import('./comp/GridList'));
-const ProfileComplete = dynamic(() => import('../commonCompo/ProfileComplete'));
-const MoreSuggestion = dynamic(() => import('../commonCompo/MoreSuggestion'));
-const Footer = dynamic(() => import('../../components/Footer'));
+const ProfileComplete = dynamic(() => import('../../_components/Container/ProfileComplete'));
+const MoreSuggestion = dynamic(() => import('../../_components/Container/MoreSuggestion'));
+const Footer = dynamic(() => import('../../_components/layout/Footer'));
 
 function index() {
 

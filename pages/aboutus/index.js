@@ -1,7 +1,7 @@
 import React from "react";
-import Footer from "../components/Footer";
+import Footer from "../_components/layout/Footer";
 import { useRouter } from "next/router";
-import Navbar from "../components/Navbar";
+import Navbar from "../_components/layout/AuthNavbar";
 import Image from "next/image";
 import UIbuttons from "../../UI/Buttons";
 

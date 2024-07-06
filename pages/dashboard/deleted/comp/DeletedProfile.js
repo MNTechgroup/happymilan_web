@@ -12,7 +12,7 @@ import 'swiper/css/pagination';
 // import required modules
 import { Pagination } from 'swiper';
 import Image from 'next/image';
-import ShareModal from '../../../components/Models/ShareModal';
+import ShareModal from '../../../_components/Model/Models/ShareModal';
 import { Dialog, DialogContent } from '@mui/material';
 
 

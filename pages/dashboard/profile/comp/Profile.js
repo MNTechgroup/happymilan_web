@@ -65,7 +65,7 @@ function Profile() {
         lineHeight: "normal"
     }
 
-    
+
     const InputFonts = {
         fontFamily: "Poppins",
     }
@@ -83,7 +83,7 @@ function Profile() {
             name: data && data.name,
             gender: data?.gender && data.gender,
             writeBoutYourSelf: data?.writeBoutYourSelf && data.writeBoutYourSelf,
-            creatingProfileFor : data?.creatingProfileFor
+            creatingProfileFor: data?.creatingProfileFor
 
         })
 
@@ -135,12 +135,33 @@ function Profile() {
         };
 
         const profileOptions = [
-            { id: 1, label: 'My Self' , value:"mySelf"},
-            { id: 2, label: 'My Son' ,  value:"mySon"},
-            { id: 3, label: 'My Daughter' ,  value:"myDaughter"},
-            { id: 4, label: 'My Brother' ,  value:"myBrother"},
-            { id: 5, label: 'My Friend' ,  value:"myFriend"},
+            { id: 1, label: 'My Self', value: "mySelf" },
+            { id: 2, label: 'My Son', value: "mySon" },
+            { id: 3, label: 'My Daughter', value: "myDaughter" },
+            { id: 4, label: 'My Brother', value: "myBrother" },
+            { id: 5, label: 'My Friend', value: "myFriend" },
         ];
+
+        const MaritalOptions = [
+            { label: 'Single', value: 'single' },
+            { label: 'Never Married', value: 'never-married' },
+            { label: 'Married', value: 'married' },
+        ]
+
+
+
+
+        //Height Option 
+
+        const heightoption = Array.from({ length: 23 }, (v, k) => {
+            const value = k + 5;
+            return { value, label: value.toString() };
+        });
+
+        const weightoption = Array.from({ length: 23 }, (v, k) => {
+            const value = k + 40;
+            return { value, label: value.toString() };
+        });
 
 
         const genralbtnText = {
@@ -250,7 +271,7 @@ function Profile() {
 
         return (
             <>
-                <div className={`w-full ${showForm ? "" : "2xl:h-[353px] xl:h-[353px] lg:h-[353px] md:h-[353px] h-[370px]"} border-[1px] border-[#F1F1F1] rounded-[10px]  2xl:space-y-[20px] xl:space-y-[20px] lg:space-y-[20px] md:space-y-[20px] space-y-[10px]`}>
+                <div className={`w-full ${showForm ? "" : "2xl:h-[360px] xl:h-[353px] lg:h-[353px] md:h-[353px] h-[370px]"} border-[1px] border-[#F1F1F1] rounded-[10px]  2xl:space-y-[20px] xl:space-y-[20px] lg:space-y-[20px] md:space-y-[20px] space-y-[10px]`}>
 
                     <div className='pt-[10px] grid place-items-center'>
                         <ul className='w-[90%] flex justify-between items-center m-[10px]'>
@@ -282,8 +303,8 @@ function Profile() {
                                                 id={userdata?.creatingProfileFor == options.value ? "grad-button" : ""}
                                                 // id={"grad-button"} 
                                                 style={genralbtnText}
-                                                onClick={()=>setuserdata(()=>{
-                                                    return {...userdata,creatingProfileFor:options.value}
+                                                onClick={() => setuserdata(() => {
+                                                    return { ...userdata, creatingProfileFor: options.value }
                                                 })}
                                                 className={`2xl:mt-0 xl:mt-0 lg:mt-0 mt-[10px] 2xl:ml-0 xl:ml-0 lg:ml-0 ml-[10px] h-[50px] ${options.id === 3 ? "2xl:w-[120px] xl:w-[110px] lg:w-[128px] w-[100px]" : "w-[100px] 2xl:w-[102px] xl:w-[90px] lg:w-[102px]"} bg-[white] rounded-[8px] border-[1px] border-[#e6e6e6]`} key={options.id}>{options.label}</button>)
                                         })}
@@ -350,26 +371,36 @@ function Profile() {
                                                 <DynamicSelect
                                                     className="h-[50px] w-[100px] 2xl:w-[120px] xl:w-[120px] lg:w-[100px] flex justify-end"
                                                     styles={customStyles}
-                                                    options={options}
+                                                    options={heightoption}
+                                                    placeholder={data?.height ? (data.height) : ('Select')}
+                                                    onChange={(selectedOption) => handleInputChange({ target: { name: "height", value: selectedOption?.value } })}
+
+
                                                 />
                                             </div>
                                             <div>
-                                                <h1 className='dark:text-[#FFF] text-[#000] pb-[10px]' style={labelText}>Height</h1>
+                                                <h1 className='dark:text-[#FFF] text-[#000] pb-[10px]' style={labelText}>Weight</h1>
 
                                                 <DynamicSelect
                                                     className="h-[50px] w-[100px] 2xl:w-[120px] xl:w-[120px] lg:w-[100px] flex justify-end"
+                                                    placeholder={data?.weight ? (data.weight) : ('Select')}
                                                     styles={customStyles}
-                                                    options={options}
+                                                    options={weightoption}
+                                                    onChange={(selectedOption) => handleInputChange({ target: { name: "weight", value: selectedOption?.value } })}
+
                                                 />
                                             </div>
                                         </div>
                                         <div>
-                                            <h1 className='dark:text-[#FFF] text-[#000] pb-[10px]' style={labelText}>Country of Living</h1>
+                                            <h1 className='dark:text-[#FFF] text-[#000] pb-[10px]' style={labelText}>MaritalStatus</h1>
 
                                             <DynamicSelect
                                                 className="h-[50px] w-[280px] 2xl:w-[270px] xl:w-[235px] lg:w-[300px] flex justify-end"
                                                 styles={customStyles}
-                                                options={options}
+                                                options={MaritalOptions}
+                                                placeholder={data?.maritalStatus ? (data.maritalStatus) : ("Select")}
+                                                onChange={(selectedOption) => handleInputChange({ target: { name: "maritalStatus", value: selectedOption?.value } })}
+
                                             />
                                         </div>
                                     </div>
@@ -425,7 +456,7 @@ function Profile() {
                                 <div className="w-[90%] relative top-[-15px] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
                                     <div>
                                         <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>{`Height & Weight`}</p>
-                                        <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px] xl:text-[14px] text-[14px]'>{data && data.city ? (data.city) : ("NA")}</h1>
+                                        <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px] xl:text-[14px] text-[14px]'>{data && data?.height ? data?.height + " " + "ft" : "NA"}, &nbsp;{data && data?.weight ? data?.weight + " " + "kg" : "NA"} </h1>
                                     </div>
                                     <div>
                                         <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>{`Marital Status`}</p>
@@ -603,7 +634,7 @@ function Profile() {
                                         <div className='flex items-center space-x-[10px]'>
                                             <Image loading='lazy' alt='heartIcon' width={16} height={14} src='/assests/dashboard/icon/heart-icon.svg' />
                                             {/* <h1 style={Text3} className='text-[12px] md:text-[14px] lg:text-[14px] 2xl:text-[14px] xl:text-[13px]'>{totalLikes}<span style={Text2} className='pl-[5px] text-[14px] text-[#8B8B8B]'> Likes </span></h1> */}
-                                            <h1 style={Text3} className='dark:text-[#FFF] text-[12px] md:text-[14px] lg:text-[14px] 2xl:text-[14px] xl:text-[13px]'>{LiveLikeCount}<span style={Text2} className='pl-[5px] text-[14px] text-[#8B8B8B]'> Likes </span></h1>
+                                            <h1 style={Text3} id='live-count'  className='dark:text-[#FFF] text-[12px] md:text-[14px] lg:text-[14px] 2xl:text-[14px] xl:text-[13px]'>{LiveLikeCount}<span style={Text2} className='pl-[5px] text-[14px] text-[#8B8B8B]'> Likes </span></h1>
                                         </div>
                                     </li>
                                     <li>
@@ -627,7 +658,7 @@ function Profile() {
                                     <li>
                                         <div className='flex items-center space-x-[10px]'>
 
-                                            <h1 style={Text2} className='dark:text-[#FFF] lg:text-[12px] md:text-[12px] text-[11px]'>{data?.gender ? data?.gender?.charAt(0).toUpperCase() + data?.gender.slice(1) : "NA"},{calculateAge(data?.dateOfBirth)}</h1>
+                                            <h1 style={Text2} className='dark:text-[#FFF] lg:text-[12px] md:text-[12px] text-[11px]'>{data?.gender ? data?.gender?.charAt(0).toUpperCase() + data?.gender.slice(1) : "NA"}&nbsp;,&nbsp;{calculateAge(data?.dateOfBirth)}</h1>
                                         </div>
                                     </li>
                                     <li>
@@ -694,7 +725,7 @@ function Profile() {
 
                             </div>
 
-                            <div className='dark:bg-[#18191a] hidden lg:block pt-[10px] pb-[30px] h-[480px]'>
+                            <div className='dark:bg-[#18191a] hidden lg:block pt-[10px] pb-[30px] '>
                                 {RenderTab()}
                             </div>
                             <div className='block lg:hidden pt-[10px] pb-[30px]'>

@@ -34,6 +34,8 @@ const initialState = {
       birthTime: "",
       religion: "",
       cast: "",
+      height: "",
+      weight: "",
       // currentcity: "",
       // countryofliving: "",
       writeBoutYourSelf: "",

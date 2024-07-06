@@ -12,12 +12,12 @@ import { Alert, Snackbar } from "@mui/material";
 import { getCookie } from 'cookies-next'
 import { validateEmail } from "../../utils/form/validationRules";
 
-const GoogleLoginButton = dynamic(() => import("../components/Buttons/GoogleLoginButton"));
-const LoginWithEmail = dynamic(() => import("./LoginSec/LoginWithEmail"));
-const LoginWithPhone = dynamic(() => import("./LoginSec/LoginWithPhone"));
-const PhoneSignUp = dynamic(() => import("./SignUpSec/PhoneSignup"));
-const LoginPage = dynamic(() => import("../logincomp/Loginpage"));
-const SignInEmail = dynamic(() => import("../logincomp/SignEmail"));
+const GoogleLoginButton = dynamic(() => import("../_components/common/Buttons/GoogleLoginButton"));
+const LoginWithEmail = dynamic(() => import("../_components/Container/View/UserLogin/LoginSec/LoginWithEmail"));
+const LoginWithPhone = dynamic(() => import("../_components/Container/View/UserLogin/LoginSec/LoginWithPhone"));
+const PhoneSignUp = dynamic(() => import("../_components/Container/View/UserLogin/SignUpSec/PhoneSignup"));
+const LoginPage = dynamic(() => import("../_components/Container/View/Loginpage"));
+const SignInEmail = dynamic(() => import("../_components/Container/View/SignEmail"));
 
 
 //Style for Select Box

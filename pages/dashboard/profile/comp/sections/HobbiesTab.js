@@ -25,35 +25,6 @@ function HobbiesTab() {
         lineHeight: "normal"
     }
 
-    // const { data, status, totalLikes } = useSelector((state) => state.myprofile);
-
-    const { status, partnerpref } = useSelector((state) => state.form?.formData)
-
-    const [showForm, setShowForm] = useState(false);
-
-    const handleEditClick = () => {
-        setShowForm(!showForm);
-    };
-
-    const { loading, data } = useSelector((state) => state.myprofile.profileData?.HobbiesData)
-    console.log("🚀 ~ HobbiesTab ~ data:", data)
-
-
-    const { upload,  allhobbies } = useSelector((state) => state.form?.formData)
-
-
-    //Edit Hobbies 
-
-
-
-
-    const Text1 = {
-        color: "#000",
-        fontFamily: "Poppins",
-        fontSize: "16px",
-        fontStyle: "normal",
-        lineHeight: "normal",
-    };
 
     const FitnessDataoption = [
         { value: "Running", label: "Running" },
@@ -83,6 +54,49 @@ function HobbiesTab() {
             { value: "SocialMedia", label: "Social Media" }
         ]
 
+
+
+    // const { data, status, totalLikes } = useSelector((state) => state.myprofile);
+
+    const [TheData, SetData] = useState()
+
+    const { status, partnerpref } = useSelector((state) => state.form?.formData)
+    const { loading, data } = useSelector((state) => state.myprofile.profileData?.HobbiesData)
+    const { upload, allhobbies } = useSelector((state) => state.form?.formData)
+
+    const [showForm, setShowForm] = useState(false);
+
+    const handleEditClick = () => {
+        setShowForm(!showForm);
+
+        if (data?.[0]) {
+            const Creative = creativeOption.filter(option => data[0]?.values.includes(option.value));
+            SetData(Creative)
+        }
+
+
+
+    };
+
+    // console.log("🚀 ~ HobbiesTab ~ data:",creativeOption.filter(option => data?.[0]?.values.includes(option.value)))
+
+
+
+    //Edit Hobbies 
+
+
+
+
+    const Text1 = {
+        color: "#000",
+        fontFamily: "Poppins",
+        fontSize: "16px",
+        fontStyle: "normal",
+        lineHeight: "normal",
+    };
+
+    
+
     const customStyle = {
         control: (provided, state) => ({
             ...provided,
@@ -108,6 +122,9 @@ function HobbiesTab() {
     const dispatch = useDispatch();
 
 
+
+
+
     const handleInputChange = (event) => {
         const value = event.target.value;
         const name = event.target.name
@@ -124,10 +141,10 @@ function HobbiesTab() {
     useEffect(() => {
         dispatch(fetchMyhoobies())
     }, [])
-      
+
     return (
         <>
-            <div className='w-full h-[369px] border-[1px] border-[#F1F1F1] rounded-[10px] space-y-[20px]'>
+            <div className={`w-full ${showForm ? "h-[450px]" : "h-[369px]"} border-[1px] border-[#F1F1F1] rounded-[10px] space-y-[20px]`}>
                 <div className='pt-[10px] grid place-items-center'>
                     <ul className='w-[90%] flex justify-between items-center m-[10px]'>
                         <li><h1 style={Text2} className='dark:text-[#FFF] text-[16px]'>{showForm ? "Modify Hobbies and Interests" : "Hobbies and Interests"}</h1></li>
@@ -155,6 +172,7 @@ function HobbiesTab() {
                                         options={creativeOption}
                                         placeholder="Select.."
                                         styles={customStyle}
+                                        value={TheData}
                                         onChange={(selectedOption) => handleInputChange({ target: { name: "creative", value: selectedOption } })}
                                         isSearchable={true}
                                         isMulti />

@@ -9,9 +9,9 @@ import moment from "moment";
 // import UserLikesbtn from "../../../components/Buttons/UserLikesbtn";
 import { addToShortlist } from "../../../../store/actions/GetingAlluser";
 import { sendRequest } from "../../../../store/actions/UsersAction";
-import RegisterAlertModal from "../../../components/Models/RegisterAlertModal";
-import GridLikeUser from "../../../components/Buttons/GridLikeUser";
-import UpgradeButton from "../../../components/Buttons/UpgradeButton";
+import RegisterAlertModal from "../../../_components/Model/Models/RegisterAlertModal";
+import GridLikeUser from "../../../_components/common/Buttons/GridLikeUser";
+import UpgradeButton from "../../../_components/common/Buttons/UpgradeButton";
 import calculateAge from "../../../../utils/helpers/CalculateAge";
 
 function Userprofile({ toggleDrawer }) {

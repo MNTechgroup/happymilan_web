@@ -1,14 +1,12 @@
 import React from "react";
-import NavBar from "../../NavBar";
 import SideBar from "../comp/Sidebar";
 import dynamic from "next/dynamic";
 import DeleteProfile from "./comp/Deleteprofile";
 const BackButton = dynamic(() => import("../comp/BackButton")); 
 const Sidebar2 = dynamic(() => import("../comp/Sidebar2"));
-// const DeleteProfile = dynamic(() => import("./comp/Deleteprofile"));
 function index() {
 
-  const handleSearch = (searchTerm) => { }
+  
 
   return (
     <>

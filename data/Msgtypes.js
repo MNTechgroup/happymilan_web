@@ -5,6 +5,7 @@ import Image from 'next/image';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { UserContext } from '../ContextProvider/UsersConversationContext';
 import { useSocket } from '../ContextProvider/SocketContext';
+import getMessageTime from '../utils/helpers/GetMessageTime';
 
 const messageText = {
     color: "#000",
@@ -188,12 +189,6 @@ const ReplyMsg = ({ el, menu }) => {
 const MediaMsg = ({ menu, userMessage, Outgoing, sendAt, Top, setTop, onDeleteMessage }) => {
 
 
-    const { userData, updateUser } = useContext(UserContext);
-
-    if (userMessage.message == "heloo guys how are you Feature: Chat typing indicator out of the box · Issue #1565 · FaridSafi/react-native-gifted-chat · GitHub") {
-        console.log("Length of mesage = ", userMessage.message.length)
-    }
-
     const getMessageTime = (sendAt) => {
         const timeDifference = Date.now() - sendAt;
         if (timeDifference < 3600000) {
@@ -247,7 +242,6 @@ const MediaMsg = ({ menu, userMessage, Outgoing, sendAt, Top, setTop, onDeleteMe
                 ?
                 <>
                     <Stack id="Chat-scroll-bar" ref={scroll} direction='row' justifyContent={'end'}>
-                        {/* {menu && <MessageOptions/>} */}
 
                         <Box p={2} sx={{
                             backgroundColor: "#F8E8FF", borderRadius: 1.5, width: 'max-content'
@@ -285,7 +279,6 @@ const MediaMsg = ({ menu, userMessage, Outgoing, sendAt, Top, setTop, onDeleteMe
 
                         </Box>
                         <MessageOptions data={userMessage} onDeleteMessage={onDeleteMessage} />
-                        {/* <ProfileImage size={40} /> */}
                     </Stack>
 
                 </>
@@ -318,9 +311,6 @@ const MediaMsg = ({ menu, userMessage, Outgoing, sendAt, Top, setTop, onDeleteMe
                                 </Stack>
                             </Stack>
                         </Box>
-
-
-                        {/* {menu && <MessageOptions/>} */}
                     </Stack>
                 </>
             }
@@ -331,20 +321,6 @@ const MediaMsg = ({ menu, userMessage, Outgoing, sendAt, Top, setTop, onDeleteMe
 
 const TextMsg = ({ el, Outgoing, userMessage, sendAt, onDeleteMessage }) => {
 
-
-    const { userData, updateUser } = useContext(UserContext);
-
-
-    const getMessageTime = (sendAt) => {
-        const timeDifference = Date.now() - sendAt;
-        if (timeDifference < 3600000) {
-            return moment(sendAt).fromNow(); // Format time as "X minutes ago"
-        } else {
-            return moment(sendAt).format('HH:mm'); // Format time as "HH:mm"
-        }
-    };
-
-    const messageTime = getMessageTime(sendAt);
 
     const TimeText = {
         color: "#000",
@@ -402,7 +378,7 @@ const TextMsg = ({ el, Outgoing, userMessage, sendAt, onDeleteMessage }) => {
                                 )}
                                 <div className='flex items-center justify-end'>
                                     <div className='p-[5px] text-right'>
-                                        <h1 style={TimeText}>{messageTime}</h1>
+                                        <h1 style={TimeText}>{getMessageTime(sendAt)}</h1>
                                     </div>
                                     <div>
                                         <Image width={15} height={15} src={"/assests/chat/receive-tick.svg"} loading='lazy' alt='receive' />
@@ -437,7 +413,7 @@ const TextMsg = ({ el, Outgoing, userMessage, sendAt, onDeleteMessage }) => {
                                 )}
                                 <div className='flex items-center justify-start'>
                                     <div className='p-[5px] text-right'>
-                                        <h1 style={TimeText}>{messageTime}</h1>
+                                        <h1 style={TimeText}>{getMessageTime(sendAt)}</h1>
                                     </div>
                                     <div>
                                         <Image width={15} height={15} src={"/assests/chat/receive-tick.svg"} loading='lazy' alt='receive' />
@@ -676,7 +652,6 @@ const AudioMessage = ({ el, Outgoing, userMessage, sendAt, onDeleteMessage }) =>
     const { userData, updateUser } = useContext(UserContext);
 
 
-    const audioSrc = "../assests/song/sample-6s.mp3"
 
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);

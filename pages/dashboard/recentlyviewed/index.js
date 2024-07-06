@@ -1,19 +1,19 @@
 
 import React, { useEffect, useState } from 'react'
-import NavBar from '../NavBar'
-import SideBar from '../SideBar'
+import NavBar from '../../_components/layout/NavBar'
+import SideBar from '../../_components/layout/SideBar'
 import ProtectedRoutes from '../../routes/ProtectedRoutes'
 import { useDispatch, useSelector } from 'react-redux'
 import { GetrecentuserprofileData } from '../../../store/actions/UsersAction'
-import UserprofileSkeleton from '../../components/Loader/UserprofileSkeleton'
+import UserprofileSkeleton from '../../_components/common/shader/UserprofileSkeleton'
 import dynamic from 'next/dynamic';
 import Image from 'next/image'
 import { useDarkMode } from '../../../ContextProvider/DarkModeContext'
 
-const Footer = dynamic(() => import('../../components/Footer'))
-const UserStory = dynamic(() => import('../commonCompo/UserStory'));
-const ProfileComplete = dynamic(() => import('../commonCompo/ProfileComplete'));
-const MoreSuggestion = dynamic(() => import('../commonCompo/MoreSuggestion'));
+const Footer = dynamic(() => import('../../_components/layout/Footer'))
+const UserStory = dynamic(() => import('../../_components/Container/UserStory'));
+const ProfileComplete = dynamic(() => import('../../_components/Container/ProfileComplete'));
+const MoreSuggestion = dynamic(() => import('../../_components/Container/MoreSuggestion'));
 const RecentViewUser = dynamic(() => import('./comp/RecentViewUser'));
 const GridUser = dynamic(() => import('./comp/GridUser'));
 

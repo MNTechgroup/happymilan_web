@@ -65,7 +65,7 @@ function UploadSection() {
                             :
                             <>
                                 <div>
-                                    <Image loading='lazy' alt="img" width={300} height={381} onClick={handleClickOpen} className='w-[300px] h-[381px] cursor-pointer' src='/assests/pic/rohan-patel-img.svg' />
+                                    {/* <Image loading='lazy' alt="img" width={300} height={381} onClick={handleClickOpen} className='w-[300px] h-[381px] cursor-pointer' src='/assests/pic/rohan-patel-img.svg' /> */}
                                 </div>
 
                             </>}

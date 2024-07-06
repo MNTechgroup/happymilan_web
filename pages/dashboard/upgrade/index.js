@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import NavBar from '../NavBar'
+import NavBar from '../../_components/layout/NavBar'
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import ProtectedRoutes from '../../routes/ProtectedRoutes';
 import dynamic from 'next/dynamic';
-import useRazorpay from 'react-razorpay';
 import { getCookie } from 'cookies-next';
 
 const PricingBox = dynamic(() => import('./comp/PricingBox'));

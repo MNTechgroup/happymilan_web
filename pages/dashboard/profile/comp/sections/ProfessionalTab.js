@@ -141,7 +141,7 @@ const ProfessionalTab = () => {
 
     return (
         <>
-            <div className='w-full h-[369px] border-[1px] border-[#F1F1F1] rounded-[10px] space-y-[20px]'>
+            <div className={`w-full ${showForm ? "h-[450px]" : "h-[369px]" } border-[1px] border-[#F1F1F1] rounded-[10px] space-y-[20px]`}>
                 <div className='pt-[10px] grid place-items-center'>
                     <ul className='w-[90%] flex justify-between items-center m-[10px]'>
                         <li><h1 style={Text2} className='dark:text-[#FFF] text-[16px]'>{showForm ? "Modify Professional Details" : "Professional Details"}</h1></li>

@@ -3,46 +3,47 @@
 import React, { useEffect, useState } from 'react';
 import ProtectedRoutes from '../routes/ProtectedRoutes';
 import { useSelector } from 'react-redux';
-import NavBar from './NavBar';
-import SideBar from './SideBar';
+import NavBar from '../_components/layout/NavBar';
+import SideBar from '../_components/layout/SideBar';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { getCookie } from 'cookies-next';
 import Image from 'next/image';
 import { useDarkMode } from '../../ContextProvider/DarkModeContext';
-import UserProfile from './commonCompo/UserProfile'
-// Lazy load your components
-// const UserProfile = dynamic(() => import('./commonCompo/UserProfile'));
-const UserGridProfile = dynamic(() => import('./commonCompo/UserGridProfile'));
-const ProfileComplete = dynamic(() => import('./commonCompo/ProfileComplete'));
-const MoreSuggestion = dynamic(() => import('./commonCompo/MoreSuggestion'));
-const UserStory = dynamic(() => import('./commonCompo/UserStory'));
-const RecentlyView = dynamic(() => import('./commonCompo/RecentlyView'));
-const StoryView = dynamic(() => import('./commonCompo/StoryView'));
-const CelebratingModal = dynamic(() => import('../components/Models/CelebratingModal'));
+import UserProfile from '../_components/Container/UserProfile'
+// Lazy load your components;
+const UserGridProfile = dynamic(() => import('../_components/Container/UserGridProfile'));
+const ProfileComplete = dynamic(() => import('../_components/Container/ProfileComplete'));
+const MoreSuggestion = dynamic(() => import('../_components/Container/MoreSuggestion'));
+const UserStory = dynamic(() => import('../_components/Container/UserStory'));
+const RecentlyView = dynamic(() => import('../_components/Container/RecentlyView'));
+const StoryView = dynamic(() => import('../_components/Container/StoryView'));
+const CelebratingModal = dynamic(() => import('../_components/Model/Models/CelebratingModal'));
 const SearchUsers = dynamic(() => import('./commonCompo/SearchParams/SearcheUsers'));
-const Footer = dynamic(() => import('../components/Footer'));
+const Footer = dynamic(() => import('../_components/layout/Footer'));
 
 
 function index() {
 
-  // const dispatch = useDispatch();
 
   const { darkMode, toggleDarkMode } = useDarkMode();
 
-  // useEffect(() => {
-  //   dispatch(getSentrequestData())
-  // }, [])
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [listType, setListType] = useState(false);
 
 
   useEffect(() => {
     const firstVisit = localStorage.getItem('modal');
-    if (firstVisit === 'open') {
+    const UserRegister = localStorage.getItem('UserRegister');
+    if (UserRegister === 'false' || !UserRegister) {
+      setIsModalOpen(false);
+    } else {
       setIsModalOpen(true);
-      localStorage.setItem('modal', 'close');
     }
+    // if (firstVisit === 'open') {
+    //   setIsModalOpen(true);
+    //   localStorage.setItem('modal', 'close');
+    // }
   }, []);
 
   const router = useRouter();
@@ -111,7 +112,7 @@ function index() {
               <UserStory />
             </div>
 
-            <div id='centerlized-content' className='dark:bg-[#18191a] 2xl:block xl:block lg:block hidden'>
+            <div id='centerlized-content' className='dark:bg-[#18191a] 2xl:block xl:block lg:block md:block hidden'>
               <div className='xl:left-0 lg:left-[10px] relative 2xl:w-[720px] xl:w-[645px] lg:w-[600px] m-[10px] flex justify-between'>
 
                 <h1 className='text-[#000] dark:text-[#FFF] p-[5px] relative lg:left-[15px] 2xl:left-[40px] xl:left-[55px]'><span style={Text6} >New Requests</span></h1>
@@ -154,14 +155,14 @@ function index() {
             </div>
 
 
-            <div className="block md:block lg:hidden 2xl:hidden xl:hidden relative top-[60px] pl-[15px]">
+            <div className="block md:hidden relative top-[60px] pl-[15px]">
               <h1 className="p-[5px] relative 2xl:left-[40px] xl:left-[55px]">
                 <span className='text-[#000] dark:text-[#FFF]' style={Text6}>New Matches</span>
-                
+
               </h1>
             </div>
 
-            <div className="block lg:block 2xl:hidden xl:hidden lg:hidden md:block">
+            <div className="block md:hidden">
               <UserGridProfile />
             </div>
 
@@ -174,8 +175,6 @@ function index() {
             </div>
 
           </div>
-
-          {/* <div className="border-[1px] border-[black] hidden  absolute 2xl:top-[250px] xl:top-[245px] right-10 2xl:flex xl:flex flex-col space-y-[30px] justify-center items-end w-full 2xl:w-[380px] xl:w-[300px]"> */}
           <div className=" hidden  absolute 2xl:top-[250px] xl:top-[245px] right-10 xl:flex flex-col space-y-[30px]">
 
             <ProfileComplete />

@@ -3,13 +3,13 @@ import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { Postrecentuserprofile, sendRequest } from '../../../../store/actions/UsersAction'
 import { useDispatch, useSelector } from 'react-redux'
-import GridLikeUser from '../../../components/Buttons/GridLikeUser'
+import GridLikeUser from '../../../_components/common/Buttons/GridLikeUser'
 import { Dialog } from '@mui/material'
-import ReportModal from '../../../components/Models/ReportModal'
-import RegisterAlertModal from '../../../components/Models/RegisterAlertModal'
-import ShareModal from '../../../components/Models/ShareModal'
-import ProfileMenu from '../../../components/popover/MenuPop'
-import BlockUserModal from "../../../components/Models/BlockModal";
+import ReportModal from '../../../_components/Model/Models/ReportModal'
+import RegisterAlertModal from '../../../_components/Model/Models/RegisterAlertModal'
+import ShareModal from '../../../_components/Model/Models/ShareModal'
+import ProfileMenu from '../../../_components/Model/popover/MenuPop'
+import BlockUserModal from "../../../_components/Model/Models/BlockModal";
 
 
 function SearchUsers({ searchResults }) {
@@ -193,7 +193,7 @@ function SearchUsers({ searchResults }) {
                                             </ul>
                                         </div>
                                         <div onClick={() => HandlePushUser(user.id)} className='flex justify-center cursor-pointer'>
-                                            <Image width={102} height={102} style={{ objectFit: "cover" }} className='w-[102px] h-[102px] rounded-[50%]' src={user?.profilePic ? user.profilePic : "/assests/pic/RecentlyViewedPicSize.svg"} />
+                                            <Image width={102} height={102} style={{ objectFit: "cover" }} className='w-[102px] h-[102px] rounded-[50%]' src={user?.profilePic ? user.profilePic : ""} />
                                         </div>
                                         <div className='text-center'>
                                             <h1 onClick={() => HandlePushUser(user.id)} style={ProfileName} className='cursor-pointer text-[18px]'>{user?.name}</h1>

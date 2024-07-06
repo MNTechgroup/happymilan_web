@@ -6,14 +6,6 @@ import UserCard from './component/UserCard'
 import UnlockProfile from './component/UnlockProfile'
 function index() {
 
-
-    const Text2 = {
-        fontFamily: "Poppins",
-        fontStyle: "normal",
-        fontWeight: "400",
-        lineHeight: "14px"
-    }
-
     
 
     return (

@@ -1,6 +1,6 @@
 'use client'
-import React, { useEffect, useState } from 'react'
-import NavBar from '../NavBar';
+import React, { useState } from 'react'
+import NavBar from '../../_components/layout/NavBar';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import SideBar from './comp/Sidebar';

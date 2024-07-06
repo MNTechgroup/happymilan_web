@@ -46,9 +46,6 @@ const Userseting = (state = initialState, action) => {
         }
         case HIDE_MY_PROFILE_FAILURE: {
             return {
-
-                // loading: false,
-                // error: action.payload
                 ...state,
                 Profilehide: {
                     loading: false,

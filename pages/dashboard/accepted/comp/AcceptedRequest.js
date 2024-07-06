@@ -8,29 +8,28 @@ import 'swiper/css/pagination';
 // import required modules
 import { Pagination } from 'swiper';
 import Image from 'next/image';
-import { Dialog, DialogContent } from '@mui/material';
+import { Dialog } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { Cancelfriendrequest, Sentblockrequest, getAcceptedRequestData } from '../../../../store/actions/UsersAction';
+import { Cancelfriendrequest, getAcceptedRequestData } from '../../../../store/actions/UsersAction';
 import index from '../../profile';
-import UserprofileSkeleton from '../../../components/Loader/UserprofileSkeleton';
+import UserprofileSkeleton from '../../../_components/common/shader/UserprofileSkeleton';
 import Link from 'next/link';
 import { getCookie } from 'cookies-next';
 import dynamic from 'next/dynamic';
-const ShareModal = dynamic(() => import('../../../components/Models/ShareModal'))
+const ShareModal = dynamic(() => import('../../../_components/Model/Models/ShareModal'))
 import { useDarkMode } from '../../../../ContextProvider/DarkModeContext';
-import ProfileMenu from '../../../components/popover/MenuPop';
-import RegisterAlertModal from '../../../components/Models/RegisterAlertModal';
-import ReportModal from '../../../components/Models/ReportModal';
-import BlockUserModal from '../../../components/Models/BlockModal'
 import { addToShortlist } from '../../../../store/actions/GetingAlluser';
-import ShowMore from '../../../components/Maincomp/UserBio';
-import MatchScoreModal from '../../../components/UserModal/MatchScoreModal';
+
+const ShowMore = dynamic(() => import('../../../_components/common/profile/UserBio'), { ssr: false });
+const MatchScoreModal = dynamic(() => import('../../../_components/Model/Models/MatchScoreModal'), { ssr: false });
+const ProfileMenu = dynamic(() => import('../../../_components/Model/popover/MenuPop'), { ssr: false });
+const RegisterAlertModal = dynamic(() => import('../../../_components/Model/Models/RegisterAlertModal'), { ssr: false });
+const ReportModal = dynamic(() => import('../../../_components/Model/Models/ReportModal'), { ssr: false });
+const BlockUserModal = dynamic(() => import('../../../_components/Model/Models/BlockModal'), { ssr: false });
+
 
 function AcceptedRequest() {
-    const { darkMode, toggleDarkMode } = useDarkMode();
-
-
-
+    const { darkMode } = useDarkMode();
 
     const [isRegisterModalOpen, setisRegisterModalOpen] = useState(false);
     const [isReportModalOpen, setisReportModalOpen] = useState(false);
@@ -43,7 +42,8 @@ function AcceptedRequest() {
         setisRegisterModalOpen(false);
     };
 
-    const openBlockModal = () => {
+    const openBlockModal = (res) => {
+        setData(res)
         setisBlockModalOpen(true);
     }
     const closeBlockModal = () => { setisBlockModalOpen(false) }
@@ -59,7 +59,6 @@ function AcceptedRequest() {
 
 
     const HandleShortlist = (id) => {
-        // console.log("🚀 ~ HandleShortlist ~ id:", id)
         dispatch(addToShortlist(id)); // Dispatch the action with the shortlist ID
 
         setshortlistText("Profile has been shortlisted");
@@ -70,26 +69,11 @@ function AcceptedRequest() {
 
     };
 
-
-
-    const [anchorEl, setAnchorEl] = React.useState(null);
-
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
-
-
-    const [blockprofile, setblockprofile] = useState(false);
-
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => {
         setIsModalOpen(true);
-        handleClose();
+
     };
 
     const closeModal = () => {
@@ -103,12 +87,7 @@ function AcceptedRequest() {
         fontWeight: "400",
         lineHeight: "12px"
     }
-    const Text3 = {
-        fontFamily: "Poppins",
-        fontStyle: "normal",
-        fontWeight: "400",
-        lineHeight: "normal"
-    }
+
 
     const ListText = {
         fontFamily: "Poppins",
@@ -117,12 +96,6 @@ function AcceptedRequest() {
         lineHeight: "24px" /* 171.429% */
     }
 
-    const Text4 = {
-        fontFamily: "Poppins",
-        fontStyle: "normal",
-        fontWeight: "400",
-        lineHeight: "12px"
-    }
 
     const Box = {
         borderRadius: "10px",
@@ -138,15 +111,7 @@ function AcceptedRequest() {
         lineHeight: "normal"
     }
 
-    const LogoutModalText = {
-        fontFamily: "Poppins",
-        fontSize: "20px",
-        fontStyle: "normal",
-        fontWeight: "400",
-        lineHeight: "30px"
-    }
 
-    const [openURLModal, setOpenURLModal] = React.useState(false);
 
     const dispatch = useDispatch();
 
@@ -173,124 +138,14 @@ function AcceptedRequest() {
     }
 
 
-    const [CurrentUserID, SetCurrentUserID] = useState("");
-    const [OtherUserId, SetOtherUserId] = useState("")
-    const [UserIdforBlock, SetUserIdforBlock] = useState("")
-
     const [CurrURL, SetCurURL] = useState("")
 
-
-    const handleClick = (event, res) => {
-        console.log("🚀 ~ handleClick ~ res:", res)
-        setAnchorEl(event.currentTarget);
-
-        if (res?.user?.id === isCurrentUser) {
-            // If the friend ID matches, set the OtherUserId to the user's ID
-            SetOtherUserId(res?.friend?.id);
-            // console.log("🚀 ~ handleClick ~ res.user.id:", res.user.id)
-
-
-        } else {
-            // If the friend ID doesn't match, set the OtherUserId to the friend's ID
-
-            SetOtherUserId(res?.friend?.id);
-            // console.log("🚀 ~ handleClick ~ res.friend.id:", res.friend.id)
-        }
-
-        SetUserIdforBlock(res?.friend?.id)
-
-
-        SetCurrentUserID(res?.id)
-
-        const userId = res?.friend?.id === isCurrentUser ? res?.user?.id : res?.friend?.id;
-        const urlWithUserId = `${"http://localhost:3000/dashboard"}/${userId}`;
-
-        SetCurURL(urlWithUserId)
-    };
-
-    const HandleBlockUser = (res) => {
-
-
-        const isConfirmed = window.confirm('Are you sure you want to block this user?');
-
-        // Check if user confirmed
-        if (isConfirmed) {
-            // Perform blocking action
-            // Add your logic here to block the user
-            console.log('User blocked successfully');
-            setAnchorEl(null);
-            dispatch(Sentblockrequest(CurrentUserID, UserIdforBlock))
-
-            setTimeout(() => {
-                dispatch(getAcceptedRequestData())
-            }, 800);
-
-
-        } else {
-            // User canceled the action
-            console.log('Blocking action canceled');
-        }
-    }
-
-
-
-    const [openLogoutModal, setOpenLogoutModal] = React.useState(false);
-    const [userdeletedata, SetuserDeleteData] = useState([])
-
-
-    const [theDetails, SettheDetails] = useState({
-        user: "",
-        LastintID: ""
-    })
-
-    const handleClickDeleteImageModal = (res) => {
-
-        res?.id, res?.lastInitiatorUser
-        setOpenLogoutModal(true);
-        SetuserDeleteData(res)
-    };
-
-    const handleCloseLogout = () => {
-        setOpenLogoutModal(false);
-    };
-
-    const HandleLogout = (e) => {
-        if (e.target.name != "stay") {
-            onsole.log('User unfriend successfully');
-            setAnchorEl(null);
-            dispatch(Cancelfriendrequest(CurrentUserID, OtherUserId))
-
-            setTimeout(() => {
-                dispatch(getAcceptedRequestData())
-            }, 800);
-            setOpenLogoutModal(false);
-
-        }
-        setOpenLogoutModal(false)
-
-    }
-
-    const [MyID, SetMyID] = useState("")
-    useEffect(() => {
-        SetMyID(getCookie("userid"))
-    }, [])
-
-
     const HandleCancelRequest = (res, id) => {
-        console.log("🚀 ~ HandleCancelRequest ~ res:", res)
-        console.log("🚀 ~ HandleCancelRequest ~ id:", id)
-        // alert(id)
 
         const isConfirmed = window.confirm('Are you sure you want to unfriend this user?');
 
-        const cuurentUser = getCookie("authtoken")
-
         // Check if user confirmed
         if (isConfirmed) {
-            // Perform blocking action
-            // Add your logic here to block the user
-            console.log('User unfriend successfully');
-            setAnchorEl(null);
             dispatch(Cancelfriendrequest(res?.id, res?.lastInitiatorUser))
 
             setTimeout(() => {
@@ -298,9 +153,6 @@ function AcceptedRequest() {
             }, 800);
 
 
-        } else {
-            // User canceled the action
-            console.log('unfriend action canceled');
         }
 
 
@@ -332,8 +184,8 @@ function AcceptedRequest() {
 
                             data?.acceptedrequestdata?.data.data.map((res) => {
 
-
                                 const IsUser = res?.friend?.id === isCurrentUser;
+
 
                                 return (
                                     <>
@@ -457,6 +309,7 @@ function AcceptedRequest() {
                 />
 
                 <BlockUserModal
+                    data={Data}
                     isOpen={isBlockModalOpen}
                     onClose={closeBlockModal}
                 />
@@ -486,49 +339,6 @@ function AcceptedRequest() {
                     </Dialog>
                 </React.Fragment>
 
-                <React.Fragment>
-                    <Dialog
-                        open={openURLModal}
-                        aria-labelledby="alert-dialog-title"
-                        aria-describedby="alert-dialog-description"
-                        PaperProps={{
-                            style: {
-                                backgroundColor: 'transparent', // or 'none' if you prefer
-                                boxShadow: 'none',
-                            }
-                        }}
-                        BackdropProps={{ style: { opacity: 0, backgroundColor: "none", boxShadow: "none" } }}
-
-                    >
-                        <div style={{ padding: "17px 19px 17px 20px" }} className='bg-[#333333] w-[249px] rounded-[100px] text-center grid place-items-center'>
-                            <div className='text-[14px]' style={Urlmodaltext}>
-                                <spa className="text-[#fff]"> URL has been copied</spa>
-                            </div>
-                        </div>
-                    </Dialog>
-                </React.Fragment>
-
-                <Dialog
-                    open={openLogoutModal}
-                    onClose={handleCloseLogout}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                    className=""
-                >
-                    <DialogContent className="text-center w-[400px] mt-[20px]">
-                        <div id="alert-dialog-description">
-                            <p style={LogoutModalText}>Are you sure you want to unfriend this user?</p>
-                        </div>
-                    </DialogContent>
-                    <div className="flex justify-evenly p-[20px] mb-[20px]">
-                        <div>
-                            <button onClick={HandleLogout} name="stay" id="grad-button" className="rounded-[24px] w-[122px] h-[50px]">No</button>
-                        </div>
-                        <div>
-                            <button onClick={HandleLogout} name="exit" className="border-[black] border-[1px] rounded-[24px] w-[122px] h-[50px]">Yes</button>
-                        </div>
-                    </div>
-                </Dialog>
             </>
                 :
                 <>

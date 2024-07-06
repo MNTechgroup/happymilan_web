@@ -20,8 +20,8 @@ export const GetSearchUsersData = (searchData) => {
         let data = {
             "minAge": searchData?.minAge,
             "maxAge": searchData?.maxAge,
-            // "maxHeight": searchData?.maxHeight,
-            // "minHeight": searchData?.minHeight,
+            "maxHeight": searchData?.maxHeight,
+            "minHeight": searchData?.minHeight,
             "maritalStatus": [
                 ...searchData.maritalStatus
                 // 'single'

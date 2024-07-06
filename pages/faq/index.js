@@ -1,10 +1,10 @@
 import React from "react";
-import Navbar from "../components/Navbar";
+import Navbar from "../_components/layout/Navbar";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Footer from "../components/Footer";
+import Footer from "../_components/layout/Footer";
 import Image from "next/image";
 
 const AccordingTitle = {

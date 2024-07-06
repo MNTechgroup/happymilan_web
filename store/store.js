@@ -13,12 +13,18 @@ import { searchformReducer } from './reducers/SearchUsersReducer';
 import Userseting from './reducers/UserSettingReducer';
 import SafetyConsentReducer from './reducers/safetyConsentReducer';
 import UpgradePlansReducer from './reducers/UpgradeReducer';
+import AuthReducer from './reducers/Authreducer';
+import SpamuserSlice from './reducers/SpamReportReducer'
+import UserStoryView from './reducers/UserStoryView';
 
 const store = configureStore({
   reducer: {
+    auth: AuthReducer,
+    storyviews: UserStoryView,
     login: Loginreducer,
     uploadreducer: imageReducer,
     form: formReducer,
+    Spamuser: SpamuserSlice,
     searchform: searchformReducer,
     myprofile: MyProfile,
     alluser: allUsersReducer,
@@ -27,9 +33,9 @@ const store = configureStore({
     notificatin: NotificationReducer,
     userseting: Userseting,
     usersact: userReducer,
-    upgradeplans : UpgradePlansReducer,
+    upgradeplans: UpgradePlansReducer,
     chatSafetyConsent: SafetyConsentReducer,
-   
+
   },
 });
 

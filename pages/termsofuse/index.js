@@ -1,6 +1,6 @@
 import React from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Navbar from "../_components/layout/Navbar";
+import Footer from "../_components/layout/Footer";
 
 const TitleText = {
   color: "#000",
@@ -47,8 +47,6 @@ const Textstyle2 = {
 
 function index() {
   const [open, setOpen] = React.useState(1);
-
-  const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
   return (
     <>

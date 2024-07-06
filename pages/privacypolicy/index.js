@@ -1,12 +1,10 @@
 import React from "react";
-import Navbar from "../components/Navbar";
+import Navbar from "../_components/layout/Navbar";
 import Accordion from "@mui/material/Accordion";
-import AccordionActions from "@mui/material/AccordionActions";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Footer from "../components/Footer";
-import Sidebar from "../components/Navigation";
+import Footer from "../_components/layout/Footer";
 
 function index() {
   const TitleText = {

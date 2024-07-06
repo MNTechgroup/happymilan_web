@@ -3,7 +3,6 @@ import { Input } from "@material-tailwind/react";
 import dynamic from 'next/dynamic';
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 import Dialog from '@mui/material/Dialog';
-
 import {
   Accordion,
   AccordionHeader,

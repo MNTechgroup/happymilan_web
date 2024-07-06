@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react'
-import NavBar from '../NavBar'
-import SideBar from '../SideBar'
+import NavBar from '../../_components/layout/NavBar'
+import SideBar from '../../_components/layout/SideBar'
 import ProtectedRoutes from '../../routes/ProtectedRoutes'
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
@@ -10,12 +10,12 @@ import { useDarkMode } from '../../../ContextProvider/DarkModeContext';
 
 
 // const UserProfile = dynamic(() => import('./commonCompo/UserProfile')); <img
-const Footer = dynamic(() => import('../../components/Footer'));
-const UserStory = dynamic(() => import('../commonCompo/UserStory'));
+const Footer = dynamic(() => import('../../_components/layout/Footer'));
+const UserStory = dynamic(() => import('../../_components/Container/UserStory'));
 const AcceptedRequest = dynamic(() => import('./comp/AcceptedRequest'));
 const GridList = dynamic(() => import('./comp/GridList'));
-const ProfileComplete = dynamic(() => import('../commonCompo/ProfileComplete'));
-const MoreSuggestion = dynamic(() => import('../commonCompo/MoreSuggestion'));
+const ProfileComplete = dynamic(() => import('../../_components/Container/ProfileComplete'));
+const MoreSuggestion = dynamic(() => import('../../_components/Container/MoreSuggestion'));
 
 function index() {
 

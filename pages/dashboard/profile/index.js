@@ -2,12 +2,12 @@
 
 import React from 'react'
 import dynamic from 'next/dynamic';
-const NavBar = dynamic(() => import('../NavBar'));
-const SideBar = dynamic(() => import('../SideBar'));
+const NavBar = dynamic(() => import('../../_components/layout/NavBar'));
+const SideBar = dynamic(() => import('../../_components/layout/SideBar'));
 const Profile = dynamic(() => import('./comp/Profile'));
 const UploadSection = dynamic(() => import('./comp/UploadSection'));
-const MoreSuggestion = dynamic(() => import('../commonCompo/MoreSuggestion'));
-const UserStory = dynamic(() => import('../commonCompo/UserStory'))
+const MoreSuggestion = dynamic(() => import('../../_components/Container/MoreSuggestion'));
+const UserStory = dynamic(() => import('../../_components/Container/UserStory'))
 
 function index() {
 

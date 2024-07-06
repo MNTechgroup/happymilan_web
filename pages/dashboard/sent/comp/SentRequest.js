@@ -14,10 +14,10 @@ import Image from 'next/image';
 import { Dialog, DialogContent } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { Cancelfriendrequest, getSentrequestData } from '../../../../store/actions/UsersAction';
-import UserprofileSkeleton from '../../../components/Loader/UserprofileSkeleton';
+import UserprofileSkeleton from '../../../_components/common/shader/UserprofileSkeleton';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-const ShareModal = dynamic(() => import('../../../components/Models/ShareModal'));
+const ShareModal = dynamic(() => import('../../../_components/Model/Models/ShareModal'));
 
 function SentRequest() {
 

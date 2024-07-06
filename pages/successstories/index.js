@@ -1,6 +1,6 @@
 import React from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Navbar from "../_components/layout/AuthNavbar";
+import Footer from "../_components/layout/Footer";
 import { useRouter } from "next/router";
 import Image from "next/image";
 

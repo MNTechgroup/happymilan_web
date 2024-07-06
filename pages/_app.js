@@ -6,13 +6,11 @@ import { SessionProvider } from 'next-auth/react'
 import useFcmToken from "../utils/hooks/useFcmToken";
 import { setCookie } from "cookies-next";
 import { DarkModeProvider } from "../ContextProvider/DarkModeContext";
-// import Nextjsprogress from 'nextjs-progressbar'
 import { UsersConversationProvider } from "../ContextProvider/UsersConversationContext";
 import { SocketProvider } from "../ContextProvider/SocketContext";
 import Head from "next/head";
 import "./global.css";
 import { ChatSettingsProvider } from "../ContextProvider/ChatSetingContext";
-// import { DrawerProvider } from "../ContextProvider/DrawerContext";
 
 
 

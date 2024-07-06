@@ -1,45 +1,66 @@
-const initialState = {
-    token: localStorage.getItem('token'),
-    isAuthenticated: null,
-    loading: true,
-    user: null,
+// slices/authSlice.js
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { getCookie, setCookie } from 'cookies-next';
+// import { setCookie, getCookie } from 'cookie-next';
+
+export const checkUserPlan = createAsyncThunk('auth/checkUserPlan', async () => {
+  const token = getCookie('authtoken');
+
+  if (!token) {
+    return { success: false, message: 'No token found' };
+  }
+
+  const config = {
+    method: 'get',
+    url: 'https://happymilan.tech/api/v1/user/user/checkPlan',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   };
-  
-  const authReducer = (state = initialState, action) => {
-    const { type, payload } = action;
-  
-    switch (type) {
-      case 'USER_LOADED':
-        return {
-          ...state,
-          isAuthenticated: true,
-          loading: false,
-          user: payload,
-        };
-      case 'LOGIN_SUCCESS':
-      case 'REGISTER_SUCCESS':
-        localStorage.setItem('token', payload.token);
-        return {
-          ...state,
-          ...payload,
-          isAuthenticated: true,
-          loading: false,
-        };
-      case 'AUTH_ERROR':
-      case 'LOGIN_FAIL':
-      case 'LOGOUT':
-      case 'REGISTER_FAIL':
-        localStorage.removeItem('token');
-        return {
-          ...state,
-          token: null,
-          isAuthenticated: false,
-          loading: false,
-        };
-      default:
-        return state;
-    }
-  };
-  
-  export default authReducer;
-  
+
+  const response = await axios(config);
+  console.log("data-- ", response.data.data)
+  const obj = {message : "No subscription found for the user" ,success : false}
+  return obj;
+});
+
+const authSlice = createSlice({
+  name: 'auth',
+  initialState: {
+    token: getCookie('token') || null,
+    hasPlan: false,
+    status: 'idle',
+    error: null,
+  },
+  reducers: {
+    setToken: (state, action) => {
+      state.token = action.payload;
+      setCookie('token', action.payload);
+    },
+    logout: (state) => {
+      state.token = null;
+      state.hasPlan = false;
+      state.status = 'idle';
+      state.error = null;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(checkUserPlan.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(checkUserPlan.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.hasPlan = action.payload.success;
+      })
+      .addCase(checkUserPlan.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      });
+  },
+});
+
+export const { setToken, logout } = authSlice.actions;
+
+export default authSlice.reducer;

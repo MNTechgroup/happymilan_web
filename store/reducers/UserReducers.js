@@ -150,8 +150,7 @@ const initialState = {
         loading: false,
         error: null,
         modalClose: false
-    }
-
+    },
 
 
 };

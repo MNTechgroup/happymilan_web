@@ -1,49 +1,34 @@
 import React, { useEffect, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
-
 // Import Swiper styles
 import 'swiper/css';
-// import required modules
-import Popover from '@mui/material/Popover';
 // Import Swiper styles
 import 'swiper/css/pagination';
-
-
 // import required modules
 import { Pagination } from 'swiper';
 import Image from 'next/image';
-import { Dialog, DialogContent, Skeleton } from '@mui/material';
+import { Dialog, Skeleton } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchshortlistdata } from '../../../../store/reducers/GetShortlistList';
 import { RemoveShortlist } from '../../../../store/actions/GetingAlluser';
 import { sendRequest } from '../../../../store/actions/UsersAction';
-import SendRequestBtn from '../../../components/Buttons/SendRequestBtn';
-import ShareModal from '../../../components/Models/ShareModal';
-import ProfileMenu from '../../../components/popover/MenuPop';
-import ReportModal from '../../../components/Models/ReportModal';
-import RegisterAlertModal from '../../../components/Models/RegisterAlertModal';
-import BlockUserModal from "../../../components/Models/BlockModal";
+import dynamic from 'next/dynamic';
+// Dynamic imports
+const SendRequestBtn = dynamic(() => import('../../../_components/common/Buttons/SendRequestBtn'), { ssr: false });
+const ShareModal = dynamic(() => import('../../../_components/Model/Models/ShareModal'), { ssr: false });
+const ProfileMenu = dynamic(() => import('../../../_components/Model/popover/MenuPop'), { ssr: false });
+const ReportModal = dynamic(() => import('../../../_components/Model/Models/ReportModal'), { ssr: false });
+const BlockUserModal = dynamic(() => import("../../../_components/Model/Models/BlockModal"), { ssr: false });
+
 
 
 function UserProfile() {
 
 
 
-    const [isRegisterModalOpen, setisRegisterModalOpen] = useState(false);
     const [isBlockModalOpen, setisBlockModalOpen] = useState(false);
-    const [Data, setData] = useState("");
     const [CurrURL, SetCurURL] = useState("");
 
-
-
-    const OpenRegisterModal = (res) => {
-        setData(res);
-        setisRegisterModalOpen(true);
-    };
-
-    const CloseRegisterModal = () => {
-        setisRegisterModalOpen(false);
-    };
 
     const openBlockModal = () => {
         setisBlockModalOpen(true);
@@ -625,11 +610,6 @@ function UserProfile() {
             }
 
 
-            <RegisterAlertModal
-                title={Data}
-                isOpen={isRegisterModalOpen}
-                onClose={CloseRegisterModal}
-            />
             <ReportModal
                 title={"helo"}
                 isOpen={isReportModalOpen}

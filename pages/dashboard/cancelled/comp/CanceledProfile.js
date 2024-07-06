@@ -8,7 +8,7 @@ import 'swiper/css/pagination';
 import { Pagination } from 'swiper';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
-const  ShareModal = dynamic(() => import('../../../components/Models/ShareModal'))
+const  ShareModal = dynamic(() => import('../../../_components/Model/Models/ShareModal'))
 import { Dialog  } from '@mui/material';
 import { useDispatch } from 'react-redux';
 

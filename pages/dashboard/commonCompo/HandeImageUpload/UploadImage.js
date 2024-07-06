@@ -1,7 +1,7 @@
 import { Dialog, DialogContent } from '@mui/material'
 import Image from 'next/image'
 import React, { useCallback, useEffect, useState } from 'react'
-import ProfileImage from '../../../components/Maincomp/ProfileImage'
+import ProfileImage from '../../../_components/common/profile/ProfileImage'
 import { getCookie } from 'cookies-next'
 import { useDropzone } from 'react-dropzone'
 import { connect, useDispatch, useSelector } from 'react-redux'
