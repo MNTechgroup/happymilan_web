@@ -39,7 +39,7 @@ function index() {
                                 </ul>
                             </div>
                             <div className='flex justify-center pt-[20px]'>
-                                <button onClick={() => router.push("/dashboard")} className='w-[184px] h-[49px] 2xl:w-[184px] 2xl:h-[49px] xl:w-[184px] xl:h-[49px] lg:w-[180px] lg:h-[45px] bg-[#FFF] border-[1px] border-[#0F52BA] rounded-[22px] hover:bg-[#F2F7FF]'>Send Message</button>
+                                <button onClick={() => router.push("/longterm/dashboard")} className='w-[184px] h-[49px] 2xl:w-[184px] 2xl:h-[49px] xl:w-[184px] xl:h-[49px] lg:w-[180px] lg:h-[45px] bg-[#FFF] border-[1px] border-[#0F52BA] rounded-[22px] hover:bg-[#F2F7FF]'>Send Message</button>
                             </div>
                         </div>
                     </div>

@@ -1,67 +1,40 @@
-"use client";
-
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { updateFormData, updateGeneralInfo } from "../../../store/actions/registerUser";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { getCookie } from "cookies-next";
-import { validatePhoneNumber, validatePhoneNumberByCountryCode } from "../../../utils/form/validationRules";
+import { validatePhoneNumberByCountryCode } from "../../../utils/form/validationRules";
+import { customStyle2 } from "../../../utils/options/styles/SelectBoxStyle";
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
-//Style for Select Box
-const customStyle2 = {
-  control: (provided, state) => ({
-    ...provided,
-    paddingRight: '10px',
-    paddingLeft: "8px",
-    width: "155px",
-    height: "50px",
-    borderRadius: "8px", // Add padding on the right side
-    border: "1px solid #e6e6e6",
-    borderColor: state.isFocused ? 'black' : provided.borderColor,
-    '&:hover': {
-      borderColor: 'black',
-    },
-    boxShadow: state.isFocused ? 'none' : provided.boxShadow,
-  }),
-  indicatorSeparator: (provided) => ({
-    ...provided,
-    display: 'none',
-    paddingRight: "20px"
-    // Hide the vertical line behind the arrow
-  }),
-};
-
-
-
-
-const Text1 = {
-  fontFamily: "Poppins",
-  fontSize: "16px",
-  fontStyle: "normal",
-  fontWeight: "400",
-  lineHeight: "normal"
-}
-
-
-const Text2 = {
-  fontFamily: "Poppins",
-  fontSize: "12px",
-  fontStyle: "normal",
-  fontWeight: "400",
-  lineHeight: "normal"
-}
-
-
-const doItlater = {
-  fontFamily: "Poppins",
-  fontSize: "14px",
-  fontStyle: "normal",
-  fontWeight: "400",
-  lineHeight: "normal"
-}
 
 const ContactSection = ({ formData, updateFormData, HandleTabclick, activeTab }) => {
+
+  const Text1 = {
+    fontFamily: "Poppins",
+    fontSize: "16px",
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: "normal"
+  }
+
+
+  const Text2 = {
+    fontFamily: "Poppins",
+    fontSize: "12px",
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: "normal"
+  }
+
+
+  const doItlater = {
+    fontFamily: "Poppins",
+    fontSize: "14px",
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: "normal"
+  }
 
 
   const dispatch = useDispatch();
@@ -89,7 +62,7 @@ const ContactSection = ({ formData, updateFormData, HandleTabclick, activeTab })
     const value = e.target.value;
 
     let errorMessage = '';
-    
+
     if (name == "mobileCode") {
       const selectedCurrentCity = countryCodes.find((option) => option.value === value);
       SetCodes({
@@ -182,7 +155,7 @@ const ContactSection = ({ formData, updateFormData, HandleTabclick, activeTab })
 
 
               />
-             
+
             </div>
           </div>
           <span className="text-[red] text-[10px] relative left-[190px]">{PhoneNumberError.label}</span>

@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../_components/layout/Navbar";
+import Navbar from "../_components/layout/AuthNavbar";
 import Footer from "../_components/layout/Footer";
 
 const TitleText = {

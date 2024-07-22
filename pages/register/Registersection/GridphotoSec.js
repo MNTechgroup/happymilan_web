@@ -1,27 +1,10 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { connect } from 'react-redux'
 import { updateFormData } from '../../../store/actions/registerUser'
 import Image from "next/image";
 
 
-const Text1 = {
-    color: "#000",
-    fontFamily: "Poppins",
-    fontSize: "18px",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "normal",
-};
-const Text2 = {
-    color: "#000",
-    textAlign: "center",
-    fontFamily: "Poppins",
-    fontSize: "12px",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "normal",
-};
 
 function GridphotoSec({ formData, updateFormData, }) {
 
@@ -29,28 +12,10 @@ function GridphotoSec({ formData, updateFormData, }) {
 
     const [TheImages, SetTheImages] = useState(data.images)
     const images = data.images
-    const Gridlayout = [
-        { id: 1, image: "/assests/userpics/1.jpg", type: "image" },
-        { id: 2, image: "/assests/userpics/2.jpg", type: "image" },
-        { id: 3, image: "/assests/userpics/3.jpg", type: "image" },
-        { id: 4, image: "/assests/userpics/4.jpg", type: "image" },
-        { id: 5, image: "/assests/userpics/5.jpg", type: "image" },
-        { id: 7, image: "/assests/common/Rectangle385.svg", type: "video" },
-    ];
-
-    const [open, setOpen] = React.useState(false);
-
-    const handleOpen = () => setOpen(!open);
-
-    const [griddata, setgriddata] = useState(Gridlayout);
-    const [selectedImage, setSelectedImage] = useState("");
-
 
 
     const HandleRemove = (res) => {
-        console.log("TheImage", TheImages)
         const filteredArray = TheImages.filter(item => item.id !== res.id)
-        console.log("🚀 ~ HandleRemove ~ filteredArray:", filteredArray)
         SetTheImages(filteredArray)
 
         updateFormData({
@@ -64,15 +29,10 @@ function GridphotoSec({ formData, updateFormData, }) {
         console.log(res)
     };
 
-    const HandleImageclick = (items) => {
-        handleOpen(true);
-        setSelectedImage(items.key);
-    };
     const [SelectedGridImage, SetSelectedGridImage] = useState(null);
 
     const HandleGridImageClick = (index, items) => {
 
-        // if (items.contentType == "video/mp4") {
         if (items.contentType.startsWith('video/')) {
             return null
                 ;
@@ -80,11 +40,8 @@ function GridphotoSec({ formData, updateFormData, }) {
 
             if (SelectedGridImage === index) {
                 SetSelectedGridImage(null); // Unselect if already selected
-                console.log("<== image clicked 1 ==>")
             } else {
                 SetSelectedGridImage(index); // Select the clicked image
-                console.log("<== image clicked 2 ==>", index)
-
                 updateFormData({
                     ...formData,
                     upload: {
@@ -100,7 +57,6 @@ function GridphotoSec({ formData, updateFormData, }) {
         }
     };
 
-    console.log("Grid data : ", images)
 
     const handleFileChange = (event) => {
 
@@ -134,6 +90,26 @@ function GridphotoSec({ formData, updateFormData, }) {
 
     }
 
+
+
+    const Text1 = {
+        color: "#000",
+        fontFamily: "Poppins",
+        fontSize: "18px",
+        fontStyle: "normal",
+        fontWeight: "400",
+        lineHeight: "normal",
+    };
+    const Text2 = {
+        color: "#000",
+        textAlign: "center",
+        fontFamily: "Poppins",
+        fontSize: "12px",
+        fontStyle: "normal",
+        fontWeight: "400",
+        lineHeight: "normal",
+    };
+
     return (
         <>
             <div className="w-full h-full grid place-items-center pb-[100px]">
@@ -156,13 +132,6 @@ function GridphotoSec({ formData, updateFormData, }) {
                                         <div
                                             key={index}
                                             className=" w-[150px] h-[150px] lg:w-[200px] lg:h-[200px] rounded-[10px]"
-                                        // style={{
-                                        //     backgroundImage: `url(${item.data})`,
-                                        //     backgroundSize: "cover",
-                                        //     backgroundPosition: "center",
-                                        // }}
-                                        // id="photo-grid-item"
-                                        // onClick={() => HandleGridImageClick(index, item)}
                                         >
 
                                             <div
@@ -170,7 +139,7 @@ function GridphotoSec({ formData, updateFormData, }) {
                                                     }  grid place-items-center  absolute  rounded-[8px]  w-[150px] h-[150px] lg:w-[200px] lg:h-[200px] bg-[#0F52BACC] `}
                                             >
                                                 <img
-                                                    src="./assests/common/Select-Right.svg"
+                                                    src="/assests/common/Select-Right.svg"
                                                     className=""
                                                 />
                                             </div>
@@ -204,31 +173,6 @@ function GridphotoSec({ formData, updateFormData, }) {
                                                     fill="white"
                                                 />
                                             </svg>
-
-
-
-                                            {/* {item.contentType != "video" ? (
-                                                <>
-                                                    <div
-                                                        className={`${SelectedGridImage === index ? "block" : "hidden"
-                                                            }  grid place-items-center  relative lg:top-[-33px] top-[-31px] rounded-[8px]  w-[150px] h-[150px] lg:w-[200px] lg:h-[200px] bg-[#0F52BACC] bg-opacity-70`}
-                                                    >
-                                                        <img
-                                                            src="./assests/common/Select-Right.svg"
-                                                            className=""
-                                                        />
-                                                    </div>
-                                                </>
-                                            ) : (
-                                                <div className="grid place-items-center w-full h-[65%]">
-                                                    <img
-                                                        onClick={() => {
-                                                            item.type != "video" ? "" : HandleImageclick(item);
-                                                        }}
-                                                        src="/assests/common/videoPlay-icon.svg"
-                                                    />
-                                                </div>
-                                            )} */}
 
                                         </div>
                                     </>);

@@ -47,7 +47,7 @@ const Message = ({ socket }) => {
         setMessages(prevMessages => {
           console.log("Receive Log")
           const newMessages = data.data.sendMessage?.results?.filter(msg => !prevMessages.some(x => x.id === msg.id));
-          console.log("🚀 ~ socket.on ~ newMessages:", newMessages)
+          
           return [...newMessages, ...prevMessages];
 
         });

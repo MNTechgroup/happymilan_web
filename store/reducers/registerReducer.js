@@ -210,9 +210,13 @@ export const FormSlice = createSlice({
     builder.addCase(updateGeneralInfo.rejected, (state, action) => {
       // Handle success state if needed
       state.formData.status = STATUSES.ERROR;
-      console.log("Data pass : ", action.payload)
     });
     builder.addCase(updateGeneralInfo.fulfilled, (state, action) => {
+      // Handle success state if needed
+      state.formData.general = {
+        ...state.formData.general,
+        ...action.payload
+      }
       state.formData.status = STATUSES.IDLE;
     });
     builder.addCase(updateAddressData.pending, (state, action) => {
@@ -270,83 +274,6 @@ export const FormSlice = createSlice({
   }
 })
 
-
-// Function to upload image to S3 using presigned URL
-export const uploadImageToS3 = async (theimageData) => {
-
-  console.log(theimageData)
-  // Iterate through the imageDataArray and make POST requests for each image
-  // theimageData.forEach(imageData => {
-
-  //   console.log(JSON.stringify(theimageData))
-
-  //   const authToken = getCookie("authtoken");
-
-
-  //   // Assuming imageData is the image data you want to send in the request
-  //   const data = JSON.stringify(imageData);
-
-  //   // Construct the fetch options
-  //   const options = {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': `Bearer ${authToken}`
-  //     },
-  //     body: data
-  //   };
-
-  //   // Make the fetch request
-  //   fetch('https://happymilan.tech/api/v1/s3/presignedurl/', options)
-  //     .then(response => {
-  //       if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //       }
-  //       return response.json();
-  //     })
-  //     .then(data => {
-  //       console.log(JSON.stringify(data));
-
-  //       if (data.status == "Success") {
-  //         // Assuming imageData is the image data you want to send in the request
-
-  //         // Construct the fetch options
-  //         const Theoptions = {
-  //           method: 'PUT',
-  //           headers: {
-  //             'Content-Type': imageData.contentType,
-  //             'Authorization': `Bearer ${authToken}`
-  //           },
-  //           body: imageData
-  //         };
-
-  //         // Make the fetch request
-  //         fetch(data.data.url, Theoptions)
-  //           .then(response => {
-  //             if (!response.ok) {
-  //               throw new Error('Network response was not ok');
-  //             }
-  //             return response.json(); // Assuming the response is JSON
-  //           })
-  //           .then(data => {
-  //             console.log(JSON.stringify(data));
-  //           })
-  //           .catch(error => {
-  //             console.error('There was a problem with your fetch operation:', error);
-  //           });
-
-  //       } else {
-  //         console.log("ERROR")
-  //       }
-
-  //     })
-  //     .catch(error => {
-  //       console.error('There was a problem with your fetch operation:', error);
-  //     });
-
-  // });
-
-};
 
 
 

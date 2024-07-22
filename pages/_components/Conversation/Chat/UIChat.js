@@ -140,8 +140,9 @@ const Chats = ({ toggleInnerDrawer, HandleWide }) => {
 
 
 
-                                {FriendeLists?.acceptedUsers?.map((el) => {
+                                {FriendeLists?.acceptedUsers?.map((el, index) => {
                                     return <ChatElement
+                                        key={index}
                                         // key={response.id}
                                         // res={response}
                                         // user={response.user}

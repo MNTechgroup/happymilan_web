@@ -9,9 +9,6 @@ export const updateSearchData = (data) => ({
 
 export const GetSearchUsersData = (searchData) => {
 
-    console.log("🚀 ~ GetSearchUsersData ~ searchData:", searchData)
-
-
     return async (dispatch) => {
         dispatch({ type: GET_SEARCHUSERS_DATA })
 
@@ -62,7 +59,7 @@ export const GetSearchUsersData = (searchData) => {
 
         axios.request(config)
             .then((response) => {
-                console.log("🚀 ~ .then ~ response:", response.data)
+               
                 console.log(JSON.stringify(response.data));
                 dispatch({ type: GET_SEARCHUSERS_DATA_SUCCESS, payload: response.data.data })
             })
@@ -139,7 +136,7 @@ export const GetSaveSearchData = (response) => (
 
 
 export const SaveUserSearchPost = (searchData) => {
-    console.log("🚀 ~ SaveUserSearch ~ searchData:", searchData)
+    
 
 
     return async (dispatch) => {
@@ -200,7 +197,7 @@ export const SaveUserSearchPost = (searchData) => {
 
         axios.request(config)
             .then((response) => {
-                console.log("🚀 ~ .then ~ response:", response.data)
+               
                 console.log(JSON.stringify(response.data));
                 dispatch({ type: POST_SAVESEARCH_DATA_SUCCESS, payload: response.data.data })
                 dispatch(FetchSaveSearchData())
@@ -216,9 +213,7 @@ export const SaveUserSearchPost = (searchData) => {
 
 
 export const DeleteSaveSearchData = (SearchID) => {
-    console.log("🚀 ~ SaveUserSearch ~ searchData:", SearchID)
-
-
+   
     return async (dispatch) => {
         dispatch({ type: DELETE_SAVESEARCH_DATA })
 

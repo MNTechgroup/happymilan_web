@@ -7,7 +7,6 @@ export const updateFormData = (data) => ({
   payload: data,
 });
 
-// /v1/user/auth/update-user
 
 export const REGISTER_USER = 'REGISTER_USER';
 export const VERIFY_OTP = 'VERIFY_OTP';
@@ -128,7 +127,7 @@ export const updateEducationData = createAsyncThunk(
       }
 
       const result = await response.json();
-      // console.log("🚀 ~ result after env:", result)
+     
       return result.data;
 
     } catch (error) {

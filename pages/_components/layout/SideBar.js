@@ -86,7 +86,7 @@ function SideBar() {
                 ID: {myProfile?.userUniqueId}
               </span>{" "}
               <span className="text-[#E3E3E3]">|</span>{" "}
-              <Link href="/dashboard/profile">
+              <Link href="/longterm/dashboard/profile">
                 <span className="text-[14px] text-[#0F52BA] dark:text-[#FFF]">My Profile</span>
               </Link>
             </div>
@@ -95,7 +95,7 @@ function SideBar() {
           <ul className="relative left-[-10px] space-y-[10px] pb-[20px] font-medium border-t  border-gray-200 dark:border-[#292929] p-[10px]">
             <li name="dashboard" className={`duration-100 ${darkMode ? "" : "hover:bg-[#F2F7FF]"} rounded-[17px] p-[5px] pl-[10px] flex items-center`}>
               <span>
-                {router.pathname === "/dashboard" ?
+                {router.pathname === "/longterm/dashboard" ?
                   <>
                     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">
                       <path d="M0.647934 13.3521H4.25785V7.93719H8.14545V13.3521H11.7554V5.02149L6.20165 0.809917L0.647934 5.02149V13.3521ZM0 14V4.69752L6.20165 0L12.4033 4.69752V14H7.49752V8.58512H4.90579V14H0Z" fill="url(#paint0_linear_1273_667)" />
@@ -116,18 +116,18 @@ function SideBar() {
                   </>}
 
               </span>
-              <Link href="/dashboard">
+              <Link href="/longterm/dashboard">
                 {" "}
                 <h1
                   style={Text3}
-                  id={router.pathname === "/dashboard" ? "sidebar-navlink-grad" : ""}
+                  id={router.pathname === "/longterm/dashboard" ? "sidebar-navlink-grad" : ""}
                   className={`text-[14px] pl-[10px] dark:hover:text-[#FFF] 
                   ${darkMode
-                      ? router.pathname === "/dashboard"
+                      ? router.pathname === "/longterm/dashboard"
                         ? "text-[#FFF]"
                         : "text-[#7D7F86]"
                       :
-                      router.pathname === "/dashboard"
+                      router.pathname === "/longterm/dashboard"
                         ? ""
                         : ""}`}
                 >
@@ -137,7 +137,7 @@ function SideBar() {
             </li>
 
             <li className={`${darkMode ? "" : "hover:bg-[#F2F7FF]"} duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center`}>
-              {router.pathname === "/dashboard/searchmember" ? <>
+              {router.pathname === "/longterm/dashboard/searchmember" ? <>
                 <Image width={14} height={14} alt="search-icon" src="/assests/sidebar/search-member-icon.svg" />
 
               </> : <>
@@ -166,18 +166,18 @@ function SideBar() {
                   </defs>
                 </svg>
               </>}
-              <Link href="/dashboard/searchmember">
+              <Link href="/longterm/dashboard/searchmember">
                 {" "}
                 <h1
                   style={Text3}
-                  id={router.pathname === "/dashboard/searchmember" ? "sidebar-navlink-grad" : ""}
+                  id={router.pathname === "/longterm/dashboard/searchmember" ? "sidebar-navlink-grad" : ""}
                   className={`text-[14px]  dark:hover:text-[#FFF] pl-[10px]  
                   ${darkMode
-                      ? router.pathname === "/dashboard/searchmember"
+                      ? router.pathname === "/longterm/dashboard/searchmember"
                         ? "text-[#FFF]"
                         : "text-[#7D7F86]"
                       :
-                      router.pathname === "/dashboard/searchmember"
+                      router.pathname === "/longterm/dashboard/searchmember"
                         ? ""
                         : ""}`}
                 >
@@ -188,7 +188,7 @@ function SideBar() {
 
             <li className={`${darkMode ? "" : "hover:bg-[#F2F7FF]"} duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center `}>
 
-              {router.pathname === "/dashboard/accepted" ? <>
+              {router.pathname === "/longterm/dashboard/accepted" ? <>
                 <Image width={14} height={14} alt="search-icon" src="/assests/sidebar/accepted-icon.svg" />
 
               </> :
@@ -208,18 +208,18 @@ function SideBar() {
 
 
 
-              <Link href="/dashboard/accepted">
+              <Link href="/longterm/dashboard/accepted">
                 <h1
                   style={Text3}
-                  id={router.pathname === "/dashboard/accepted" ? "sidebar-navlink-grad" : ""}
+                  id={router.pathname === "/longterm/dashboard/accepted" ? "sidebar-navlink-grad" : ""}
                   className={`text-[14px] dark:hover:text-[#FFF] pl-[10px] 
                   ${darkMode
-                      ? router.pathname === "/dashboard/accepted"
+                      ? router.pathname === "/longterm/dashboard/accepted"
 
                         ? "text-[#FFF]"
                         : "text-[#7D7F86]"
                       :
-                      router.pathname === "/dashboard/accepted"
+                      router.pathname === "/longterm/dashboard/accepted"
 
                         ? ""
                         : ""}`}
@@ -228,7 +228,7 @@ function SideBar() {
                 </h1>
               </Link>
               <div
-                className={`${router.pathname === "/dashboard/accepted" ? "invisible" : "visible	"} flex justify-end  w-full pr-[10px]`}
+                className={`${router.pathname === "/longterm/dashboard/accepted" ? "invisible" : "visible	"} flex justify-end  w-full pr-[10px]`}
               >
                 {/* <div
                   id="grad-btn"
@@ -243,7 +243,7 @@ function SideBar() {
 
             <li className={`${darkMode ? "" : "hover:bg-[#F2F7FF]"} duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center relative left-[-1px] `}>
               {
-                router.pathname === "/dashboard/recentlyviewed" ? <>
+                router.pathname === "/longterm/dashboard/recentlyviewed" ? <>
                   <Image width={19} height={12} alt="recentView" src={"/assests/sidebar/recently-view-icon.svg"} />
                 </> : <>
 
@@ -264,19 +264,19 @@ function SideBar() {
               }
 
 
-              <Link href="/dashboard/recentlyviewed">
+              <Link href="/longterm/dashboard/recentlyviewed">
                 <h1
                   style={Text3}
-                  id={router.pathname === "/dashboard/recentlyviewed" ? "sidebar-navlink-grad" : ""}
+                  id={router.pathname === "/longterm/dashboard/recentlyviewed" ? "sidebar-navlink-grad" : ""}
 
                   className={`text-[14px]  dark:hover:text-[#FFF] pl-[6px]  
                    ${darkMode
-                      ? router.pathname === "/dashboard/recentlyviewed"
+                      ? router.pathname === "/longterm/dashboard/recentlyviewed"
 
                         ? "text-[#FFF]"
                         : "text-[#7D7F86]"
                       :
-                      router.pathname === "/dashboard/recentlyviewed"
+                      router.pathname === "/longterm/dashboard/recentlyviewed"
                         ? ""
                         : ""}`}
                 >
@@ -286,7 +286,7 @@ function SideBar() {
             </li>
 
             <li className={`${darkMode ? "" : "hover:bg-[#F2F7FF]"} duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center `}>
-              {router.pathname === "/dashboard/newrequest" ?
+              {router.pathname === "/longterm/dashboard/newrequest" ?
                 <>
                   <Image width={15} height={14} alt="newrequest" src={"/assests/sidebar/new-request-icon.svg"} />
                 </>
@@ -318,18 +318,18 @@ function SideBar() {
                   </svg>
                 </>}
 
-              <Link href="/dashboard/newrequest">
+              <Link href="/longterm/dashboard/newrequest">
                 <h1
                   style={Text3}
-                  id={router.pathname === "/dashboard/newrequest" ? "sidebar-navlink-grad" : ""}
+                  id={router.pathname === "/longterm/dashboard/newrequest" ? "sidebar-navlink-grad" : ""}
                   className={`pl-[10px] text-[14px]  dark:hover:text-[#FFF] 
                   ${darkMode
-                      ? router.pathname === "/dashboard/newrequest"
+                      ? router.pathname === "/longterm/dashboard/newrequest"
 
                         ? "text-[#FFF]"
                         : "text-[#7D7F86]"
                       :
-                      router.pathname === "/dashboard/newrequest"
+                      router.pathname === "/longterm/dashboard/newrequest"
                         ? ""
                         : ""}`}
                 >
@@ -337,7 +337,7 @@ function SideBar() {
                 </h1>
               </Link>
               <div
-                className={`${router.pathname === "/dashboard/newrequest" ? "invisible" : "visible	"} flex justify-center relative 2xl:left-[50px] lg:left-[50px] xl:left-[40px]`}
+                className={`${router.pathname === "/longterm/dashboard/newrequest" ? "invisible" : "visible	"} flex justify-center relative 2xl:left-[50px] lg:left-[50px] xl:left-[40px]`}
               >
                 {/* <div className="grid place-items-center w-[24px] h-[24px] bg-[#17C270] rounded-[50px]">
                   <h1 style={NotificationText} className="text-[white]">
@@ -348,7 +348,7 @@ function SideBar() {
             </li>
 
             <li className={`${darkMode ? "" : "hover:bg-[#F2F7FF]"} duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center `}>
-              {router.pathname === "/dashboard/shortlists" ?
+              {router.pathname === "/longterm/dashboard/shortlists" ?
                 <>
                   <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10.7399 3.5023L13.8866 4.22619C14.701 4.41452 15.2086 5.22747 15.0202 6.04193C14.9599 6.30248 14.8317 6.54237 14.6486 6.73729L12.5704 9.12543L12.8545 12.3518V12.3656C12.9183 13.197 12.2999 13.9244 11.469 13.9952C11.1789 14.0182 10.8881 13.9581 10.6308 13.822L7.77338 12.6098L4.7947 13.8723C4.02821 14.1962 3.1443 13.8374 2.82037 13.0709L2.81872 13.067C2.77162 12.9559 2.73789 12.8396 2.71828 12.7206C2.70244 12.6204 2.69663 12.5189 2.70096 12.4176C2.69919 12.3974 2.69919 12.3771 2.70096 12.357L2.98498 9.12716L0.868727 6.6888C0.32265 6.05838 0.391012 5.10468 1.02139 4.55861C1.19894 4.40478 1.40996 4.29455 1.63764 4.23658L1.67228 4.22619H1.68613L4.82068 3.50057L6.4832 0.729701C6.91528 0.0152499 7.84473 -0.213693 8.55923 0.218389C8.77436 0.34849 8.95364 0.530155 9.08088 0.747019L9.09128 0.762605L10.7399 3.5023ZM14.1378 6.25944C14.1875 6.20761 14.23 6.14938 14.2642 6.08626C14.4765 5.68998 14.3273 5.19668 13.9311 4.98441C13.8674 4.95029 13.7995 4.92483 13.7291 4.90864L10.4387 4.14665C10.3458 4.1257 10.2656 4.06746 10.217 3.98559V3.98386L8.49385 1.10909L8.48346 1.09177C8.25214 0.706317 7.75217 0.581368 7.36672 0.812692C7.2522 0.881401 7.15635 0.977256 7.08764 1.09177L5.35585 3.97174C5.30827 4.0598 5.22488 4.12293 5.12725 4.14492L1.84897 4.90171H1.82819C1.39039 5.00371 1.1182 5.44134 1.2202 5.87914C1.25012 6.00755 1.31077 6.12674 1.39697 6.22653L3.59288 8.76188C3.66709 8.83474 3.70458 8.93713 3.69506 9.04069L3.40758 12.3657C3.40897 12.3836 3.40897 12.4015 3.40758 12.4194C3.39966 12.4844 3.39966 12.5501 3.40758 12.6151C3.41628 12.6707 3.43079 12.7253 3.45088 12.7779C3.45902 12.7935 3.46599 12.8097 3.47166 12.8264C3.65116 13.2147 4.1006 13.3978 4.50034 13.2455C4.51757 13.2365 4.53554 13.2289 4.55403 13.223L7.64008 11.9155C7.72641 11.8789 7.82391 11.8789 7.91024 11.9155L10.908 13.1797C10.9271 13.1861 10.9456 13.1942 10.9634 13.2039C11.0989 13.2774 11.2532 13.3093 11.4067 13.2957H11.4171C11.8579 13.2562 12.1859 12.8712 12.1549 12.4298V12.4125L11.8639 9.04069C11.8554 8.94696 11.8854 8.85379 11.947 8.78266L14.1187 6.28022L14.1378 6.25944Z" fill="url(#paint0_linear_79_7)" />
@@ -390,7 +390,7 @@ function SideBar() {
                     </defs>
                   </svg>
                 </>}
-              <Link href="/dashboard/shortlists">
+              <Link href="/longterm/dashboard/shortlists">
                 {notificatindot.newShortlists > 0 && (
                   <div className="relative left-[-8px]">
                     <span class="inline absolute flex h-2.5 w-2.5">
@@ -408,15 +408,15 @@ function SideBar() {
                 <h1
                   onClick={HandleGOTO}
                   style={Text3}
-                  id={router.pathname === "/dashboard/shortlists" ? "sidebar-navlink-grad" : ""}
+                  id={router.pathname === "/longterm/dashboard/shortlists" ? "sidebar-navlink-grad" : ""}
                   className={` ${notificatindot.newShortlists > 0 && "inline relative left-[0px]"}  text-[14px] pl-[10px]  dark:hover:text-[#FFF]
                   ${darkMode
-                      ? router.pathname === "/dashboard/shortlists"
+                      ? router.pathname === "/longterm/dashboard/shortlists"
 
                         ? "text-[#FFF]"
                         : "text-[#7D7F86]"
                       :
-                      router.pathname === "/dashboard/shortlists"
+                      router.pathname === "/longterm/dashboard/shortlists"
                         ? ""
                         : ""}`}
                 >
@@ -426,7 +426,7 @@ function SideBar() {
             </li>
 
             <li className={`${darkMode ? "" : "hover:bg-[#F2F7FF]"} duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center `}>
-              {router.pathname === "/dashboard/sent" ?
+              {router.pathname === "/longterm/dashboard/sent" ?
                 <>
                   <Image width={16} height={14} alt="sent" className="relative left-[2px]" src={"/assests/sidebar/sent-icon.svg"} />
                 </>
@@ -448,18 +448,18 @@ function SideBar() {
                 </>
               }
 
-              <Link href="/dashboard/sent">
+              <Link href="/longterm/dashboard/sent">
                 <h1
                   style={Text3}
-                  id={router.pathname === "/dashboard/sent" ? "sidebar-navlink-grad" : ""}
+                  id={router.pathname === "/longterm/dashboard/sent" ? "sidebar-navlink-grad" : ""}
                   className={`text-[14px] dark:hover:text-[#FFF] pl-[10px] 
                   ${darkMode
-                      ? router.pathname === "/dashboard/sent"
+                      ? router.pathname === "/longterm/dashboard/sent"
 
                         ? "text-[#FFF]"
                         : "text-[#7D7F86]"
                       :
-                      router.pathname === "/dashboard/sent"
+                      router.pathname === "/longterm/dashboard/sent"
                         ? ""
                         : ""}`}
                 >
@@ -470,7 +470,7 @@ function SideBar() {
           </ul>
           <ul className="relative left-[-10px] pb-[20px]  pt-2 mt-0 p-[10px] space-y-[10px] font-medium border-t border-gray-200 dark:border-[#292929]">
             <li className={`${darkMode ? "" : "hover:bg-[#F2F7FF]"} duration-100 rounded-[17px] p-[5px] pl-[10px] flex items-center`}>
-              {router.pathname === "/dashboard/cancelled" ?
+              {router.pathname === "/longterm/dashboard/cancelled" ?
                 <>
                   <Image className="relative top-[3px]" width={15} height={14} alt="cancel" src={"/assests/sidebar/cancel-icon.svg"} />
                 </>
@@ -484,18 +484,18 @@ function SideBar() {
                 </>}
 
 
-              <Link href="/dashboard/cancelled">
+              <Link href="/longterm/dashboard/cancelled">
                 <h1
                   style={Text3}
-                  id={router.pathname === "/dashboard/cancelled" ? "sidebar-navlink-grad" : ""}
+                  id={router.pathname === "/longterm/dashboard/cancelled" ? "sidebar-navlink-grad" : ""}
                   className={`text-[14px] dark:hover:text-[#FFF] pl-[10px]  
                   ${darkMode
-                      ? router.pathname === "/dashboard/cancelled"
+                      ? router.pathname === "/longterm/dashboard/cancelled"
 
                         ? "text-[#FFF]"
                         : "text-[#7D7F86]"
                       :
-                      router.pathname === "/dashboard/cancelled"
+                      router.pathname === "/longterm/dashboard/cancelled"
                         ? ""
                         : ""}`}
                 >
@@ -516,11 +516,11 @@ function SideBar() {
                   <path
                     d="M7.5035 14C6.53565 14 5.62557 13.8163 4.77326 13.449C3.92093 13.0817 3.17953 12.5832 2.54905 11.9535C1.91858 11.3238 1.41945 10.5834 1.05167 9.73213C0.683891 8.88089 0.5 7.97135 0.5 7.0035C0.5 6.03565 0.683656 5.12557 1.05097 4.27326C1.41829 3.42094 1.9168 2.67954 2.54647 2.04907C3.17617 1.41859 3.91663 0.919455 4.76787 0.551673C5.61911 0.183891 6.52865 0 7.4965 0C8.46435 0 9.37443 0.183656 10.2267 0.550968C11.0791 0.918294 11.8205 1.4168 12.4509 2.04647C13.0814 2.67617 13.5805 3.41663 13.9483 4.26787C14.3161 5.11911 14.5 6.02865 14.5 6.9965C14.5 7.96435 14.3163 8.87443 13.949 9.72674C13.5817 10.5791 13.0832 11.3205 12.4535 11.951C11.8238 12.5814 11.0834 13.0805 10.2321 13.4483C9.38089 13.8161 8.47135 14 7.5035 14ZM7.5 13.5575C9.32878 13.5575 10.8789 12.9218 12.1503 11.6503C13.4218 10.3789 14.0575 8.82878 14.0575 7C14.0575 6.16023 13.9033 5.36024 13.5948 4.60005C13.2864 3.83986 12.8506 3.14464 12.2874 2.51437L3.01437 11.7874C3.63123 12.364 4.32193 12.8032 5.08647 13.1049C5.85101 13.4066 6.65552 13.5575 7.5 13.5575ZM2.71264 11.4856L11.9856 2.21264C11.3822 1.63602 10.6948 1.19684 9.92359 0.895115C9.15234 0.593391 8.34448 0.442529 7.5 0.442529C5.67122 0.442529 4.12111 1.07824 2.84967 2.34967C1.57824 3.62111 0.942529 5.17122 0.942529 7C0.942529 7.84448 1.09674 8.64899 1.40517 9.41353C1.7136 10.1781 2.14943 10.8688 2.71264 11.4856Z"
                     fill={darkMode ?
-                      router.pathname === "/dashboard/blocked"
+                      router.pathname === "/longterm/dashboard/blocked"
                         ? "#FFF"
                         : "#7D7F86"
                       :
-                      router.pathname === "/dashboard/blocked"
+                      router.pathname === "/longterm/dashboard/blocked"
                         ? "#0F52BA"
                         : "black"
                     }
@@ -538,18 +538,18 @@ function SideBar() {
                 </defs>
               </svg>
 
-              <Link href="/dashboard/blocked">
+              <Link href="/longterm/dashboard/blocked">
                 <h1
                   style={Text3}
-                  id={router.pathname === "/dashboard/blocked" ? "sidebar-navlink-grad" : ""}
+                  id={router.pathname === "/longterm/dashboard/blocked" ? "sidebar-navlink-grad" : ""}
                   className={`text-[14px] dark:hover:text-[#FFF] pl-[10px] 
                   ${darkMode
-                      ? router.pathname === "/dashboard/blocked"
+                      ? router.pathname === "/longterm/dashboard/blocked"
 
                         ? "text-[#FFF]"
                         : "text-[#7D7F86]"
                       :
-                      router.pathname === "/dashboard/blocked"
+                      router.pathname === "/longterm/dashboard/blocked"
                         ? ""
                         : ""}`}
                 >
@@ -570,11 +570,11 @@ function SideBar() {
                   <path
                     d="M2.67881 14C2.34272 14 2.05008 13.8754 1.80091 13.6262C1.55174 13.3771 1.42715 13.0844 1.42715 12.7483V1.0894H0.5V0.57947H3.83775V0H9.58609V0.57947H12.9238V1.0894H11.9967V12.7483C11.9967 13.1003 11.8761 13.3969 11.6348 13.6381C11.3936 13.8794 11.097 14 10.745 14H2.67881ZM11.4868 1.0894H1.93709V12.7483C1.93709 12.9647 2.01049 13.1424 2.15728 13.2815C2.30408 13.4205 2.47792 13.4901 2.67881 13.4901H10.745C10.9305 13.4901 11.1004 13.4128 11.255 13.2583C11.4095 13.1038 11.4868 12.9338 11.4868 12.7483V1.0894ZM4.95033 11.5894H5.46027V2.96689H4.95033V11.5894ZM7.96358 11.5894H8.47351V2.96689H7.96358V11.5894Z"
                     fill={darkMode ?
-                      router.pathname === "/dashboard/deleted"
+                      router.pathname === "/longterm/dashboard/deleted"
                         ? "#FFF"
                         : "#7D7F86"
                       :
-                      router.pathname === "/dashboard/deleted"
+                      router.pathname === "/longterm/dashboard/deleted"
                         ? "#0F52BA"
                         : "black"
                     }
@@ -591,18 +591,18 @@ function SideBar() {
                   </clipPath>
                 </defs>
               </svg>
-              <Link href="/dashboard/deleted">
+              <Link href="/longterm/dashboard/deleted">
                 <h1
                   style={Text3}
-                  id={router.pathname === "/dashboard/deleted" ? "sidebar-navlink-grad" : ""}
+                  id={router.pathname === "/longterm/dashboard/deleted" ? "sidebar-navlink-grad" : ""}
                   className={`text-[14px] dark:hover:text-[#FFF] pl-[10px]
                   ${darkMode
-                      ? router.pathname === "/dashboard/deleted"
+                      ? router.pathname === "/longterm/dashboard/deleted"
 
                         ? "text-[#FFF]"
                         : "text-[#7D7F86]"
                       :
-                      router.pathname === "/dashboard/deleted"
+                      router.pathname === "/longterm/dashboard/deleted"
                         ? ""
                         : ""}`}
                 >

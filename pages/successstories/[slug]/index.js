@@ -141,12 +141,12 @@ function index({ data }) {
                                                 <path d="M19.7193 29L18.455 27.849C13.9646 23.7771 11 21.0916 11 17.7956C11 15.1101 13.1101 13 15.7956 13C17.3128 13 18.7689 13.7063 19.7193 14.8223C20.6698 13.7063 22.1259 13 23.6431 13C26.3286 13 28.4387 15.1101 28.4387 17.7956C28.4387 21.0916 25.4741 23.7771 20.9837 27.8578L19.7193 29Z" fill="url(#paint1_linear_1217_1200)" />
                                                 <defs>
                                                     <linearGradient id="paint0_linear_1217_1200" x1="2.5" y1="-3.5" x2="40" y2="43.5" gradientUnits="userSpaceOnUse">
-                                                        <stop stop-color="#0F52BA" />
-                                                        <stop offset="0.979167" stop-color="#8225AF" />
+                                                        <stop stopColor="#0F52BA" />
+                                                        <stop offset="0.979167" stopColor="#8225AF" />
                                                     </linearGradient>
                                                     <linearGradient id="paint1_linear_1217_1200" x1="9.69785" y1="5.57812" x2="30.0104" y2="32.5312" gradientUnits="userSpaceOnUse">
-                                                        <stop stop-color="#0F52BA" />
-                                                        <stop offset="1" stop-color="#7D27AF" />
+                                                        <stop stopColor="#0F52BA" />
+                                                        <stop offset="1" stopColor="#7D27AF" />
                                                     </linearGradient>
                                                 </defs>
                                             </svg>

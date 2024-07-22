@@ -131,7 +131,7 @@ const Logintoggle = {
     borderRadius: "10px",
     // background: "linear-gradient(199deg, #EF4136 0%, #2B3990 100%)",
     // background: "#0F52BA",
-    background: "linear-gradient(265deg, #0F52BA -6.89%, #8225AF 97.49%)"
+    background: "linear-gradient(124deg, #0F52BA -6.89%, #8225AF 97.49%)"
 };
 const NotActiveLogintoggle = {
     width: "147px",
@@ -529,7 +529,7 @@ function login() {
     useEffect(() => {
         const token = getCookie("jwtToken");
         if (status === "idle" && token) {
-            router.push("/dashboard")
+            router.push("/longterm/dashboard")
         }
     }, [router, status])
 

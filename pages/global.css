@@ -7,7 +7,7 @@
 body {
   @apply leading-[normal] m-0;
 }
-
+/* input */
 *,
 ::before,
 ::after {
@@ -245,7 +245,7 @@ body {
   font-family: Poppins;
   font-style: normal;
   font-weight: 700;
-  
+
 }
 
 #home-title p {
@@ -1391,13 +1391,21 @@ body::-webkit-scrollbar {
 
 }
 
-input[type="range"] {
+#AudioRange{
   width: 150px;
   height: 3px;
   background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
   accent-color: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
   outline: none;
 }
+
+/* input[type="range"] {
+  width: 150px;
+  height: 3px;
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+  accent-color: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+  outline: none;
+} */
 
 .track-duration {
   display: flex;
@@ -1438,9 +1446,27 @@ input[type="range"] {
 #chat-image:-webkit-full-screen,
 #chat-image:-moz-full-screen,
 #chat-image:-ms-fullscreen {
-  object-fit: cover; /* Ensures the image covers the entire screen */
+  object-fit: cover;
+  /* Ensures the image covers the entire screen */
   width: 100vw;
   height: 100vh;
-  display: block; /* Ensures the image is displayed as a block element */
-  margin: 0; /* Removes any default margin */
+  display: block;
+  /* Ensures the image is displayed as a block element */
+  margin: 0;
+  /* Removes any default margin */
+}
+
+#gradient-Text-style {
+  background: linear-gradient(98deg, #0F52BA -6.94%, #8225AF 63.93%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#gradient-Text-style-2 {
+  background: linear-gradient(91deg, #0F52BA -0.45%, #8225AF 97.59%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
 }

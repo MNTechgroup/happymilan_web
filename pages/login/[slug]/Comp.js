@@ -40,16 +40,17 @@ function Comp({ formData, updateFormData }) {
     const ContinueBtn = () => {
 
         if (activebtn === 1) {
-            router.push("/dashboard")
+            router.push("/longterm/dashboard")
             updateFormData({
                 ...formData,
                 userType: {
                     ...formData.userType,
                     appUsesType: "marriage",
-                  },
-                })
-                localStorage.setItem("UserProfile", "marriage")
-                localStorage.setItem("UserRegister", true)
+                },
+            })
+            localStorage.setItem("UserProfile", "marriage")
+            localStorage.setItem("UserRegister", true)
+            localStorage.setItem("platform-choose", false)
         }
         else {
             router.push("/dating")

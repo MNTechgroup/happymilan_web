@@ -676,7 +676,7 @@ function NavBar() {
         }
     };
 
-    const isUpgradeActive = router.pathname.startsWith('/dashboard/upgrade');
+    const isUpgradeActive = router.pathname.startsWith('/longterm/dashboard/upgrade');
 
 
 
@@ -713,7 +713,7 @@ function NavBar() {
 
                         <div className="flex space-x-[20px] pl-[10px] pr-[10px] pt-[20px] pb-[20px] border-b-[1px] border-gray-200">
                             <div>
-                                <Image width={40} height={40} onClick={() => router.push("/dashboard/profile")} className="cursor-pointer" src="/assests/dashboard/user/userProfile.svg" />
+                                <Image width={40} height={40} onClick={() => router.push("/longterm/dashboard/profile")} className="cursor-pointer" src="/assests/dashboard/user/userProfile.svg" />
                             </div>
                             <div>
                                 <h1 style={Username}>Riya M Shah</h1>
@@ -730,72 +730,72 @@ function NavBar() {
                     <ul class="flex flex-col py-0 border-b-[1px] border-gray-200">
                         <li>
 
-                            <Link href="/dashboard" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-home ${router.pathname === "/dashboard" ? "text-[#0F52BA]" : ""}`}></i></span>
-                                <span class={`text-sm font-medium ${router.pathname === "/dashboard" ? "text-[#0F52BA]" : ""}`}>Home</span>
+                            <Link href="/longterm/dashboard" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-home ${router.pathname === "/longterm/dashboard" ? "text-[#0F52BA]" : ""}`}></i></span>
+                                <span class={`text-sm font-medium ${router.pathname === "/longterm/dashboard" ? "text-[#0F52BA]" : ""}`}>Home</span>
                             </Link>
                         </li>
                         <li>
 
-                            <Link href="/dashboard/searchmember" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-search ${router.pathname === "/dashboard/searchmember" ? "text-[#0F52BA]" : ""}`}></i></span>
-                                <span class={`text-sm font-medium ${router.pathname === "/dashboard/searchmember" ? "text-[#0F52BA]" : ""}`}>Search Member</span>
+                            <Link href="/longterm/dashboard/searchmember" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-search ${router.pathname === "/longterm/dashboard/searchmember" ? "text-[#0F52BA]" : ""}`}></i></span>
+                                <span class={`text-sm font-medium ${router.pathname === "/longterm/dashboard/searchmember" ? "text-[#0F52BA]" : ""}`}>Search Member</span>
                             </Link>
                         </li>
                         <li>
 
-                            <Link href="/dashboard/accepted" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-check-circle  ${router.pathname === "/dashboard/accepted" ? "text-[#0F52BA]" : ""}`}></i></span>
-                                <span class={`text-sm font-medium ${router.pathname === "/dashboard/accepted" ? "text-[#0F52BA]" : ""}`}>Accepted</span>
+                            <Link href="/longterm/dashboard/accepted" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-check-circle  ${router.pathname === "/longterm/dashboard/accepted" ? "text-[#0F52BA]" : ""}`}></i></span>
+                                <span class={`text-sm font-medium ${router.pathname === "/longterm/dashboard/accepted" ? "text-[#0F52BA]" : ""}`}>Accepted</span>
                             </Link>
                         </li>
                         <li>
 
-                            <Link href="/dashboard/recentlyviewed" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-search ${router.pathname === "/dashboard/recentlyviewed" ? "text-[#0F52BA]" : ""}`}></i></span>
-                                <span class={`text-sm font-medium ${router.pathname === "/dashboard/recentlyviewed" ? "text-[#0F52BA]" : ""}`}>recentlyviewed</span>
+                            <Link href="/longterm/dashboard/recentlyviewed" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-search ${router.pathname === "/longterm/dashboard/recentlyviewed" ? "text-[#0F52BA]" : ""}`}></i></span>
+                                <span class={`text-sm font-medium ${router.pathname === "/longterm/dashboard/recentlyviewed" ? "text-[#0F52BA]" : ""}`}>recentlyviewed</span>
                             </Link>
                         </li>
                         <li>
 
-                            <Link href="/dashboard/newrequest" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-bell ${router.pathname === "/dashboard/newrequest" ? "text-[#0F52BA]" : ""}`}></i></span>
-                                <span class={`text-sm font-medium ${router.pathname === "/dashboard/newrequest" ? "text-[#0F52BA]" : ""}`}>New Requests</span>
+                            <Link href="/longterm/dashboard/newrequest" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-bell ${router.pathname === "/longterm/dashboard/newrequest" ? "text-[#0F52BA]" : ""}`}></i></span>
+                                <span class={`text-sm font-medium ${router.pathname === "/longterm/dashboard/newrequest" ? "text-[#0F52BA]" : ""}`}>New Requests</span>
                             </Link>
                         </li>
                         <li>
-                            <Link href="/dashboard/shortlists" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-star ${router.pathname === "/dashboard/shortlists" ? "text-[#0F52BA]" : ""}`}></i></span>
-                                <span class={`text-sm font-medium ${router.pathname === "/dashboard/shortlists" ? "text-[#0F52BA]" : ""}`}>Shortlists</span>
+                            <Link href="/longterm/dashboard/shortlists" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-star ${router.pathname === "/longterm/dashboard/shortlists" ? "text-[#0F52BA]" : ""}`}></i></span>
+                                <span class={`text-sm font-medium ${router.pathname === "/longterm/dashboard/shortlists" ? "text-[#0F52BA]" : ""}`}>Shortlists</span>
                             </Link>
                         </li>
                         <li>
-                            <Link href="/dashboard/sent" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-search ${router.pathname === "/dashboard/sent" ? "text-[#0F52BA]" : ""}`}></i></span>
-                                <span class={`text-sm font-medium ${router.pathname === "/dashboard/sent" ? "text-[#0F52BA]" : ""}`}>Sent</span>
+                            <Link href="/longterm/dashboard/sent" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-search ${router.pathname === "/longterm/dashboard/sent" ? "text-[#0F52BA]" : ""}`}></i></span>
+                                <span class={`text-sm font-medium ${router.pathname === "/longterm/dashboard/sent" ? "text-[#0F52BA]" : ""}`}>Sent</span>
                             </Link>
                         </li>
                     </ul>
                     <ul class="flex flex-col py-4">
                         <li>
 
-                            <Link href="/dashboard/cancelled" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-dislike ${router.pathname === "/dashboard/cancelled" ? "text-[#0F52BA]" : ""}`}></i></span>
-                                <span class={`text-sm font-medium ${router.pathname === "/dashboard/cancelled" ? "text-[#0F52BA]" : ""}`}>Cancelled</span>
+                            <Link href="/longterm/dashboard/cancelled" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-dislike ${router.pathname === "/longterm/dashboard/cancelled" ? "text-[#0F52BA]" : ""}`}></i></span>
+                                <span class={`text-sm font-medium ${router.pathname === "/longterm/dashboard/cancelled" ? "text-[#0F52BA]" : ""}`}>Cancelled</span>
                             </Link>
                         </li>
                         <li>
 
-                            <Link href="/dashboard/blocked" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-block ${router.pathname === "/dashboard/blocked" ? "text-[#0F52BA]" : ""}`}></i></span>
-                                <span class={`text-sm font-medium ${router.pathname === "/dashboard/blocked" ? "text-[#0F52BA]" : ""}`}>Blocked</span>
+                            <Link href="/longterm/dashboard/blocked" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-block ${router.pathname === "/longterm/dashboard/blocked" ? "text-[#0F52BA]" : ""}`}></i></span>
+                                <span class={`text-sm font-medium ${router.pathname === "/longterm/dashboard/blocked" ? "text-[#0F52BA]" : ""}`}>Blocked</span>
                             </Link>
                         </li>
                         <li>
 
-                            <Link href="/dashboard/deleted" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-trash ${router.pathname === "/dashboard/deleted" ? "text-[#0F52BA]" : ""}`}></i></span>
-                                <span class={`text-sm font-medium ${router.pathname === "/dashboard/deleted" ? "text-[#0F52BA]" : ""}`}>Deleted</span>
+                            <Link href="/longterm/dashboard/deleted" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-trash ${router.pathname === "/longterm/dashboard/deleted" ? "text-[#0F52BA]" : ""}`}></i></span>
+                                <span class={`text-sm font-medium ${router.pathname === "/longterm/dashboard/deleted" ? "text-[#0F52BA]" : ""}`}>Deleted</span>
                             </Link>
                         </li>
                         <li className="hidden">
@@ -807,7 +807,7 @@ function NavBar() {
                         {isUpgradeActive ? "" : <>
                             <li>
                                 <div className="relative left-[14px] top-[10px]">
-                                    <button id="grad-btn" onClick={() => router.push("/dashboard/upgrade")} style={Text2} className="text-[#FFF] mr-[2px] text-center flex items-center justify-center w-[110px] h-[40px] bg-[#0F52BA] rounded-[8px]">Upgrade<Image width={17} height={14} className="pl-[5px]" src="/assests/dashboard/icon/crown-icon.svg" /></button>
+                                    <button id="grad-btn" onClick={() => router.push("/longterm/dashboard/upgrade")} style={Text2} className="text-[#FFF] mr-[2px] text-center flex items-center justify-center w-[110px] h-[40px] bg-[#0F52BA] rounded-[8px]">Upgrade<Image width={17} height={14} className="pl-[5px]" src="/assests/dashboard/icon/crown-icon.svg" /></button>
                                 </div>
                             </li>
                         </>
@@ -830,7 +830,7 @@ function NavBar() {
 
             >
                 {isUpgradeActive ? "" : <>
-                    <button id="grad-btn" style={Text2} onClick={() => router.push("/dashboard/upgrade")} className="text-[#FFF] text-center flex items-center justify-center w-[123px] h-[40px] bg-[#0F52BA] rounded-[8px]">Upgrade<Image width={23} height={23} className="pl-[5px]" src="/assests/dashboard/icon/crown-icon.svg" /></button>
+                    <button id="grad-btn" style={Text2} onClick={() => router.push("/longterm/dashboard/upgrade")} className="text-[#FFF] text-center flex items-center justify-center w-[123px] h-[40px] bg-[#0F52BA] rounded-[8px]">Upgrade<Image width={23} height={23} className="pl-[5px]" src="/assests/dashboard/icon/crown-icon.svg" /></button>
                 </>}
 
             </Typography>
@@ -954,7 +954,7 @@ function NavBar() {
                                 <h1 style={UserProfileName} className="text-[#000]">Riya M Shah</h1>
                                 <p style={userId} className="text-[#50545A]">ID: HM1002021</p>
                                 <div className="pt-[8px]">
-                                    <button id="grad-btn" onClick={() => router.push("/dashboard/upgrade")} style={Text2} className="text-[#FFF] mr-[2px] text-center flex items-center justify-center w-[123px] h-[40px] bg-[#0F52BA] rounded-[8px]">Upgrade<Image width={23} height={23} className="pl-[5px]" src="/assests/dashboard/icon/crown-icon.svg" /></button>
+                                    <button id="grad-btn" onClick={() => router.push("/longterm/dashboard/upgrade")} style={Text2} className="text-[#FFF] mr-[2px] text-center flex items-center justify-center w-[123px] h-[40px] bg-[#0F52BA] rounded-[8px]">Upgrade<Image width={23} height={23} className="pl-[5px]" src="/assests/dashboard/icon/crown-icon.svg" /></button>
 
                                 </div>
                             </div>
@@ -965,10 +965,10 @@ function NavBar() {
                                 <ul style={Text4} className="pl-[30px] text-[#000] space-y-[21px]">
 
                                     <li className="cursor-pointer flex items-center space-x-[10px]">
-                                        <Link href="/dashboard/profile" className="cursor-pointer flex items-center space-x-[10px]" > <Image width={17.223} height={16} src="/assests/dashboard/menu/menu-profile.svg" className="w-[17.223px] h-[16px]" />
+                                        <Link href="/longterm/dashboard/profile" className="cursor-pointer flex items-center space-x-[10px]" > <Image width={17.223} height={16} src="/assests/dashboard/menu/menu-profile.svg" className="w-[17.223px] h-[16px]" />
                                             <h1>My Profile</h1></Link>
                                     </li>
-                                    <li className="flex items-center space-x-[10px]"><Image width={17.223} height={16} src="/assests/dashboard/menu/menu-seting.svg" className="w-[17.223px] h-[16px]" /><h1><Link href="/dashboard/seting">Accounts</Link></h1></li>
+                                    <li className="flex items-center space-x-[10px]"><Image width={17.223} height={16} src="/assests/dashboard/menu/menu-seting.svg" className="w-[17.223px] h-[16px]" /><h1><Link href="/longterm/dashboard/seting">Accounts</Link></h1></li>
                                     <li className="flex items-center space-x-[10px]"><Image width={17.223} height={16} src="/assests/dashboard/menu/menu-lock.svg" className="w-[17.223px] h-[16px]" /><h1>Privacy Policy</h1></li>
                                 </ul>
 

@@ -3,6 +3,9 @@ import { connect, useDispatch } from 'react-redux'
 import { useDropzone } from 'react-dropzone'
 import { updateFormData } from '../../../store/actions/registerUser'
 
+function UploadSec({ formData, updateFormData, HandleTabclick, activeTab }) {
+
+    
 const Text1 = {
     color: "#000",
     fontFamily: "Poppins",
@@ -38,7 +41,6 @@ const Text3 = {
     lineHeight: "32px"
 }
 
-function UploadSec({ formData, updateFormData, HandleTabclick, activeTab }) {
 
     const dispatch = useDispatch();
 

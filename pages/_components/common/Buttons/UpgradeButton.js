@@ -16,7 +16,7 @@ function UpgradeButton({ IconSize, BtnSizeH, BtnSizeW }) {
     }
     return (
         <>
-            <button id="grad-btn" onClick={() => router.push("/dashboard/upgrade")} style={Text2} className={`hover:opacity-90 text-[#FFF] mr-[2px] text-center flex items-center justify-center w-[${BtnSizeW}px] h-[${BtnSizeH}px] bg-[#0F52BA] rounded-[22px]`}>Upgrade<Image loading='lazy' alt="img" width={IconSize} height={IconSize} className="pl-[5px]" src="/assests/dashboard/icon/crown-icon.svg" /></button>
+            <button id="grad-btn" onClick={() => router.push("/longterm/dashboard/upgrade")} style={Text2} className={`hover:opacity-90 text-[#FFF] mr-[2px] text-center flex items-center justify-center w-[${BtnSizeW}px] h-[${BtnSizeH}px] bg-[#0F52BA] rounded-[22px]`}>Upgrade<Image loading='lazy' alt="img" width={IconSize} height={IconSize} className="pl-[5px]" src="/assests/dashboard/icon/crown-icon.svg" /></button>
         </>
     )
 }

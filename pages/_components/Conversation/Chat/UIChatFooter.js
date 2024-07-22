@@ -4,16 +4,11 @@ import Image from 'next/image';
 import { getCookie } from 'cookies-next';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
-import dynamic from 'next/dynamic';
 import RecordingInput from './RecordingInput';
 import { UserContext } from '../../../../ContextProvider/UsersConversationContext';
 import { updateFormData } from '../../../../store/actions/registerUser';
 import { setUploadUIVisibility } from '../../../../store/reducers/registerReducer';
-import { useChatSettings } from '../../../../ContextProvider/ChatSetingContext';
-
-// Import EmojiPicker dynamically
-const EmojiPicker = dynamic(() => import('emoji-picker-react'), { ssr: false });
-
+import EmojiPicker from './EmojiPicker';
 
 
 const ChatInput = ({ HandleStopVoice, HanldeVoiceChat, setOpenPicker, StartVoice, socket, handleSendMessage, message, setMessage, updateFormData, formData }) => {
@@ -48,8 +43,7 @@ const ChatInput = ({ HandleStopVoice, HanldeVoiceChat, setOpenPicker, StartVoice
 
 
             if (bufferdata != "") {
-                console.log("Hello 2")
-                console.log(bufferdata)
+                              
                 const CurrentUser = getCookie("userid")
 
                 updateFormData({
@@ -104,7 +98,7 @@ const ChatInput = ({ HandleStopVoice, HanldeVoiceChat, setOpenPicker, StartVoice
                                             "type": "image"
                                         }
 
-                                        console.log(JSON.stringify(response.data));
+                                       
                                         socket.emit("sendMessage", chatContent2)
                                         updateFormData({
                                             ...formData,
@@ -137,8 +131,6 @@ const ChatInput = ({ HandleStopVoice, HanldeVoiceChat, setOpenPicker, StartVoice
 
                 if (bufferdata != "") {
 
-                    console.log("Caption Text : ", message)
-
                     updateFormData({
                         ...formData,
                         uploadChatImage: {
@@ -163,9 +155,7 @@ const ChatInput = ({ HandleStopVoice, HanldeVoiceChat, setOpenPicker, StartVoice
     };
     const handleStopTyping = () => {
         setTyping(false);
-        // socket.emit('typing', false); // Emit typing stop event stopTyping
         const currentUser = getCookie("userid")
-        // socket.emit('typing', true); // Emit typing start event
         const fromUserId = currentUser; // Replace with the actual sender user ID
         const toUserId = userData.id; // Replace with the actual recipient user ID
         const data = { from: fromUserId, to: toUserId };
@@ -229,9 +219,6 @@ const ChatInput = ({ HandleStopVoice, HanldeVoiceChat, setOpenPicker, StartVoice
                     <Image loading='lazy' width={100} height={100} alt='user-image' style={{ objectFit: "cover", borderRadius: "10px", height: "120px", width: "120px" }} src={bufferdata} />
                 </Stack>
 
-
-
-
                 <input style={{ border: "1px solid #DADADA", paddingLeft: "50px", paddingTop: "12px", paddingBottom: "12px", borderRadius: "25px", backgroundColor: "#FFF" }} onKeyDown={handleTyping} onBlur={handleStopTyping} value={message} fullWidth onChange={(e) => setMessage(e.target.value)} placeholder='Write a message...' variant='filled' />
                 <span
                     className='absolute bottom-[70px] ml-[24px]'
@@ -285,7 +272,6 @@ const ChatFooter = ({ socket, formData, updateFormData }) => {
                 "type": "image"
             }
 
-            console.log("🚀 ~ handleSendMessage ~ chatContent:", message ? chatContent : chatContentobj)
 
             socket.emit("uploadContent", message ? chatContent : chatContentobj)
 
@@ -293,15 +279,11 @@ const ChatFooter = ({ socket, formData, updateFormData }) => {
 
                 const CurrentUser = getCookie("userid")
                 if (data.data.message != "messages received") {
-                    console.log("🚀 ~ socket.on ~ imagesdata:", imagesdata)
-
-
+                  
                     fetch(imagesdata.data)
                         .then(response => response.blob())
                         .then(blob => {
-                            console.log("🚀 ~ socket.on ~ blob:", blob)
-                            // Use the blob as needed
-
+                            
                             const axios = require('axios');
                             let config = {
                                 method: 'put',
@@ -323,9 +305,7 @@ const ChatFooter = ({ socket, formData, updateFormData }) => {
                                         "message": message ? message : "",
                                         "fileName": imagesdata?.key,
                                         "type": "image"
-                                    }
-
-                                    console.log(JSON.stringify(response.data));
+                                    }                           
                                     socket.emit("sendMessage", chatContent2)
                                     updateFormData({
                                         ...formData,
@@ -346,10 +326,7 @@ const ChatFooter = ({ socket, formData, updateFormData }) => {
                         .catch(error => {
                             console.error('Error fetching blob:', error);
                         });
-
                 }
-
-                // Update messages state with the received message
             });
 
 
@@ -357,8 +334,6 @@ const ChatFooter = ({ socket, formData, updateFormData }) => {
         } else {
 
             if (message.trim() !== '') {
-
-
 
                 const currentUser = getCookie("userid")
                 const objmsg = {
@@ -375,7 +350,6 @@ const ChatFooter = ({ socket, formData, updateFormData }) => {
 
     const HandleEmojiSelect = (emoji) => {
 
-        // setMessage(message + emoji.emoji)
         setMessage((prevMessage) => prevMessage + emoji.emoji);
 
     }
@@ -386,7 +360,6 @@ const ChatFooter = ({ socket, formData, updateFormData }) => {
 
     const HanldeVoiceChat = async () => {
         SetStartVoice(!StartVoice)
-        console.log("Start")
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             recorderRef.current = new MediaRecorder(stream);
@@ -403,11 +376,7 @@ const ChatFooter = ({ socket, formData, updateFormData }) => {
         if (audioChunks.current.length === 0) return;
 
         const blob = new Blob(audioChunks.current, { type: 'audio/webm' });
-        console.log('Blob data:', blob);
-
-
-
-
+       
         const currentUser = getCookie("userid");
 
 
@@ -418,11 +387,10 @@ const ChatFooter = ({ socket, formData, updateFormData }) => {
             "type": "audio",
         };
 
-        socket.emit("uploadContent", chatContent);
-        console.log(" ~ uploadAndEmitAudioBlob ~ chatContent:", chatContent);
+        socket.emit("uploadContent", chatContent);;
 
         socket.on('message', (data) => {
-            console.log(" ~ socket.on ~ data:", data);
+
 
             const CurrentUser = getCookie("userid");
 
@@ -446,9 +414,7 @@ const ChatFooter = ({ socket, formData, updateFormData }) => {
             };
 
             axios.request(config)
-                .then((response) => {
-                    console.log(JSON.stringify(response.data));
-
+                .then((response) => {                
                     const chatContent2 = {
                         "from": CurrentUser,
                         "to": userData.id,
@@ -523,8 +489,6 @@ const ChatFooter = ({ socket, formData, updateFormData }) => {
         });
     }, []);
 
-    const { settings, setSettings } = useChatSettings();
-
 
     const { getRootProps, getInputProps } = useDropzone({ onDrop, maxFiles: 1 });
 
@@ -535,10 +499,7 @@ const ChatFooter = ({ socket, formData, updateFormData }) => {
             <Stack direction='row' alignItems={'center'} spacing={3}>
                 <Stack sx={{ background: "none", width: '100%' }}>
                     {/* Chat Input */}
-                    <Box sx={{ display: openPicker ? 'inline' : 'none', zIndex: 10, position: 'fixed', bottom: 120, right: 'auto' }}>
-                        {/* <Picker  onEmojiSelect={HandleEmojiSelect} /> */}
-                        <EmojiPicker onEmojiClick={HandleEmojiSelect} />
-                    </Box>
+                    <EmojiPicker HandleEmojiSelect={HandleEmojiSelect} openPicker={openPicker} />
                     <ChatInput HandleStopVoice={HandleStopVoice} HanldeVoiceChat={HanldeVoiceChat} formData={formData} updateFormData={updateFormData} socket={socket} StartVoice={StartVoice} handleSendMessage={handleSendMessage} setMessage={setMessage} message={message} setOpenPicker={setOpenPicker} />
                 </Stack>
 
@@ -549,9 +510,7 @@ const ChatFooter = ({ socket, formData, updateFormData }) => {
                     <Stack sx={{ height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
                         {StartVoice ? <></> : <>
                             <IconButton onClick={handleSendMessage}>
-                                {/* <Image loading='lazy' alt="send-message" width={29} height={24} src="/assests/dashboard/chats/send-icon.svg" /> */}
                                 <Image loading='lazy' alt="send-message" width={29} height={24} src="/assests/chat/Send-Icon.svg" />
-
                             </IconButton>
                         </>}
                     </Stack>
@@ -579,8 +538,8 @@ const ChatFooter = ({ socket, formData, updateFormData }) => {
                                     <path d="M7 11.4286C6.34188 11.4286 5.78847 11.2088 5.33975 10.7692C4.89103 10.3297 4.66667 9.78754 4.66667 9.14286V2.28571C4.66667 1.64103 4.89103 1.09891 5.33975 0.659344C5.78847 0.219782 6.34188 0 7 0C7.65812 0 8.21153 0.219782 8.66025 0.659344C9.10897 1.09891 9.33333 1.64103 9.33333 2.28571V9.14286C9.33333 9.78754 9.10897 10.3297 8.66025 10.7692C8.21153 11.2088 7.65812 11.4286 7 11.4286ZM6.41667 20V15.9802C4.58889 15.8161 3.0625 15.0843 1.8375 13.7846C0.6125 12.485 0 10.9377 0 9.14286H1.16667C1.16667 10.7238 1.73542 12.0714 2.87292 13.1857C4.01042 14.3 5.38611 14.8571 7 14.8571C8.61389 14.8571 9.98958 14.3 11.1271 13.1857C12.2646 12.0714 12.8333 10.7238 12.8333 9.14286H14C14 10.9377 13.3875 12.485 12.1625 13.7846C10.9375 15.0843 9.41111 15.8161 7.58333 15.9802V20H6.41667ZM7 10.2857C7.33056 10.2857 7.60764 10.1762 7.83125 9.95714C8.05486 9.7381 8.16667 9.46667 8.16667 9.14286V2.28571C8.16667 1.9619 8.05486 1.69048 7.83125 1.47143C7.60764 1.25238 7.33056 1.14286 7 1.14286C6.66944 1.14286 6.39236 1.25238 6.16875 1.47143C5.94514 1.69048 5.83333 1.9619 5.83333 2.28571V9.14286C5.83333 9.46667 5.94514 9.7381 6.16875 9.95714C6.39236 10.1762 6.66944 10.2857 7 10.2857Z" fill="url(#paint0_linear_607_216)" />
                                     <defs>
                                         <linearGradient id="paint0_linear_607_216" x1="4.01326e-07" y1="-8.5" x2="14" y2="23" gradientUnits="userSpaceOnUse">
-                                            <stop stop-color="#0F52BA" />
-                                            <stop offset="1" stop-color="#8225AF" />
+                                            <stop stopColor="#0F52BA" />
+                                            <stop offset="1" stopColor="#8225AF" />
                                         </linearGradient>
                                     </defs>
                                 </svg> :
@@ -596,6 +555,5 @@ const ChatFooter = ({ socket, formData, updateFormData }) => {
         </Box>
     )
 }
-
 
 export default connect((state) => ({ formData: state.form.formData }), { updateFormData })(ChatFooter);

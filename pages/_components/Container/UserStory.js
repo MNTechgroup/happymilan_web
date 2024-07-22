@@ -7,12 +7,12 @@ import DialogContent from '@mui/material/DialogContent';
 import Image from 'next/image';
 import ProfileImage from '../common/profile/ProfileImage';
 import { getCookie } from 'cookies-next';
-import Modal from '../../dashboard/commonCompo/storyUploadcomp/components/Modal';
+import Modal from '../../longterm/dashboard/commonCompo/storyUploadcomp/components/Modal';
 import { useDropzone } from 'react-dropzone';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { updateFormData } from '../../../store/actions/registerUser'
 import { Getallstatus, Uploadmystory, Uploadmystorymodal } from '../../../store/actions/UsersAction';
-import ViewStory from '../../dashboard/commonCompo/StoryModals/ViewStory';
+import ViewStory from '../../longterm/dashboard/commonCompo/StoryModals/ViewStory';
 import { Skeleton } from '@mui/material';
 import EmojiPicker from 'emoji-picker-react';
 import { Getstoryviewsdata, ViewstoryPost } from '../../../store/actions/UserStoryAction';
@@ -95,7 +95,6 @@ function UserStory({ formData, updateFormData }) {
     };
 
     const HandleStoryOpen = (e, res) => {
-        console.log("🚀 ~ HandleStoryOpen ~ res:", res)
         const name = e.currentTarget.getAttribute('name'); // Use currentTarget instead of target
 
         switch (name) {

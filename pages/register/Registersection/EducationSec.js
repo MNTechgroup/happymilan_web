@@ -3,37 +3,22 @@ import dynamic from 'next/dynamic';
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 import { updateFormData } from "../../../store/actions/registerUser";
 import { connect } from "react-redux";
+import { CityOptions, CollageOptions, CountryOptions, DegreeOption, StateOptions } from "../../../utils/options/Register/EducationSectionOptions";
+import { customStyles } from "../../../utils/options/styles/SelectBoxStyle";
 
-//Style for Select Box
-const customStyles = {
-    control: (provided, state) => ({
-        ...provided,
-        paddingRight: '10px',
-        paddingLeft: "8px",
-        width: "300px",
-        height: "50px",
-        borderRadius: "8px",
-        border: "1px solid #e6e6e6",
-        borderColor: state.isFocused ? 'black' : provided.borderColor,
-        '&:hover': {
-            borderColor: 'black',
-        },
-        boxShadow: state.isFocused ? 'none' : provided.boxShadow, // Add padding on the right side
-    }),
-    indicatorSeparator: (provided) => ({
-        ...provided,
-        display: 'none',
-        paddingRight: "20px"
-        // Hide the vertical line behind the arrow
-    }),
-    menu: (provided, state) => ({
-        ...provided,
-        overflow: "auto",
-        paddingBottom: "20px"
+function EducationSec({ formData, updateFormData, HandleTabclick, activeTab }) {
+
+    const handleInputChange = (e) => {
+        const value = e.target.value;
+        const name = e.target.name;
+
+        updateFormData({
+            education: { ...formData.education, [name]: value }
+        });
+    }
 
 
-    }),
-};
+    
 const Text1 = {
     fontFamily: "Poppins",
     fontSize: "16px",
@@ -57,62 +42,6 @@ const doItlater = {
     fontStyle: "normal",
     fontWeight: "400",
     lineHeight: "normal"
-}
-
-const Spanstyle = {
-    color: "#000",
-    fontFamily: "Poppins",
-    fontSize: "12px",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "normal",
-    position: "relative",
-    top: "-10px",
-    left: "4px",
-};
-
-function EducationSec({ formData, updateFormData, HandleTabclick, activeTab }) {
-    
-    const StateOptions = [
-        { value: 'gujarat', label: 'Gujarat' },
-        { value: 'otava', label: 'Otava' },
-        { value: 'Assam', label: 'Assam' },
-    ];
-    const CollageOptions = [
-        { value: 'harvard', label: 'Harvard' },
-        { value: 'stanford', label: 'Stanford' },
-        { value: 'mit', label: 'MIT' },
-        { value: 'caltech', label: 'Caltech' },
-        { value: 'oxford', label: 'Oxford' }
-    ];
-    const CityOptions = [
-        { value: "ahmedabad", label: "Ahmedabad" },
-        { value: "surat", label: "Surat" },
-        { value: "toronto", label: "Toronto" },
-    ];
-    const DegreeOption = [
-        { value: 'bs', label: 'Bachelor of Science (B.S.)' },
-        { value: 'ba', label: 'Bachelor of Arts (B.A.)' },
-        { value: 'ms', label: 'Master of Science (M.S.)' },
-        { value: 'mba', label: 'Master of Business Administration (MBA)' },
-        { value: 'phd', label: 'Doctor of Philosophy (Ph.D.)' }
-    ];
-    const CountryOptions = [
-        { value: "india", label: "India" },
-        { value: "us", label: "United States" },
-        { value: "canada", label: "Canada" },
-        { value: "mexico", label: "Mexico" },
-    ];
-
-
-
-const handleInputChange = (e) =>{
-const value = e.target.value;
-const name = e.target.name;
-
-updateFormData({
-    education: { ...formData.education, [name]: value }
-  });
 }
 
 

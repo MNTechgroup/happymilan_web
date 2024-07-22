@@ -1,10 +1,15 @@
 const moment = require('moment');
 
 function getStatusTime(res) {
-   
-    const now = moment();
-    const postTime = moment(res);
+    // Parse the input date
+    const postTime = moment(res, moment.ISO_8601, true); // Using strict parsing with ISO 8601 format
 
+    // Check if the date is valid
+    if (!postTime.isValid()) {
+        return 'Invalid date';
+    }
+
+    const now = moment();
     const duration = moment.duration(now.diff(postTime));
     const seconds = duration.asSeconds();
     const minutes = duration.asMinutes();

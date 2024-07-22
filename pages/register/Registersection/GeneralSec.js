@@ -1,23 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import dynamic from 'next/dynamic';
 import { updateFormData } from "../../../store/actions/registerUser";
-import { connect, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { validateFirstName, validateLastName } from "../../../utils/form/validationRules";
+import { MaritalOptions, heightoptionFun, motherTongueOption, profileOptions, religionOptions, weightoptionFun } from "../../../utils/options/Register/GenralSectionOptions";
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
-const motherTongueOption = [
-    { value: "english", label: "English" },
-    { value: "hindi", label: "Hindi" },
-    { value: "gujarati", label: "Gujarati" }
-];
-
-const religionOptions = [
-    { value: "hindu", label: "Hinduism" },
-    { value: "muslim", label: "Islam" },
-    { value: "sikh", label: "Sikhism" },
-    // Add more options as needed
-];
 
 
 const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) => {
@@ -35,10 +24,6 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
         });
 
     }
-
-
-
-
 
     const Text1 = {
         fontFamily: "Poppins",
@@ -63,37 +48,11 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
         lineHeight: "normal"
     }
 
-    const profileOptions = [
-        { id: 1, label: 'My Self', value: 'mySelf' },
-        { id: 2, label: 'My Son', value: 'mySon' },
-        { id: 3, label: 'My Daughter', value: 'myDaughter' },
-        { id: 4, label: 'My Brother', value: 'myBrother' },
-        { id: 5, label: 'My Friend', value: 'myFriend' },
-    ];
-
-
-    const MaritalOptions = [
-        { label: 'Single', value: 'single' },
-        { label: 'Never Married', value: 'never-married' },
-        { label: 'Married', value: 'married' },
-    ]
-
-
-    const heightoption = Array.from({ length: 23 }, (v, k) => {
-        const value = k + 5;
-        return { value, label: value.toString() };
-    });
-
-    const weightoption = Array.from({ length: 23 }, (v, k) => {
-        const value = k + 40;
-        return { value, label: value.toString() };
-    });
-
-
+    const heightoption = useMemo(() => heightoptionFun(1, 100), []);
+    const weightoption = useMemo(() => weightoptionFun(1, 100), []);
 
     const [selectedProfile, setselectedProfile] = useState(0)
     const HandleSelectProfile = (val) => {
-        console.log("🚀 ~ HandleSelectProfile ~ val:", val.id)
         // Update local state
         setselectedProfile(val.id);
 

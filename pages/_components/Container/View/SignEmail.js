@@ -145,7 +145,7 @@ const SignInEmail = () => {
                 otp: otp.join(""),
                 deviceToken: DeviceToken
             }
-            console.log("🚀 ~ handleOTPSubmit ~ DataPost:", DataPost)
+            
 
 
             const response = await axios.post(
@@ -157,6 +157,7 @@ const SignInEmail = () => {
             localStorage.setItem("token", theData.tokens.access.token);
             localStorage.setItem("refoken", theData.tokens.refresh.token);
             localStorage.setItem("modal", "open");
+            localStorage.setItem("platform-choose", true)
 
             setCookie("jwtToken", theData.tokens.access.token);
             setCookie("authtoken", theData.tokens.refresh.token);
@@ -226,7 +227,7 @@ const SignInEmail = () => {
 
             // Make PUT request to update user password
             const response = await axios.put("https://happymilan.tech/api/v1/user/auth/update-user", requestBody, { headers });
-            console.log("🚀 ~ SubmitPasswordddddd ~ response:", response)
+           
 
             // Handle the response as needed (e.g., display a success message)
             console.log("Password update successful:", response);

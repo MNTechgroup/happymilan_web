@@ -50,7 +50,7 @@ const ChatElement = ({ toggleInnerDrawer, id, name, profilePic }) => {
                 profilePic: profilePic,
                 id: id
             }
-            console.log("🚀 ~ HandleOpenChat ~ thedata:", thedata)
+           
             SetSelectedUser(thedata.id)
             toggleInnerDrawer();
 

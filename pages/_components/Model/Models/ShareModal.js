@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 
-function ShareModal({ isOpen, onClose, data }) {
+function ShareModal({ isOpen, onClose, data , UserID }) {
   if (!isOpen) return null;
   const TitleText = {
     fontFamily: "Poppins",
@@ -37,6 +37,12 @@ function ShareModal({ isOpen, onClose, data }) {
       })
       .catch((error) => console.error("Failed to copy:", error));
   };
+
+  const NewTabOpen = () => {
+    const baseUrl = window.location.origin; // This will automatically take care of local and hosted environments
+    const url = `${baseUrl}/longterm/dashboard/${UserID}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
 
   return (
     <>
@@ -234,7 +240,8 @@ function ShareModal({ isOpen, onClose, data }) {
             <div>
               <button
                 style={Btntext}
-                onClick={() => window.open(data, "_blank")}
+                // onClick={() => window.open(data, "_blank")}
+                onClick={NewTabOpen}
                 className="w-[500px] h-[50px] border-[1px] group-hover:border-[black] duration-150 border-[#B9BABC] rounded-[10px] bg-[white] outline-none group-hover:text-[#3c41b5]"
               >
                 Visit page (opens in new tab)

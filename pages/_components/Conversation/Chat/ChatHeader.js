@@ -3,20 +3,25 @@ import Image from 'next/image';
 import React, { useContext, useState } from 'react';
 import { getCookie } from 'cookies-next';
 import { UserContext } from '../../../../ContextProvider/UsersConversationContext';
+import { useRouter } from 'next/router';
+import ReportModal from '../../Model/Models/ReportModal';
 
 
 
-const MessageOptions = ({ data }) => {
+const MessageOptions = ({ userData, HandleOpenProfile, OpenReportModal }) => {
 
     const Message_options = [
         {
             title: "View Profile",
+            name: "viewprofile"
         },
-        {
-            title: "Block",
-        },
+        // {
+        //     title: "Block",
+        //     name: "block"
+        // },
         {
             title: "Report User",
+            name: "report"
         },
         {
             title: "Star message",
@@ -31,6 +36,7 @@ const MessageOptions = ({ data }) => {
 
 
     const [anchorEl, setAnchorEl] = React.useState(null);
+
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -39,10 +45,26 @@ const MessageOptions = ({ data }) => {
         setAnchorEl(null);
     };
 
-    const HanldeEvent = () => {
+
+    const HanldeEvent = (e) => {
+
+        switch (e.name) {
+            case "viewprofile":
+                HandleOpenProfile();
+                break;
+            case "block":
+                console.log("block profile")
+                break;
+            case "report":
+                OpenReportModal();
+                break;
+            default: return null;
+        }
 
 
     }
+
+
     return (
         <>
             <Image
@@ -66,8 +88,8 @@ const MessageOptions = ({ data }) => {
 
             >
                 <Stack sx={{ borderRadius: "20px", padding: "10px" }} spacing={1} px={1}>
-                    {Message_options.slice(0, 3).map((el) => (
-                        <MenuItem  onClick={HanldeEvent}>{el.title}</MenuItem>
+                    {Message_options.slice(0, 2).map((el) => (
+                        <MenuItem name={el?.name} onClick={() => HanldeEvent(el)}>{el.title}</MenuItem>
                     ))}
                 </Stack>
             </Menu>
@@ -80,6 +102,8 @@ const MessageOptions = ({ data }) => {
 
 const Header = ({ socket }) => {
 
+
+    const router = useRouter();
     const { userData, updateUser } = useContext(UserContext);
 
     const [userTyping, SetUserTyping] = useState(false)
@@ -100,6 +124,11 @@ const Header = ({ socket }) => {
         SetUserTyping(false)
         // Check if the stopTyping event is for the current user
     });
+
+
+    const HandleOpenProfile = () => {
+        router.push(`/longterm/dashboard/${userData?.id}`)
+    }
 
     const ActiveText = {
         color: "#0091FF",
@@ -128,13 +157,26 @@ const Header = ({ socket }) => {
         lineHeight: "normal"
     }
 
+
+    const [isReportModalOpen, setisReportModalOpen] = useState(false);
+
+    const OpenReportModal = () => {
+        setisReportModalOpen(true);
+
+    };
+
+    const CloseReportModal = () => {
+        setisReportModalOpen(false);
+    };
+
+
     return (
         <>
             <Box p={2} sx={{ width: '100%', backgroundColor: '#FFF', boxShadow: '0px 0px 2px rgba(0,0,0,0.25)' }}>
                 <Stack alignItems={'center'} direction='row' style={{ marginLeft: "5px" }} justifyContent={'space-between'}
                     sx={{ width: '100%', height: '100%' }}>
                     <Stack direction={'row'} spacing={2}>
-                        <Box>
+                        <Box className="cursor-pointer" onClick={HandleOpenProfile}>
                             {userData?.profilePic ?
                                 <Image loading='lazy' width={47} height={47} alt='profile-image' style={{ objectFit: "cover", borderRadius: "50%" }} className='w-[47px] h-[47px]' src={userData?.profilePic} />
                                 :
@@ -155,14 +197,22 @@ const Header = ({ socket }) => {
                         <Stack className=''>
                             <div className="absolute right-10 mt-[10px]">
                                 {/* <Image alt="img" width={4} height={16} className="2xl:w-auto 2xl:h-auto xl:w-[5px] xl:h-[14px]" src="/assests/dashboard/chats/chat-more-icon.svg" /> */}
-                                <MessageOptions />
+                                <MessageOptions OpenReportModal={OpenReportModal} HandleOpenProfile={HandleOpenProfile} userData={userData} />
                             </div>
                         </Stack>
                     </Stack>
                 </Stack>
 
             </Box>
-            <Divider className='mt-[0px] bg-[#e3e3e3]' sx={{backgroundColor:"#e3e3e3"}} />
+            <Divider className='mt-[0px] bg-[#e3e3e3]' sx={{ backgroundColor: "#e3e3e3" }} />
+
+
+            <ReportModal
+                title={"helo"}
+                isOpen={isReportModalOpen}
+                onClose={CloseReportModal}
+
+            />
 
         </>)
 }

@@ -4,21 +4,22 @@ import {
     SEND_REQUEST, REQUEST_SUCCESS, REQUEST_FAILURE,
     ACCEPT_REQUEST_SUCCESS, ACCEPT_REQUEST_FAILURE, REJECT_REQUEST,
     REJECT_REQUEST_SUCCESS, ACCEPT_REQUEST, REJECT_REQUEST_FAILURE, GET_EDUCATION_DATA_SUCCESS,
-    GET_EDUCATION_DATA_FAILURE, GET_EDUCATION_DATA, GET_ADDRESS_DATA_SUCCESS, GET_ADDRESS_DATA_FAILURE,
+    GET_EDUCATION_DATA_FAILURE, GET_EDUCATION_DATA,
     GET_PROFESSIONAL_DATA_SUCCESS, GET_PROFESSIONAL_DATA_FAILURE, GET_PROFESSIONAL_DATA,
     GET_PARTNERPREFERENCE_DATA, GET_PARTNERPREFERENCE_DATA_SUCCESS,
     UPDATE_EDUCATION_DATA, UPDATE_EDUCATION_DATA_SUCCESS, UPDATE_EDUCATION_DATA_FAILURE, GET_ACCEPTED_REQUEST_DATA,
     GET_ACCEPTED_REQUEST_DATA_SUCCESS, GET_ACCEPTED_REQUEST_DATA_FAILURE, GET_SENTREQUEST_DATA_SUCCESS, GET_SENTREQUEST_DATA_FAILURE,
     GET_SENTREQUEST_DATA, LOGOUT_USER, GET_BLOCK_USERDATA, GET_BLOCK_USERDATA_SUCCESS, GET_BLOCK_USERDATA_FAILURE,
-    SENT_BLOCK_REQUEST_SUCCESS, SENT_BLOCK_REQUEST_FAILURE, SENT_BLOCK_REQUEST, CANCEL_FRIEND_REQUEST_FAILURE, CANCEL_FRIEND_REQUEST_SUCCESS,
+    SENT_BLOCK_REQUEST_SUCCESS, SENT_BLOCK_REQUEST_FAILURE, SENT_BLOCK_REQUEST, CANCEL_FRIEND_REQUEST_FAILURE,
+     CANCEL_FRIEND_REQUEST_SUCCESS,
     CANCEL_FRIEND_REQUEST, UPDATE_PROFILE_IMAGE, UPDATE_PROFILE_IMAGE_SUCCESS, UPDATE_PROFILE_IMAGE_FAILURE, GET_CANCELREQUEST_DATA,
     GET_CANCELREQUEST_DATA_SUCCESS, GET_CANCELREQUEST_DATA_FAILURE, DELETE_IMAGE_SUCCESS, DELETE_IMAGE_FAILURE, DELETE_IMAGE,
     UPDATE_PROFILE_IMAGE_PROCESS, POST_RECENT_USERPROFILE_SUCCESS, POST_RECENT_USERPROFILE_FAILURE, POST_RECENT_USERPROFILE,
     GET_RECENT_USERPROFILE_DATA, GET_RECENT_USERPROFILE_DATA_FAILURE, GET_RECENT_USERPROFILE_DATA_SUCCESS, UPDATE_ADDRESS_DATA,
     UPDATE_ADDRESS_DATA_FAILURE, UPDATE_ADDRESS_DATA_SUCCESS, FETCH_GRID_USER_DATA_REQUEST, FETCH_GRID_USER_DATA_REQUEST_SUCCESS,
     LIKED_USERS_PROFILE_DATA, LIKED_USERS_PROFILE_DATA_SUCCESS, UPLOAD_MY_STORY, UPLOAD_MY_STORY_SUCCESS, UPLOAD_MY_STORY_FAILURE,
-    GET_ALL_STATUS_SUCCESS, GET_ALL_STATUS, GET_ALL_STATUS_FAILURE, UPLOAD_MY_STORY_MODAL, DELETE_MY_STATUS_SUCCESS, DELETE_STATUS_MODAL,
-    VIEW_STORY_POST
+    GET_ALL_STATUS_SUCCESS, GET_ALL_STATUS, GET_ALL_STATUS_FAILURE, UPLOAD_MY_STORY_MODAL, DELETE_MY_STATUS_SUCCESS, 
+    DELETE_STATUS_MODAL
 } from '../type';
 import { GET_REQUEST, GET_REQUEST_SUCCESS, GET_REQUEST_FAILURE } from '../type';
 import { fetchMyProfileData } from '../reducers/MyProfile';
@@ -48,7 +49,7 @@ export const sendRequest = (requestData) => {
 
         axios.request(config)
             .then((response) => {
-                // console.log(JSON.stringify(response.data));
+                
 
                 dispatch({ type: REQUEST_SUCCESS, payload: response.data });
             })
@@ -120,7 +121,6 @@ export const getRequestFailure = (error) => ({
 export const acceptRequest = (requestData) => {
     return async (dispatch) => {
 
-        // console.log(requestData)
         dispatch({ type: ACCEPT_REQUEST })
 
         const axios = require('axios');
@@ -136,7 +136,6 @@ export const acceptRequest = (requestData) => {
             method: 'post',
             maxBodyLength: Infinity,
             url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/friend/respond-friend-req`,
-            // url: 'https://ed07-49-36-90-151.ngrok-free.app/v1/user/friend/respond-friend-req',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -146,7 +145,7 @@ export const acceptRequest = (requestData) => {
 
         axios.request(config)
             .then((response) => {
-                // console.log(JSON.stringify(response.data));
+                
                 dispatch({ type: ACCEPT_REQUEST_SUCCESS, payload: response.data })
                 // dispatch({type : GET_REQUEST })
             })
@@ -194,7 +193,7 @@ export const rejectRequest = (requestData) => {
 
         axios.request(config)
             .then((response) => {
-                // console.log(JSON.stringify(response.data));
+                
                 dispatch({ type: REJECT_REQUEST_SUCCESS, payload: response.data })
                 // dispatch({type : GET_REQUEST })
             })
@@ -234,7 +233,7 @@ export const getEducationData = (requestData) => {
 
         axios.request(config)
             .then((response) => {
-                // console.log(JSON.stringify(response.data));
+                
                 dispatch({ type: GET_EDUCATION_DATA_SUCCESS, payload: response.data })
             })
             .catch((error) => {
@@ -275,7 +274,7 @@ export const updateEducationData = (userid, alldata) => {
 
         axios.request(config)
             .then((response) => {
-                // console.log(JSON.stringify(response.data));
+                
                 dispatch({ type: UPDATE_EDUCATION_DATA_SUCCESS, payload: response.data });
             })
             .catch((error) => {
@@ -314,7 +313,7 @@ export const getProfessionalData = (requestData) => {
 
         axios.request(config)
             .then((response) => {
-                // console.log(JSON.stringify(response.data));
+                
                 dispatch({ type: GET_PROFESSIONAL_DATA_SUCCESS, payload: response.data })
             })
             .catch((error) => {
@@ -356,7 +355,7 @@ export const getPartnerpreferencedata = (requestData) => {
 
         axios.request(config)
             .then((response) => {
-                // console.log(JSON.stringify(response.data));
+                
                 dispatch({ type: GET_PARTNERPREFERENCE_DATA_SUCCESS, payload: response.data.data })
             })
             .catch((error) => {
@@ -410,10 +409,7 @@ export const getAcceptedRequestData = () => {
             }, []);
 
 
-            // console.log("<== friendRequests ==>", friendRequests)
-            // console.log("<== friendIds ==>", friendIds)
-
-
+           
             // Define the batch size for fetching user data
             const batchSize = 50;
             const numBatches = Math.ceil(friendIds.length / batchSize);
@@ -427,12 +423,11 @@ export const getAcceptedRequestData = () => {
                 const batchIds = friendIds.slice(start, end);
 
                 const batchUserData = await fetchUserDataBatch(batchIds);
-                console.log("🚀 ~ return ~ batchUserData:", batchUserData)
+                
                 userDataArray.push(...batchUserData);
             }
 
-            console.log("User data for accepted friends:", userDataArray);
-
+       
 
             // dispatch({ type: GET_ACCEPTED_REQUEST_DATA_SUCCESS, payload: response.data });
             dispatch({
@@ -587,7 +582,7 @@ export const getblockuserdata = () => {
 
         axios.request(config)
             .then((response) => {
-                // console.log(JSON.stringify(response.data));
+                
                 dispatch({ type: GET_BLOCK_USERDATA_SUCCESS, payload: response.data })
             })
             .catch((error) => {
@@ -650,34 +645,25 @@ export const FetchUserDataById = async (userId) => {
 
 }
 
-export const Sentblockrequest = (requestData) => {
-    console.log("🚀 ~ Sentblockrequest ~ requestData:", requestData)
+export const Sentblockrequest = (requestData, OtherUserId) => {
 
     return async (dispatch) => {
         dispatch({ type: SENT_BLOCK_REQUEST });
 
-        // const EnumStatusOfFriend = {
-        //     REQUESTED: 'requested',
-        //     RECEIVED: 'received',
-        //     ACCEPTED: 'accepted',
-        //     REJECTED: 'rejected',
-        //     REMOVED: 'removed',
-        //     BLOCKED: 'blocked',
-        //   };
 
         const axios = require('axios');
-
+      
         const token = getCookie("authtoken")
         let data = JSON.stringify({
-            "user": requestData?.InitiatorUser,
-            "request": requestData?.RequestID,
-            "status": requestData?.status
+            "user": OtherUserId,
+            "request": requestData,
+            "status": "blocked"
 
 
         });
 
         let config = {
-            method: 'POST',
+            method: 'PUT',
             maxBodyLength: Infinity,
             url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/friend/respond-friend-req`,
             headers: {
@@ -689,11 +675,9 @@ export const Sentblockrequest = (requestData) => {
 
         axios.request(config)
             .then((response) => {
-                // console.log(JSON.stringify(response.data));
+                
                 dispatch({ type: SENT_BLOCK_REQUEST_SUCCESS, payload: response.data })
                 // dispatch({type : GET_REQUEST })
-                dispatch(getAcceptedRequestData())
-                dispatch(getblockuserdata())
             })
             .catch((error) => {
                 console.log(error);
@@ -746,7 +730,7 @@ export const Cancelfriendrequest = (requestData, curUser) => {
 
         axios.request(config)
             .then((response) => {
-                // console.log(JSON.stringify(response.data));
+                
                 dispatch({ type: CANCEL_FRIEND_REQUEST_SUCCESS, payload: response.data })
             })
             .catch((error) => {
@@ -834,7 +818,7 @@ export const Updateprofileimage = (requestdata, seconddata) => {
 
                             axios.request(config)
                                 .then((response) => {
-                                    // console.log(JSON.stringify(response.data));
+                                    
                                     dispatch({ type: UPDATE_PROFILE_IMAGE_SUCCESS })
                                     dispatch(fetchMyProfileData())
                                 })
@@ -894,7 +878,7 @@ export const Getcancelrequestdata = () => {
         axios.request(config)
             .then((response) => {
                 dispatch({ type: GET_CANCELREQUEST_DATA_SUCCESS, payload: response.data })
-                // console.log(JSON.stringify(response.data));
+                
                 console.log("🚀 ~ .then ~ response:", response.data)
             })
 
@@ -944,7 +928,7 @@ export const Deleteimage = (imagedata) => {
 
         axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
+    
                 dispatch({ type: DELETE_IMAGE_SUCCESS })
                 dispatch(fetchMyProfileData())
             })
@@ -1005,7 +989,7 @@ export const Postrecentuserprofile = (visitedUserId) => {
 
         axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
+    
                 dispatch({ type: POST_RECENT_USERPROFILE_SUCCESS })
             })
             .catch((error) => {
@@ -1031,14 +1015,6 @@ export const Postrecentuserprofilefailure = (error) => (
     }
 )
 
-const shuffleArray = (array) => {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-};
-
 export const GetrecentuserprofileData = () => {
     return async (dispatch) => {
         dispatch({ type: GET_RECENT_USERPROFILE_DATA })
@@ -1061,7 +1037,7 @@ export const GetrecentuserprofileData = () => {
         axios.request(config)
             .then((response) => {
 
-                dispatch({ type: GET_RECENT_USERPROFILE_DATA_SUCCESS, payload: shuffleArray(response.data.data) })
+                dispatch({ type: GET_RECENT_USERPROFILE_DATA_SUCCESS, payload: response.data.data })
             })
             .catch((error) => {
                 console.log(error);
@@ -1123,8 +1099,6 @@ export const FetchGriduserdata = (currentPage) => {
             axios.request(config)
                 .then((response) => {
                     const data = response.data
-
-
                     dispatch({
                         type: FETCH_GRID_USER_DATA_REQUEST_SUCCESS,
                         payload: {
@@ -1147,9 +1121,6 @@ export const FetchGriduserdata = (currentPage) => {
     }
 }
 
-export const FetchGriduserdatasuccess = () => {
-
-}
 
 
 export const Getlikeduserdata = () => {
@@ -1173,7 +1144,7 @@ export const Getlikeduserdata = () => {
 
         axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
+    
                 dispatch({ type: LIKED_USERS_PROFILE_DATA_SUCCESS, payload: response.data.data })
             })
             .catch((error) => {
@@ -1200,7 +1171,7 @@ export const Uploadmystory = (requestdata, seconddata, theblob, Caption) => {
                 "contentType": requestdata.imagesdata.contentType,
                 "isProfilePic": false,
                 // "caption": Caption ? Caption : "",
-                "caption": Caption,
+                "caption": Caption ,
                 "profileType": "statusImage"
             }
 
@@ -1255,7 +1226,7 @@ export const Uploadmystory = (requestdata, seconddata, theblob, Caption) => {
 
                             axios.request(config)
                                 .then((response) => {
-                                    console.log(JSON.stringify(response.data));
+                        
                                     dispatch({ type: UPLOAD_MY_STORY_SUCCESS })
                                     // dispatch({ type: UPLOAD_MY_STORY_MODAL })
                                     dispatch(Getallstatus())
@@ -1320,7 +1291,7 @@ export const Getallstatus = () => {
 
         axios.request(config)
             .then((response) => {
-                // console.log(JSON.stringify(response.data));
+                
                 const mystory = response.data.data.filter((item) => item.userId.id == currentUser)
                 const allstatus = response.data.data.filter((item) => item.userId.id != currentUser)
 
@@ -1357,7 +1328,7 @@ export const DeleteMystatus = (StatusID) => {
 
         axios.request(config)
             .then((response) => {
-                console.log(JSON.stringify(response.data));
+    
                 dispatch(Getallstatus())
                 dispatch({ type: DELETE_MY_STATUS_SUCCESS })
                 dispatch({ type: DELETE_STATUS_MODAL })
@@ -1369,7 +1340,4 @@ export const DeleteMystatus = (StatusID) => {
 
     }
 }
-
-
-
 // GET_ALL_STATUS_SUCCESS

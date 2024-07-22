@@ -27,7 +27,7 @@ function ProfileComplete() {
               <path d="M20.7859 34.6667L6.82012 27.0228V15.6894L0 12.0001L20.7859 0.666748L41.6359 12.0001V26.9142H39.2649V13.3866L34.7516 15.6894V27.0228L20.7859 34.6667ZM20.7859 20.6448L36.6405 12.0001L20.7859 3.47191L4.99548 12.0001L20.7859 20.6448ZM20.7859 31.9781L32.3805 25.6041V17.1281L20.7859 23.3334L9.19122 17.0438V25.6041L20.7859 31.9781Z" fill="url(#paint0_linear_1217_1619)" />
               <defs>
                 <linearGradient id="paint0_linear_1217_1619" x1="-1.49655e-06" y1="-7" x2="38.5" y2="40" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#0F52BA" />
+                  <stop stopColor="#0F52BA" />
                   <stop offset="1" stopColor="#8225AF" />
                 </linearGradient>
               </defs>

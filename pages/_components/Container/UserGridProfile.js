@@ -98,7 +98,7 @@ function UserGridProfile() {
         // Render pagination buttons within the range of startPage to endPage
         for (let i = startPage; i <= endPage; i++) {
             buttons.push(
-                <Link key={i} href={`/dashboard?page=${i}`} className='inline-block'>
+                <Link key={i} href={`/longterm/dashboard?page=${i}`} className='inline-block'>
                     <div id={currentPage === i ? "grid-active-btn" : (darkMode ? "DarkPagination" : "pagination-count")} onClick={() => setCurrentPage(i)} className='duration-300 cursor-pointer w-[44px] h-[44px] border-[1px] border-[black] grid place-items-center rounded-full'>{i}</div>
                 </Link>
             );
@@ -111,12 +111,12 @@ function UserGridProfile() {
     const HanldeNextPage = () => {
         const nextpage = currentPage + 1
         setCurrentPage(nextpage)
-        router.push(`/dashboard?page=${nextpage}`)
+        router.push(`/longterm/dashboard?page=${nextpage}`)
     }
     const HandlePrevPage = () => {
         const prevpage = currentPage - 1;
         setCurrentPage(prevpage)
-        router.push(`/dashboard?page=${prevpage}`)
+        router.push(`/longterm/dashboard?page=${prevpage}`)
 
     }
 
@@ -208,9 +208,9 @@ function UserGridProfile() {
 
 
     const HandleVisitProfile = (res) => {
-        // () => router.push(`/dashboard/${user?.id}`)
+        // () => router.push(`/longterm/dashboard/${user?.id}`)
 
-        router.push(`/dashboard/${res?.id}`)
+        router.push(`/longterm/dashboard/${res?.id}`)
     }
 
 

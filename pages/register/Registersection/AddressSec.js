@@ -1,35 +1,11 @@
-"use client";
-
 import { Checkbox } from "@material-tailwind/react";
 import dynamic from "next/dynamic";
 import { updateFormData } from "../../../store/actions/registerUser";
 const DynamicSelect = dynamic(() => import("react-select"), { ssr: false });
 import React from "react";
 import { connect } from "react-redux";
-
-//Style for Select Box
-const customStyles = {
-  control: (provided, state) => ({
-    ...provided,
-    paddingRight: "10px",
-    paddingLeft: "8px",
-    width: "300px",
-    height: "50px",
-    borderRadius: "8px", // Add padding on the right side
-    border: "1px solid #e6e6e6",
-    borderColor: state.isFocused ? "black" : provided.borderColor,
-    "&:hover": {
-      borderColor: "black",
-    },
-    boxShadow: state.isFocused ? "none" : provided.boxShadow,
-  }),
-  indicatorSeparator: (provided) => ({
-    ...provided,
-    display: "none",
-    paddingRight: "20px",
-    // Hide the vertical line behind the arrow
-  }),
-};
+import { countryoflivingOptions, currentcityOption } from "../../../utils/options/Register/AddressSectionOptions";
+import { customStyles } from "../../../utils/options/styles/SelectBoxStyle";
 
 const AddressSection = ({
   formData,
@@ -37,21 +13,7 @@ const AddressSection = ({
   HandleTabclick,
   activeTab,
 }) => {
-  const currentcityOption = [
-    { value: "ahmedabad", label: "Ahmedabad" },
-    { value: "surat", label: "Surat" },
-    { value: "toronto", label: "Toronto" },
-    // Add more cities as needed
-  ];
 
-  // Countries
-  const countryoflivingOptions = [
-    { value: "india", label: "India" },
-    { value: "us", label: "United States" },
-    { value: "canada", label: "Canada" },
-    { value: "mexico", label: "Mexico" },
-    // Add more countries as needed
-  ];
   const Text1 = {
     fontFamily: "Poppins",
     fontSize: "16px",

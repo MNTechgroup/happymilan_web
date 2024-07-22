@@ -1,64 +1,49 @@
 import React from "react";
-import Navbar from "../_components/layout/Navbar";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Navbar from "../_components/layout/AuthNavbar";
 import Footer from "../_components/layout/Footer";
 import Image from "next/image";
+import CustomAccordion from '../../components/common/Features/Accordion'
 
-const AccordingTitle = {
-  color: "#000",
-  fontFamily: "Poppins",
-  fontSize: "18px",
-  fontStyle: "normal",
-  fontWeight: "400",
-  lineHeight: "normal",
-};
-
-const AccordingBody = {
-  color: "#000",
-  fontFamily: "Poppins",
-  fontSize: "14px",
-  fontStyle: "normal",
-  fontWeight: "400",
-  lineHeight: "normal",
-};
-
-const CardTitleText = {
-  color: "#000",
-  textAlign: "center",
-  fontFamily: "Poppins",
-  fontSize: "18px",
-  fontStyle: "normal",
-  fontWeight: "600",
-  lineHeight: "normal",
-};
-
-const CardContentText = {
-  color: "#000",
-  fontFamily: "Poppins",
-  fontSize: "14px",
-  fontStyle: "normal",
-  fontWeight: "400",
-  lineHeight: "normal",
-};
-
-const Textstyle = {
-  color: "#000",
-  textAlign: "center",
-  fontFamily: "Poppins",
-  fontSize: "14px",
-  fontStyle: "normal",
-  fontWeight: "600",
-  lineHeight: "normal",
-};
 
 function index() {
-  const [open, setOpen] = React.useState(1);
 
-  const handleOpen = (value) => setOpen(open === value ? 0 : value);
+  const AccordingBody = {
+    color: "#000",
+    fontFamily: "Poppins",
+    fontSize: "14px",
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: "normal",
+  };
 
+  const CardTitleText = {
+    color: "#000",
+    textAlign: "center",
+    fontFamily: "Poppins",
+    fontSize: "18px",
+    fontStyle: "normal",
+    fontWeight: "600",
+    lineHeight: "normal",
+  };
+
+  const CardContentText = {
+    color: "#000",
+    fontFamily: "Poppins",
+    fontSize: "14px",
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: "normal",
+  };
+
+  const Textstyle = {
+    color: "#000",
+    textAlign: "center",
+    fontFamily: "Poppins",
+    fontSize: "14px",
+    fontStyle: "normal",
+    fontWeight: "600",
+    lineHeight: "normal",
+  };
   return (
     <>
       <Navbar />
@@ -72,20 +57,10 @@ function index() {
           </h1>
         </div>
 
-        <div className="mt-[20px] pb-[0px]">
-          <div className="w-full lg:w-[750px]">
-            <div className=" h-[10px]"></div>
-
-            <Accordion style={{borderRadius:"18px"}} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1-content"
-                id="panel1-header"
-                style={AccordingTitle}
-              >
-                How do I create an account on HappyMilan.com?
-              </AccordionSummary>
-              <AccordionDetails>
+        <div className="mt-[30px] pb-[0px]">
+          <div className="w-full flex justify-center ">
+            <div className="w-full grid place-items-center space-y-[20px]">
+              <CustomAccordion title={"How do I create an account on HappyMilan.com?"}>
                 <ul style={AccordingBody}>
                   <li>
                     Step 1: Click on{" "}
@@ -120,18 +95,9 @@ function index() {
                     Wish you’ll have great experience on HappyMilan.com
                   </li>
                 </ul>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion style={{borderRadius:"18px"}} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1-content"
-                id="panel1-header"
-                style={AccordingTitle}
-              >
-                Is HappyMilan for dating or matrimony purposes?
-              </AccordionSummary>
-              <AccordionDetails>
+              </CustomAccordion>
+
+              <CustomAccordion title={"Is HappyMilan for dating or matrimony purposes?"}>
                 <ul style={AccordingBody}>
                   <li>
                     HappyMilan is a social networking website that caters to
@@ -139,18 +105,10 @@ function index() {
                     either option when registering
                   </li>
                 </ul>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion style={{borderRadius:"18px"}} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1-content"
-                id="panel1-header"
-                style={AccordingTitle}
-              >
-                What are the top feature of HappyMilan?
-              </AccordionSummary>
-              <AccordionDetails>
+              </CustomAccordion>
+
+
+              <CustomAccordion title={" What are the top feature of HappyMilan?"}>
                 <ul style={AccordingBody}>
                   <li>
                     HappyMilan is an advanced social media networking platform
@@ -171,18 +129,12 @@ function index() {
                     easy for users of all kinds to navigate.
                   </li>
                 </ul>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion style={{borderRadius:"18px"}} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1-content"
-                id="panel1-header"
-                style={AccordingTitle}
-              >
-                How can I manage my profile and account settings?
-              </AccordionSummary>
-              <AccordionDetails>
+              </CustomAccordion>
+
+
+
+              <CustomAccordion title={" How can I manage my profile and account settings?"}>
+
                 <ul style={AccordingBody}>
                   <li>
                     HappyMilan offers an advanced level of profile and account
@@ -207,18 +159,8 @@ function index() {
                   </li>
                   <li>Step 2: Click on</li>
                 </ul>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion style={{borderRadius:"18px"}} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1-content"
-                id="panel1-header"
-                style={AccordingTitle}
-              >
-                Are there any safety tips for online dating on HappyMilan?
-              </AccordionSummary>
-              <AccordionDetails>
+              </CustomAccordion>
+              <CustomAccordion title={" Are there any safety tips for online dating on HappyMilan?"}>
                 <ul style={AccordingBody}>
                   <li>
                     Yes, HappyMilan is very concerned about the safety of its
@@ -235,18 +177,9 @@ function index() {
                     </span>
                   </li>
                 </ul>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion style={{borderRadius:"18px"}} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1-content"
-                id="panel1-header"
-                style={AccordingTitle}
-              >
-                How can I contact customer support?
-              </AccordionSummary>
-              <AccordionDetails>
+              </CustomAccordion>
+              <CustomAccordion title={"How can I contact customer support?"}>
+
                 <ul style={AccordingBody}>
                   <li>
                     If you have any questions or concerns regarding this Privacy
@@ -261,18 +194,9 @@ function index() {
                     +91 91048 14072
                   </li>
                 </ul>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion style={{borderRadius:"18px"}} className="shadow-none border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1-content"
-                id="panel1-header"
-                style={AccordingTitle}
-              >
-                How to verify my account on HappyMilan?
-              </AccordionSummary>
-              <AccordionDetails>
+              </CustomAccordion>
+              <CustomAccordion title={"How to verify my account on HappyMilan?"}>
+
                 <ul style={AccordingBody}>
                   <li>
                     HappyMilan is very strict about fake profiles, and we have implemented multiple authentication steps for users to verify their profiles
@@ -295,18 +219,9 @@ function index() {
                   </li>
 
                 </ul>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion style={{borderRadius:"18px"}} className="shadow-none  border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1-content"
-                id="panel1-header"
-                style={AccordingTitle}
-              >
-                What is your cancellation policy?
-              </AccordionSummary>
-              <AccordionDetails>
+              </CustomAccordion>
+              <CustomAccordion title={"What is your cancellation policy?"}>
+
                 <ul style={AccordingBody}>
                   <li>
                     You can terminate your membership anytime by deleting your profile or contacting HappyMilan.com. No refunds for unused subscription fees unless expressly guaranteed in writing
@@ -319,37 +234,19 @@ function index() {
                   </li>
 
                 </ul>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion style={{borderRadius:"18px"}} className="shadow-none  border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1-content"
-                id="panel1-header"
-                style={AccordingTitle}
-              >
-                Can I change my plan later?
-              </AccordionSummary>
-              <AccordionDetails>
+              </CustomAccordion>
+              <CustomAccordion title={"Can I change my plan later?"}>
+
+
                 <ul style={AccordingBody}>
                   <li>
                     Yes, subscription plans are changeable. Members only need to pay an additional amount for add-ons
                   </li>
-
-
                 </ul>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion style={{borderRadius:"18px"}} className="shadow-none  border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1-content"
-                id="panel1-header"
-                style={AccordingTitle}
-              >
-                How’s I delete my account?
-              </AccordionSummary>
-              <AccordionDetails>
+              </CustomAccordion>
+              <CustomAccordion title={"How’s I delete my account?"}>
+
+
                 <ul style={AccordingBody}>
                   <li>
                     HappyMilan users can delete or hide their profile after finding a match or determining that this platform is not compatible.
@@ -369,20 +266,9 @@ function index() {
                   <li >
                     Step 3: Click on <span className="text-[#0F52BA]">“Delete my profile.”</span>
                   </li>
-
                 </ul>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion style={{borderRadius:"18px"}} className="shadow-none  border-[1px] border-[#0F52BA] mt-[10px] rounded-[18px] mb-[20px] p-[8px]">
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1-content"
-                id="panel1-header"
-                style={AccordingTitle}
-              >
-                How I change my login details?
-              </AccordionSummary>
-              <AccordionDetails>
+              </CustomAccordion>
+              <CustomAccordion title={"How I change my login details?"}>
                 <ul style={AccordingBody}>
                   <li>
                     Yes, HappyMilan users can change their login details by following these steps:
@@ -400,12 +286,11 @@ function index() {
                   </li>
 
                 </ul>
-              </AccordionDetails>
-            </Accordion>
-
+              </CustomAccordion>
+            </div>
             <div className=" h-[10px]"></div>
           </div>
-        </div>
+        </div >
 
 
 
@@ -486,7 +371,7 @@ function index() {
 
         <Footer />
         {/* <!-- Footer Section End --> */}
-      </div>
+      </div >
     </>
   );
 }

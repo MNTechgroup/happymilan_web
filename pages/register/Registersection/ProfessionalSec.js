@@ -1,88 +1,31 @@
 import React from 'react'
-
 import dynamic from 'next/dynamic';
 import { connect } from 'react-redux';
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 import { updateFormData } from "../../../store/actions/registerUser";
+import { countryoflivingOptions, currentDesignationOptions, currentcityOption, jobTypeOptions } from '../../../utils/options/Register/ProfessionalSectionOptions';
+import { customStyles } from '../../../utils/options/styles/SelectBoxStyle';
 
-//Style For Select Box
-
-const customStyles = {
-    control: (provided, state) => ({
-        ...provided,
-        paddingRight: '10px',
-        paddingLeft: "8px",
-        width: "300px",
-        height: "50px",
-        borderRadius: "8px",
-        border: "1px solid #e6e6e6",
-        borderColor: state.isFocused ? 'black' : provided.borderColor,
-        '&:hover': {
-            borderColor: 'black',
-        },
-        boxShadow: state.isFocused ? 'none' : provided.boxShadow, // Add padding on the right side
-    }),
-    indicatorSeparator: (provided) => ({
-        ...provided,
-        display: 'none',
-        paddingRight: "20px"
-        // Hide the vertical line behind the arrow
-    }),
-};
-
-const Text1 = {
-    fontFamily: "Poppins",
-    fontSize: "16px",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "normal"
-}
-
-const Text2 = {
-    fontFamily: "Poppins",
-    fontSize: "12px",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "normal"
-}
 
 
 function ProfessionalSec({ formData, updateFormData, HandleTabclick, activeTab }) {
 
-
-
-    const jobTypeOptions = [
-        { value: 'full_time', label: 'Full-time' },
-        { value: 'part_time', label: 'Part-time' },
-        { value: 'contract', label: 'Contract' },
-        { value: 'internship', label: 'Internship' },
-        { value: 'remote', label: 'Remote' }
-    ];
-
-
-    const currentDesignationOptions = [
-        { value: 'junior_engineer', label: 'Junior Engineer' },
-        { value: 'senior_analyst', label: 'Senior Analyst' },
-        { value: 'team_lead', label: 'Team Lead' },
-        { value: 'project_manager', label: 'Project Manager' },
-        { value: 'director', label: 'Director' }
-    ];
-    const currentcityOption = [
-        { value: "ahmedabad", label: "Ahmedabad" },
-        { value: "surat", label: "Surat" },
-        { value: "toronto", label: "Toronto" },
-        // Add more cities as needed
-      ];
-
-      const countryoflivingOptions = [
-        { value: "india", label: "India" },
-        { value: "us", label: "United States" },
-        { value: "canada", label: "Canada" },
-        { value: "mexico", label: "Mexico" },
-        // Add more countries as needed
-      ];
-
-
+    const Text1 = {
+        fontFamily: "Poppins",
+        fontSize: "16px",
+        fontStyle: "normal",
+        fontWeight: "400",
+        lineHeight: "normal"
+    }
+    
+    const Text2 = {
+        fontFamily: "Poppins",
+        fontSize: "12px",
+        fontStyle: "normal",
+        fontWeight: "400",
+        lineHeight: "normal"
+    }
+    
     const doItlater = {
         fontFamily: "Poppins",
         fontSize: "14px",
@@ -93,18 +36,18 @@ function ProfessionalSec({ formData, updateFormData, HandleTabclick, activeTab }
 
 
 
-const handleInputChange = (e) =>{
+    const handleInputChange = (e) => {
 
-    const value = e.target.value;
-    const name = e.target.name;
+        const value = e.target.value;
+        const name = e.target.name;
 
-    updateFormData({
-        professional: { ...formData.professional, [name]: value }
-      });
+        updateFormData({
+            professional: { ...formData.professional, [name]: value }
+        });
 
 
 
-}
+    }
 
 
     return (

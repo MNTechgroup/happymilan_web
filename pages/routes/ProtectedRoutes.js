@@ -8,8 +8,17 @@ const ProtectedRoutes = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const authData = getCookie("authtoken");
 
+
+
   useEffect(() => {
     const checkAuthentication = async () => {
+      const platformChoose = localStorage.getItem("platform-choose")
+
+      if (authData && platformChoose === 'true') {
+        await router.push("/login/1");
+        return;
+      }
+
       if (!authData) {
         await router.push('/login');
       } else {
@@ -20,11 +29,11 @@ const ProtectedRoutes = ({ children }) => {
           setIsLoading(false);
           return;
         }
-        
-        // Check if the current route starts with "/dashboard"
+
+        // Check if the current route starts with "/longterm/dashboard"
         const currentRoute = router.pathname;
-        if (!currentRoute.startsWith('/dashboard')) {
-          await router.push('/dashboard');
+        if (!currentRoute.startsWith('/longterm/dashboard')) {
+          await router.push('/longterm/dashboard');
         } else {
           setIsLoading(false);
         }

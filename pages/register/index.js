@@ -1,4 +1,3 @@
-"use client";
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
@@ -176,15 +175,15 @@ function Home() {
                 dispatch(updatePartnerPrefData(partnerpref))
 
                 // localStorage.setItem("regmodal",false)
-                router.push("/dashboard")
+                router.push("/longterm/dashboard")
             } else {
-                router.push("/dashboard")
+                router.push("/longterm/dashboard")
             }
 
         }
 
         if (activeTab >= 9) {
-            router.push("/dashboard")
+            router.push("/longterm/dashboard")
 
         }
 

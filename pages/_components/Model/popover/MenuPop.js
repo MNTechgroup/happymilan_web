@@ -6,7 +6,7 @@ import { Dialog, Popover } from "@mui/material";
 import { updateSpamUserdata } from "../../../../store/reducers/SpamReportReducer";
 import {  useDispatch, useSelector } from "react-redux";
 
-const ProfileMenu = ({ HandleCancelRequest, MenuTitle, res, SetCurURL, openModal, OpenReportModal, openBlockModal }) => {
+const ProfileMenu = ({ HandleCancelRequest, MenuTitle, res, SetCurURL, SetUserID, openModal, OpenReportModal, openBlockModal }) => {
 
     const { darkMode, toggleDarkMode } = useDarkMode();
     // accepted
@@ -37,6 +37,7 @@ const ProfileMenu = ({ HandleCancelRequest, MenuTitle, res, SetCurURL, openModal
         const urlWithUserId = `${currentUrl}/${userId}`;
 
         SetCurURL(urlWithUserId);
+        SetUserID(userId)
     };
 
     const handleClose = () => {

@@ -32,7 +32,7 @@ export const likeUser = (userId) => ({
 });
 
 export const CreateLikeUser = (user) => {
-  console.log("🚀 ~ CreateLikeUser ~ userId:", user)
+ 
   return async (dispatch) => {
 
     const axios = require('axios');
@@ -70,11 +70,8 @@ export const CreateLikeUser = (user) => {
 }
 
 export const UnlikeTheUser = (Postdata) => {
-  // console.log("🚀 ~ UnlikeTheUser ~ data:", Postdata)
   return async (dispatch) => {
 
-    // const likedUSerId = data.likedUserId
-    // const theID = data.id
 
     const axios = require('axios');
     const token = getCookie("authtoken")
@@ -137,7 +134,6 @@ export const fetchAllUsers = () => async (dispatch) => {
 
   try {
     const token = getCookie("authtoken")
-    // const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/user`);
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/v1/user/user/getUserByGender`,
       {

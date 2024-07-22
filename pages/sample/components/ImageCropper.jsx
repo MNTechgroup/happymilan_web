@@ -50,11 +50,7 @@ const ImageCropper = ({ setModalOpen , closeModal, updateAvatar }) => {
         key: file.name, // Use file name or any other identifier
         size: file.size
       };
-      console.log("🚀 ~ reader.addEventListener ~ imageData:", imageData)
-
-
-
-
+      
       const imageElement = new Image();
       const imageUrl = reader.result?.toString() || "";
       imageElement.src = imageUrl;
@@ -115,25 +111,6 @@ const ImageCropper = ({ setModalOpen , closeModal, updateAvatar }) => {
   const dispatch = useDispatch()
 
   const loader = useSelector((state) => state.usersact.profileimageupdate)
-
-
-
-  const handleCropImage = () => {
-    const canvas = previewCanvasRef.current;
-    const dataUrl = previewCanvasRef.current.toDataURL();
-    console.log("🚀 ~ handleCropImage ~ dataUrl:", dataUrl)
-    canvas.toBlob((blob) => {
-      if (blob) {
-
-        const urldata = URL.createObjectURL(blob)
-        console.log("🚀 ~ canvas.toBlob ~ urldata:", urldata)
-
-
-        // updateAvatar(blob); // Pass the Blob directly to the updateAvatar function
-        // closeModal();
-      }
-    }, "image/jpeg");
-  };
 
   const SpanStyle = {
     fontFamily: "Poppins",
@@ -196,7 +173,6 @@ const ImageCropper = ({ setModalOpen , closeModal, updateAvatar }) => {
                   <img src='/loginassests/register-icons/Drag-Drop.svg' />
                 </div>
                 <h1 className='text-[15px] lg:text-[20px]' style={Text2}>Upload Image
-                  {/* <span className='text-[16px]' style={Text3}> Or drag and drop a file</span> */}
                 </h1>
               </div>
             </div>
@@ -230,48 +206,6 @@ const ImageCropper = ({ setModalOpen , closeModal, updateAvatar }) => {
               <h1 style={Text3}>Adjust the round object to set your photo</h1>
             </div>
           </div>
-          {/* <button
-            onClick={() => {
-              setCanvasPreview(
-                imgRef.current, // HTMLImageElement
-                previewCanvasRef.current, // HTMLCanvasElement
-                convertToPixelCrop(
-                  crop,
-                  imgRef.current.width,
-                  imgRef.current.height
-                )
-              );
-
-              const canvas = previewCanvasRef.current;
-              canvas.toBlob((blob) => {
-                if (blob) {
-                  const urldata = URL.createObjectURL(blob)
-
-                  const CurrentImageData = {
-                    key: ImageData.name,
-                    contentType: ImageData.type,
-                    data: urldata
-                  }
-
-                  const blobData = {
-                    size: blob.size,
-                    type: blob.type,
-                    blob: URL.createObjectURL(blob)
-
-                  };
-                  console.log("🚀 ~ canvas.toBlob ~ blobData:", blobData)
-
-                  dispatch(Updateprofileimage(CurrentImageData, blobData))
-
-                }
-              }, "image/jpeg");
-            }}
-            className="text-white font-mono text-xs py-2 px-4 rounded-2xl mt-4 bg-sky-500 hover:bg-sky-600"
-          >
-            Crop Image
-          </button> */}
-          {/* <button onClick={() => console.log(ImageData)}>OK</button> */}
-
           <div className="flex justify-center relative top-[80px] space-x-[30px]">
             <button className="cursor-pointer w-[125px] h-[49px] rounded-[10px]  bg-[#FFF] border-[1px] border-[black]">
               <input className="cursor-pointer w-[100px] opacity-0 absolute" type="file" accept="image/*" onChange={onSelectFile} />
@@ -307,7 +241,6 @@ const ImageCropper = ({ setModalOpen , closeModal, updateAvatar }) => {
                       blob: URL.createObjectURL(blob)
 
                     };
-                    console.log("🚀 ~ canvas.toBlob ~ blobData:", blobData)
 
                     dispatch(Updateprofileimage(CurrentImageData, blobData))
 

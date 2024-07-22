@@ -2,8 +2,7 @@ import { getCookie } from 'cookies-next';
 import { FETCH_SAFETY_CONSENT_FAILURE, FETCH_SAFETY_CONSENT_REQUEST, FETCH_SAFETY_CONSENT_SUCCESS, POST_SAFETY_CONSENT_FAILURE, POST_SAFETY_CONSENT_REQUEST, POST_SAFETY_CONSENT_SUCCESS } from '../type';
 
 export const SafetyConsentAction = (ReceiverID) => {
-    console.log("🚀 ~ ReceiverID:", ReceiverID)
-
+    
     return async (dispatch) => {
         dispatch({ type: FETCH_SAFETY_CONSENT_REQUEST })
         const axios = require('axios');
@@ -34,7 +33,7 @@ export const SafetyConsentAction = (ReceiverID) => {
 }
 
 export const UpdateMessageConsentStatus = (ReceivedData) => {
-    console.log("🚀 ~ UpdateMessageConsentStatus ~ ReceivedData:", ReceivedData)
+   
     return async (dispatch) => {
         dispatch({type : POST_SAFETY_CONSENT_REQUEST})
 

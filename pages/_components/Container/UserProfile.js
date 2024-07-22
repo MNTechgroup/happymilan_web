@@ -16,7 +16,7 @@ import {
     Postrecentuserprofile,
     sendRequest,
 } from "../../../store/actions/UsersAction";
-import UserprofileSkeleton from "../common/shader/UserprofileSkeleton";
+import UserprofileSkeleton from "../../../components/common/shader/UserprofileSkeleton";
 import { useRouter } from "next/router";
 import LikeUser from "../common/Buttons/LikeUser";
 import SendRequestBtn from "../common/Buttons/SendRequestBtn";
@@ -74,6 +74,7 @@ function SampleUserProfile({ users }) {
 
     const [sentrequest, setsentRequest] = useState({});
     const [CurrURL, SetCurURL] = useState("");
+    const [UserID, SetUserID] = useState("");
 
 
 
@@ -212,7 +213,7 @@ function SampleUserProfile({ users }) {
 
     const router = useRouter();
     const HandlePushUser = (res) => {
-        router.push(`/dashboard/${res}`);
+        router.push(`/longterm/dashboard/${res}`);
         dispatch(Postrecentuserprofile(res));
     };
 
@@ -369,7 +370,7 @@ function SampleUserProfile({ users }) {
                                                                 </div>
                                                             </li>
                                                             <li>
-                                                                <ProfileMenu SetCurURL={SetCurURL} openBlockModal={openBlockModal} OpenReportModal={OpenReportModal} openModal={openModal} res={res} />
+                                                                <ProfileMenu SetUserID={SetUserID} SetCurURL={SetCurURL} openBlockModal={openBlockModal} OpenReportModal={OpenReportModal} openModal={openModal} res={res} />
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -507,7 +508,7 @@ function SampleUserProfile({ users }) {
                     </div>
                 </div>
             </div>
-            <ShareModal isOpen={isModalOpen} onClose={closeModal} data={CurrURL} />
+            <ShareModal UserID={UserID} isOpen={isModalOpen} onClose={closeModal} data={CurrURL} />
             <RegisterAlertModal
                 title={Data}
                 isOpen={isRegisterModalOpen}

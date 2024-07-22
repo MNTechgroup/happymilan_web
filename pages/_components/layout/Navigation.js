@@ -96,7 +96,7 @@ function Sidebar() {
 
     const router = useRouter()
 
-    const isUpgradeActive = router.pathname.startsWith('/dashboard/upgrade');
+    const isUpgradeActive = router.pathname.startsWith('/longterm/dashboard/upgrade');
 
 
     const [openNav, setOpenNav] = React.useState(false);
@@ -354,7 +354,7 @@ function Sidebar() {
                                                 <span>
                                                     {darkMode ? icons.myprofile.dark : icons.myprofile.light}
                                                 </span>
-                                                <Link className="relative left-[5px]" href="/dashboard/profile" >
+                                                <Link className="relative left-[5px]" href="/longterm/dashboard/profile" >
                                                     My Profile
                                                 </Link>
                                             </li>
@@ -362,7 +362,7 @@ function Sidebar() {
                                                 <span>
                                                     {darkMode ? icons.setting.dark : icons.setting.light}
                                                 </span>
-                                                <Link className="relative left-[5px]" href="/dashboard/seting/credentials">Accounts</Link>
+                                                <Link className="relative left-[5px]" href="/longterm/dashboard/seting/credentials">Accounts</Link>
                                             </li>
                                             <li className="w-[230px] h-[34px] p-[10px] pl-[15px] hover:bg-[#F3F8FF] dark:hover:bg-[#18191a] rounded-[100px]  flex items-center space-x-[10px]">
 
@@ -370,7 +370,7 @@ function Sidebar() {
                                                     {darkMode ? icons["menu-lock"].dark : icons["menu-lock"].light}
                                                 </span>
 
-                                                <Link className="relative left-[5px]" href="/dashboard/seting/privacyseting">Privacy Policy</Link>
+                                                <Link className="relative left-[5px]" href="/longterm/dashboard/seting/privacyseting">Privacy Policy</Link>
                                             </li>
 
 
