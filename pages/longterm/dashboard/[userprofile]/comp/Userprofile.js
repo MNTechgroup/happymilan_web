@@ -10,9 +10,12 @@ import { addToShortlist } from "../../../../../store/actions/GetingAlluser";
 import { sendRequest } from "../../../../../store/actions/UsersAction";
 import RegisterAlertModal from "../../../../_components/Model/Models/RegisterAlertModal";
 import GridLikeUser from "../../../../_components/common/Buttons/GridLikeUser";
-import UpgradeButton from "../../../../_components/common/Buttons/UpgradeButton";
 import calculateAge from "../../../../../utils/helpers/CalculateAge";
 import { capitalizeFirstLetter } from "../../../../../utils/form/Captitelize";
+import ContactTab from "./tabs/ContactTab";
+import LocationTab from "./tabs/LocationTab";
+import Notfound from "../../../../../components/common/Error/Notfound";
+import Avatar from "react-avatar";
 
 function Userprofile({ toggleDrawer }) {
   const Username = {
@@ -198,7 +201,7 @@ function Userprofile({ toggleDrawer }) {
     );
   };
 
-  const LocationTab = ({ data }) => {
+  const TheLocationTab = ({ data }) => {
     return (
       <>
         <div
@@ -218,217 +221,35 @@ function Userprofile({ toggleDrawer }) {
           <div className="flex justify-center ">
             <div className="grid place-items-center w-[90%] h-[1px] bg-[#F1F1F1]"></div>
           </div>
-          {
-            upgradeDone
-              ?
-              <>
-                <div className="grid place-items-center">
-                  <div className="text-center mt-[10%]">
-                    <ul className="flex flex-col justify-center items-center w-full space-y-[10px]">
-                      <li>
-                        <Image width={0} height={0} alt="lock" src={"/assests/profile/Lock-gradient.svg"} loading="lazy" className="w-[18.151px] h-[24px]" />
-                      </li>
-                      <li>
-                        <h1 style={RulesText} className="text-[14px] text-center text-[#000] dark:text-[#FFF]]">Only for Premium Member. Unlock now!</h1>
-                      </li>
-                      <li>
-                        <div>
-                          <UpgradeButton IconSize={17} BtnSizeH={40} BtnSizeW={110} />
-                        </div>
-                      </li>
-                    </ul>
-
-                  </div>
-                </div>
-              </>
-              : <>
-                <div className="grid place-items-center">
-                  <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 2xl:gap-[32px] xl:gap-[32px] lg:gap-[32px] md:gap-[32px] gap-[30px]">
-                    <div>
-                      <p
-                        style={Text2}
-                        className="2xl:text-[14px] xl:text-[12px] text-[12px]"
-                      >
-                        Current Residing Address
-                      </p>
-                      <h1
-                        style={Text5}
-                        className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
-                      >
-                        {data && data.address?.currentResidenceAddress
-                          ? capitalizeFirstLetter(data?.address?.currentResidenceAddress)
-                          : "NA"}
-                      </h1>
-                    </div>
-                    <div className=" ">
-                      <p
-                        style={Text2}
-                        className="2xl:text-[14px] xl:text-[12px] text-[14px]"
-                      ></p>
-                      <h1
-                        style={Text5}
-                        className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
-                      ></h1>
-                    </div>
-                    <div>
-                      <p
-                        style={Text2}
-                        className="2xl:text-[14px] xl:text-[12px] text-[12px]"
-                      >
-                        Current City
-                      </p>
-                      <h1
-                        style={Text5}
-                        className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
-                      >
-                        {data && data.address?.currentCity
-                          ? capitalizeFirstLetter(data?.address?.currentCity)
-                          : "NA"}
-                      </h1>
-                    </div>
-                    <div>
-                      <p
-                        style={Text2}
-                        className="2xl:text-[14px] xl:text-[12px] text-[12px]"
-                      >
-                        Current Residing Country
-                      </p>
-                      <h1
-                        style={Text5}
-                        className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
-                      >
-                        {data && data.address?.currentCountry
-                          ? capitalizeFirstLetter(data?.address?.currentCountry)
-                          : "NA"}
-                      </h1>
-                    </div>
-                    <div>
-                      <p
-                        style={Text2}
-                        className="2xl:text-[14px] xl:text-[12px] text-[12px]"
-                      >
-                        Permanent Address
-                      </p>
-                      <h1
-                        style={Text5}
-                        className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
-                      >
-                        {"NA"}
-                      </h1>
-                    </div>
-                  </div>
-                </div>
-              </>
-          }
+          <LocationTab data={data} />
         </div>
       </>
     );
   };
-  const ContactTab = ({ data }) => {
-    return (
-      <>
-        <div className={upgradeDone ? `w-full 2xl:h-[353px] xl:h-[353px] lg:h-[353px] md:h-[353px] h-[370px] border-[1px] border-[#F1F1F1] rounded-[10px]  2xl:space-y-[20px] xl:space-y-[20px] lg:space-y-[20px] md:space-y-[20px] space-y-[10px]` : `w-full h-[270px] lg:h-[369px]  border-[1px] border-[#F1F1F1] rounded-[10px] 2xl:space-y-[20px] xl:space-y-[20px] lg:space-y-[20px] md:space-y-[20px] space-y-[10px]`}>
-          <div className="pt-[10px] grid place-items-center">
-            <ul className="w-[90%] flex justify-between items-center m-[10px]">
-              <li>
-                <h1
-                  style={Text2}
-                  className="2xl:text-[16px] xl:text-[16px] lg:text-[16px] md:text-[16px] text-[14px]"
-                >
-                  Contact Details
-                </h1>
-              </li>
-              <li></li>
-            </ul>
-          </div>
-          <div className="flex justify-center ">
-            <div className="grid place-items-center w-[90%] h-[1px] bg-[#F1F1F1]"></div>
-          </div>
 
-          {
-            upgradeDone
-              ?
-              <>
-                <div className="grid place-items-center">
-                  <div className="text-center mt-[10%]">
-                    <ul className="flex flex-col justify-center items-center w-full space-y-[10px]">
-                      <li>
-                        <Image width={0} height={0} alt="lock" src={"/assests/profile/Lock-gradient.svg"} loading="lazy" className="w-[18.151px] h-[24px]" />
-                      </li>
-                      <li>
-                        <h1 style={RulesText} className="text-[14px] text-center text-[#000] dark:text-[#FFF]]">Only for Premium Member. Unlock now!</h1>
-                      </li>
-                      <li>
-                        <div>
-                          <UpgradeButton IconSize={17} BtnSizeH={40} BtnSizeW={110} />
-                        </div>
-                      </li>
-                    </ul>
+  const TheContactTab = ({ data }) => {
+    return (<div className={`w-full h-[270px] lg:h-[369px]  border-[1px] border-[#F1F1F1] rounded-[10px] 2xl:space-y-[20px] xl:space-y-[20px] lg:space-y-[20px] md:space-y-[20px] space-y-[10px]`}>
+      <div className="pt-[10px] grid place-items-center">
+        <ul className="w-[90%] flex justify-between items-center m-[10px]">
+          <li>
+            <h1
+              style={Text2}
+              className="2xl:text-[16px] xl:text-[16px] lg:text-[16px] md:text-[16px] text-[14px]"
+            >
+              Contact Details
+            </h1>
+          </li>
+          <li></li>
+        </ul>
+      </div>
+      <div className="flex justify-center ">
+        <div className="grid place-items-center w-[90%] h-[1px] bg-[#F1F1F1]"></div>
+      </div>
+      <ContactTab data={data} />
+    </div>
+    )
+  }
 
-                  </div>
-                </div>
-              </>
-              :
-              <>
-                <div className="grid place-items-center">
-                  <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
-                    <div>
-                      <p
-                        style={Text2}
-                        className="2xl:text-[14px] xl:text-[12px] text-[12px]"
-                      >
-                        Mobile Number
-                      </p>
-                      <h1
-                        style={Text5}
-                        className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
-                      >
-                        +{" "}
-                        {data && data?.mobileNumber
-                          ? data?.mobileNumber && data.mobileNumber
-                          : "NA"}
-                      </h1>
-                    </div>
-                    <div>
-                      <p
-                        style={Text2}
-                        className="2xl:text-[14px] xl:text-[12px] text-[12px]"
-                      >
-                        Home Number
-                      </p>
-                      <h1
-                        style={Text5}
-                        className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
-                      >
-                        +{" "}
-                        {data && data?.homeMobileNumber
-                          ? data?.homeMobileNumber && data.homeMobileNumber
-                          : "NA"}
-                      </h1>
-                    </div>
-                    <div className="w-full">
-                      <p
-                        style={Text2}
-                        className="2xl:text-[14px] xl:text-[12px] text-[12px]"
-                      >
-                        Email Address
-                      </p>
-                      <h1
-                        style={Text5}
-                        className="2xl:text-[16px]  xl:text-[14px] text-[14px]"
-                      >
-                        {data && data?.email ? data?.email && data.email : "NA"}
-                      </h1>
-                    </div>
-                  </div>
-                </div>
-              </>
-          }
-
-        </div>
-      </>
-    );
-  };
   const EducationTab = ({ data }) => {
     return (
       <>
@@ -915,7 +736,8 @@ function Userprofile({ toggleDrawer }) {
 
   const { userprofile } = router.query;
 
-  const { user, loading } = useSelector((state) => state.userById);
+  const { user, loading, error } = useSelector((state) => state.userById);
+  console.log("🚀 ~ Userprofile ~ user:", user)
 
   const [ActiveTab, SetActiveTab] = useState(1);
 
@@ -925,10 +747,10 @@ function Userprofile({ toggleDrawer }) {
         return <GeneralTab data={user} />;
         break;
       case 2:
-        return <LocationTab data={user} />;
+        return <TheLocationTab data={user} />;
         break;
       case 3:
-        return <ContactTab data={user} />;
+        return <TheContactTab data={user} />;
         break;
       case 4:
         return <EducationTab data={user} />;
@@ -1047,6 +869,10 @@ function Userprofile({ toggleDrawer }) {
     return <SkeletonProfileSec />;
   }
 
+
+  if (error !== "") {
+    return <Notfound error={error} />;
+  }
   return (
     <>
       <link
@@ -1059,8 +885,8 @@ function Userprofile({ toggleDrawer }) {
           className={`flex m-[10px] 2xl:w-[631px] 2xl:h-[294px] xl:w-[540px] xl:h-[284px] lg:w-full w-full bg-[#FFF]`}
         >
           <div
-            id='profile-background-grad'
-            className="w-full h-[100px] 2xl:h-[138px] xl:h-[138px] md:h-[138px] lg:h-[138px] bg-[#0F52BA] rounded-[10px]"
+            // id='profile-background-grad'
+            className="ml-[-5px] mt-[-3px] bg-custom-gradient w-full h-[100px] 2xl:h-[138px] xl:h-[138px] md:h-[138px] lg:h-[138px] bg-[#0F52BA] rounded-[10px]"
           >
             <div>
               <div className="absolute right-[25px] pt-[10px]">
@@ -1208,20 +1034,8 @@ function Userprofile({ toggleDrawer }) {
               </div>
             </div>
 
-            <div className="flex justify-between">
-              <div className="">
-                <Image loading="lazy"
-                  alt="arrow"
-                  width={32}
-                  height={32}
-                  onClick={() => router.back()}
-                  className=" cursor-pointer m-[10px] w-[30px] h-[30px] md:w-[32px] md:h-[32px]"
-                  src="/assests/dashboard/story/arrow-left.svg"
-                />
-              </div>
-            </div>
-            <div></div>
-            <div className="grid place-items-center">
+
+            <div className="grid place-items-center mt-[50px]">
               {user?.profilePic ? (
                 <Image loading="lazy"
                   alt="img"
@@ -1232,26 +1046,7 @@ function Userprofile({ toggleDrawer }) {
                   src={user?.profilePic}
                 />
               ) : (
-                <div
-                  style={{
-                    width: "184px",
-                    height: "184px",
-                    backgroundColor: "#F8FBFF",
-                    borderRadius: "50%",
-                  }}
-                  className="grid place-items-center"
-                >
-                  <Image loading="lazy"
-                    alt="not-found"
-                    style={{ position: "relative", top: "30px" }}
-                    width={45}
-                    height={45}
-                    src={"/assests/dashboard/icon/NotFound-img.svg"}
-                  />
-                  <h1 className="inline" style={ImageNotFoundText}>
-                    No Image
-                  </h1>
-                </div>
+                <Avatar name={user?.name} round size="184" />
               )}
 
               <div className="pb-[10px] pt-[15px]">
@@ -1318,7 +1113,7 @@ function Userprofile({ toggleDrawer }) {
               </div>
               <div>
 
-                <GridLikeUser toggleDrawer={toggleDrawer} from={"UserProfile"} user={user} theid={user?.id} />
+                <GridLikeUser toggleDrawer={toggleDrawer} from={"UserProfile"} user={user} theid={user?._id} />
               </div>
               <div className="text-center pt-[10px]">
                 <p
@@ -1382,11 +1177,11 @@ function Userprofile({ toggleDrawer }) {
                   </div>
 
                   <div>
-                    <LocationTab />
+                    <TheLocationTab />
                   </div>
 
                   <div>
-                    <ContactTab />
+                    <TheContactTab />
                   </div>
 
                   <div>

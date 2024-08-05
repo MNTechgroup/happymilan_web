@@ -5,6 +5,7 @@ import { updateFormData } from "../../../store/actions/registerUser";
 import { connect } from "react-redux";
 import { validateFirstName, validateLastName } from "../../../utils/form/validationRules";
 import { MaritalOptions, heightoptionFun, motherTongueOption, profileOptions, religionOptions, weightoptionFun } from "../../../utils/options/Register/GenralSectionOptions";
+import {  getNameFromLocalStorage, updateEmailInLocalStorage, updateNameInLocalStorage } from "../../../utils/helpers/LocalStorage";
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
 
@@ -13,6 +14,16 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
 
 
     const [selectedGender, setSelectedGender] = useState("");
+
+    // const [FirstName,SetFirstName] = useState(formData?.general.firstName ? formData?.general.firstName : DefaultName)
+
+    const DefaultName = getNameFromLocalStorage("personal")
+    // useEffect(() => {
+    //     const DefaultName = getEmailFromLocalStorage('personal');
+    //     if (storedEmail) {
+    //         setEmail(storedEmail);
+    //     }
+    // }, []);
     const HandleGendertab = (text) => {
         setSelectedGender(text)
 
@@ -184,7 +195,8 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
 
         } else if (name == "firstName") {
             SetFNError(validateFirstName(value))
-
+            // updateNameInLocalStorage()
+            updateNameInLocalStorage('personal', value);
             updateFormData({
                 ...formData,
                 general: {
@@ -269,7 +281,7 @@ const GeneralSection = ({ formData, updateFormData, activeTab, TheValidation }) 
                 </div>
                 <div>
                     <h1 className='text-[#000] pb-[10px]' style={Text2}>First Name <span className={`text-[10px] text-${nullFields.includes('firstName') ? "[red]" : "[black]"}`}>*</span></h1>
-                    <input name="firstName" style={{ border: FNError != null ? "1px solid red" : "1px solid #e6e6e6" }} value={formData?.general.firstName} onChange={handleInputChange} type='text' placeholder='First Name' className={`hover:border-[black] outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[300px] border-[1px] border-${'[#e6e6e6]'} pl-[10px] rounded-[8px]`} />
+                    <input name="firstName" style={{ border: FNError != null ? "1px solid red" : "1px solid #e6e6e6" }} value={formData?.general.firstName ? formData?.general.firstName : DefaultName} onChange={handleInputChange} type='text' placeholder='First Name' className={`hover:border-[black] outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[300px] border-[1px] border-${'[#e6e6e6]'} pl-[10px] rounded-[8px]`} />
                     <span className="block relative text-[10px] text-[red] left-[5px] top-[5px]">{FNError}</span>
                     {/* <input name="firstName" style={{border:isFieldNull("firstName") ? "1px solid red" : "1px solid #e6e6e6"}} value={formData?.general.firstName} onChange={handleInputChange} type='text' placeholder='First Name' className={`hover:border-[black] outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[300px] border-[1px] border-${'[#e6e6e6]'} pl-[10px] rounded-[8px]`} /> */}
                     {/* {isFieldNull("firstName") ? <><span className="block text-[red]">required</span></> : ""} */}

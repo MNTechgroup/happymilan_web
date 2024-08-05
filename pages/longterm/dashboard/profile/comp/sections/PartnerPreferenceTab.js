@@ -461,7 +461,7 @@ const PartnerPreferenceTab = ({ partnerPrefID, formData, updateFormData }) => {
                                     </div>
                                     <div className='w-[90%] flex justify-end pb-[10px] mt-[10px]'>
 
-                                        <button id='profile-save-details-btn' className='rounded-[10px] text-[white] w-[80px] h-[40px]' onClick={SubmitChanges} >Save</button>
+                                        <button id='grad-button' className='rounded-[10px] text-[white] w-[80px] h-[40px]' onClick={SubmitChanges} >Save</button>
 
                                     </div>
                                 </div>

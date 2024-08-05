@@ -1,6 +1,5 @@
 
 import React, { useEffect, useState } from 'react'
-import NavBar from '../../../_components/layout/NavBar'
 import SideBar from '../../../_components/layout/SideBar'
 import Footer from '../../../_components/layout/Footer'
 import ProtectedRoutes from '../../../routes/ProtectedRoutes'
@@ -10,6 +9,7 @@ import Image from 'next/image'
 import UserprofileSkeleton from '../../../../components/common/shader/UserprofileSkeleton'
 import { getCookie } from 'cookies-next'
 import dynamic from 'next/dynamic'
+import NavBar from '../../../_components/layout/Navbar'
 
 const UserStory = dynamic(() => import('../../../_components/Container/UserStory'));
 const CanceledProfile = dynamic(() => import('./comp/CanceledProfile'));
@@ -70,8 +70,11 @@ function index() {
             <div id='story-centerlized-content' className='pl-[15px] md:pl-[15px] lg:pl-[10px] 2xl:pl-0 xl:pl-0'>
               <UserStory />
             </div>
+
+
             {data && data?.data.length > 0 ? (
-              <div id='centerlized-content' className='2xl:block xl:block lg:block hidden'>
+              <div id='centerlized-content' className='mt-[65px] dark:bg-[#18191a] 2xl:block xl:block lg:block md:block hidden'>
+
                 <div className='relative 2xl:w-[715px] xl:w-[635px] lg:w-[650px] m-[10px] flex justify-between'>
 
                   <h1 className='p-[5px] relative 2xl:left-[40px] lg:left-[10px] xl:left-[55px]'><span style={Text6}>Cancelled</span></h1>

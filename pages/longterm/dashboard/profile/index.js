@@ -2,7 +2,8 @@
 
 import React from 'react'
 import dynamic from 'next/dynamic';
-const NavBar = dynamic(() => import('../../../_components/layout/NavBar'));
+// import NavBar from '../../../_components/layout/Navbar';
+const NavBar = dynamic(() => import('../../../_components/layout/Navbar'));
 const SideBar = dynamic(() => import('../../../_components/layout/SideBar'));
 const Profile = dynamic(() => import('./comp/Profile'));
 const UploadSection = dynamic(() => import('./comp/UploadSection'));
@@ -25,7 +26,7 @@ function index() {
       {/* Main Section Start */}
 
 
-      <div id='main-centerlized-content' className='dark:bg-[#18191a] flex justify-center flex-col'>
+      <div id='main-centerlized-content' className='flex justify-center flex-col'>
         <div id='first-child' className='pl-[0px] lg:pl-[240px] 2xl:pl-[280px] xl:pl-[240px] flex  mt-[100px]'>
 
           <div className='h-full'>
@@ -35,7 +36,7 @@ function index() {
               <UserStory />
             </div>
 
-            <div id='centerlized-content' className='dark:bg-[#18191a] ml-[-5px] 2xl:mt-0 xl:mt-0 lg:mt-0 mt-[80px]'>
+            <div id='centerlized-content' className='2xl:block xl:block lg:block hidden'>
               <div className='relative 2xl:w-[715px] xl:w-[635px] m-[10px] flex justify-between'>
 
                 <Profile />

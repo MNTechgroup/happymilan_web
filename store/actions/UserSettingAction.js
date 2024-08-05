@@ -1,7 +1,9 @@
 import { getCookie } from "cookies-next";
-import { GET_PRIVACY_QUESTIONS, GET_PRIVACY_QUESTIONS_FAILURE, GET_PRIVACY_QUESTIONS_SUCCESS, HIDE_MY_PROFILE, HIDE_MY_PROFILE_CLOSEMODAL, HIDE_MY_PROFILE_FAILURE, HIDE_MY_PROFILE_SUCCESS, UPDATE_PRIVACY_QUESTIONS, UPDATE_PRIVACY_QUESTIONS_FAILURE, UPDATE_PRIVACY_QUESTIONS_SUCCESS } from "../type"
+import { GET_PRIVACY_QUESTIONS, GET_PRIVACY_QUESTIONS_FAILURE, GET_PRIVACY_QUESTIONS_SUCCESS, HIDE_MY_PROFILE, HIDE_MY_PROFILE_CLOSEMODAL, HIDE_MY_PROFILE_FAILURE, HIDE_MY_PROFILE_SUCCESS, UPDATE_DISPLAY_NAME, UPDATE_DISPLAY_NAME_FAILURE, UPDATE_DISPLAY_NAME_SUCCESS, UPDATE_DISPLAY_STATUS, UPDATE_PRIVACY_QUESTIONS, UPDATE_PRIVACY_QUESTIONS_FAILURE, UPDATE_PRIVACY_QUESTIONS_SUCCESS } from "../type"
+import { logoutuser } from "./UsersAction";
 
 export const Hidemyprofile = (credetials) => {
+    console.log("🚀 ~ Hidemyprofile ~ credetials:", credetials)
     return (dispatch) => {
 
 
@@ -9,6 +11,13 @@ export const Hidemyprofile = (credetials) => {
 
         const axios = require('axios');
         const token = getCookie("authtoken")
+
+        const Credentials = {
+            "profileHideAndDelete": {
+                "isProfileDelete": credetials?.isProfileDelete,
+                "reasonForProfileDelete": credetials?.reasonForProfileDelete
+            }
+        }
 
         let config = {
             method: 'put',
@@ -18,13 +27,14 @@ export const Hidemyprofile = (credetials) => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            data: credetials
+            data: Credentials
         };
 
         axios.request(config)
             .then((response) => {
                 console.log(JSON.stringify(response.data));
                 dispatch({ type: HIDE_MY_PROFILE_SUCCESS, payload: response.data })
+                dispatch(logoutuser())
             })
             .catch((error) => {
                 dispatch({ type: HIDE_MY_PROFILE_FAILURE, payload: error })
@@ -93,9 +103,9 @@ export const Getprivacyquestionsfailure = (error) => ({
 
 export const Updateprivacyquestions = () => {
     return (dispatch) => {
-        dispatch({ type : UPDATE_PRIVACY_QUESTIONS})
+        dispatch({ type: UPDATE_PRIVACY_QUESTIONS })
 
-        
+
     }
 }
 
@@ -108,3 +118,51 @@ export const Updateprivacyquestionsfailure = (error) => ({
     type: UPDATE_PRIVACY_QUESTIONS_FAILURE,
     payload: error
 })
+
+
+export const UpdateDisplayName = (SelectedDisplayName) => {
+    console.log("🚀 ~ UpdateDisplayName ~ SelectedDisplayName:", SelectedDisplayName)
+    return (dispatch) => {
+        dispatch({
+            type: UPDATE_DISPLAY_NAME
+        })
+
+        const axios = require('axios');
+        const Token = getCookie("authtoken")
+        let data = JSON.stringify({
+            "name": SelectedDisplayName
+        });
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `https://happymilan.tech/api/v1/user/auth/update-user/`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${Token}`
+            },
+            data: data
+        };
+
+        axios.request(config)
+            .then((response) => {
+                console.log(JSON.stringify(response.data));
+                dispatch({
+                    type: UPDATE_DISPLAY_NAME_SUCCESS,
+                    payload: response.data
+                })
+
+                setTimeout(() => {
+                    dispatch({ type: UPDATE_DISPLAY_STATUS })
+                }, 500);
+            })
+            .catch((error) => {
+                console.log(error);
+                dispatch({
+                    type: UPDATE_DISPLAY_NAME_FAILURE,
+                    payload: error
+                })
+            });
+
+    }
+}

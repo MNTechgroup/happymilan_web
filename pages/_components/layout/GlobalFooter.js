@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 function GlobalFooter() {
@@ -21,31 +22,32 @@ function GlobalFooter() {
         lineHeight: "normal", /* 87.5% */
     }
 
+    const router = useRouter();
     return (
         <footer className='pt-[40px]'>
             <div className='flex justify-between pl-[100px] pr-[100px]'>
                 <ul className='space-y-[15px]'>
-                    <li style={footerlinks} className='hover:text-[#0F52BA] text-[#000]'>
+                    <li style={footerlinks} className={`${router.pathname == "/aboutus" ? "text-[#0F52BA]" : "text-[#000] hover:text-[#0F52BA]"}`}>
                         <Link href="/aboutus">About</Link></li>
-                    <li style={footerlinks} className='hover:text-[#0F52BA] text-[#000]'>
+                    <li style={footerlinks} className={`${router.pathname == "/successstories" ? "text-[#0F52BA]" : "text-[#000] hover:text-[#0F52BA]"}`}>
                         <Link href="/successstories">Success  Stories</Link>
                     </li>
-                    <li style={footerlinks} className='hover:text-[#0F52BA] text-[#000]'>
+                    <li style={footerlinks} className={`${router.pathname == "/faq" ? "text-[#0F52BA]" : "text-[#000] hover:text-[#0F52BA]"}`}>
                         <Link href="/faq">FAQs</Link>
                     </li>
                 </ul>
                 <ul className='space-y-[15px]'>
-                    <li style={footerlinks} className='hover:text-[#0F52BA] text-[#000]'>
+                    <li style={footerlinks} className={`${router.pathname == "/career" ? "text-[#0F52BA]" : "text-[#000] hover:text-[#0F52BA]"}`}>
                         <Link href="/career">Hiring</Link>
                     </li>
                     <li style={footerlinks} className='hover:text-[#0F52BA] text-[#000]'>Contact us</li>
                     <li style={footerlinks} className='hover:text-[#0F52BA] text-[#000]'>Sitemap</li>
                 </ul>
                 <ul className='space-y-[15px]'>
-                    <li style={footerlinks} className='hover:text-[#0F52BA] text-[#000]'>
+                    <li style={footerlinks} className={`${router.pathname == "/termsofuse" ? "text-[#0F52BA]" : "text-[#000] hover:text-[#0F52BA]"}`}>
                         <Link href="/termsofuse">Term of Use</Link>
                     </li>
-                    <li style={footerlinks} className='hover:text-[#0F52BA] text-[#000]'>
+                    <li style={footerlinks} className={`${router.pathname == "/privacypolicy" ? "text-[#0F52BA]" : "text-[#000] hover:text-[#0F52BA]"}`}>
                         <Link href="/privacypolicy">Privacy Policy</Link>
                     </li>
                     <li style={footerlinks} className='hover:text-[#0F52BA] text-[#000]'>

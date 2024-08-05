@@ -1,133 +1,108 @@
-import React, { useEffect, useState } from 'react'
-import NavBar from '../../../_components/layout/NavBar'
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 import ProtectedRoutes from '../../../routes/ProtectedRoutes';
 import dynamic from 'next/dynamic';
 import { getCookie } from 'cookies-next';
+import NavBar from '../../../_components/layout/Navbar';
+import { capitalizeFirstLetter } from '../../../../utils/form/Captitelize';
+import { useDispatch } from 'react-redux';
+import { getPlansByID } from '../../../../store/actions/UpgradeAction';
 
 const PricingBox = dynamic(() => import('./comp/PricingBox'));
 const PricingBox2 = dynamic(() => import('./comp/PricingBox2'));
 
-
-
-function index() {
-
-
-    const UserText = {
-        fontFamily: "Poppins",
-        fontStyle: "normal",
-        fontWeight: "500",
-        lineHeight: "normal"
-    }
-
-    const TabsText = {
-        fontFamily: "Poppins",
-        fontStyle: "normal",
-        fontWeight: "400",
-        lineHeight: "normal"
-    }
-
-
-    const [currentTab, setCurrentTab] = useState(1)
-
+const PricingPage = () => {
+    const [currentTab, setCurrentTab] = useState(1);
+    const [userName, setUserName] = useState('User');
     const router = useRouter();
 
-    const [Uname,setUname] = useState("User")
+    useEffect(() => {
+        const name = getCookie('userName');
+        if (name) setUserName(name);
+    }, []);
 
-    useEffect(()=>{
-        setUname(getCookie("userName"))
-    },[])
+    const dispatch = useDispatch();
 
-    const HandleCheckout = async (e) => {
-        router.push(`/longterm/dashboard/upgrade/${e?.planId}`)
-
-    }
-
+    const handleCheckout = async (e) => {
+        console.log("<== E ==>", e)
+        // console.log("<== RES ==>",res)
+        if (e?.planId) {
+            dispatch(getPlansByID(e?.planId))
+            router.push(`/longterm/dashboard/upgrade/${e?.planId}`);
+        }
+    };
 
     const data = [
         {
-            label: "Silver",
-            value: "dashboard",
-            curval: "dashboard",
-
-            desc: <PricingBox HandleCheckout={HandleCheckout} />,
+            label: 'Silver',
+            value: 'dashboard',
+            desc: <PricingBox handleCheckout={handleCheckout} />,
         },
         {
-            label: "Gold",
-            value: "profile",
-            curval: "profile",
-
+            label: 'Gold',
+            value: 'profile',
             desc: <PricingBox />,
         },
         {
-            label: "Platinum",
-            value: "settings",
-            curval: "settings",
-
+            label: 'Platinum',
+            value: 'settings',
             desc: <PricingBox />,
         },
-
     ];
 
-
-
-
-    const handleSearch = (searchTerm) => { }
+    const handleSearch = (searchTerm) => {
+        // Implement search functionality
+    };
 
     return (
         <>
             <ProtectedRoutes />
             <NavBar handleSearch={handleSearch} />
-            <div id='PriceBox'>
-                <div className='gradient-div grid place-items-center w-full h-full'>
-                    <div className='text-center bg-[#FFF]'>
-                        <div className='flex flex-col justify-center items-center relative top-[90px] 2xl:top-[90px] xl:top-[90px] lg:top-[80px]  z-[10]  w-full h-full '>
-                            <div className='flex justify-between'>
-                                <div>
-                                    <h1 style={UserText} className='2xl:text-[20px] xl:text-[18px] text-[#000]'>Hi {Uname}, Upgrade Your Profile</h1>
-                                </div>
-                                <div>
-
-                                    <div style={TabsText} id='doItText' className=' cursor-pointer text-[black] absolute 2xl:right-[-210px] xl:right-[-180px] lg:right-[-140px] right-[0px]'>
-                                        <button  onClick={() => router.back()} className='cursor-pointer border-[1px] border-[#8225AF] rounded-[23px] hover:bg-[#F3F8FF] w-[95px] h-[27px] '>
-                                            <span className='text-[12px] w-[72px] h-[18px]'>I’ll do it later</span>
-                                        </button></div>
-                                </div>
+            <div id="PriceBox">
+                <button
+                    onClick={() => router.back()}
+                    className="absolute bottom-10 right-10 top-24 cursor-pointer border-[1px] border-[#8225AF] rounded-[23px] hover:bg-[#F3F8FF] w-[95px] h-[27px]"
+                >
+                    <span className="text-[12px]">I’ll do it later</span>
+                </button>
+                <div className="grid place-items-center w-full h-full">
+                    <div className="text-center bg-[#FFF]">
+                        <div className="flex flex-col justify-center items-center relative top-[90px] z-[10] w-full h-full">
+                            <div className="flex justify-between">
+                                <h1 className="2xl:text-[20px] xl:text-[18px] text-[#000]">
+                                    Hi {capitalizeFirstLetter(userName)}, Upgrade Your Profile
+                                </h1>
                             </div>
-                            <div className='pt-[40px] 2xl:pt-[40px] xl:pt-[30px] lg:pt-[20px]'>
-                                <div className='flex justify-center'>
-
-                                    <div className='bg-[#F5FAFF] rounded-[25px] w-[387px] lg:h-[30px] xl:h-[40px] 2xl:h-[50px]'>
-                                        <div className='flex justify-between items-center'>
-
-                                            <div id={currentTab === 1 ? 'grad-btn' : ""} onClick={() => setCurrentTab(1)} className={`cursor-pointer flex items-center justify-center  rounded-[25px] w-[131px] 2xl:h-[50px] xl:h-[40px] lg:h-[35px] ${currentTab === 1 ? "bg-[#0F52BA] text-[white]" : "text-black"} `}>Silver</div>
-                                            <div id={currentTab === 2 ? 'grad-btn' : ""} onClick={() => setCurrentTab(2)} className={`cursor-pointer flex items-center justify-center  rounded-[25px] w-[131px] 2xl:h-[50px] xl:h-[40px] lg:h-[35px] ${currentTab === 2 ? "bg-[#0F52BA] text-[white]" : "text-black"} `}>Gold</div>
-                                            <div id={currentTab === 3 ? 'grad-btn' : ""} onClick={() => setCurrentTab(3)} className={`cursor-pointer flex items-center justify-center  rounded-[25px] w-[131px] 2xl:h-[50px] xl:h-[40px] lg:h-[35px] ${currentTab === 3 ? "bg-[#0F52BA] text-[white]" : "text-black"} `}>Platinum</div>
-
+                            <div className="pt-[40px]">
+                                <div className="flex justify-center">
+                                    <div className="bg-[#F5FAFF] rounded-[25px] w-[387px] lg:h-[30px] xl:h-[40px] 2xl:h-[50px]">
+                                        <div className="flex justify-between items-center">
+                                            {data.map((tab, index) => (
+                                                <div
+                                                    key={index}
+                                                    id={currentTab === index + 1 ? "grad-button" : ""}
+                                                    onClick={() => setCurrentTab(index + 1)}
+                                                    className={`cursor-pointer flex items-center justify-center rounded-[25px] w-[131px] 2xl:h-[50px] xl:h-[40px] lg:h-[35px] text-black`}
+                                                >
+                                                    {tab.label}
+                                                </div>
+                                            ))}
                                         </div>
                                     </div>
                                 </div>
-                                <div id='pricing-box' className='mt-[20px]'>
-                                    {currentTab === 1 && data[0].desc}
-                                    {currentTab === 2 && data[1].desc}
-                                    {currentTab === 3 && data[2].desc}
+                                <div id="pricing-box" className="mt-[20px]">
+                                    {data[currentTab - 1].desc}
                                 </div>
                             </div>
                         </div>
-
-                        <Image alt='menu' width={0} height={350} id='upgrade-bg-img' className='mt-[40px] h-full absolute 2xl:h-[350px] xl:h-[350px] bottom-0 left-0 w-full' src='/assests/dashboard/menu/upgrade-menu-gradient.png' />
-
                     </div>
                 </div>
             </div>
-
-            <div id="PriceBox2" className='pt-[50px]'>
+            <div id="PriceBox2" className="pt-[50px]">
                 <PricingBox2 />
             </div>
-
         </>
-    )
-}
+    );
+};
 
-export default index
+export default PricingPage;

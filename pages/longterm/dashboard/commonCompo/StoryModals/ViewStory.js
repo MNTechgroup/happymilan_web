@@ -107,10 +107,10 @@ function ViewStory({ CloseBtn, Storyimagesrc }) {
 
                     <div className='flex justify-between pt-[20px]'>
                         <div className='pl-[40px] flex items-center space-x-[20px]'>
-                            <Image onClick={() => GotoProfile(Storyimagesrc)} alt='request' width={47} height={47} className="w-[47px] h-[47px]" style={{ borderRadius: "50%", objectFit: "cover" }} src={Storyimagesrc?.Data ? Storyimagesrc?.Data?.userId?.profilePic : "/assests/dashboard/request/req-3.svg"} />
+                            <Image onClick={() => GotoProfile(Storyimagesrc)} alt='request' width={47} height={47} className="w-[47px] h-[47px] cursor-pointer" style={{ borderRadius: "50%", objectFit: "cover" }} src={Storyimagesrc?.Data ? Storyimagesrc?.Data?.userId?.profilePic : "/assests/dashboard/request/req-3.svg"} />
 
                             <div className='text-left text-[#FFF]'>
-                                <h1 style={Username} className='text-[14px]'>{Storyimagesrc?.Data ? Storyimagesrc?.Data.userId.name : "NA"}</h1>
+                                <h1 style={Username} className='text-[14px] cursor-pointer' onClick={() => GotoProfile(Storyimagesrc)}>{Storyimagesrc?.Data ? Storyimagesrc?.Data.userId.name : "NA"}</h1>
                                 {/* <p style={Activity}>27, Designer</p> */}
                                 <p style={Activity}>{getStatusTime(Storyimagesrc?.Data ? Storyimagesrc.Data?.statusAddTime : "NA")}</p>
                             </div>
@@ -122,7 +122,7 @@ function ViewStory({ CloseBtn, Storyimagesrc }) {
                                     <div className='group cursor-pointer' onClick={() => SetShowViewer(false)}>
                                         <div className='absolute opacity-[0.2] h-[40px] w-[40px] right-[35px] mt-[-5px] rounded-full group-hover:bg-[#F2F7FF] p-[5px]'>
                                         </div>
-                                        <Image alt='img' className=' cursor-pointer' width={30} height={30} onClick={() => SetShowViewer(false)} src='/assests/dashboard/story/arrow-left.svg' />
+                                        <Image alt='img' className='cursor-pointer' width={30} height={30} onClick={() => SetShowViewer(false)} src='/assests/dashboard/story/arrow-left.svg' />
                                     </div>
                                 </> : <>
                                     {
@@ -217,12 +217,12 @@ function ViewStory({ CloseBtn, Storyimagesrc }) {
                                             {
                                                 data?.results?.map((res, index) => {
                                                     return (
-                                                        <div className='flex justify-between items-center w-[80%] cursor-pointer duration-100 hover:opacity-90 hover:bg-[#383838] bg-[#1E1E1E] rounded-[10px] p-[20px]'>
+                                                        <div onClick={() => router.push(`/longterm/dashboard/${res?.viewerId?.id}`)} className='flex justify-between items-center w-[80%] cursor-pointer duration-100 hover:opacity-70 hover:bg-[#383838] bg-[#1E1E1E] rounded-[10px] p-[20px]'>
                                                             <div className='flex items-center space-x-[29px]'>
                                                                 <div className='ml-[12px]'><Image width={47} height={47} src={res?.viewerId?.profilePic} style={{ objectFit: "cover", borderRadius: "50%", width: "45px", height: "45px" }} /></div>
-                                                                <div><h1 style={ViewerUser}>{res?.viewerId?.name}</h1></div>
+                                                                <div><h1 style={ViewerUser} className='cursor-pointer'>{res?.viewerId?.name}</h1></div>
                                                             </div>
-                                                            <div className='group' onClick={() => router.push(`/longterm/dashboard/${res?.viewerId?.id}`)}>
+                                                            <div className='group'>
                                                                 <Image width={30} height={30} src={"/assests/stories/Stories-UserIcon.svg"} />
                                                             </div>
                                                         </div>

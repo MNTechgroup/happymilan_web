@@ -1,16 +1,15 @@
 'use client';
 
 import React from 'react'
-import NavBar from '../../../_components/layout/NavBar'
 import SideBar from '../../../_components/layout/SideBar'
 import dynamic from 'next/dynamic';
+import NavBar from '../../../_components/layout/Navbar';
 const UserStory = dynamic(() => import('../../../_components/Container/UserStory'));
 const Profile = dynamic(() => import('./comp/Userprofile'));
 const UploadSection = dynamic(() => import('./comp/UploadSection'));
 const MoreSuggestion = dynamic(() => import('../../../_components/Container/MoreSuggestion'));
 const ProtectedRoutes = dynamic(() => import('../../../routes/ProtectedRoutes'));
 
-// const UserProfile = dynamic(() => import('./commonCompo/UserProfile'));
 
 
 
@@ -22,7 +21,7 @@ function index() {
 
       <ProtectedRoutes />
 
-      <NavBar  handleSearch={handleSearch} />
+      <NavBar handleSearch={handleSearch} />
 
 
       <SideBar />
@@ -41,12 +40,10 @@ function index() {
             </div>
 
             <div id='centerlized-content' className='ml-[-5px] 2xl:mt-0 xl:mt-0 lg:mt-0 mt-[80px]'>
+
               <div className='relative 2xl:w-[715px] xl:w-[635px] m-[10px] flex justify-between'>
 
-
                 <Profile />
-
-
 
               </div>
             </div>

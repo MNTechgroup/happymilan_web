@@ -1,10 +1,10 @@
 
 import React, { useState } from 'react'
-import NavBar from '../../../_components/layout/NavBar'
 import SideBar from '../../../_components/layout/SideBar'
 import Footer from '../../../_components/layout/Footer'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
+import NavBar from '../../../_components/layout/Navbar'
 const UserStory = dynamic(() => import('../../../_components/Container/UserStory'));
 const BlockedUser = dynamic(() => import('./comp/BlockedUser'));
 const ProfileComplete = dynamic(() => import('../../../_components/Container/ProfileComplete'));
@@ -49,7 +49,8 @@ function index() {
               <UserStory />
             </div>
 
-            <div id='centerlized-content' className='2xl:block xl:block lg:block hidden'>
+            <div id='centerlized-content' className='ml-[-5px] 2xl:mt-0 xl:mt-0 lg:mt-0 mt-[80px]'>
+
               <div className='relative 2xl:w-[715px] xl:w-[635px] lg:w-[650px] m-[10px] flex justify-between'>
 
                 <h1 className='p-[5px] relative 2xl:left-[40px] lg:left-[10px] xl:left-[55px]'><span style={Text6}>Blocked Profile</span></h1>

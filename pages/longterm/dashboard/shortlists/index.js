@@ -1,11 +1,11 @@
 
 import React, { useState } from 'react'
-import NavBar from '../../../_components/layout/NavBar'
 import SideBar from '../../../_components/layout/SideBar'
 import UserStory from '../../../_components/Container/UserStory'
 import ProtectedRoutes from '../../../routes/ProtectedRoutes'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
+import NavBar from '../../../_components/layout/Navbar'
 
 const GridUserProfile = dynamic(() => import('./comp/GridUserProfile'));
 const Footer = dynamic(() => import('../../../_components/layout/Footer'));
@@ -53,6 +53,7 @@ function index() {
             </div>
 
             <div id='centerlized-content' className='2xl:block xl:block lg:block hidden'>
+
               <div className='relative 2xl:w-[715px] xl:w-[635px] lg:w-[650px] m-[10px] flex justify-between'>
 
                 <h1 className='p-[5px] relative 2xl:left-[40px] lg:left-[10px] xl:left-[55px]'><span style={Text6}>Shortlisted</span></h1>

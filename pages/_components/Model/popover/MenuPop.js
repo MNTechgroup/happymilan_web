@@ -4,7 +4,7 @@ import icons from "../../../../utils/icons/icons";
 import React, { useState } from "react";
 import { Dialog, Popover } from "@mui/material";
 import { updateSpamUserdata } from "../../../../store/reducers/SpamReportReducer";
-import {  useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProfileMenu = ({ HandleCancelRequest, MenuTitle, res, SetCurURL, SetUserID, openModal, OpenReportModal, openBlockModal }) => {
 
@@ -37,7 +37,9 @@ const ProfileMenu = ({ HandleCancelRequest, MenuTitle, res, SetCurURL, SetUserID
         const urlWithUserId = `${currentUrl}/${userId}`;
 
         SetCurURL(urlWithUserId);
-        SetUserID(userId)
+        if (MenuTitle != "accepted") {
+            SetUserID(userId)
+        }
     };
 
     const handleClose = () => {

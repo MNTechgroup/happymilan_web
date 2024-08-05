@@ -7,6 +7,7 @@
 body {
   @apply leading-[normal] m-0;
 }
+
 /* input */
 *,
 ::before,
@@ -107,36 +108,22 @@ body {
 }
 
 #grad-button:hover {
+  transition: 0.3s;
   opacity: 0.9;
 }
 
 
-
+/* 
 #profile-background-grad {
   background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
 
-}
+} */
 
-
-#profile-save-details-btn {
-  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
-  color: white;
-}
-
-#profile-save-details-btn:hover {
-  opacity: 0.9;
-  transition: 0.3s;
-  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
-  color: white;
-}
-
-
-
-
+/* 
 #grad-bg {
   background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
 
-}
+} */
 
 #grad-text {
   color: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
@@ -146,16 +133,6 @@ body {
   background: linear-gradient(92deg, #0F52BA 17.13%, #8225AF 117.79%);
 }
 
-#landingPage-background {
-  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
-}
-
-
-
-#addstories-btn {
-  border: 1px solid linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
-}
-
 #grad-btn {
   background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
 }
@@ -163,6 +140,8 @@ body {
 #grad-btn:hover {
   opacity: 0.9;
 }
+
+/* Check Pending  */
 
 #active-no {
   background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
@@ -241,133 +220,6 @@ body {
   text-decoration: none;
 }
 
-#home-title h1 {
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: 700;
-
-}
-
-#home-title p {
-  flex-shrink: 0;
-  font-family: Poppins;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 300;
-  line-height: normal;
-}
-
-#home-title button {
-  flex-shrink: 0;
-  border-radius: 10px;
-  background: #ffffff;
-  color: #0F52BA;
-  text-align: center;
-  font-family: Poppins;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  cursor: pointer;
-  margin: "5px"
-}
-
-#home-title button:hover {
-  opacity: 0.90;
-}
-
-#hero-section {
-  flex-shrink: 0;
-  background-color: #EF4136;
-  background: linear-gradient(177deg, #EF4136 28.01%, #B5352C 100%);
-}
-
-#sec-2-title {
-  color: #000;
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  flex-shrink: 0;
-}
-
-#sec-2-stories-num {
-  color: #0F52BA;
-  font-family: Open Sans;
-  font-size: 45px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-}
-
-#sec-2-explore-str {
-  color: #000;
-  font-family: Open Sans;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-
-
-#profile-section {
-  flex-shrink: 0;
-  border-radius: 24px;
-  background: #FFF;
-  box-shadow: 0px 10px 40px 0px rgba(158, 158, 158, 0.19);
-}
-
-#profile-section span {
-  color: #000;
-  text-align: center;
-  font-family: Poppins;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-#sec-3-content {
-  flex-shrink: 0;
-}
-
-#sec-3-content #sec-3-h1 {
-  color: #000;
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-#sec-3-content p {
-  color: #000;
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: 300;
-  line-height: normal;
-}
-
-
-#section-4-title {
-  height: 98px;
-  flex-shrink: 0;
-  color: #000;
-  text-align: center;
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-#download-section span {
-  color: #000;
-  font-family: Poppins;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
 
 #footer-links {
   padding-top: 10px;
@@ -425,143 +277,6 @@ body {
   line-height: normal;
 }
 
-#toggle-1,
-#toggle-2 {
-  color: #000;
-  text-align: center;
-  font-family: Poppins;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-#scan-qr-text {
-  color: #000;
-  font-family: Poppins;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-
-#login-icons-text span {
-  color: #000;
-  text-align: center;
-  font-family: Poppins;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-#signUp-sec-1 {
-  width: 300px;
-  height: 50px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  border: 1px solid #D4D4D4;
-  background: #FFF;
-}
-
-#signUp-sec-1 span {
-  color: #000;
-  text-align: center;
-  font-family: Poppins;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-#signin-phone-title {
-  color: #000;
-  text-align: center;
-  font-family: Poppins;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-#signin-phone-OtpText {
-  color: #000;
-  text-align: center;
-  font-family: Poppins;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-#signin-phone-Resend {
-  color: #0F52BA;
-  text-align: center;
-  font-family: Poppins;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  text-decoration-line: underline;
-}
-
-#Send-otp-btn {
-  color: #FFF;
-  text-align: center;
-  font-family: Poppins;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  border-radius: 10px;
-  background: linear-gradient(199deg, #EF4136 0%, #2B3990 100%);
-}
-
-#already-signup-text {
-  color: #000;
-  text-align: center;
-  font-family: Poppins;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-#register-text {
-  font-family: Poppins;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-#register-welcome-text {
-  color: #000;
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  width: 231px;
-}
-
-#progress-container {
-  height: 1px;
-  background-color: #ECECEC;
-}
-
-#progress-inner {
-  height: 100%;
-  background-color: #17C270;
-}
-
-#register-input-box {
-  width: 300px;
-  height: 50px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  background: #FFF;
-}
 
 #faq-title-1 {
   color: #000;
@@ -638,11 +353,6 @@ body::-webkit-scrollbar {
   left: 20px;
 }
 
-.custom-dialog-backdrop {
-  background-color: rgba(0, 0, 0, 0);
-  backdrop-filter: none;
-  transition: backdrop-filter 0.3s ease;
-}
 
 #number-input::-webkit-inner-spin-button,
 #number-input::-webkit-outer-spin-button {
@@ -682,59 +392,7 @@ body::-webkit-scrollbar {
 
 /* Heart Animation  */
 
-.heart-App {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-.heart-icon {
-  height: 100px;
-  width: 100px;
-  background: url("/assests/animation/heart-Animation-3.png");
-  background-position: left;
-  cursor: pointer;
-  position: absolute;
-
-}
-
-.heart-bg {
-  background: rgba(255, 192, 200, 0);
-  border-radius: 50%;
-  height: 50px;
-  width: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 100ms ease;
-  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
-  /* background: white; */
-
-}
-
-
-.likes-amount {
-  font-size: 20px;
-  font-family: "Roboto", sans-serif;
-  color: #888;
-  font-weight: 900;
-  margin-left: 6px;
-}
-
-.heart-icon.liked {
-  animation: like-anim 0.7s steps(28) forwards;
-}
-
-@keyframes like-anim {
-  to {
-    background-position: right;
-  }
-}
-
-.likes-amount.liked {
-  color: red;
-}
 
 
 
@@ -790,23 +448,6 @@ body::-webkit-scrollbar {
   }
 }
 
-.verify-p {
-  margin-top: 10px;
-  font-size: 24px;
-  font-weight: bold;
-  color: #00adef;
-  animation: fade-in 0.5s ease-in-out 0.8s forwards;
-}
-
-@keyframes fade-in {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
 
 /* Customize the height and width of pagination bullets */
 .swiper-pagination-clickable .swiper-pagination-bullet {
@@ -830,27 +471,9 @@ body::-webkit-scrollbar {
   /* Customize background color for active bullet */
 }
 
-.image-selection-container {
+/* .image-selection-container {
   display: flex;
-}
-
-.left-section {
-  display: flex;
-  flex-direction: column;
-}
-
-.left-section img {
-  opacity: 0.1;
-  cursor: pointer;
-}
-
-.left-section img.selected {
-  opacity: 1;
-}
-
-.right-section img {
-  max-width: 100%;
-}
+} */
 
 /* styles.module.css */
 
@@ -863,12 +486,6 @@ body::-webkit-scrollbar {
     width: 64px;
     /* You can adjust this as needed */
   }
-}
-
-#nearby-places-main {
-  border-radius: 10px;
-  background: #FFF;
-  box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.03);
 }
 
 .css-6hp17o-MuiList-root-MuiMenu-list {
@@ -889,17 +506,6 @@ body::-webkit-scrollbar {
   }
 }
 
-@media (max-width: 370px) {
-
-  #story-img {
-    width: 100%;
-    border-radius: 10px;
-  }
-
-  #story-img-background {
-    width: 100%;
-  }
-}
 
 #PriceBox2 {
   display: none;
@@ -1013,23 +619,6 @@ body::-webkit-scrollbar {
 }
 
 
-@media screen and (min-width: 1555px) {
-
-  /* Your styles for screens 1555 pixels and wider go here */
-  #landingPage-content {
-    padding-bottom: 170px;
-  }
-
-}
-
-@media screen and (min-width: 1640px) {
-
-  /* Your styles for screens 1555 pixels and wider go here */
-  #landingPage-content {
-    padding-bottom: 200px;
-  }
-
-}
 
 
 @media screen and (width: 1280px) and (height: 720px) {
@@ -1056,12 +645,6 @@ body::-webkit-scrollbar {
   }
 }
 
-@media screen and (min-width: 1037px) and (max-width: 1139px) {
-
-  #landingPage-content {
-    padding-bottom: 140px;
-  }
-}
 
 
 @media only screen and (min-width: 960px) and (max-width: 1139px) {
@@ -1082,118 +665,13 @@ body::-webkit-scrollbar {
   -webkit-text-fill-color: transparent;
 }
 
-.custom-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
+#Match-score-grad {
+  background: linear-gradient(93deg, #0F52BA -7.8%, #8225AF 105.98%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.modal-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  position: relative;
-  overflow: hidden;
-}
-
-.close-icon {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-#Gradient-border-btn {
-  border: none;
-  outline: none;
-  position: relative;
-  z-index: 1;
-  border-radius: 23px;
-  /* background: linear-gradient(to right, #00FFA3, #DC1FFF); */
-  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
-  cursor: pointer;
-}
-
-#Gradient-border-btn::before {
-  content: "";
-  position: absolute;
-  left: 1px;
-  right: 0.7px;
-  top: 1px;
-  bottom: 0.5px;
-  border-radius: 20px;
-
-  background-color: white;
-  z-index: -1;
-  transition: 200ms
-}
-
-#Gradient-border-btn:hover:before {
-  background-color: #F3F8FF;
-}
-
-#Gradient-btn {
-  border: none;
-  outline: none;
-  position: relative;
-  z-index: 1;
-  border-radius: 20px;
-  /* background: linear-gradient(to right, #00FFA3, #DC1FFF); */
-  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
-  cursor: pointer;
-}
-
-#Gradient-btn::before {
-  content: "";
-  position: absolute;
-  left: 1px;
-  right: 1px;
-  top: 1px;
-  bottom: 0.7px;
-  border-radius: 23px;
-  background-color: white;
-  z-index: -1;
-  transition: 200ms
-}
-
-#Gradient-cancel-btn {
-  border: none;
-  outline: none;
-  position: relative;
-  z-index: 1;
-  border-radius: 23px;
-  /* background: linear-gradient(to right, #00FFA3, #DC1FFF); */
-  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
-  cursor: pointer;
-  width: 137px;
-  height: 50px;
-
-}
-
-#Gradient-cancel-btn::before {
-  content: "";
-  position: absolute;
-  left: 1px;
-  right: 1px;
-  top: 1px;
-  bottom: 1.2px;
-  border-radius: 22px;
-  background-color: white;
-  z-index: -1;
-  transition: 200ms;
-}
-
-#Gradient-cancel-btn:hover::before {
-  background-color: #F3F8FF;
-}
 
 #Gradient-btn-2 {
   border: none;
@@ -1367,6 +845,11 @@ body::-webkit-scrollbar {
 /* For Image Not Select  */
 
 
+.Prevbtn {
+  /* box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px; */
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
 
 
 
@@ -1380,32 +863,23 @@ body::-webkit-scrollbar {
   height: 53px;
   border-radius: 10px;
   display: flex;
-  place-items: center;
+  align-items: center;
+  /* Changed 'place-items' to 'align-items' */
   justify-content: space-between;
   padding: 5px;
-
 }
 
 #audio-img {
   margin-left: 10px;
-
 }
 
-#AudioRange{
+#PlayerStack input[type="range"] {
   width: 150px;
   height: 3px;
   background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
   accent-color: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
   outline: none;
 }
-
-/* input[type="range"] {
-  width: 150px;
-  height: 3px;
-  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
-  accent-color: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
-  outline: none;
-} */
 
 .track-duration {
   display: flex;
@@ -1423,6 +897,7 @@ body::-webkit-scrollbar {
 }
 
 
+
 /* Modify Search  */
 
 #Save-Search-Box {
@@ -1430,10 +905,6 @@ body::-webkit-scrollbar {
   box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.07);
   flex-shrink: 0;
 }
-
-
-
-
 
 
 #Search-Member-Box {
@@ -1470,3 +941,94 @@ body::-webkit-scrollbar {
   -webkit-text-fill-color: transparent;
 
 }
+
+#GradientBG {
+  background: linear-gradient(103deg, var(--gradient-color-1) -25.03%, var(--gradient-color-2) 137.92%);
+}
+
+
+/* Hide the scrollbar while still allowing scrolling */
+#hide-Story-scrollbar {
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+}
+
+#hide-Story-scrollbar::-webkit-scrollbar {
+  display: none;
+  /* Safari and Chrome */
+}
+
+.heart {
+  transition: all 0.3s ease-in-out;
+}
+
+.heart.animated {
+  transform: scale(1.2);
+}
+
+#DisableBTN {
+  opacity: 0.4;
+  border: 1px solid rgb(130, 129, 129);
+  color: black;
+}
+
+
+
+/* Scroll Top Button  */
+
+/* From Uiverse.io by vinodjangid07 */ 
+.Scroll-Top-Btn {
+  width: 45px;
+  height: 45px;
+  /* background: linear-gradient(#44ea76, #39fad7); */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  border: none;
+}
+
+.Scroll-top-arrow path {
+  fill: white;
+}
+
+.Scroll-Top-text {
+  font-size: 0.7em;
+  width: 100px;
+  position: absolute;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: -18px;
+  opacity: 0;
+  transition-duration: .7s;
+}
+
+.Scroll-Top-Btn:hover .Scroll-Top-text {
+  opacity: 1;
+  transition-duration: .7s;
+}
+
+.Scroll-Top-Btn:hover .Scroll-top-arrow {
+  animation: slide-in-bottom .7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@keyframes slide-in-bottom {
+  0% {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+/* Scroll Top Button  */

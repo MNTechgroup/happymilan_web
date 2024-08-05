@@ -88,6 +88,9 @@ const planPrice2 = {
 
 function NavBar({ handleSearch }) {
 
+
+
+
     const [token, settoken] = useState()
     const [Uname, SetUname] = useState();
 
@@ -280,6 +283,7 @@ function NavBar({ handleSearch }) {
     };
 
 
+   
 
 
 
@@ -303,7 +307,7 @@ function NavBar({ handleSearch }) {
                                 <ProfileImage size={40} />
                             </div>
                             <div>
-                                <h1 style={Username2}>{Uname}</h1>
+                                <h1 style={Username2}>{"myProfile?.name"}</h1>
                                 <p style={userStatus} className="text-[#0091FF]">Online</p>
 
                             </div>
@@ -432,8 +436,7 @@ function NavBar({ handleSearch }) {
     }
 
 
-  const myProfile = useSelector((state) => state.myprofile?.data);
-
+    const myProfile = useSelector((state) => state.myprofile?.data);
 
 
 
@@ -533,8 +536,8 @@ function NavBar({ handleSearch }) {
                                 </div>
 
                                 <div className="pl-[28px] ">
-                                    <h1 style={UserProfileName} className="text-[#000] dark:text-[#FFF]">{Uname}</h1>
-                                    <p style={userId} className="text-[#50545A]">ID: {myProfile?.userUniqueId}</p>
+                                    <h1 style={UserProfileName} className="text-[#000] dark:text-[#FFF]">{myProfile?.name}</h1>
+                                    <p style={userId} className="text-[#50545A]">ID: {myProfile?.userUniqueId?.toUpperCase()}</p>
 
                                 </div>
                                 <div className="w-full grid place-items-center">

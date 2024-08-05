@@ -3,6 +3,7 @@ import Navbar from "../../_components/layout/AuthNavbar";
 import Footer from "../../_components/layout/Footer";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import UploadImage from "./UploadImage";
 
 function index() {
     const router = useRouter();
@@ -109,7 +110,7 @@ function index() {
                                 <div className="w-full h-full">
                                     <ul className="flex justify-between">
                                         <li>
-                                            <button onClick={() => router.back()}  className="w-[104px] h-[50px] bg-[#FFF] outline-none rounded-[23px]  hover:bg-[#F3F8FF]  border-[1px] border-[#8225AF] ">Back</button>
+                                            <button onClick={() => router.back()} className="w-[104px] h-[50px] bg-[#FFF] outline-none rounded-[23px]  hover:bg-[#F3F8FF]  border-[1px] border-[#8225AF] ">Back</button>
                                         </li>
                                         <li>
                                             <button onClick={() => router.push("/successstories")} id="grad-button" className="w-[104px] h-[50px]  outline-none border-none rounded-[23px]">Publish</button>
@@ -121,32 +122,7 @@ function index() {
                             </div>
                         </div>
 
-                        <div className="relative top-[80px] flex h-full justify-center flex-wrap w-full lg:w-full 2xl:w-[300px] xl:w-[415px]  pt-[0px] lg:pt-0  gap-y-[20px] gap-x-[17px]">
-                            <div className="border-dashed border-[1px] border-[#B5B5B5] w-[45%] lg:w-[300px] h-[266px] rounded-[8px] ">
-                                <div className="flex justify-center flex-col items-center h-full">
-                                    <Image
-                                        loading="lazy"
-                                        alt="add-pic"
-                                        width={24}
-                                        height={24}
-                                        src="/assests/stories/gradient-drag-icon.svg"
-                                        className="  h-[31.473px]  w-[31.47px]"
-                                    />
-                                    <h1
-                                        className="w-[92px] text-center text-[12px] text-[#000] pt-[10px]"
-                                        style={TitleText}
-                                    >
-                                        Select or drag
-                                        Wedding Photo
-                                    </h1>
-                                </div>
-                            </div>
-
-                            <div>
-                                <h1 style={Text3}>Max. 3 Photos (JPEG, PNG)</h1>
-                            </div>
-
-                        </div>
+                        <UploadImage />
                         <div className=" lg:hidden  w-full lg:w-auto  flex justify-center items-center space-x-[20px]  lg:mt-[0px] mt-[10px]">
                             <button
                                 onClick={() => router.push("/successstories")}

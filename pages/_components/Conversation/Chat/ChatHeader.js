@@ -5,6 +5,7 @@ import { getCookie } from 'cookies-next';
 import { UserContext } from '../../../../ContextProvider/UsersConversationContext';
 import { useRouter } from 'next/router';
 import ReportModal from '../../Model/Models/ReportModal';
+import { useSocket } from '../../../../ContextProvider/SocketContext';
 
 
 
@@ -100,8 +101,9 @@ const MessageOptions = ({ userData, HandleOpenProfile, OpenReportModal }) => {
 
 
 
-const Header = ({ socket }) => {
+const Header = () => {
 
+    const socket = useSocket();
 
     const router = useRouter();
     const { userData, updateUser } = useContext(UserContext);
@@ -160,6 +162,9 @@ const Header = ({ socket }) => {
 
     const [isReportModalOpen, setisReportModalOpen] = useState(false);
 
+    const [UserActive, UserInActive] = useState({})
+
+
     const OpenReportModal = () => {
         setisReportModalOpen(true);
 
@@ -168,6 +173,8 @@ const Header = ({ socket }) => {
     const CloseReportModal = () => {
         setisReportModalOpen(false);
     };
+
+
 
 
     return (

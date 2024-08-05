@@ -12,7 +12,7 @@ import ProfileImage from "../common/profile/ProfileImage";
 import { AppBar, Box, Collapse, Dialog, DialogContent, Modal, Typography } from "@mui/material";
 import { useDarkMode } from "../../../ContextProvider/DarkModeContext";
 import icons from "../../../utils/icons/icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logoutuser } from "../../../store/actions/UsersAction";
 
 
@@ -23,6 +23,9 @@ function CommonNavbar({ background }) {
     const isLoginActive = router.pathname.startsWith('/login');
 
     const { darkMode, toggleDarkMode } = useDarkMode();
+
+    const myProfile = useSelector((state) => state.myprofile?.data);
+
 
 
     const befText = {
@@ -69,15 +72,6 @@ function CommonNavbar({ background }) {
         fontWeight: "400",
         lineHeight: "normal", /* 122.222% */
     }
-
-    // color: #000;
-    // font-family: Poppins;
-    // font-size: 14px;
-    // font-style: normal;
-    // font-weight: 400;
-    // line-height: normal;
-
-
 
     const [openLogoutModal, setOpenLogoutModal] = React.useState(false);
 
@@ -133,11 +127,9 @@ function CommonNavbar({ background }) {
         );
     }, []);
     const [token, settoken] = useState();
-    const [Uname, SetUname] = useState("NA");
 
     useEffect(() => {
         settoken(getCookie('jwtToken'))
-        SetUname(getCookie("userName"));
     }, [])
 
 
@@ -253,7 +245,7 @@ function CommonNavbar({ background }) {
                 as="li"
                 variant="small"
                 color="blue-gray"
-                className="hover:bg-[#F2F7FF] p-1 lg:w-[151px] lg:grid place-items-center lg:h-[30px]  font-normal poppins rounded-[17px]"
+                className={` ${router.pathname == "/aboutus" ? "bg-[#F2F7FF]" : "hover:bg-[#F2F7FF] "} p-1 lg:w-[151px] lg:grid place-items-center lg:h-[30px]  font-normal poppins rounded-[17px]`}
             >
 
                 <Link style={router.pathname == "/aboutus" ? aftText : befText} href="/aboutus" className="flex items-center">
@@ -336,12 +328,12 @@ function CommonNavbar({ background }) {
                                 <div className="flex flex-col justify-evenly h-full pl-[24px] pr-[24px]">
                                     <div className="mt-[-10px] space-y-[5px]">
                                         <ProfileImage size={60} />
-                                        <h1 style={MenuNameText}>{Uname}</h1>
-                                        <p style={MenuIDText}>ID: HM1002021</p>
+                                        <h1 style={MenuNameText}>{myProfile?.name}</h1>
+                                        <p style={MenuIDText}>ID: {myProfile?.userUniqueId?.toUpperCase()}</p>
                                     </div>
                                     <div className="h-[1px] w-[90%] bg-[#EBEBEB]"></div>
                                     <div>
-                                        <ul onClick={()=>router.push("/longterm/dashboard")} className="hover:bg-[#F3F8FF] dark:hover:bg-[#18191a] rounded-[100px] p-[10px] cursor-pointer flex space-x-[15px]">
+                                        <ul onClick={() => router.push("/longterm/dashboard")} className="hover:bg-[#F3F8FF] dark:hover:bg-[#18191a] rounded-[100px] p-[10px] cursor-pointer flex space-x-[15px]">
                                             <li>{darkMode ? icons.myprofile.dark : icons.myprofile.light}</li>
                                             <li><h1 style={MenuLinkText}>Dashboard</h1></li>
                                         </ul>

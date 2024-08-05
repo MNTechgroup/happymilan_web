@@ -1,6 +1,5 @@
 
 import React, { useEffect, useState } from 'react'
-import NavBar from '../../../_components/layout/NavBar'
 import SideBar from '../../../_components/layout/SideBar'
 import Footer from '../../../_components/layout/Footer'
 import Image from 'next/image'
@@ -8,6 +7,7 @@ import ProtectedRoutes from '../../../routes/ProtectedRoutes'
 import { useSelector } from 'react-redux'
 import dynamic from 'next/dynamic'
 import { useDarkMode } from '../../../../ContextProvider/DarkModeContext'
+import NavBar from '../../../_components/layout/Navbar'
 const UserStory = dynamic(() => import('../../../_components/Container/UserStory'));
 const ModifySearch = dynamic(() => import('./comp/ModifySearch'));
 const ProfileComplete = dynamic(() => import('../../../_components/Container/ProfileComplete'));
@@ -54,17 +54,7 @@ function index() {
     fontWeight: "400",
     lineHeight: "22px"
   }
-  const RequestBox = {
-    borderRadius: "10px",
-    background: "#FFF",
-    boxShadow: "0px 0px 14px 0px rgba(0, 0, 0, 0.07)"
-  }
 
-  const ProfileCard = {
-    borderRadius: "10px",
-    background: "#FFF",
-    boxShadow: "0px 0px 14px 0px rgba(0, 0, 0, 0.07)"
-  }
   const [FormOpen, setFormOpen] = useState(true);
 
   const { loading, data } = useSelector((state) => state.usersact.searchusersprofiledata)
@@ -100,17 +90,18 @@ function index() {
       </>
         :
         <>
-          <div id='main-centerlized-content' className='dark:bg-[#18191a] flex justify-center flex-col'>
+          <div id='main-centerlized-content' className='flex justify-center flex-col'>
             <div id='first-child' className='pl-[0px] lg:pl-[240px] 2xl:pl-[280px] xl:pl-[240px] flex  mt-[100px]'>
 
-              <div className=' h-full'>
+              <div className='h-full'>
                 {/* Side Section 1 */}
 
                 <div id='story-centerlized-content' className='pl-[15px] md:pl-[15px] lg:pl-[10px] 2xl:pl-0 xl:pl-0'>
                   <UserStory />
                 </div>
 
-                <div id='centerlized-content'>
+                <div id='centerlized-content' className='2xl:block xl:block lg:block hidden'>
+
                   <div className='relative md:top-0 top-[50px] 2xl:w-[715px] xl:w-[635px] lg:w-[650px] md:w-[635px] w-full m-[10px] space-x-[0px] md:space-x-0 flex justify-between'>
 
                     <h1 className='p-[5px] relative 2xl:left-[40px] lg:left-[10px] xl:left-[55px]'><span className='md:text-[16px] text-[14px]' style={Text5}>{loading ? 0 : `${data?.length} `}</span> <span className='text-[12px] md:text-[16px] text-[#000] dark:text-[#FFF]' style={Text6}>Profiles Found For You!</span></h1>

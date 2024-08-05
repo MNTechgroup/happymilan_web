@@ -357,7 +357,6 @@ function LoginWithEmail({ rendercomponent, setrendercomponent }) {
                         <div>
                             <input type={showPassword ? "text" : "password"} name='password' value={credentials.password} placeholder='Enter Password' className='hover:border-[#000] pr-[45px] focus:border-[1px] focus:border-[black] outline-none border-[1px] pl-[50px] border-[#E6E6E6] rounded-[8px] w-[300px] 2xl:h-[50px] h-[50px] xl:h-[45px]' onChange={(e) => setCredentials({ ...credentials, password: e.target.value })} />
                             <Image loading="lazy" alt='password-icon' width={14.023} height={18} className='w-[14.023px] h-[18px] absolute mt-[-36px] 2xl:mt-[-35px] xl:mt-[-33px] ml-[20px]' src='/loginassests/lock-icon.svg' />
-                            {/* <div className='absolute right-[11px]  mt-[-40px] w-[30px] h-[30px] rounded-full bg-[#F3F8FF]'></div> */}
                             <Image loading="lazy" alt='show-password' onClick={() => setshowPassword(!showPassword)} width={20.776} height={16} className="hover:bg-[#F3F8FF] p-[2px] rounded-full  cursor-pointer absolute right-[15px] mt-[-35px]" src={showPassword ? "/assests/Blue/pass-view.png" : "/assests/Blue/pass-hide.png"} />
 
                         </div>

@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { getCookie } from 'cookies-next';
+import { useDispatch } from 'react-redux';
+import { logoutuser } from '../../store/actions/UsersAction';
 // import { getAuthData } from '../../utils/API/Localstorage';
 
 const ProtectedRoutes = ({ children }) => {
@@ -8,7 +10,7 @@ const ProtectedRoutes = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const authData = getCookie("authtoken");
 
-
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -21,33 +23,35 @@ const ProtectedRoutes = ({ children }) => {
 
       if (!authData) {
         await router.push('/login');
-      } else {
-        const isAdmin = getCookie('isAdmin');
-        // Check if the user is an admin
-        if (isAdmin === 'true') {
-          // Admin has access to all routes, no need to check further
-          setIsLoading(false);
-          return;
-        }
+        dispatch(logoutuser())
 
-        // Check if the current route starts with "/longterm/dashboard"
-        const currentRoute = router.pathname;
-        if (!currentRoute.startsWith('/longterm/dashboard')) {
-          await router.push('/longterm/dashboard');
-        } else {
-          setIsLoading(false);
-        }
+} else {
+  const isAdmin = getCookie('isAdmin');
+// Check if the user is an admin
+if (isAdmin === 'true') {
+  // Admin has access to all routes, no need to check further
+  setIsLoading(false);
+  return;
+}
+
+// Check if the current route starts with "/longterm/dashboard"
+const currentRoute = router.pathname;
+if (!currentRoute.startsWith('/longterm/dashboard')) {
+  await router.push('/longterm/dashboard');
+} else {
+  setIsLoading(false);
+}
       }
     };
 
-    checkAuthentication();
+checkAuthentication();
   }, [authData, router]);
 
-  if (isLoading) {
-    return <div>Loading...</div>; // Or any other loading indicator
-  }
+if (isLoading) {
+  return <div>Loading...</div>; // Or any other loading indicator
+}
 
-  return <>{children}</>;
+return <>{children}</>;
 };
 
 export default ProtectedRoutes;

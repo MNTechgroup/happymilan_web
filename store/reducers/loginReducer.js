@@ -5,7 +5,7 @@ import { getCookie, setCookie } from 'cookies-next';
 
 // Define an async thunk to handle the login request
 export const loginAsync = createAsyncThunk('/dashboard/myprofile', async (credentials) => {
-  
+
   const deviceToken = getCookie("fcmToken")
   const UserCredentials = {
     "email": credentials.email,
@@ -13,7 +13,7 @@ export const loginAsync = createAsyncThunk('/dashboard/myprofile', async (creden
     "deviceToken": deviceToken
 
   }
- 
+
   const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/auth/login`, UserCredentials);
   return response.data;
   //  return console.log(response.data)
@@ -46,7 +46,7 @@ const loginAuth = createSlice({
     resetError(state) {
       state.error = null;
     },
-  }, 
+  },
   extraReducers: (builder) => {
     builder
       .addCase(loginAsync.pending, (state) => {
@@ -84,7 +84,8 @@ const loginAuth = createSlice({
 });
 
 function setCookiesAndLocalStorage(data) {
-
+  console.log("🚀 ~ setCookiesAndLocalStorage ~ data:", data)
+  localStorage.setItem("personal", JSON.stringify(data?.user))
   const objectData = {
     userid: data.user.id,
     token: data.tokens.access.token,
@@ -96,11 +97,11 @@ function setCookiesAndLocalStorage(data) {
   }
 
   localStorage.setItem("authdata", JSON.stringify(objectData));
-  
+
   setCookie('userid', data.user.id, { secure: true });
   localStorage.setItem("token", data.tokens.access.token);
   localStorage.setItem("refoken", data.tokens.refresh.token);
-  localStorage.setItem('user', data.user.email , {secure : true });
+  localStorage.setItem('user', data.user.email, { secure: true });
   localStorage.setItem('email', data.user.email);
   localStorage.setItem('mobilenumber', data.user.mobileNumber)
   localStorage.setItem('flName', `${data.user.firstName} ${data.user.lastName}`);
@@ -110,7 +111,7 @@ function setCookiesAndLocalStorage(data) {
   setCookie('userName', data.user.name, { secure: true });
   setCookie('data', JSON.stringify(data.tokens), { secure: true });
 
-  
+
 
 
 
@@ -118,4 +119,4 @@ function setCookiesAndLocalStorage(data) {
 
 export default loginAuth.reducer;
 // Export the login action
-export const { login , resetError} = loginAuth.actions;
+export const { login, resetError } = loginAuth.actions;

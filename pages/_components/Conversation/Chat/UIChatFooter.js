@@ -1,21 +1,21 @@
 import { Box, IconButton, Stack } from '@mui/material';
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { getCookie } from 'cookies-next';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import { useDropzone } from 'react-dropzone';
+import { connect, useSelector } from 'react-redux';
 import RecordingInput from './RecordingInput';
 import { UserContext } from '../../../../ContextProvider/UsersConversationContext';
 import { updateFormData } from '../../../../store/actions/registerUser';
-import { setUploadUIVisibility } from '../../../../store/reducers/registerReducer';
 import EmojiPicker from './EmojiPicker';
+import UploadContent from './UploadContent';
+import axios from 'axios';
+import { useSocket } from '../../../../ContextProvider/SocketContext';
 
 
-const ChatInput = ({ HandleStopVoice, HanldeVoiceChat, setOpenPicker, StartVoice, socket, handleSendMessage, message, setMessage, updateFormData, formData }) => {
+const ChatInput = ({ HandleStopVoice, HanldeVoiceChat, setOpenPicker, StartVoice, socket, message, handleSendMessage, setMessage, updateFormData, formData }) => {
 
 
     const { imagesdata, bufferdata } = useSelector((state) => state.form.formData.uploadChatImage)
-
 
     const HanldeRemoveImage = () => {
         updateFormData({
@@ -28,133 +28,23 @@ const ChatInput = ({ HandleStopVoice, HanldeVoiceChat, setOpenPicker, StartVoice
         });
     }
 
-
-    const [typing, setTyping] = useState(false);
     const { userData, updateUser } = useContext(UserContext);
 
-    const handleTyping = (e) => {
-        const currentUser = getCookie("userid")
-        const fromUserId = currentUser; // Replace with the actual sender user ID
-        const toUserId = userData.id; // Replace with the actual recipient user ID
+    const handleTyping = async (e) => {
+        const currentUser = getCookie("userid");
+        const fromUserId = currentUser;
+        const toUserId = userData.id;
         const data = { from: fromUserId, to: toUserId };
         socket.emit('typing', data); // Emit the "typing" event to the server
 
         if (e.key === 'Enter') {
-
-
-            if (bufferdata != "") {
-                              
-                const CurrentUser = getCookie("userid")
-
-                updateFormData({
-                    ...formData,
-                    uploadChatImage: {
-                        ...formData.uploadChatImage,
-                        CaptionText: message
-                    }
-                });
-
-                const chatContent = {
-                    "from": CurrentUser,
-                    "to": userData.id,
-                    "message": message,
-                    "fileName": imagesdata.key,
-                    "type": "image"
-                }
-
-
-                socket.emit("uploadContent", chatContent)
-
-                socket.on('message', (data) => {
-
-                    const CurrentUser = getCookie("userid")
-                    if (data.data.message != "messages received") {
-
-                        fetch(imagesdata.data)
-                            .then(response => response.blob())
-                            .then(blob => {
-                                // Use the blob as needed
-
-                                const axios = require('axios');
-                                let config = {
-                                    method: 'put',
-                                    maxBodyLength: Infinity,
-                                    url: data.data?.result.url,
-                                    headers: {
-                                        'Content-Type': 'image/jpeg',
-                                        'x-amz-acl': 'public-read',
-                                    },
-                                    data: blob
-                                };
-
-                                axios.request(config)
-                                    .then((response) => {
-
-                                        const chatContent2 = {
-                                            "from": CurrentUser,
-                                            "to": userData.id,
-                                            "message": message,
-                                            "fileName": imagesdata.key,
-                                            "type": "image"
-                                        }
-
-                                       
-                                        socket.emit("sendMessage", chatContent2)
-                                        updateFormData({
-                                            ...formData,
-                                            uploadChatImage: {
-                                                imagesdata: "",
-                                                bufferdata: "",
-                                                CaptionText: ""
-                                            }
-                                        });
-
-                                        setMessage('')
-                                    })
-                                    .catch((error) => {
-                                        console.log(error);
-                                    });
-
-                            })
-                            .catch(error => {
-                                console.error('Error fetching blob:', error);
-                            });
-
-                    }
-                    // Update messages state with the received message
-                });
-
-            }
-            e.preventDefault(); // Prevent default behavior of Enter key
-            if (message.trim() !== '') {
-                // Emit message using socket
-
-                if (bufferdata != "") {
-
-                    updateFormData({
-                        ...formData,
-                        uploadChatImage: {
-                            ...formData.uploadChatImage,
-                            CaptionText: message
-                        }
-                    });
-
-                } else {
-
-                    const currentUser = getCookie("userid")
-                    const objmsg = {
-                        to: userData.id,
-                        from: currentUser,
-                        message: message
-                    };
-                    socket.emit('sendMessage', objmsg); // Emit the message to the server
-                    setMessage('');
-                }
-            }
+            console.log("Hello")
+            handleSendMessage();
         }
     };
+
     const handleStopTyping = () => {
-        setTyping(false);
+
         const currentUser = getCookie("userid")
         const fromUserId = currentUser; // Replace with the actual sender user ID
         const toUserId = userData.id; // Replace with the actual recipient user ID
@@ -216,7 +106,19 @@ const ChatInput = ({ HandleStopVoice, HanldeVoiceChat, setOpenPicker, StartVoice
                             fill="white"
                         />
                     </svg>
-                    <Image loading='lazy' width={100} height={100} alt='user-image' style={{ objectFit: "cover", borderRadius: "10px", height: "120px", width: "120px" }} src={bufferdata} />
+                    {imagesdata?.contentType?.startsWith('video') ? <>
+                        <video
+                            width={100}
+                            height={100}
+                            controls
+                            style={{ objectFit: "cover", borderRadius: "10px", height: "120px", width: "120px" }}
+                        >
+                            <source src={bufferdata} type={imagesdata?.contentType} />
+                            Your browser does not support the video tag.
+                        </video>
+                    </> : <>
+                        <Image loading='lazy' width={100} height={100} alt='user-image' style={{ objectFit: "cover", borderRadius: "10px", height: "120px", width: "120px" }} src={bufferdata} />
+                    </>}
                 </Stack>
 
                 <input style={{ border: "1px solid #DADADA", paddingLeft: "50px", paddingTop: "12px", paddingBottom: "12px", borderRadius: "25px", backgroundColor: "#FFF" }} onKeyDown={handleTyping} onBlur={handleStopTyping} value={message} fullWidth onChange={(e) => setMessage(e.target.value)} placeholder='Write a message...' variant='filled' />
@@ -235,19 +137,46 @@ const ChatInput = ({ HandleStopVoice, HanldeVoiceChat, setOpenPicker, StartVoice
     )
 }
 
-const ChatFooter = ({ socket, formData, updateFormData }) => {
+const ChatFooter = ({ formData, updateFormData }) => {
 
-    const { userData, updateUser } = useContext(UserContext);
-
-    const { imagesdata, bufferdata } = useSelector((state) => state.form.formData.uploadChatImage)
-
-
-    const [openPicker, setOpenPicker] = useState(false);
     const [message, setMessage] = useState('');
+    const [openPicker, setOpenPicker] = useState(false);
+    const [startVoice, setStartVoice] = useState(false);
+    const recorderRef = useRef(null);
+    const audioChunks = useRef([]);
+    const currentUserID = getCookie("userid");
+    const { userData, updateUser } = useContext(UserContext);
+    const { imagesdata, bufferdata } = useSelector((state) => state.form.formData.uploadChatImage);
+    const socket = useSocket();
+
+    
+    const pickerRef = useRef(null);
+
+    const handleClickOutside = (event) => {
+        if (pickerRef.current && !pickerRef.current.contains(event.target)) {
+            setOpenPicker(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    useEffect(() => {
+        setMessage('');
+    }, [userData, updateUser]);
 
     const handleSendMessage = () => {
-        if (bufferdata != "") {
-            const CurrentUser = getCookie("userid")
+        if (!currentUserID) {
+            console.error("User not logged in");
+            return;
+        }
+
+        if (bufferdata) {
+            console.log("Sending image or video");
 
             updateFormData({
                 ...formData,
@@ -257,240 +186,186 @@ const ChatFooter = ({ socket, formData, updateFormData }) => {
                 }
             });
 
+
             const chatContent = {
-                "from": CurrentUser,
-                "to": userData.id,
-                "message": message ? message : "",
-                "fileName": imagesdata.key,
-                "type": "image"
-            }
+                from: currentUserID,
+                to: userData.id,
+                message: message || "",
+                fileName: imagesdata.key,
+                type: imagesdata?.contentType.startsWith("video") ? "video" : "image"
+            };
+            console.log("🚀 ~ handleSendMessage ~ chatContent:", chatContent)
 
-            const chatContentobj = {
-                "from": CurrentUser,
-                "to": userData.id,
-                "fileName": imagesdata.key,
-                "type": "image"
-            }
+            const chatContentObj = {
+                from: currentUserID,
+                to: userData.id,
+                fileName: imagesdata.key,
+                type: imagesdata?.contentType.startsWith("video") ? "video" : "image"
+            };
+            console.log("🚀 ~ handleSendMessage ~ chatContentObj:", chatContentObj)
 
+            socket.emit("uploadContent", message ? chatContent : chatContentObj);
 
-            socket.emit("uploadContent", message ? chatContent : chatContentobj)
+            const handleSocketMessage = (data) => {
+                console.log("Socket message received");
 
-            socket.on('message', (data) => {
-
-                const CurrentUser = getCookie("userid")
-                if (data.data.message != "messages received") {
-                  
+                if (data.data.message !== "messages received") {
                     fetch(imagesdata.data)
                         .then(response => response.blob())
                         .then(blob => {
-                            
-                            const axios = require('axios');
-                            let config = {
+                            const config = {
                                 method: 'put',
                                 maxBodyLength: Infinity,
                                 url: data.data?.result.url,
                                 headers: {
-                                    'Content-Type': 'image/jpeg',
+                                    'Content-Type': imagesdata?.contentType,
                                     'x-amz-acl': 'public-read',
                                 },
                                 data: blob
                             };
+                            console.log("🚀 ~ handleSocketMessage ~ config:", config)
 
                             axios.request(config)
-                                .then((response) => {
-
+                                .then(() => {
                                     const chatContent2 = {
-                                        "from": CurrentUser,
-                                        "to": userData?.id,
-                                        "message": message ? message : "",
-                                        "fileName": imagesdata?.key,
-                                        "type": "image"
-                                    }                           
-                                    socket.emit("sendMessage", chatContent2)
-                                    updateFormData({
-                                        ...formData,
-                                        uploadChatImage: {
-                                            imagesdata: "",
-                                            bufferdata: "",
-                                            CaptionText: ""
-                                        }
-                                    });
+                                        from: currentUserID,
+                                        to: userData?.id,
+                                        message: message || "",
+                                        fileName: imagesdata?.key,
+                                        type: imagesdata?.contentType.startsWith("video") ? "video" : "image"
+                                    };
 
-                                    setMessage('')
+                                    socket.emit("sendMessage", chatContent2);
+                                    resetFormData();
+                                    setMessage('');
                                 })
                                 .catch((error) => {
-                                    console.log(error);
+                                    console.error(error);
+                                    resetFormData();
+                                    setMessage('');
                                 });
-
                         })
                         .catch(error => {
                             console.error('Error fetching blob:', error);
+                            resetFormData();
+                            setMessage('');
                         });
                 }
-            });
+            };
+
+            socket.off('message', handleSocketMessage);
+            socket.on('message', handleSocketMessage);
 
 
+        } else if (message.trim() !== '') {
+            console.log("Sending text message");
 
-        } else {
-
-            if (message.trim() !== '') {
-
-                const currentUser = getCookie("userid")
-                const objmsg = {
-                    to: userData?.id,
-                    from: currentUser,
-                    message: message
-                };
-                socket.emit('sendMessage', objmsg); // Emit the message to the server
-                setMessage('');
-            }
-
+            const objmsg = {
+                to: userData?.id,
+                from: currentUserID,
+                message: message
+            };
+            socket.emit('sendMessage', objmsg);
+            setMessage('');
         }
     };
 
-    const HandleEmojiSelect = (emoji) => {
+    const resetFormData = () => {
+        updateFormData({
+            uploadChatImage: {
+                imagesdata: "",
+                bufferdata: "",
+                CaptionText: ""
+            }
+        });
+    };
 
+    const handleEmojiSelect = (emoji) => {
         setMessage((prevMessage) => prevMessage + emoji.emoji);
+    };
 
-    }
-    const [StartVoice, SetStartVoice] = useState(false)
-
-    const recorderRef = useRef(null);
-    const audioChunks = useRef([]);
-
-    const HanldeVoiceChat = async () => {
-        SetStartVoice(!StartVoice)
+    const handleVoiceChat = async () => {
+        setStartVoice(!startVoice);
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             recorderRef.current = new MediaRecorder(stream);
             recorderRef.current.ondataavailable = (e) => audioChunks.current.push(e.data);
             recorderRef.current.start();
-            SetStartVoice(true);
+            setStartVoice(true);
         } catch (err) {
             console.error('Error accessing microphone:', err);
         }
-
-    }
+    };
 
     const uploadAndEmitAudioBlob = () => {
         if (audioChunks.current.length === 0) return;
 
+        console.log("Audio-chunk" , audioChunks.current)
+
         const blob = new Blob(audioChunks.current, { type: 'audio/webm' });
-       
-        const currentUser = getCookie("userid");
-
-
         const chatContent = {
-            "from": currentUser,
+            "from": currentUserID,
             "to": userData.id,
             "fileName": "audio.webm",
             "type": "audio",
         };
 
-        socket.emit("uploadContent", chatContent);;
+        socket.emit("uploadContent", chatContent);
 
         socket.on('message', (data) => {
-
-
-            const CurrentUser = getCookie("userid");
-
             if (!data.data?.result?.url) {
                 console.error("Missing upload URL in response!");
-                return; // Handle missing upload URL
+                return;
             }
 
             const uploadUrl = data.data.result.url;
 
-            const axios = require('axios');
-            let config = {
+            const config = {
                 method: 'put',
                 maxBodyLength: Infinity,
                 url: uploadUrl,
                 headers: {
                     'Content-Type': blob.type,
-                    'x-amz-acl': 'public-read', // Adjust headers as needed
+                    'x-amz-acl': 'public-read',
                 },
                 data: blob
             };
 
             axios.request(config)
-                .then((response) => {                
+                .then(() => {
                     const chatContent2 = {
-                        "from": CurrentUser,
+                        "from": currentUserID,
                         "to": userData.id,
-                        "message": message, // Assuming you have a message state
+                        "message": message,
                         "fileName": "audio",
                         "type": blob.type
                     };
 
                     socket.emit("sendMessage", chatContent2);
                     setMessage('');
-                    audioChunks.current = []; // Clear recorded audio data
+                    audioChunks.current = [];
                 })
                 .catch((error) => {
                     console.error("Error uploading blob:", error);
-                    // Handle upload errors (e.g., display error message to user)
                 });
         });
-
     };
 
-
-    const HandleStopVoice = () => {
-        SetStartVoice(false)
-        console.log("Stop")
-        uploadAndEmitAudioBlob();
-        console.log(audioChunks.current.length)
-        recorderRef.current.stop();
-
-    }
-
-
+    const handleStopVoice = () => {
+        setStartVoice(false);
+        if (recorderRef.current) {
+            recorderRef.current.stop();
+            uploadAndEmitAudioBlob();
+        }
+    };
 
     useEffect(() => {
-        // Cleanup recorder on component unmount
         return () => {
             if (recorderRef.current) {
                 recorderRef.current.stop();
             }
         };
     }, []);
-
-    //Upload Image
-
-    const dispatch = useDispatch();
-
-    const onDrop = useCallback((acceptedFiles) => {
-        if (acceptedFiles.length > 1) {
-            alert("Please select only one image");
-            return;
-        }
-
-        const selectedImage = acceptedFiles[0];
-        const userId = userData?.id;
-
-        dispatch(setUploadUIVisibility({ userId, isVisible: true }));
-
-        const imageData = {
-            id: selectedImage?.name,
-            key: selectedImage?.name,
-            contentType: selectedImage?.type,
-            data: URL.createObjectURL(selectedImage),
-            isProfile: false
-        };
-
-        updateFormData({
-            ...formData,
-            uploadChatImage: {
-                ...formData.uploadChatImage,
-                imagesdata: imageData,
-                bufferdata: URL.createObjectURL(selectedImage)
-            }
-        });
-    }, []);
-
-
-    const { getRootProps, getInputProps } = useDropzone({ onDrop, maxFiles: 1 });
 
 
 
@@ -499,8 +374,8 @@ const ChatFooter = ({ socket, formData, updateFormData }) => {
             <Stack direction='row' alignItems={'center'} spacing={3}>
                 <Stack sx={{ background: "none", width: '100%' }}>
                     {/* Chat Input */}
-                    <EmojiPicker HandleEmojiSelect={HandleEmojiSelect} openPicker={openPicker} />
-                    <ChatInput HandleStopVoice={HandleStopVoice} HanldeVoiceChat={HanldeVoiceChat} formData={formData} updateFormData={updateFormData} socket={socket} StartVoice={StartVoice} handleSendMessage={handleSendMessage} setMessage={setMessage} message={message} setOpenPicker={setOpenPicker} />
+                    <EmojiPicker pickerRef={pickerRef} HandleEmojiSelect={handleEmojiSelect} openPicker={openPicker} />
+                    <ChatInput HandleStopVoice={handleStopVoice} HanldeVoiceChat={handleVoiceChat} formData={formData} updateFormData={updateFormData} socket={socket} StartVoice={startVoice} handleSendMessage={handleSendMessage} setMessage={setMessage} message={message} setOpenPicker={setOpenPicker} />
                 </Stack>
 
                 <Box sx={{
@@ -508,7 +383,7 @@ const ChatFooter = ({ socket, formData, updateFormData }) => {
                     borderRadius: 1.5
                 }}>
                     <Stack sx={{ height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                        {StartVoice ? <></> : <>
+                        {startVoice ? <></> : <>
                             <IconButton onClick={handleSendMessage}>
                                 <Image loading='lazy' alt="send-message" width={29} height={24} src="/assests/chat/Send-Icon.svg" />
                             </IconButton>
@@ -527,14 +402,9 @@ const ChatFooter = ({ socket, formData, updateFormData }) => {
                                     <path d="M11.2464 15.8221C12.5244 15.8221 13.5978 15.3878 14.4663 14.5192C15.3349 13.6506 15.7693 12.5773 15.7693 11.2993C15.7693 10.0212 15.3349 8.94912 14.4663 8.08294C13.5978 7.21675 12.5244 6.78366 11.2464 6.78366C9.96834 6.78366 8.89622 7.21675 8.03003 8.08294C7.16384 8.94912 6.73075 10.0212 6.73075 11.2993C6.73075 12.5773 7.16384 13.6506 8.03003 14.5192C8.89622 15.3878 9.96834 15.8221 11.2464 15.8221ZM11.2464 14.8606C10.2328 14.8606 9.38702 14.5204 8.70912 13.8402C8.03125 13.1599 7.69231 12.3129 7.69231 11.2993C7.69231 10.2857 8.03125 9.43991 8.70912 8.76203C9.38702 8.08414 10.2328 7.74519 11.2464 7.74519C12.26 7.74519 13.107 8.08414 13.7873 8.76203C14.4675 9.43991 14.8077 10.2857 14.8077 11.2993C14.8077 12.3129 14.4675 13.1599 13.7873 13.8402C13.107 14.5204 12.26 14.8606 11.2464 14.8606ZM1.73075 20C1.2504 20 0.841844 19.8316 0.505094 19.4949C0.168364 19.1582 0 18.7496 0 18.2692V4.32931C0 3.85015 0.168364 3.4419 0.505094 3.10456C0.841844 2.76723 1.2504 2.59856 1.73075 2.59856H5.72356L8.02884 0H14.4712L16.7764 2.59856H20.7693C21.2484 2.59856 21.6567 2.76723 21.994 3.10456C22.3313 3.4419 22.5 3.85015 22.5 4.32931V18.2692C22.5 18.7496 22.3313 19.1582 21.994 19.4949C21.6567 19.8316 21.2484 20 20.7693 20H1.73075ZM20.7693 19.0385C20.9936 19.0385 21.1779 18.9664 21.3221 18.8221C21.4664 18.6779 21.5385 18.4936 21.5385 18.2692V4.32931C21.5385 4.12098 21.4664 3.9407 21.3221 3.78847C21.1779 3.63622 20.9936 3.56009 20.7693 3.56009H16.3341L14.0288 0.961531H8.47116L6.16588 3.56009H1.73075C1.5064 3.56009 1.3221 3.63622 1.17788 3.78847C1.03365 3.9407 0.961531 4.12098 0.961531 4.32931V18.2692C0.961531 18.4936 1.03365 18.6779 1.17788 18.8221C1.3221 18.9664 1.5064 19.0385 1.73075 19.0385H20.7693Z" fill="black" />
                                 </svg>
                             </li>
-                            <li {...getRootProps()} className='cursor-pointer'>
-                                <input {...getInputProps()} type='file' className='cursor-pointer opacity-0 w-[11px] absolute' />
-                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="20" viewBox="0 0 11 20" fill="none">
-                                    <path d="M11 14.55C11 16.0694 10.4625 17.3576 9.3875 18.4145C8.3125 19.4715 7.01667 20 5.5 20C3.98333 20 2.6875 19.4792 1.6125 18.4375C0.5375 17.3958 -1.69746e-07 16.1167 -2.36042e-07 14.6L-7.05939e-07 3.85C-7.52218e-07 2.79125 0.379533 1.88489 1.1386 1.13092C1.89768 0.376974 2.81018 -1.22837e-07 3.8761 -1.6943e-07C4.94203 -2.16023e-07 5.85417 0.376974 6.6125 1.13092C7.37083 1.88489 7.75 2.79125 7.75 3.85L7.75 13.725C7.75 14.362 7.53216 14.9004 7.09648 15.3402C6.66079 15.7801 6.12746 16 5.49648 16C4.86549 16 4.33333 15.7708 3.9 15.3125C3.46667 14.8542 3.25 14.3083 3.25 13.675L3.25 3.85L4.25 3.85L4.25 13.7C4.25 14.05 4.36938 14.3542 4.60813 14.6125C4.84686 14.8708 5.14269 15 5.49563 15C5.84854 15 6.14583 14.875 6.3875 14.625C6.62917 14.375 6.75 14.075 6.75 13.725L6.75 3.85C6.75 3.052 6.47259 2.3775 5.91777 1.8265C5.36297 1.2755 4.68381 1 3.88027 1C3.07676 1 2.39583 1.2755 1.8375 1.8265C1.27917 2.3775 0.999999 3.052 0.999999 3.85L1 14.65C1 15.8667 1.44062 16.8958 2.32187 17.7375C3.20313 18.5792 4.2625 19 5.5 19C6.75 19 7.8125 18.5708 8.6875 17.7125C9.5625 16.8542 10 15.8083 10 14.575L10 3.85L11 3.85L11 14.55Z" fill="black" />
-                                </svg>
-                            </li>
-                            <li className='cursor-pointer' onClick={HanldeVoiceChat}>
-                                {StartVoice ? <svg xmlns="http://www.w3.org/2000/svg" width="14" height="20" viewBox="0 0 14 20" fill="none">
+                            <UploadContent updateFormData={updateFormData} formData={formData} />
+                            <li className='cursor-pointer' onClick={handleVoiceChat}>
+                                {startVoice ? <svg xmlns="http://www.w3.org/2000/svg" width="14" height="20" viewBox="0 0 14 20" fill="none">
                                     <path d="M7 11.4286C6.34188 11.4286 5.78847 11.2088 5.33975 10.7692C4.89103 10.3297 4.66667 9.78754 4.66667 9.14286V2.28571C4.66667 1.64103 4.89103 1.09891 5.33975 0.659344C5.78847 0.219782 6.34188 0 7 0C7.65812 0 8.21153 0.219782 8.66025 0.659344C9.10897 1.09891 9.33333 1.64103 9.33333 2.28571V9.14286C9.33333 9.78754 9.10897 10.3297 8.66025 10.7692C8.21153 11.2088 7.65812 11.4286 7 11.4286ZM6.41667 20V15.9802C4.58889 15.8161 3.0625 15.0843 1.8375 13.7846C0.6125 12.485 0 10.9377 0 9.14286H1.16667C1.16667 10.7238 1.73542 12.0714 2.87292 13.1857C4.01042 14.3 5.38611 14.8571 7 14.8571C8.61389 14.8571 9.98958 14.3 11.1271 13.1857C12.2646 12.0714 12.8333 10.7238 12.8333 9.14286H14C14 10.9377 13.3875 12.485 12.1625 13.7846C10.9375 15.0843 9.41111 15.8161 7.58333 15.9802V20H6.41667ZM7 10.2857C7.33056 10.2857 7.60764 10.1762 7.83125 9.95714C8.05486 9.7381 8.16667 9.46667 8.16667 9.14286V2.28571C8.16667 1.9619 8.05486 1.69048 7.83125 1.47143C7.60764 1.25238 7.33056 1.14286 7 1.14286C6.66944 1.14286 6.39236 1.25238 6.16875 1.47143C5.94514 1.69048 5.83333 1.9619 5.83333 2.28571V9.14286C5.83333 9.46667 5.94514 9.7381 6.16875 9.95714C6.39236 10.1762 6.66944 10.2857 7 10.2857Z" fill="url(#paint0_linear_607_216)" />
                                     <defs>
                                         <linearGradient id="paint0_linear_607_216" x1="4.01326e-07" y1="-8.5" x2="14" y2="23" gradientUnits="userSpaceOnUse">

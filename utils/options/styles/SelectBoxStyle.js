@@ -75,6 +75,29 @@ export const customStyles = {
   };
 
 
+  export const CareerPageStyle = {
+    control: (provided, state) => ({
+      ...provided,
+      paddingRight: '10px',
+      paddingLeft: "8px",
+      height: "50px",
+      borderRadius: "10px", // Add padding on the right side
+      border: "1px solid #CDCDCD",
+      borderColor: state.isFocused ? 'black' : provided.borderColor,
+      '&:hover': {
+        borderColor: 'black',
+      },
+      boxShadow: state.isFocused ? 'none' : provided.boxShadow,
+    }),
+    indicatorSeparator: (provided) => ({
+      ...provided,
+      display: 'none',
+      paddingRight: "20px"
+      // Hide the vertical line behind the arrow
+    }),
+  };
+
+
 
 
   export const customStyle3 = {

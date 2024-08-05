@@ -117,7 +117,7 @@ function PhotoGrid({ handleClickOpen }) {
                                     <div className='right-[10px] mt-[10px] z-[10] absolute'>
                                         <Image loading='lazy' onClick={() => handleClickDeleteImageModal(res)} alt='delete' width={24} height={24} src="/assests/dashboard/icon/Trash-icon.svg" />
                                     </div>
-                                    <img style={imageStyle} onClick={() => handleClickOpen(res, index)} alt='user-images' className='space-x-[10px] rounded-[10px] h-[381px] w-[300px] cursor-pointer' src={res.url} />
+                                    <img style={imageStyle} onClick={() => handleClickOpen(res, index)} alt='user-images' className='space-x-[10px] rounded-[10px] h-[381px] w-[300px] cursor-pointer' src={res?.url} />
                                 </SwiperSlide>
                             ))
                         ) : (

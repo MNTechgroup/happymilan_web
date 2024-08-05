@@ -173,7 +173,7 @@ const ContactTab = ({ data }) => {
 
                             <div className='w-[90%] flex justify-end pb-[10px] mt-[20px]'>
 
-                                <button id='profile-save-details-btn' className='rounded-[10px] text-[white] w-[80px] h-[40px]' >Save</button>
+                                <button id='grad-button' className='rounded-[10px] text-[white] w-[80px] h-[40px]' >Save</button>
 
                             </div>
                         </div>

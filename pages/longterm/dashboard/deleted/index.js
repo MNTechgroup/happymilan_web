@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react'
-import NavBar from '../../../_components/layout/NavBar'
+// import NavBar from '../../../_components/layout/NavBar'
 import SideBar from '../../../_components/layout/SideBar'
 import Footer from '../../../_components/layout/Footer'
 import UserStory from '../../../_components/Container/UserStory'
@@ -10,6 +10,7 @@ import DeletedProfile from './comp/DeletedProfile'
 import DeleteGridUser from './comp/DeleteGridUser'
 import ProtectedRoutes from '../../../routes/ProtectedRoutes'
 import Image from 'next/image'
+import NavBar from '../../../_components/layout/Navbar'
 function index() {
 
 

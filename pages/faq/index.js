@@ -3,6 +3,7 @@ import Navbar from "../_components/layout/AuthNavbar";
 import Footer from "../_components/layout/Footer";
 import Image from "next/image";
 import CustomAccordion from '../../components/common/Features/Accordion'
+import GlobalFooter from "../_components/layout/GlobalFooter";
 
 
 function index() {
@@ -47,7 +48,7 @@ function index() {
   return (
     <>
       <Navbar />
-      <div className="w-full pt-[80px] lg:pt-[120px] mt-[37px] h-full  lg:grid place-items-center ">
+      <div className="w-full pt-[80px] lg:pt-[120px] mt-[37px] h-full  lg:grid place-items-center pb-[40px]">
         <div className="">
           <h1 className="text-center">
             <span id="faq-title-1">Frequently asked questions</span>
@@ -369,11 +370,17 @@ function index() {
 
         {/* <!-- Footer Section Started --> */}
 
-        <Footer />
+
         {/* <!-- Footer Section End --> */}
-      </div >
+      </div>
+
+      <div className="pt-[10px] border-t-[1px] border-t-[#E1E1E1] ">
+        <GlobalFooter />
+      </div>
     </>
   );
 }
 
 export default index;
+
+8866428582

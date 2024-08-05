@@ -100,13 +100,14 @@ export const cityOptions = [
 
 
 export const incomeOptions = [
-    { value: "1L-10L", label: "1 LPA to 10 LPA" },
-    { value: "10L-20L", label: "10 LPA to 20 LPA" },
-    { value: "20L-30L", label: "20 LPA to 30 LPA" },
-    { value: "30L-40L", label: "30 LPA to 40 LPA" },
-    { value: "40L-50L", label: "40 LPA to 50 LPA" },
-    { value: "50L+", label: "50 LPA and above" }
+    { value: 10, label: "1 LPA to 10 LPA" },
+    { value: 20, label: "10 LPA to 20 LPA" },
+    { value: 30, label: "20 LPA to 30 LPA" },
+    { value: 40, label: "30 LPA to 40 LPA" },
+    { value: 50, label: "40 LPA to 50 LPA" },
+    { value: 60, label: "50 LPA and above" } // Using 60 as a placeholder for "50 LPA and above"
 ];
+
 
 export const dietOptions = [
     { value: "vegetarian", label: "Vegetarian" },

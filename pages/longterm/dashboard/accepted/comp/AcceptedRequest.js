@@ -10,7 +10,7 @@ import { Pagination } from 'swiper';
 import Image from 'next/image';
 import { Dialog } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { Cancelfriendrequest, getAcceptedRequestData } from '../../../../../store/actions/UsersAction';
+import {  getAcceptedRequestData } from '../../../../../store/actions/UsersAction';
 import index from '../../profile';
 import UserprofileSkeleton from '../../../../../components/common/shader/UserprofileSkeleton';
 import Link from 'next/link';
@@ -19,6 +19,7 @@ import dynamic from 'next/dynamic';
 const ShareModal = dynamic(() => import('../../../../_components/Model/Models/ShareModal'))
 import { useDarkMode } from '../../../../../ContextProvider/DarkModeContext';
 import { addToShortlist } from '../../../../../store/actions/GetingAlluser';
+import CancelRequestModal from '../../../../_components/Model/Models/CancelRequestModal';
 
 const ShowMore = dynamic(() => import('../../../../_components/common/profile/UserBio'), { ssr: false });
 const MatchScoreModal = dynamic(() => import('../../../../_components/Model/Models/MatchScoreModal'), { ssr: false });
@@ -34,6 +35,7 @@ function AcceptedRequest() {
     const [isRegisterModalOpen, setisRegisterModalOpen] = useState(false);
     const [isReportModalOpen, setisReportModalOpen] = useState(false);
     const [isBlockModalOpen, setisBlockModalOpen] = useState(false);
+    const [isCancelModalOpen, setisCancelModalOpen] = useState(false);
     const [Data, setData] = useState("");
     const [openShortlistModal, setopenShortlistModal] = React.useState(false)
     const [shortlistText, setshortlistText] = useState();
@@ -47,6 +49,12 @@ function AcceptedRequest() {
         setisBlockModalOpen(true);
     }
     const closeBlockModal = () => { setisBlockModalOpen(false) }
+
+    const openCancelModal = () => {
+        // setData(res)
+        setisCancelModalOpen(true);
+    }
+    const closeCancelModal = () => { setisCancelModalOpen(false) }
 
     const OpenReportModal = () => {
         setisReportModalOpen(true);
@@ -140,27 +148,20 @@ function AcceptedRequest() {
 
     const [CurrURL, SetCurURL] = useState("")
 
+    const [Cancelusersdata, Setcancelusersdata] = useState({
+        currUser: "",
+        OtherUser: ""
+
+    })
+
     const HandleCancelRequest = (res, id) => {
 
-        const isConfirmed = window.confirm('Are you sure you want to unfriend this user?');
-
-        // Check if user confirmed
-        if (isConfirmed) {
-            dispatch(Cancelfriendrequest(res?.id, res?.lastInitiatorUser))
-
-            setTimeout(() => {
-                dispatch(getAcceptedRequestData())
-            }, 800);
-
-
-        }
-
-
+        Setcancelusersdata({
+            currUser: res?.id,
+            OtherUser: res?.lastInitiatorUser
+        })
+        openCancelModal();
     }
-
-
-
-
 
     if (data?.loading == true) {
         return (
@@ -338,6 +339,13 @@ function AcceptedRequest() {
                         </div>
                     </Dialog>
                 </React.Fragment>
+
+                <CancelRequestModal
+                    // data={Data}
+                    data={Cancelusersdata}
+                    isOpen={isCancelModalOpen}
+                    onClose={closeCancelModal}
+                />
 
             </>
                 :

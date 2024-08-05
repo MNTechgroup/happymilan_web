@@ -1,6 +1,5 @@
 
 import React, { useEffect, useState } from 'react'
-import NavBar from '../../../_components/layout/NavBar'
 import SideBar from '../../../_components/layout/SideBar'
 import Footer from '../../../_components/layout/Footer'
 
@@ -9,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getFriendsList } from '../../../../store/actions/UsersAction'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
+import NavBar from '../../../_components/layout/Navbar'
 
 
 const UserStory = dynamic(() => import('../../../_components/Container/UserStory'));
@@ -69,6 +69,7 @@ function index() {
             </div>
 
             <div id='centerlized-content' className='2xl:block xl:block lg:block hidden'>
+
               <div className='relative 2xl:w-[715px] xl:w-[635px] lg:w-[650px] m-[10px] flex justify-between'>
 
                 <h1 className='p-[5px] relative lg:left-[15px] 2xl:left-[40px] xl:left-[55px]'><span style={Text6}>New Requests ({data?.data.length})</span></h1>

@@ -7,6 +7,11 @@ export const updateFormData = (data) => ({
   payload: data,
 });
 
+export const removeUploadData = () => ({
+  type: 'REMOVE_UPLOAD_DATA'
+});
+
+
 
 export const REGISTER_USER = 'REGISTER_USER';
 export const VERIFY_OTP = 'VERIFY_OTP';

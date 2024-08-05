@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../../../ContextProvider/UsersConversationContext';
 //single chat element
 const ChatElement = ({ toggleInnerDrawer, id, name, profilePic }) => {
+console.log("🚀 ~ ChatElement ~ name:", name)
 
 
     const Username2 = {

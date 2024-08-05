@@ -136,11 +136,12 @@ const Chats = ({ toggleInnerDrawer, HandleWide }) => {
                             className='scrollbar' p={1} spacing={0} direction='column' sx={{ flexGrow: 1, overflow: 'scroll', height: '100%' }}>
 
 
-                            <Stack spacing={1.5} className='mt-[5px]'>
+                            <Stack spacing={1.5} className='mt-[-5px]'>
 
 
 
                                 {FriendeLists?.acceptedUsers?.map((el, index) => {
+                                    console.log("🚀 ~ {FriendeLists?.acceptedUsers?.map ~ el:", el)
                                     return <ChatElement
                                         key={index}
                                         // key={response.id}
@@ -161,7 +162,7 @@ const Chats = ({ toggleInnerDrawer, HandleWide }) => {
                             <div className='w-full h-full grid place-items-center'>
                                 <div className='text-center space-y-[10px]'>
                                     <div className='grid place-items-center'>
-                                        <Image width={0} height={0} alt='chat-icon' src={"assests/dashboard/chats/chat-icon-grad.svg"} style={{ height: "44px", width: "47px" }} loading='lazy' />
+                                        <Image width={0} height={0} alt='chat-icon' src={"/assests/dashboard/chats/chat-icon-grad.svg"} style={{ height: "44px", width: "47px" }} loading='lazy' />
                                     </div>
                                     <div>
                                         <p style={MessageText} className='pb-[5px]'>No messages</p>

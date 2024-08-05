@@ -9,13 +9,8 @@ import { useDarkMode } from "../../../ContextProvider/DarkModeContext";
 import { getMessaging, onMessage } from 'firebase/messaging';
 import firebaseApp from '../../../utils/firebase/firebase';
 import Image from "next/image";
-// stopColor
-
-
 
 function SideBar() {
-
-
   const { darkMode, toggleDarkMode } = useDarkMode();
 
   const Text2 = {
@@ -33,15 +28,12 @@ function SideBar() {
     lineHeight: "normal",
   };
   const router = useRouter();
-  const [Uname, setUname] = useState("");
 
   const notificatindot = useSelector((state) => state.notificatin);
   const myProfile = useSelector((state) => state.myprofile?.data);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    setUname(getCookie("userName"));
-  }, []);
+
 
   const HandleGOTO = () => {
     dispatch(markshortlistseen());
@@ -73,22 +65,24 @@ function SideBar() {
         aria-label="Sidebar"
       >
         <div id="sidebarScroll" className="h-full px-3 py-4 overflow-y-auto bg-[#FFF] dark:bg-[#18191A] dark:border-r dark:border-[#292929]">
-          <div className="p-[10px]">
-            <div>
+          <div className="p-[10px] space-y-[20px]">
+            <div onClick={() => router.push("/longterm/dashboard/profile")} className="cursor-pointer w-[50px] hover:opacity-90 duration-100">
               <ProfileImage size={47} />
             </div>
-            <div className="pt-[20px]">
-              <h1 className="text-[#000] dark:text-[#FFF]" style={Text2}>{Uname}</h1>
-            </div>
-            <div className="pt-[10px]">
-              <span style={Text3} className="text-[14px] text-[#50545A] dark:text-[#616161]">
-                {/* ID: HM1002021 */}
-                ID: {myProfile?.userUniqueId}
-              </span>{" "}
-              <span className="text-[#E3E3E3]">|</span>{" "}
-              <Link href="/longterm/dashboard/profile">
-                <span className="text-[14px] text-[#0F52BA] dark:text-[#FFF]">My Profile</span>
-              </Link>
+            <div>
+              <div onClick={() => router.push("/longterm/dashboard/profile")} className="group cursor-pointer duration-100 inline-block">
+                <h1 className="group-hover:opacity-75 text-[#000] dark:text-[#FFF]" style={Text2}>{myProfile?.name}</h1>
+              </div>
+              <div className="pt-[10px]">
+                <span style={Text3} className="text-[14px] text-[#50545A] dark:text-[#616161]">
+                  {/* ID: HM1002021 */}
+                  ID: {myProfile?.userUniqueId?.toUpperCase()}
+                </span>{" "}
+                <span className="text-[#E3E3E3]">|</span>{" "}
+                <Link href="/longterm/dashboard/profile">
+                  <span className="text-[14px] text-[#0F52BA] dark:text-[#FFF]">My Profile</span>
+                </Link>
+              </div>
             </div>
           </div>
 
@@ -393,14 +387,14 @@ function SideBar() {
               <Link href="/longterm/dashboard/shortlists">
                 {notificatindot.newShortlists > 0 && (
                   <div className="relative left-[-8px]">
-                    <span class="inline absolute flex h-2.5 w-2.5">
+                    <span className="inline absolute flex h-2.5 w-2.5">
                       <span
-                        id="grad-bg"
-                        class="animate-ping absolute inline-flex h-full w-full rounded-full  opacity-75"
+
+                        className="bg-custom-gradient animate-ping absolute inline-flex h-full w-full rounded-full  opacity-75"
                       ></span>
                       <span
-                        id="grad-bg"
-                        class="absolute inline-flex rounded-full h-2.5 w-2.5 "
+
+                        className="bg-custom-gradient absolute inline-flex rounded-full h-2.5 w-2.5 "
                       ></span>
                     </span>
                   </div>

@@ -2,6 +2,8 @@ import { Box, Modal, Stack, Typography } from '@mui/material';
 import Image from 'next/image'
 import React from 'react'
 import ProfileImage from '../../common/profile/ProfileImage';
+import { useDispatch } from 'react-redux';
+import { GetMatchScore } from '../../../../store/actions/UsersAction';
 
 function MatchScoreModal({ user }) {
 
@@ -76,10 +78,23 @@ function MatchScoreModal({ user }) {
         lineHeight: "normal"
     }
 
+
+    const matchScoreText = {
+        fontFamily: "Poppins",
+        fontSize: "10px",
+        fontStyle: "normal",
+        fontWeight: "600",
+        lineHeight: "12px" /* 120% */
+    }
+
+    const dispatch = useDispatch();
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {
         setOpen(true)
         console.log(user)
+        dispatch(GetMatchScore(user?._id))
+
     };
     const handleClose = () => setOpen(false);
 
@@ -97,9 +112,9 @@ function MatchScoreModal({ user }) {
                 />
             </div>
             <div onClick={handleOpen} className="">
-                <span className="relative top-[-2px] text-[10px] text-[#000] dark:text-[#FFF]"
-                    style={Text4}>
-                    Match Score
+                <span id='Match-score-grad' className="relative top-[-2px] text-[10px] text-[#000] dark:text-[#FFF]"
+                    style={matchScoreText}>
+                    {user?.matchPercentage ? `${user?.matchPercentage}%  Match` : "0% Match"}
                 </span>
             </div>
 
@@ -117,7 +132,7 @@ function MatchScoreModal({ user }) {
                     },
                 }}
             >
-                <Box  sx={{ ...style, outline: "none", borderRadius: "21px" }}>
+                <Box sx={{ ...style, outline: "none", borderRadius: "21px" }}>
 
                     <div>
                         <div className='w-full space-y-[20px] 2xl:space-y-[20px] xl:space-y-[15px] lg:space-y-[20px]'>
@@ -135,9 +150,9 @@ function MatchScoreModal({ user }) {
                                         <div>
                                             {user?.profilePic ?
                                                 <>
-                                                <div className='w-[70px] h-[70px]'>
-                                                    <Image width={70} height={70} alt='user' className='rounded-full' style={{objectFit:"cover",width:"70px",height:"70px"}} src={user?.profilePic} />
-                                                </div>
+                                                    <div className='w-[70px] h-[70px]'>
+                                                        <Image width={70} height={70} alt='user' className='rounded-full' style={{ objectFit: "cover", width: "70px", height: "70px" }} src={user?.profilePic} />
+                                                    </div>
                                                 </>
                                                 :
                                                 <>

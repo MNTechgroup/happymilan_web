@@ -1,5 +1,5 @@
 import { Tooltip } from "@material-tailwind/react";
-import {  signIn } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import Image from "next/image";
 const LoginPage = ({ setrendercomponent, rendercomponent }) => {
 
@@ -38,8 +38,6 @@ const LoginPage = ({ setrendercomponent, rendercomponent }) => {
         )
     }
 
-   
-
     return (
         <>
 
@@ -55,8 +53,6 @@ const LoginPage = ({ setrendercomponent, rendercomponent }) => {
                                 unmount: { scale: 0, y: 25 },
                             }}
                         >
-
-
 
                             “My Profile”  </Tooltip> </span> and scan with scanning function</h1>
                 </div>
@@ -76,7 +72,7 @@ const LoginPage = ({ setrendercomponent, rendercomponent }) => {
 
                 <div className='flex items-center justify-center gap-x-[30px] 2xl:mt-[-15px] xl:mt-0'>
                     <div className="xl:w-[45px] xl:h-[45px] 2xl:w-[50px] 2xl:h-[50px]">
-                        <Image alt="google-icon"  width={50} height={50} onClick={handleLogin} src='/assests/social/google-icon-btn.svg' />
+                        <Image alt="google-icon" width={50} height={50} onClick={handleLogin} src='/assests/social/google-icon-btn.svg' />
                     </div>
                     <div className="xl:w-[45px] xl:h-[45px] 2xl:w-[50px] 2xl:h-[50px]">
                         <Image alt="fb-icon" width={50} height={50} src='/assests/social/facebook-icon-btn.svg' />

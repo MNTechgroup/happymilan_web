@@ -11,18 +11,19 @@ import {
     GET_ACCEPTED_REQUEST_DATA_SUCCESS, GET_ACCEPTED_REQUEST_DATA_FAILURE, GET_SENTREQUEST_DATA_SUCCESS, GET_SENTREQUEST_DATA_FAILURE,
     GET_SENTREQUEST_DATA, LOGOUT_USER, GET_BLOCK_USERDATA, GET_BLOCK_USERDATA_SUCCESS, GET_BLOCK_USERDATA_FAILURE,
     SENT_BLOCK_REQUEST_SUCCESS, SENT_BLOCK_REQUEST_FAILURE, SENT_BLOCK_REQUEST, CANCEL_FRIEND_REQUEST_FAILURE,
-     CANCEL_FRIEND_REQUEST_SUCCESS,
+    CANCEL_FRIEND_REQUEST_SUCCESS,
     CANCEL_FRIEND_REQUEST, UPDATE_PROFILE_IMAGE, UPDATE_PROFILE_IMAGE_SUCCESS, UPDATE_PROFILE_IMAGE_FAILURE, GET_CANCELREQUEST_DATA,
     GET_CANCELREQUEST_DATA_SUCCESS, GET_CANCELREQUEST_DATA_FAILURE, DELETE_IMAGE_SUCCESS, DELETE_IMAGE_FAILURE, DELETE_IMAGE,
     UPDATE_PROFILE_IMAGE_PROCESS, POST_RECENT_USERPROFILE_SUCCESS, POST_RECENT_USERPROFILE_FAILURE, POST_RECENT_USERPROFILE,
     GET_RECENT_USERPROFILE_DATA, GET_RECENT_USERPROFILE_DATA_FAILURE, GET_RECENT_USERPROFILE_DATA_SUCCESS, UPDATE_ADDRESS_DATA,
     UPDATE_ADDRESS_DATA_FAILURE, UPDATE_ADDRESS_DATA_SUCCESS, FETCH_GRID_USER_DATA_REQUEST, FETCH_GRID_USER_DATA_REQUEST_SUCCESS,
     LIKED_USERS_PROFILE_DATA, LIKED_USERS_PROFILE_DATA_SUCCESS, UPLOAD_MY_STORY, UPLOAD_MY_STORY_SUCCESS, UPLOAD_MY_STORY_FAILURE,
-    GET_ALL_STATUS_SUCCESS, GET_ALL_STATUS, GET_ALL_STATUS_FAILURE, UPLOAD_MY_STORY_MODAL, DELETE_MY_STATUS_SUCCESS, 
+    GET_ALL_STATUS_SUCCESS, GET_ALL_STATUS, GET_ALL_STATUS_FAILURE, UPLOAD_MY_STORY_MODAL, DELETE_MY_STATUS_SUCCESS,
     DELETE_STATUS_MODAL
 } from '../type';
 import { GET_REQUEST, GET_REQUEST_SUCCESS, GET_REQUEST_FAILURE } from '../type';
 import { fetchMyProfileData } from '../reducers/MyProfile';
+// import { useRouter } from 'next/router';
 
 export const sendRequest = (requestData) => {
     return async (dispatch) => {
@@ -49,7 +50,7 @@ export const sendRequest = (requestData) => {
 
         axios.request(config)
             .then((response) => {
-                
+
 
                 dispatch({ type: REQUEST_SUCCESS, payload: response.data });
             })
@@ -145,7 +146,7 @@ export const acceptRequest = (requestData) => {
 
         axios.request(config)
             .then((response) => {
-                
+
                 dispatch({ type: ACCEPT_REQUEST_SUCCESS, payload: response.data })
                 // dispatch({type : GET_REQUEST })
             })
@@ -193,7 +194,7 @@ export const rejectRequest = (requestData) => {
 
         axios.request(config)
             .then((response) => {
-                
+
                 dispatch({ type: REJECT_REQUEST_SUCCESS, payload: response.data })
                 // dispatch({type : GET_REQUEST })
             })
@@ -233,7 +234,7 @@ export const getEducationData = (requestData) => {
 
         axios.request(config)
             .then((response) => {
-                
+
                 dispatch({ type: GET_EDUCATION_DATA_SUCCESS, payload: response.data })
             })
             .catch((error) => {
@@ -274,7 +275,7 @@ export const updateEducationData = (userid, alldata) => {
 
         axios.request(config)
             .then((response) => {
-                
+
                 dispatch({ type: UPDATE_EDUCATION_DATA_SUCCESS, payload: response.data });
             })
             .catch((error) => {
@@ -313,7 +314,7 @@ export const getProfessionalData = (requestData) => {
 
         axios.request(config)
             .then((response) => {
-                
+
                 dispatch({ type: GET_PROFESSIONAL_DATA_SUCCESS, payload: response.data })
             })
             .catch((error) => {
@@ -355,7 +356,7 @@ export const getPartnerpreferencedata = (requestData) => {
 
         axios.request(config)
             .then((response) => {
-                
+
                 dispatch({ type: GET_PARTNERPREFERENCE_DATA_SUCCESS, payload: response.data.data })
             })
             .catch((error) => {
@@ -398,42 +399,14 @@ export const getAcceptedRequestData = () => {
             const currentUser = getCookie("userid")
 
             const friendRequests = response.data.data.map((res) => currentUser == res?.friend?.id ? res?.user : res?.friend);
-            const friendIds = friendRequests.reduce((ids, friendArray) => {
-                // Ensure friendArray is an object with id property before extracting id
-                if (friendArray && friendArray?.id) {
-                    ids.push(friendArray?.id);
-                } else {
-                    console.error('Friend array is not in the expected format:', friendArray);
-                }
-                return ids;
-            }, []);
-
-
-           
-            // Define the batch size for fetching user data
-            const batchSize = 50;
-            const numBatches = Math.ceil(friendIds.length / batchSize);
-
-            const userDataArray = [];
-
-            // Fetch user data in batches
-            for (let i = 0; i < numBatches; i++) {
-                const start = i * batchSize;
-                const end = Math.min((i + 1) * batchSize, friendIds.length);
-                const batchIds = friendIds.slice(start, end);
-
-                const batchUserData = await fetchUserDataBatch(batchIds);
-                
-                userDataArray.push(...batchUserData);
-            }
-
-       
+            // console.log("🚀 ~ return ~ friendRequests:", friendRequests)
+            
 
             // dispatch({ type: GET_ACCEPTED_REQUEST_DATA_SUCCESS, payload: response.data });
             dispatch({
                 type: GET_ACCEPTED_REQUEST_DATA_SUCCESS, payload: {
                     data: response.data,
-                    acceptedUsers: userDataArray
+                    acceptedUsers: friendRequests
                 }
             });
         } catch (error) {
@@ -540,6 +513,8 @@ export const getSentrequestDataFailure = (error) => ({
 
 export const logoutuser = () => {
     console.log("Logout from Redux...")
+
+    // const router = useRouter();
     return async (dispatch) => {
 
         dispatch({
@@ -559,6 +534,8 @@ export const logoutuser = () => {
         } catch (error) {
             console.error('Error logging out:', error);
         }
+
+        // router.push("/")
     }
 
 }
@@ -582,7 +559,7 @@ export const getblockuserdata = () => {
 
         axios.request(config)
             .then((response) => {
-                
+
                 dispatch({ type: GET_BLOCK_USERDATA_SUCCESS, payload: response.data })
             })
             .catch((error) => {
@@ -652,7 +629,7 @@ export const Sentblockrequest = (requestData, OtherUserId) => {
 
 
         const axios = require('axios');
-      
+
         const token = getCookie("authtoken")
         let data = JSON.stringify({
             "user": OtherUserId,
@@ -675,7 +652,7 @@ export const Sentblockrequest = (requestData, OtherUserId) => {
 
         axios.request(config)
             .then((response) => {
-                
+
                 dispatch({ type: SENT_BLOCK_REQUEST_SUCCESS, payload: response.data })
                 // dispatch({type : GET_REQUEST })
             })
@@ -730,7 +707,7 @@ export const Cancelfriendrequest = (requestData, curUser) => {
 
         axios.request(config)
             .then((response) => {
-                
+
                 dispatch({ type: CANCEL_FRIEND_REQUEST_SUCCESS, payload: response.data })
             })
             .catch((error) => {
@@ -818,7 +795,7 @@ export const Updateprofileimage = (requestdata, seconddata) => {
 
                             axios.request(config)
                                 .then((response) => {
-                                    
+
                                     dispatch({ type: UPDATE_PROFILE_IMAGE_SUCCESS })
                                     dispatch(fetchMyProfileData())
                                 })
@@ -878,7 +855,7 @@ export const Getcancelrequestdata = () => {
         axios.request(config)
             .then((response) => {
                 dispatch({ type: GET_CANCELREQUEST_DATA_SUCCESS, payload: response.data })
-                
+
                 console.log("🚀 ~ .then ~ response:", response.data)
             })
 
@@ -928,7 +905,7 @@ export const Deleteimage = (imagedata) => {
 
         axios.request(config)
             .then((response) => {
-    
+
                 dispatch({ type: DELETE_IMAGE_SUCCESS })
                 dispatch(fetchMyProfileData())
             })
@@ -989,7 +966,7 @@ export const Postrecentuserprofile = (visitedUserId) => {
 
         axios.request(config)
             .then((response) => {
-    
+
                 dispatch({ type: POST_RECENT_USERPROFILE_SUCCESS })
             })
             .catch((error) => {
@@ -1144,7 +1121,7 @@ export const Getlikeduserdata = () => {
 
         axios.request(config)
             .then((response) => {
-    
+
                 dispatch({ type: LIKED_USERS_PROFILE_DATA_SUCCESS, payload: response.data.data })
             })
             .catch((error) => {
@@ -1171,7 +1148,7 @@ export const Uploadmystory = (requestdata, seconddata, theblob, Caption) => {
                 "contentType": requestdata.imagesdata.contentType,
                 "isProfilePic": false,
                 // "caption": Caption ? Caption : "",
-                "caption": Caption ,
+                "caption": Caption,
                 "profileType": "statusImage"
             }
 
@@ -1226,7 +1203,7 @@ export const Uploadmystory = (requestdata, seconddata, theblob, Caption) => {
 
                             axios.request(config)
                                 .then((response) => {
-                        
+
                                     dispatch({ type: UPLOAD_MY_STORY_SUCCESS })
                                     // dispatch({ type: UPLOAD_MY_STORY_MODAL })
                                     dispatch(Getallstatus())
@@ -1291,7 +1268,7 @@ export const Getallstatus = () => {
 
         axios.request(config)
             .then((response) => {
-                
+
                 const mystory = response.data.data.filter((item) => item.userId.id == currentUser)
                 const allstatus = response.data.data.filter((item) => item.userId.id != currentUser)
 
@@ -1328,7 +1305,7 @@ export const DeleteMystatus = (StatusID) => {
 
         axios.request(config)
             .then((response) => {
-    
+
                 dispatch(Getallstatus())
                 dispatch({ type: DELETE_MY_STATUS_SUCCESS })
                 dispatch({ type: DELETE_STATUS_MODAL })
@@ -1341,3 +1318,12 @@ export const DeleteMystatus = (StatusID) => {
     }
 }
 // GET_ALL_STATUS_SUCCESS
+
+
+//Get match score 
+
+export const GetMatchScore = (MatchID) => {
+    console.log("🚀 ~ GetMatchScore ~ MatchID:", MatchID)
+    return async (dispatch) => {
+    }
+}

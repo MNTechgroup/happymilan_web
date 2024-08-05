@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../_components/layout/AuthNavbar";
 import Footer from "../_components/layout/Footer";
+import GlobalFooter from "../_components/layout/GlobalFooter";
 
 const TitleText = {
   color: "#000",
@@ -51,7 +52,7 @@ function index() {
   return (
     <>
       <Navbar />
-      <div className="w-full lg:pt-[120px] pt-[100px] h-full  lg:grid place-items-center ">
+      <div className="pb-[40px] w-full lg:pt-[120px] pt-[100px] h-full  lg:grid place-items-center ">
         <div className="lg:pr-0 lg:pl-0 pr-[20px] pl-[20px] w-full md:w-[750px] text-left">
           <h1 style={TitleText}>Terms of Use / Service Agreement</h1>
         </div>
@@ -394,8 +395,12 @@ function index() {
 
         {/* <!-- Footer Section Started --> */}
 
-        <Footer />
+
         {/* <!-- Footer Section End --> */}
+      </div>
+
+      <div className="pt-[10px] border-t-[1px] border-t-[#E1E1E1]">
+        <GlobalFooter />
       </div>
     </>
   );

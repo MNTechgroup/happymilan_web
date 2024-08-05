@@ -1,42 +1,43 @@
+import { Box, Modal } from "@mui/material";
 import ImageCropper from "../../../../sample/components/ImageCropper";
-// w-[95%] sm:w-[50%] min-h-[500px]
-const Modal = ({ setModalOpen, updateAvatar, closeModal }) => {
+
+const ProfileModal = ({ handleClose, handleOpen, setOpenProfileModal, openProfileModal, setModalOpen, updateAvatar, closeModal }) => {
+
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '45%',
+        height: "574px",
+        outline: "none",
+        bgcolor: 'background.paper',
+        borderRadius: "10px",
+        boxShadow: 24,
+        p: 4,
+    };
+
+
     return (
-        <div
-            className="relative z-[101]"
-            aria-labelledby="crop-image-dialog"
-            role="dialog"
-            aria-modal="true"
+
+
+
+        <Modal
+            open={openProfileModal}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
         >
-            <div className="fixed inset-0 bg-[black] bg-opacity-30 transition-all "></div>
-            <div className="grid place-items-center">
-                <div className="ml-[50px]  fixed inset-0 z-10 w-[90%] overflow-y-auto">
-                    <div className="flex min-h-[600px] justify-center px-2 py-12 text-center ">
-                        <div className="relative 
-                    w-[50%] h-[550px]
-                   rounded-2xl bg-[#FFF] text-slate-100 text-left shadow-xl transition-all">
-                            <div className="px-5 py-4">
-                                <button
-                                    type="button"
-                                    className="rounded-md p-1 inline-flex items-center justify-center text-gray-400 hover:bg-gray-700 focus:outline-none absolute top-2 right-2"
-                                    onClick={closeModal}
-                                >
-                                    <span className="sr-only">Close menu</span>
-
-                                </button>
-                                <ImageCropper
-                                    updateAvatar={updateAvatar}
-                                    closeModal={closeModal}
-                                    setModalOpen={setModalOpen}
-                                />
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
+            <Box sx={style}>
+                <ImageCropper
+                    updateAvatar={updateAvatar}
+                    closeModal={closeModal}
+                    setModalOpen={setModalOpen}
+                    handleClose={handleClose}
+                />
+            </Box>
+        </Modal >
     );
 };
-export default Modal;
+export default ProfileModal;

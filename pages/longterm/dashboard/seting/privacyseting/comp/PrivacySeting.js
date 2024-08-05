@@ -1,8 +1,12 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Getprivacyquestions } from "../../../../../../store/actions/UserSettingAction";
+import { Getprivacyquestions, UpdateDisplayName } from "../../../../../../store/actions/UserSettingAction";
 import { getCookie } from "cookies-next";
+import { capitalizeFirstLetter } from "../../../../../../utils/form/Captitelize";
+import DisplayNameSelect from "./function/DisplayNameSelect";
+import { Dialog } from "@mui/material";
+import { UPDATE_DISPLAY_STATUS } from "../../../../../../store/type";
 
 function PrivacySeting() {
 
@@ -40,60 +44,93 @@ function PrivacySeting() {
   };
 
 
+  const { NameChangeloading, status, error } = useSelector((state) => state?.userseting.DisplayName)
+  const [openShortlistModal, setopenShortlistModal] = React.useState(false);
+
+  const [shortlistText, setshortlistText] = useState();
+  const Urlmodaltext = {
+    color: "#000",
+    fontFamily: "Poppins",
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: "normal",
+  };
+
+
+
+  useEffect(() => {
+    console.log("start")
+    if (status != "") {
+      console.log("done")
+      setshowbtn(false)
+
+      setopenShortlistModal(true);
+
+
+      setTimeout(() => {
+        setopenShortlistModal(false);
+      }, 900);
+    }
+  }, [status])
 
 
   const postDataToApi = () => {
-    setTimeout(() => {
-      setshowbtn(false);
-    }, 1000);
-    const changedFields = formData.map((question) => ({
-      id: question.id,
-      question: question.question,
-      options: question.options,
-    }));
 
-    try {
-      // Iterate over each question in formData
-      for (const question of formData) {
-        // Prepare the data object for the PUT request
-        const requestData = {
-          question: question.question,
-          options: question.options,
-        };
 
-        let updatedOptions = question.options.map(({ _id, option, isSelected }) => ({ option, isSelected }));
-       
-        // Check if the request was successful
-        const axios = require('axios');
-        const token = getCookie('authtoken')
-        let data = JSON.stringify({
-          "question": question.question,
-          "options": updatedOptions
-        });
-      
-        let config = {
-          method: 'put',
-          maxBodyLength: Infinity,
-          url: `https://happymilan.tech/api/v1/user/privacy/update-privacy/${question.id}`,
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          data: data
-        };
+    dispatch(UpdateDisplayName(SelectedDisplayName))
 
-        axios.request(config)
-          .then((response) => {
-            dispatch(Getprivacyquestions())
-          })
-          .catch((error) => {
-            console.log(error);
-          });
 
-      }
-    } catch (error) {
-      console.error('Error occurred while making PUT request:', error);
-    }
+    // setTimeout(() => {
+    //   setshowbtn(false);
+    // }, 1000);
+    // const changedFields = formData.map((question) => ({
+    //   id: question.id,
+    //   question: question.question,
+    //   options: question.options,
+    // }));
+
+    // try {
+    //   // Iterate over each question in formData
+    //   for (const question of formData) {
+    //     // Prepare the data object for the PUT request
+    //     const requestData = {
+    //       question: question.question,
+    //       options: question.options,
+    //     };
+
+    //     let updatedOptions = question.options.map(({ _id, option, isSelected }) => ({ option, isSelected }));
+
+    //     // Check if the request was successful
+    //     const axios = require('axios');
+    //     const token = getCookie('authtoken')
+    //     let data = JSON.stringify({
+    //       "question": question.question,
+    //       "options": updatedOptions
+    //     });
+
+    //     let config = {
+    //       method: 'put',
+    //       maxBodyLength: Infinity,
+    //       url: `https://happymilan.tech/api/v1/user/privacy/update-privacy/${question.id}`,
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //         'Authorization': `Bearer ${token}`
+    //       },
+    //       data: data
+    //     };
+
+    //     axios.request(config)
+    //       .then((response) => {
+    //         dispatch(Getprivacyquestions())
+    //       })
+    //       .catch((error) => {
+    //         console.log(error);
+    //       });
+
+    //   }
+    // } catch (error) {
+    //   console.error('Error occurred while making PUT request:', error);
+    // }
   }
   const TextHeading = {
     color: "#6A6A6A",
@@ -104,10 +141,14 @@ function PrivacySeting() {
     lineHeight: "normal",
   }
 
-  const UserNames = useSelector((state) => state.myprofile?.data);
-  const HandleChangeUserName = (e) =>{
+  const [SelectedDisplayName, SetSelectedDisplayName] = useState()
+
+  const HandleChangeUserName = (e) => {
+    // dispatch(UpdateDisplayName(e.target.value))
+    SetSelectedDisplayName(e.target.value)
     setshowbtn(true)
   }
+
 
   return (
     <>
@@ -122,61 +163,7 @@ function PrivacySeting() {
           </h1>
         </div>
         <div className=" mt-[20px] xl:mt-[25px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
-        <div className="mt-[20px]">
-          <h1 className="text-[15px] xl:text-[16px] font-medium mb-[5px]">
-            Select Display Name
-          </h1>
-
-          <div className="mt-[20px] flex place-items-center">
-            <input
-              className="w-[15.5px]  xl:w-[16px] h-[15.5px] xl:h-[16px]"
-              type="radio"
-              id={UserNames?.name?.charAt(0) + " " + UserNames?.cast}
-              name="os"
-              onChange={HandleChangeUserName}
-            ></input>
-            <label
-              for={UserNames?.name?.charAt(0) + " " + UserNames?.cast}
-              className="ml-[10px] text-[13px] xl:text-[14px]  "
-            >
-            {UserNames?.name?.charAt(0) + " " + UserNames?.cast}
-            </label>
-          </div>
-          <div className=" mt-[15px] flex place-items-center ">
-            <input
-              className="w-[15.5px]  xl:w-[16px] h-[15.5px] xl:h-[16px]"
-              type="radio"
-              id={UserNames?.cast + " " + UserNames?.name}
-              name="os"
-              onChange={HandleChangeUserName}
-            ></input>
-            <label
-              for={UserNames?.cast + " " + UserNames?.name}
-              className="ml-[10px] text-[13px] xl:text-[14px]  "
-            >
-              {UserNames?.cast + " " + UserNames?.name}
-            </label>
-          </div>
-
-
-
-          <div className=" mt-[15px] flex place-items-center">
-            <input
-              className="w-[15.5px]  xl:w-[16px] h-[15.5px] xl:h-[16px]"
-              type="radio"
-              id="Profile ID"
-              name="os"
-            ></input>
-            <label
-              for="Profile ID"
-              className="ml-[10px] text-[13px] xl:text-[14px]  "
-            >
-              Profile ID: SH00289943
-            </label>
-          </div>
-
-
-        </div>
+        <DisplayNameSelect HandleChangeUserName={HandleChangeUserName} />
         <div className=" mt-[10px] xl:mt-[25px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
         {loading ? " " :
           <>
@@ -221,6 +208,29 @@ function PrivacySeting() {
           </>}
       </div>
 
+      <Dialog
+        open={openShortlistModal}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        PaperProps={{
+          style: {
+            backgroundColor: "transparent", // or 'none' if you prefer
+            boxShadow: "none",
+          },
+        }}
+        BackdropProps={{
+          style: { opacity: 0, backgroundColor: "none", boxShadow: "none" },
+        }}
+      >
+        <div
+          style={{ padding: "17px 19px 17px 20px" }}
+          className="bg-[#333333] w-[full] rounded-[100px] text-center grid place-items-center"
+        >
+          <div className="text-[14px]" style={Urlmodaltext}>
+            <span className="text-[#fff]"> {"Your Display Name Has Been Updated!"}</span>
+          </div>
+        </div>
+      </Dialog>
 
     </>
   );

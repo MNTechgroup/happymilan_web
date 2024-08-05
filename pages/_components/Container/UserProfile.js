@@ -22,7 +22,6 @@ import LikeUser from "../common/Buttons/LikeUser";
 import SendRequestBtn from "../common/Buttons/SendRequestBtn";
 import { useDarkMode } from "../../../ContextProvider/DarkModeContext";
 import dynamic from "next/dynamic";
-import ShowMore from "../common/profile/UserBio";
 import { capitalizeFirstLetter } from "../../../utils/form/Captitelize";
 
 // Dynamically imported components
@@ -32,6 +31,8 @@ const ReportModal = dynamic(() => import("../Model/Models/ReportModal"), { ssr: 
 const ProfileMenu = dynamic(() => import("../Model/popover/MenuPop"), { ssr: false });
 const BlockUserModal = dynamic(() => import("../Model/Models/BlockModal"), { ssr: false });
 const MatchScoreModal = dynamic(() => import("../Model/Models/MatchScoreModal"), { ssr: false });
+const ShowMore = dynamic(() => import("../common/profile/UserBio"), { ssr: false });
+
 
 
 function SampleUserProfile({ users }) {
@@ -178,15 +179,16 @@ function SampleUserProfile({ users }) {
 
     const HandleRequestModal = (res) => {
         if (data?.data?.userProfileCompleted) {
-            dispatch(sendRequest(res.id));
+            dispatch(sendRequest(res._id));
 
             setsentRequest((prevState) => ({
                 ...prevState,
-                [res.id]: !prevState[res.id], // Update the sentRequests state for the specific user ID
+                [res._id]: !prevState[res._id], // Update the sentRequests state for the specific user ID
             }));
 
-            if (!sentrequest[res.id]) {
-                setshortlistText("Request Sent..");
+            if (!sentrequest[res._id]) {
+
+                setshortlistText(`You sent a request to ${res?.name}`);
                 setopenShortlistModal(true);
             } else {
                 setshortlistText("Request Removed..");
@@ -195,7 +197,7 @@ function SampleUserProfile({ users }) {
 
             setTimeout(() => {
                 setopenShortlistModal(false);
-            }, 800);
+            }, 900);
         } else {
             OpenRegisterModal();
         }
@@ -218,6 +220,8 @@ function SampleUserProfile({ users }) {
     };
 
 
+   
+
     if (loading) {
         return <UserprofileSkeleton />;
     }
@@ -227,19 +231,9 @@ function SampleUserProfile({ users }) {
             <div className="">
                 <div className="flex">
                     <div className=" grid place-items-center w-[10px] lg:w-[40px] 2xl:w-[40px] xl:w-[40px] h-[294px]">
-                        <button
-                            id="custom-prev-button"
-                            className=" relative left-[20px] md:left-[10px]  2xl:left-0 xl:left-[20px] w-[35px] h-[70px]"
-                        >
-                            <Image
-                                loading="lazy"
-                                width={55}
-                                height={91}
-                                alt="prev"
-                                quality={25}
-                                src={darkMode ? "/assests/dashboard/icon/prev-card-btn-white.svg" : "/assests/dashboard/icon/prev-card-btn.svg"}
-                            />
-                        </button>
+                        <div id="custom-prev-button" className="Prevbtn relative left-[20px] md:left-[10px]  2xl:left-0 xl:left-[20px] rounded-l-full grid place-items-center cursor-pointer hover:bg-[#F1F6FF]" style={{ width: "35px", height: "70.993px" }}>
+                            <Image width={7} height={14} className='' alt='next-light' src="/assests/gridSection/Prev-Data.svg" />
+                        </div>
                     </div>
 
                     <Swiper
@@ -330,9 +324,10 @@ function SampleUserProfile({ users }) {
                                             <div className="w-full pt-[15px] 2xl:pt-[15px] xl:pt-[20px]">
                                                 <div className="flex justify-between  h-[50px]">
                                                     <div>
+
                                                         <h1
-                                                            onClick={() => HandlePushUser(res.id)}
-                                                            className="2xl:text-[20px] xl:text-[15px] text-[15px] cursor-pointer text-[#000] dark:text-[#FFF]"
+                                                            onClick={() => HandlePushUser(res._id)}
+                                                            className="2xl:text-[20px] xl:text-[15px] text-[15px] cursor-pointer text-[#000] dark:text-[#FFF]  hover:opacity-75 duration-100"
                                                             style={ProfileName}
                                                         >
                                                             {capitalizeFirstLetter(res.name)}
@@ -357,7 +352,7 @@ function SampleUserProfile({ users }) {
 
                                                             <li
                                                                 className="cursor-pointer"
-                                                                onClick={() => HandleShortlist(res.id)}
+                                                                onClick={() => HandleShortlist(res._id)}
                                                             >
                                                                 <div className="cursor-pointer hover:bg-[#F2F7FF] dark:hover:bg-[#383838] p-[5px] rounded-[50%] relative top-[-5px]">
                                                                     <Image
@@ -392,88 +387,117 @@ function SampleUserProfile({ users }) {
                                                                 />
                                                                 {`'32,5'3`}
                                                             </li>
+
                                                             <li
                                                                 className="text-[14px] 2xl:text-[14px] xl:text-[13px] text-[#000] dark:text-[#FFF]"
                                                                 style={ListText}
                                                             >
-                                                                <Image
-                                                                    loading="lazy"
-                                                                    alt="mark"
-                                                                    width={15}
-                                                                    height={14}
-                                                                    src={darkMode ? "/assests/Black/RightTickWhite.svg" : "/assests/Black/RightTick.svg"}
-                                                                    className="inline pr-[5px]"
-                                                                />
-                                                                {res.maritalStatus ? capitalizeFirstLetter(res.maritalStatus) : "NA , NA"}
-                                                            </li>
-                                                            <li
-                                                                className="text-[14px] 2xl:text-[14px] xl:text-[13px] text-[#000] dark:text-[#FFF]"
-                                                                style={ListText}
-                                                            >
-                                                                <Image
-                                                                    loading="lazy"
-                                                                    alt="mark"
-                                                                    width={15}
-                                                                    height={14}
-                                                                    src={darkMode ? "/assests/Black/RightTickWhite.svg" : "/assests/Black/RightTick.svg"}
-                                                                    className="inline pr-[5px]"
-                                                                />
-                                                                {`${res.religion ? capitalizeFirstLetter(res.religion) : "NA"}, ${res.cast ? capitalizeFirstLetter(res.cast) : "NA"}`}
-                                                            </li>
-                                                            <li
-                                                                className="text-[14px] 2xl:text-[14px] xl:text-[13px] text-[#000] dark:text-[#FFF]"
-                                                                style={ListText}
-                                                            >
-                                                                <Image
-                                                                    loading="lazy"
-                                                                    alt="mark"
-                                                                    width={15}
-                                                                    height={14}
-                                                                    src={darkMode ? "/assests/Black/RightTickWhite.svg" : "/assests/Black/RightTick.svg"}
-                                                                    className="inline pr-[5px]"
-                                                                />
-                                                                {`${res.address ? capitalizeFirstLetter(res.address.currentCity) : "NA"} , ${res.address ? capitalizeFirstLetter(res.address.currentCountry) : "NA"}`}
-                                                            </li>
-                                                            <li
-                                                                className="text-[14px] 2xl:text-[14px] xl:text-[13px] text-[#000] dark:text-[#FFF]"
-                                                                style={ListText}
-                                                            >
-                                                                <Image
-                                                                    loading="lazy"
-                                                                    alt="mark"
-                                                                    width={15}
-                                                                    height={14}
-                                                                    src={darkMode ? "/assests/Black/RightTickWhite.svg" : "/assests/Black/RightTick.svg"}
-                                                                    className="inline pr-[5px]"
-                                                                />
-                                                                {`${res.motherTongue ? capitalizeFirstLetter(res.motherTongue) : "NA , NA"}  `}
+                                                                {res?.maritalStatus ?
+                                                                    <>
+                                                                        <Image
+                                                                            loading="lazy"
+                                                                            alt="mark"
+                                                                            width={15}
+                                                                            height={14}
+                                                                            src={darkMode ? "/assests/Black/RightTickWhite.svg" : "/assests/Black/RightTick.svg"}
+                                                                            className="inline pr-[5px]"
+                                                                        />
+                                                                        {res.maritalStatus ? capitalizeFirstLetter(res.maritalStatus) : "NA , NA"}
+                                                                    </>
+                                                                    : ""}
                                                             </li>
 
                                                             <li
                                                                 className="text-[14px] 2xl:text-[14px] xl:text-[13px] text-[#000] dark:text-[#FFF]"
                                                                 style={ListText}
                                                             >
-                                                                <Image
-                                                                    loading="lazy"
-                                                                    alt="mark"
-                                                                    width={15}
-                                                                    height={14}
-                                                                    src={darkMode ? "/assests/Black/RightTickWhite.svg" : "/assests/Black/RightTick.svg"}
-                                                                    className="inline pr-[5px]"
-                                                                />
-                                                                {res.userProfessional ? capitalizeFirstLetter(res.userProfessional.jobTitle) : "NA , NA"}
+                                                                {res?.religion ?
+                                                                    <>
+                                                                        <Image
+                                                                            loading="lazy"
+                                                                            alt="mark"
+                                                                            width={15}
+                                                                            height={14}
+                                                                            src={darkMode ? "/assests/Black/RightTickWhite.svg" : "/assests/Black/RightTick.svg"}
+                                                                            className="inline pr-[5px]"
+                                                                        />
+                                                                        {`${res.religion ? capitalizeFirstLetter(res.religion) : "NA"}, ${res.cast ? capitalizeFirstLetter(res.cast) : "NA"}`}
+                                                                    </>
+                                                                    : ""}
                                                             </li>
+
+
+                                                            <li
+                                                                className="text-[14px] 2xl:text-[14px] xl:text-[13px] text-[#000] dark:text-[#FFF]"
+                                                                style={ListText}
+                                                            >
+                                                                {res?.address ?
+                                                                    <>
+                                                                        <Image
+                                                                            loading="lazy"
+                                                                            alt="mark"
+                                                                            width={15}
+                                                                            height={14}
+                                                                            src={darkMode ? "/assests/Black/RightTickWhite.svg" : "/assests/Black/RightTick.svg"}
+                                                                            className="inline pr-[5px]"
+                                                                        />
+                                                                        {`${res.address ? capitalizeFirstLetter(res.address.currentCity) : "NA"} , ${res.address ? capitalizeFirstLetter(res.address.currentCountry) : "NA"}`}
+                                                                    </>
+                                                                    : ""}
+                                                            </li>
+
+
+                                                            <li
+                                                                className="text-[14px] 2xl:text-[14px] xl:text-[13px] text-[#000] dark:text-[#FFF]"
+                                                                style={ListText}
+                                                            >
+                                                                {res?.motherTongue ?
+                                                                    <>
+                                                                        <Image
+                                                                            loading="lazy"
+                                                                            alt="mark"
+                                                                            width={15}
+                                                                            height={14}
+                                                                            src={darkMode ? "/assests/Black/RightTickWhite.svg" : "/assests/Black/RightTick.svg"}
+                                                                            className="inline pr-[5px]"
+                                                                        />
+                                                                        {`${res.motherTongue ? capitalizeFirstLetter(res.motherTongue) : "NA , NA"}  `}
+                                                                    </>
+                                                                    : ""}
+                                                            </li>
+
+                                                            <li
+                                                                className="text-[14px] 2xl:text-[14px] xl:text-[13px] text-[#000] dark:text-[#FFF]"
+                                                                style={ListText}
+                                                            >
+                                                                {res?.userProfessional ?
+                                                                    <>
+                                                                        <Image
+                                                                            loading="lazy"
+                                                                            alt="mark"
+                                                                            width={15}
+                                                                            height={14}
+                                                                            src={darkMode ? "/assests/Black/RightTickWhite.svg" : "/assests/Black/RightTick.svg"}
+                                                                            className="inline pr-[5px]"
+                                                                        />
+                                                                        {res.userProfessional ? capitalizeFirstLetter(res.userProfessional.jobTitle) : "NA , NA"}
+                                                                    </>
+                                                                    : ""}
+                                                            </li>
+
                                                         </ul>
                                                     </div>
                                                     <div className="mt-[20px] 2xl:mt-[20px] xl:mt-[15px] h-[45px]">
 
-                                                        <ShowMore userid={res?.id} text={res?.writeBoutYourSelf} maxLength={100} />
+                                                        <ShowMore userid={res?._id} text={res?.writeBoutYourSelf} maxLength={100} />
                                                     </div>
                                                 </div>
 
                                                 <div className="absolute right-0 mt-[-10px]">
                                                     <SendRequestBtn
-                                                        RequestId={sentrequest[res.id]}
+                                                        userdata={res?.name}
+                                                        Requeststatus={res?.friendsDetails}
+                                                        RequestId={sentrequest[res._id]}
                                                         HandleRequestModal={() => HandleRequestModal(res)}
                                                     />
                                                 </div>
@@ -485,7 +509,8 @@ function SampleUserProfile({ users }) {
                                             <LikeUser
                                                 ActiveLike={ActiveLike}
                                                 setActiveLike={setActiveLike}
-                                                userId={res.id}
+                                                userId={res._id}
+                                                TheUsername={res?.name}
                                             />
                                         </>}
                                     </div>
@@ -496,18 +521,12 @@ function SampleUserProfile({ users }) {
                     </Swiper>
 
                     <div className="z-8 relative  right-[20px] xl:right-[10px] 2xl:right-[10px]  grid place-items-center w-[10px] lg:w-[40px] h-[294px]">
-                        <button id="custom-next-button" className="w-[35px] h-[70px]">
-                            <Image
-                                loading="lazy"
-                                alt="next-icon"
-                                width={55}
-                                height={91}
-                                src={darkMode ? "/assests/dashboard/icon/next-card-btn-white.svg" : "/assests/dashboard/icon/next-card-btn.svg"}
-                            />
-                        </button>
+                        <div id="custom-next-button" className="Prevbtn rounded-r-full grid place-items-center cursor-pointer  hover:bg-[#F1F6FF]" style={{ width: "35px", height: "70.993px" }}>
+                            <Image width={7} height={14} className='transform scale-x-[-1]' alt='next-light' src="/assests/gridSection/Prev-Data.svg" />
+                        </div>
                     </div>
                 </div>
-            </div>
+            </div >
             <ShareModal UserID={UserID} isOpen={isModalOpen} onClose={closeModal} data={CurrURL} />
             <RegisterAlertModal
                 title={Data}

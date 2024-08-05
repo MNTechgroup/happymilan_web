@@ -209,7 +209,7 @@ const AddressTab = ({ AddressID }) => {
                                             </div>
                                             <div className='flex justify-end pb-[10px] mt-[10px]'>
 
-                                                <button onClick={SaveUpdateDataBtn} id='profile-save-details-btn' className='rounded-[10px] text-[white] w-[80px] h-[40px]' >Save</button>
+                                                <button onClick={SaveUpdateDataBtn} id='grad-button' className='rounded-[10px] text-[white] w-[80px] h-[40px]' >Save</button>
 
                                             </div>
                                         </div>

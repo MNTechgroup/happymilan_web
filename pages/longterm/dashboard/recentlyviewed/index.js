@@ -1,6 +1,5 @@
 
 import React, { useEffect, useState } from 'react'
-import NavBar from '../../../_components/layout/NavBar'
 import SideBar from '../../../_components/layout/SideBar'
 import ProtectedRoutes from '../../../routes/ProtectedRoutes'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,6 +8,7 @@ import UserprofileSkeleton from '../../../../components/common/shader/Userprofil
 import dynamic from 'next/dynamic';
 import Image from 'next/image'
 import { useDarkMode } from '../../../../ContextProvider/DarkModeContext'
+import NavBar from '../../../_components/layout/Navbar'
 
 const Footer = dynamic(() => import('../../../_components/layout/Footer'))
 const UserStory = dynamic(() => import('../../../_components/Container/UserStory'));
@@ -63,7 +63,8 @@ function index() {
               <UserStory />
             </div>
 
-            <div id='centerlized-content' className='dark:bg-[#18191a] 2xl:block xl:block lg:block hidden'>
+            <div id='centerlized-content' className='2xl:block xl:block lg:block hidden'>
+
               <div className=' relative 2xl:w-[715px] xl:w-[635px] lg:w-[650px] m-[10px] flex justify-between'>
 
                 <h1 className='text-[#000] dark:text-[#FFF] p-[5px] relative lg:left-[15px] 2xl:left-[40px] xl:left-[55px]'><span style={Text6} >New Requests</span></h1>

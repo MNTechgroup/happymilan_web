@@ -33,9 +33,6 @@ function StoryView() {
                         </svg>
                     </div>
 
-
-
-
                 </div>
             </div>
             <div className="relative 2xl:left-[0px] xl:left-[53px] left-[40px] top-[20px]">

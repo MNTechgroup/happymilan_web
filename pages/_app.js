@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { ThemeProvider } from "@material-tailwind/react";
 import { Provider } from 'react-redux';
 import store from "../store/store";
 import { SessionProvider } from 'next-auth/react'
 import useFcmToken from "../utils/hooks/useFcmToken";
-import { setCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 import { DarkModeProvider } from "../ContextProvider/DarkModeContext";
 import { UsersConversationProvider } from "../ContextProvider/UsersConversationContext";
 import { SocketProvider } from "../ContextProvider/SocketContext";
@@ -19,6 +19,7 @@ export default function MyApp({
   pageProps: { session, ...pageProps },
 }) {
   const { fcmToken, notificationPermissionStatus } = useFcmToken();
+
 
 
   // Use the token as needed
@@ -39,6 +40,7 @@ export default function MyApp({
         {/* Add more meta tags as needed */}
       </Head>
 
+      {/* <NavBar /> */}
 
       <Provider store={store}>
         <SessionProvider>
@@ -46,14 +48,15 @@ export default function MyApp({
             <SocketProvider>
               <UsersConversationProvider>
                 <ChatSettingsProvider>
+
                   {/* <DrawerProvider> */}
-                    <ThemeProvider>
+                  <ThemeProvider>
 
-                      {/* <Nextjsprogress height={2} color="#3742b6" /> */}
-                      {/* <Component {...pageProps} toggleDarkMode={toggleDarkMode} darkMode={darkMode}/> */}
+                    {/* <Nextjsprogress height={2} color="#3742b6" /> */}
+                    {/* <Component {...pageProps} toggleDarkMode={toggleDarkMode} darkMode={darkMode}/> */}
 
-                      <Component {...pageProps} />
-                    </ThemeProvider>
+                    <Component {...pageProps} />
+                  </ThemeProvider>
                   {/* </DrawerProvider> */}
                 </ChatSettingsProvider>
               </UsersConversationProvider>

@@ -108,6 +108,7 @@ function DeleteProfile() {
   }
 
 
+
   const [SelectDeleteReason, SetselectDeleteReason] = useState({
     isProfileDelete: true,
     reasonForProfileDelete: ""
@@ -167,12 +168,13 @@ function DeleteProfile() {
             <div>
               <button
                 onClick={handleModelOpen}
-                id="grad-button"
+                id={SelectHideDuration?.timeForProfileHide ? "grad-button" : "DisableBTN"}
+                disabled={!SelectHideDuration?.timeForProfileHide}
                 className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white] w-[120px] h-[40px] xl:h-[50px] rounded-[25px]"
               >
-                
-                  Hide
-                </button>
+
+                Hide
+              </button>
               <Modal
                 className=""
                 BackdropProps={{ style: { opacity: 1 } }}
@@ -195,14 +197,14 @@ function DeleteProfile() {
                         <div className="flex gap-[15px] mt-[40px]">
                           <button
                             onClick={handleModelClose}
-                            className="w-[126px] h-[40px] xl:h-[50px] border-[1px] border-[#0F52BA] rounded-[8px]"
+                            className="text-[16px] w-[126px] h-[40px] xl:h-[50px] border-[1px] border-[#0F52BA] rounded-[23px]"
                           >
-                            <h1 className="text-[16px]">Not Now</h1>
+                            Not Now
                           </button>
                           <button
                             id="grad-button"
                             onClick={HanldeHideProfile}
-                            className="w-[126px] h-[40px] xl:h-[50px]  rounded-[8px]"
+                            className="text-[16px] text-[#fff] w-[126px] h-[40px] xl:h-[50px]  rounded-[23px]"
                           >
                             {loading ?
                               <>
@@ -211,9 +213,7 @@ function DeleteProfile() {
                               </>
                               :
                               <>
-                                <h1 className="text-[16px] text-[#fff]">
-                                  Yes, Hide{" "}
-                                </h1>
+                                Yes, Hide{" "}
                               </>}
                           </button>
                         </div>
@@ -250,12 +250,11 @@ function DeleteProfile() {
             <div>
               <button
                 onClick={handleModelShow}
-                id="grad-button"
-                className="w-[120px] h-[40px] xl:h-[50px] rounded-[25px]"
+                id={SelectDeleteReason?.reasonForProfileDelete ? "grad-button" : "DisableBTN"}
+                disabled={!SelectDeleteReason?.reasonForProfileDelete}
+                className=" text-[12px] lg:text-[14px] xl:text-[16px] text-[white] w-[120px] h-[40px] xl:h-[50px] rounded-[25px]"
               >
-                <h1 className="text-[12px] lg:text-[14px] xl:text-[16px] text-[white]">
-                  Delete
-                </h1>
+                Delete
               </button>
               <Modal
                 className=""
@@ -279,14 +278,14 @@ function DeleteProfile() {
                         <div className="flex gap-[15px] mt-[40px]">
                           <button
                             onClick={handleModelHide}
-                            className="w-[126px] h-[40px] xl:h-[50px] border-[1px] border-[#0F52BA] rounded-[8px]"
+                            className="hover:bg-[#EFF5FF] text-[16px] w-[126px] h-[40px] xl:h-[50px] border-[1px] border-[#0F52BA] rounded-[23px]"
                           >
-                            <h1 className="text-[16px]">Not Now</h1>
+                            Not Now
                           </button>
                           <button
                             id="grad-button"
                             onClick={HanldeDeleteProfile}
-                            className="w-[126px] h-[40px] xl:h-[50px]  rounded-[8px]"
+                            className="text-[16px] text-[#fff] w-[126px] h-[40px] xl:h-[50px]  rounded-[23px]"
                           >{loading ?
                             <>
                               <Image alt="loader" width={25} height={25} className='animate-spin inline ' src='/assests/animation/loaderIcon.svg' />
@@ -294,9 +293,7 @@ function DeleteProfile() {
                             </>
                             :
                             <>
-                              <h1 className="text-[16px] text-[#fff]">
-                                Yes, Delete{" "}
-                              </h1>
+                              Yes, Delete{" "}
                             </>
                             }
                           </button>

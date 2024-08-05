@@ -1,11 +1,13 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Skeleton } from '@mui/material';
+import { Dialog, Skeleton } from '@mui/material';
 import { useDarkMode } from '../../../ContextProvider/DarkModeContext';
 import { fetchAllUsers } from '../../../store/actions/GetingAlluser';
 import { fetchAllUsersdata, loadMoreUsers } from '../../../utils/API/MoreSuggestion';
 import { sendRequest } from '../../../store/actions/UsersAction';
+import Link from 'next/link';
+import Avatar from 'react-avatar';
 
 function MoreSuggestion() {
     const dispatch = useDispatch();
@@ -30,20 +32,47 @@ function MoreSuggestion() {
         loadMoreUsers(startIndex, usersdata, setStartIndex, setVisibleUsers, setIsLoading);
     };
 
+    const Urlmodaltext = {
+        color: "#000",
+        fontFamily: "Poppins",
+        fontStyle: "normal",
+        fontWeight: "400",
+        lineHeight: "normal",
+    };
+
+
+    const [openShortlistModal, setopenShortlistModal] = React.useState(false);
+
+    const [shortlistText, setshortlistText] = useState();
+
     const handleRequestModal = async (user) => {
         try {
-            await dispatch(sendRequest(user.id));
+            await dispatch(sendRequest(user._id));
             setsentRequest((prevState) => ({
                 ...prevState,
-                [user.id]: !prevState[user.id],
+                [user._id]: !prevState[user._id],
             }));
+
+
+            if (!sentrequest[user._id]) {
+
+                setshortlistText(`You sent a request to ${user?.name}`);
+                setopenShortlistModal(true);
+            } else {
+                setshortlistText("Request Removed..");
+                setopenShortlistModal(true);
+            }
+
+            setTimeout(() => {
+                setopenShortlistModal(false);
+            }, 900);
         } catch (error) {
             console.error("Error sending request:", error);
         }
     };
 
-    const LikeUserBtn = React.memo(({ requestId, handleRequestModal }) => {
-        const [sent, setSent] = useState(false);
+    const LikeUserBtn = React.memo(({ RequestStatus, requestId, handleRequestModal }) => {
+
         const [onHover, setOnHover] = useState(false);
 
         return (
@@ -58,11 +87,11 @@ function MoreSuggestion() {
                     width={27}
                     height={27}
                     src={
-                        requestId || sent
+                        requestId || RequestStatus?.status === "requested" || RequestStatus?.status === "accepted"
                             ? "/assests/common/suggestion-mark-icon.svg"
                             : onHover
-                            ? "/assests/dashboard/icon/send-icon-2.svg"
-                            : "/assests/gridSection/Grid-before-sent.svg"
+                                ? "/assests/dashboard/icon/send-icon-2.svg"
+                                : "/assests/gridSection/Grid-before-sent.svg"
                     }
                 />
             </div>
@@ -90,15 +119,6 @@ function MoreSuggestion() {
         boxShadow: "0px 0px 14px 0px rgba(0, 0, 0, 0.07)",
     };
 
-    const ImagenotFound = {
-        color: "#B3CBF1",
-        textAlign: "center",
-        fontFamily: "Poppins",
-        fontSize: "6px",
-        fontStyle: "normal",
-        fontWeight: "500",
-        lineHeight: "normal",
-    };
 
     return (
         <div className='p-[20px] 2xl:w-[300px] xl:w-[280px] h-full bg-[#FFF] dark:bg-[#242526]' style={RequestBox}>
@@ -147,42 +167,31 @@ function MoreSuggestion() {
                             ))
                         ) : (
                             visibleUsers.map((res, index) => (
-                                <li key={res.id}>
+                                <li key={res._id}>
                                     <div className='flex justify-between items-center'>
                                         <div className='flex space-x-[20px]'>
                                             <div>
                                                 {res?.profilePic ? (
-                                                    <Image
-                                                        quality={40}
-                                                        loading='lazy'
-                                                        className='rounded-[50%]'
-                                                        style={{ height: "42px", width: "40px", borderRadius: "50%", objectFit: "cover" }}
-                                                        width={42}
-                                                        height={42}
-                                                        alt='request-1'
-                                                        src={res.profilePic}
-                                                    />
-                                                ) : (
-                                                    <div
-                                                        className='bg-[#F8FBFF] grid place-items-center'
-                                                        style={{ height: "42px", width: "40px", borderRadius: "50%", objectFit: "cover" }}
-                                                    >
+                                                    <Link href={`/longterm/dashboard/${res._id}`}>
                                                         <Image
-                                                            quality={25}
+                                                            quality={40}
                                                             loading='lazy'
-                                                            alt='not-found'
-                                                            width={18}
-                                                            height={18}
-                                                            src={"/assests/dashboard/icon/NotFound-img.svg"}
+                                                            className='rounded-[50%] hover:opacity-90 duration-100'
+                                                            style={{ height: "42px", width: "40px", borderRadius: "50%", objectFit: "cover" }}
+                                                            width={42}
+                                                            height={42}
+                                                            alt='request-1'
+                                                            src={res.profilePic}
                                                         />
-                                                        <h1 className='relative top-[-5px]' style={ImagenotFound}>
-                                                            No Image
-                                                        </h1>
-                                                    </div>
+                                                    </Link>
+                                                ) : (
+                                                    <Avatar name={res?.name} round size='42' />
                                                 )}
                                             </div>
                                             <div>
-                                                <h1 className='text-[#000] dark:text-[#FFF]' style={Text7}>{res.name}</h1>
+                                                <Link href={`/longterm/dashboard/${res._id}`}>
+                                                    <h1 className='text-[#000] dark:text-[#FFF] hover:opacity-75 duration-100' style={Text7}>{res.name}</h1>
+                                                </Link>
                                                 <h1 className='text-[#000] dark:text-[#FFF]' style={Text8}>
                                                     {res?.gender === "male" ? "M" : res?.gender === "female" ? "F" : "NA"}, 29, {res?.userProfessional ? res?.userProfessional?.jobTitle : "NA"}
                                                 </h1>
@@ -192,9 +201,10 @@ function MoreSuggestion() {
                                             </div>
                                         </div>
                                         <LikeUserBtn
-                                            requestId={sentrequest[res?.id]}
+                                            requestId={sentrequest[res?._id]}
                                             handleRequestModal={() => handleRequestModal(res)}
                                             user={res}
+                                            RequestStatus={res?.friendsDetails}
                                         />
                                     </div>
                                 </li>
@@ -213,6 +223,33 @@ function MoreSuggestion() {
                     </button>
                 </div>
             </div>
+
+
+            <React.Fragment>
+                <Dialog
+                    open={openShortlistModal}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                    PaperProps={{
+                        style: {
+                            backgroundColor: "transparent", // or 'none' if you prefer
+                            boxShadow: "none",
+                        },
+                    }}
+                    BackdropProps={{
+                        style: { opacity: 0, backgroundColor: "none", boxShadow: "none" },
+                    }}
+                >
+                    <div
+                        style={{ padding: "17px 19px 17px 20px" }}
+                        className="bg-[#333333] w-[249px] rounded-[100px] text-center grid place-items-center"
+                    >
+                        <div className="text-[14px]" style={Urlmodaltext}>
+                            <span className="text-[#fff]"> {shortlistText}</span>
+                        </div>
+                    </div>
+                </Dialog>
+            </React.Fragment>
         </div>
     );
 }

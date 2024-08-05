@@ -278,66 +278,66 @@ function Request({ data, loading }) {
                                                                         <MatchScoreModal user={res?.user} />
 
                                                                     </li>
-                                                                <li>
-                                                                    <div onClick={() => HandleShortlist(res.user.id)} className="cursor-pointer hover:bg-[#F2F7FF] p-[5px] rounded-[50%] relative top-[-5px]">
-                                                                        <Image
-                                                                            loading="lazy"
-                                                                            width={15}
-                                                                            height={14}
-                                                                            alt="star"
-                                                                            src={"/assests/Black/Stars-2.svg"}
-                                                                        />
-                                                                    </div>
-                                                                </li>
-                                                                <li>
+                                                                    <li>
+                                                                        <div onClick={() => HandleShortlist(res.user.id)} className="cursor-pointer hover:bg-[#F2F7FF] p-[5px] rounded-[50%] relative top-[-5px]">
+                                                                            <Image
+                                                                                loading="lazy"
+                                                                                width={15}
+                                                                                height={14}
+                                                                                alt="star"
+                                                                                src={"/assests/Black/Stars-2.svg"}
+                                                                            />
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
 
-                                                                    <ProfileMenu SetCurURL={SetCurURL} openBlockModal={openBlockModal} OpenReportModal={OpenReportModal} openModal={openModal} res={res} />
+                                                                        <ProfileMenu SetCurURL={SetCurURL} openBlockModal={openBlockModal} OpenReportModal={OpenReportModal} openModal={openModal} res={res} />
 
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div className='mt-[10px] 2xl:mt-[10px] xl:mt-[5px] pl-[2px]'>
-                                                        <div id="user-card">
-                                                            <ul id="user-card-grid">
-                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='img' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{"NA"}</li>
-                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='img' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{"NA"}</li>
-                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='img' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{"NA"}</li>
-                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='img' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{"NA"}</li>
-                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='img' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{"NA"}</li>
-                                                                <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='img' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{"NA"}</li>
-                                                            </ul>
-                                                        </div>
-                                                        <div className='mt-[20px] 2xl:mt-[20px] xl:mt-[15px]'>
-                                                            <p style={Text3} className='text-[#979797] text-[14px] 2xl:text-[12px] xl:text-[12px] '>{"Description..."}<span className='text-[#0F52BA]'> more </span></p>
-                                                        </div>
-                                                    </div>
-                                                    <div className='flex justify-end items-center mt-[20px] 2xl:mt-[20px] xl:mt-[20px] lg:mt-0 mr-[20px] space-x-[10px]'>
-                                                        <h1 className='text-[16px] 2xl:text-[16px] xl:text-[14px]' style={BoldText}>Want to accept?</h1>
-                                                        <div className='flex space-x-[21px]'>
-                                                            <div onClick={() => HanldeAccept(res)} onMouseEnter={() => setIsHovered2(true)}
-                                                                onMouseLeave={() => setIsHovered2(false)}
-                                                                id={isHovered2 ? 'grad-bg' : ""} className='cursor-pointer w-[40px]  h-[40px] grid place-items-center rounded-full border-[1px] border-[#0F52BA]'>
-                                                                <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path d="M5.65147 12L0 6.34853L0.637477 5.73308L5.65147 10.747L16.3765 0L17.014 0.637506L5.65147 12Z" fill={isHovered2 ? "white" : "black"} />
-                                                                </svg>
+                                                                    </li>
+                                                                </ul>
                                                             </div>
-                                                            <div onClick={() => HanldeReject(res)} onMouseEnter={() => setIsHovered(true)}
-                                                                onMouseLeave={() => setIsHovered(false)} id={isHovered ? "grad-bg" : ""} className='w-[40px] h-[40px] grid place-items-center rounded-full border-[1px] border-[#0F52BA]'>
-                                                                <svg className='SVG-hover' width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path d="M0.529793 12L0 11.4702L5.47021 6L0 0.529793L0.529793 0L6 5.47021L11.4702 0L12 0.529793L6.52979 6L12 11.4702L11.4702 12L6 6.52979L0.529793 12Z" fill={isHovered ? "white" : "black"} />
-                                                                </svg>
+                                                        </div>
+                                                        <div className='mt-[10px] 2xl:mt-[10px] xl:mt-[5px] pl-[2px]'>
+                                                            <div id="user-card">
+                                                                <ul id="user-card-grid">
+                                                                    <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='img' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{"NA"}</li>
+                                                                    <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='img' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{"NA"}</li>
+                                                                    <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='img' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{"NA"}</li>
+                                                                    <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='img' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{"NA"}</li>
+                                                                    <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='img' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{"NA"}</li>
+                                                                    <li className='text-[14px] 2xl:text-[14px] xl:text-[13px]' style={ListText}><Image alt='img' width={15} height={14} src='/assests/Black/RightTick.svg' className='inline pr-[5px]' />{"NA"}</li>
+                                                                </ul>
+                                                            </div>
+                                                            <div className='mt-[20px] 2xl:mt-[20px] xl:mt-[15px]'>
+                                                                <p style={Text3} className='text-[#979797] text-[14px] 2xl:text-[12px] xl:text-[12px] '>{"Description..."}<span className='text-[#0F52BA]'> more </span></p>
+                                                            </div>
+                                                        </div>
+                                                        <div className='flex justify-end items-center mt-[20px] 2xl:mt-[20px] xl:mt-[20px] lg:mt-0 mr-[20px] space-x-[10px]'>
+                                                            <h1 className='text-[16px] 2xl:text-[16px] xl:text-[14px]' style={BoldText}>Want to accept?</h1>
+                                                            <div className='flex space-x-[21px]'>
+                                                                <div onClick={() => HanldeAccept(res)} onMouseEnter={() => setIsHovered2(true)}
+                                                                    onMouseLeave={() => setIsHovered2(false)}
+                                                                    className={`${isHovered2 ? "bg-custom-gradient" : ""}  cursor-pointer w-[40px]  h-[40px] grid place-items-center rounded-full border-[1px] border-[#0F52BA]`}>
+                                                                    <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path d="M5.65147 12L0 6.34853L0.637477 5.73308L5.65147 10.747L16.3765 0L17.014 0.637506L5.65147 12Z" fill={isHovered2 ? "white" : "black"} />
+                                                                    </svg>
+                                                                </div>
+                                                                <div onClick={() => HanldeReject(res)} onMouseEnter={() => setIsHovered(true)}
+                                                                    onMouseLeave={() => setIsHovered(false)} className={`${isHovered ? "bg-custom-gradient" : ""} w-[40px] h-[40px] grid place-items-center rounded-full border-[1px] border-[#0F52BA]`}>
+                                                                    <svg className='SVG-hover' width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path d="M0.529793 12L0 11.4702L5.47021 6L0 0.529793L0.529793 0L6 5.47021L11.4702 0L12 0.529793L6.52979 6L12 11.4702L11.4702 12L6 6.52979L0.529793 12Z" fill={isHovered ? "white" : "black"} />
+                                                                    </svg>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
 
-                                        </div >
+                                            </div >
 
                                         </>
-                        )
+                                    )
                                 })
 
                             }
@@ -346,35 +346,35 @@ function Request({ data, loading }) {
 
 
 
+                        </div>
+
                     </div>
 
-                </div>
+                    <ShareModal isOpen={isModalOpen} onClose={closeModal} />
 
-            <ShareModal isOpen={isModalOpen} onClose={closeModal} />
-
-            <React.Fragment>
-                <Dialog
-                    open={openURLModal}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                >
-                    <DialogContent className='w-[249px] h-[81px] text-center grid place-items-center'>
-                        <div className='text-[14px]' style={Urlmodaltext}>
-                            URL has been copied
-                        </div>
-                    </DialogContent>
-                </Dialog>
-            </React.Fragment>
-        </>
+                    <React.Fragment>
+                        <Dialog
+                            open={openURLModal}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                            <DialogContent className='w-[249px] h-[81px] text-center grid place-items-center'>
+                                <div className='text-[14px]' style={Urlmodaltext}>
+                                    URL has been copied
+                                </div>
+                            </DialogContent>
+                        </Dialog>
+                    </React.Fragment>
+                </>
                 : <>
-        <div className='h-[500px] grid place-items-center'>
-            <div className='grid place-items-center space-y-[5px]'>
-                <Image alt='not-found' width={34} height={34} src={"/assests/dashboard/icon/NotFound-img.svg"} />
-                <h1 className='inline' style={ImageNotFoundText}>No Profiles Found</h1>
-            </div>
-        </div>
-    </>
-}
+                    <div className='h-[500px] grid place-items-center'>
+                        <div className='grid place-items-center space-y-[5px]'>
+                            <Image alt='not-found' width={34} height={34} src={"/assests/dashboard/icon/NotFound-img.svg"} />
+                            <h1 className='inline' style={ImageNotFoundText}>No Profiles Found</h1>
+                        </div>
+                    </div>
+                </>
+            }
 
             <RegisterAlertModal
                 title={Data}

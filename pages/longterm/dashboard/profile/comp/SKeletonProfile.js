@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchMyProfileData  } from '../../../../../store/reducers/MyProfile';
+import { fetchMyProfileData } from '../../../../../store/reducers/MyProfile';
 import { Skeleton } from '@mui/material';
 
 function SkeletonProfile() {
@@ -28,12 +28,7 @@ function SkeletonProfile() {
         fontWeight: "600",
         lineHeight: "normal"
     }
-    const Text4 = {
-        fontFamily: "Poppins",
-        fontStyle: "normal",
-        fontWeight: "400",
-        lineHeight: "24px"
-    }
+    
     const Text5 = {
         fontFamily: "Poppins",
         fontStyle: "normal",
@@ -139,11 +134,9 @@ function SkeletonProfile() {
                     <div id='grad-btn' className='w-full h-[100px] 2xl:h-[138px] xl:h-[138px] md:h-[138px] lg:h-[138px] bg-[#0F52BA] rounded-[10px]'>
 
                         <div className='flex justify-between'>
-                            <div>
-                                <Image alt='left-icon' width={32} height={32} onClick={() => router.back()} className='cursor-pointer m-[10px] w-[30px] h-[30px] md:w-[32px] md:h-[32px]' src='/assests/dashboard/story/arrow-left.svg' />
-                            </div>
 
-                            <div onClick={() => router.push("/longterm/dashboard/seting")} className='block lg:hidden cursor-pointer pr-[20px] pt-[20px]'>
+
+                            <div className='block lg:hidden cursor-pointer pr-[20px] pt-[20px]'>
                                 <span class=" h-12 w-12 text-lg text-white "><i class={`bx bx-cog `}></i></span>
                             </div>
 
@@ -238,7 +231,7 @@ function SkeletonProfile() {
 
                             <div className='hidden lg:block pt-[10px] pb-[30px]'>
                                 {/* <GeneralTab/> */}
-                                <GeneralTab/>
+                                <GeneralTab />
                             </div>
                             <div className='block lg:hidden pt-[10px] pb-[30px]'>
                                 {/* <GeneralTab/> */}

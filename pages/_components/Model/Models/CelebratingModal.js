@@ -82,9 +82,9 @@ function CelebratingModal({ isOpen, onClose, title }) {
 
   return (
     <>
-      <div className="fixed inset-0 flex items-center justify-center z-50">
+      <div className="fixed inset-0 flex items-center justify-center z-[50]">
       <div className="fixed inset-0 bg-black opacity-50"></div>
-        <div className="z-10 2xl:w-[450px] 2xl:h-[516px] xl:w-[350px] xl:h-[400px] bg-[#FFF] rounded-[14px]">
+        <div className="z-[50] 2xl:w-[450px] 2xl:h-[516px] xl:w-[350px] xl:h-[400px] bg-[#FFF] rounded-[14px]">
           <div style={divStyle} className="2xl:w-[450px] xl:w-[350px] 2xl:h-[111px] xl:h-[80px]">
             <div className="grid place-items-center w-full h-full">
               <div className="absolute">

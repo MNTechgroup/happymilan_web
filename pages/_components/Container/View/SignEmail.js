@@ -145,7 +145,7 @@ const SignInEmail = () => {
                 otp: otp.join(""),
                 deviceToken: DeviceToken
             }
-            
+
 
 
             const response = await axios.post(
@@ -227,13 +227,15 @@ const SignInEmail = () => {
 
             // Make PUT request to update user password
             const response = await axios.put("https://happymilan.tech/api/v1/user/auth/update-user", requestBody, { headers });
-           
+
 
             // Handle the response as needed (e.g., display a success message)
             console.log("Password update successful:", response);
 
             // Update cookies with user data
             setCookie('userName', response.data.userData.name);
+            console.log("userInfo : ", response?.data)
+            localStorage.setItem("personal", JSON.stringify(response?.data?.userData))
             setCookie('userid', response.data.userData.id);
             localStorage.setItem("UserRegister", true)
 
@@ -324,7 +326,7 @@ const SignInEmail = () => {
 
                             <div className="text-center flex flex-col 2xl:pt-0 xl:pt-[10px] justify-center items-center">
 
-                                <button id="grad-btn" style={Text2} className="w-[300px] h-[51px] bg-[#0F52BA] rounded-[10px] text-[#FFF]" onClick={handleOTPSubmit}>Register Now</button>
+                                <button id="grad-btn" style={Text2} className="w-[300px] h-[51px] bg-[#0F52BA] rounded-[10px] text-[#FFF]" onClick={handleOTPSubmit}>Verify</button>
                             </div>
                         </div>
 

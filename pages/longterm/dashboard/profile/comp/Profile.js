@@ -534,7 +534,11 @@ function Profile() {
     const router = useRouter();
 
     const [isHovered, setIsHovered] = useState(false)
-    const [modalOpen, setModalOpen] = useState(false);
+
+    const [openProfileModal, setOpenProfileModal] = React.useState(false);
+    const handleOpen = () => setOpenProfileModal(true);
+    const handleClose = () => setOpenProfileModal(false);
+
 
     if (status === STATUSES.LOADING) {
 
@@ -551,7 +555,9 @@ function Profile() {
 
             <div className=" dark:bg-[#18191a] 2xl:pl-0 2xl:pr-0 xl:pl-0 xl:pr-0 lg:pl-[0px] lg:pr-[30px] pl-[0px] pr-[20px] relative 2xl:left-[40px] xl:left-[45px] lg:left-0 left-[0px]">
                 <div className={` flex m-[10px] 2xl:w-[631px] 2xl:h-[294px] xl:w-[540px] xl:h-[284px] lg:w-full w-full dark:bg-[#18191a] bg-[#FFF]`}>
-                    <div id='profile-background-grad' className=' w-full h-[100px] 2xl:h-[138px] xl:h-[138px] md:h-[138px] lg:h-[138px] bg-[#0F52BA] rounded-[10px]'>
+                    <div
+                        // id='profile-background-grad' 
+                        className='bg-custom-gradient w-full h-[100px] 2xl:h-[138px] xl:h-[138px] md:h-[138px] lg:h-[138px] bg-[#0F52BA] rounded-[10px]'>
 
                         <div className='flex justify-between pb-[50px]'>
                             {/* <div>
@@ -566,7 +572,7 @@ function Profile() {
                         <div>
                         </div>
                         <div className=' grid place-items-center'>
-                            <div onClick={() => setModalOpen(true)} onMouseEnter={() => setIsHovered(true)}
+                            <div onClick={handleOpen} onMouseEnter={() => setIsHovered(true)}
                                 onMouseLeave={() => setIsHovered(false)}>
                                 {
                                     token ? (
@@ -634,7 +640,7 @@ function Profile() {
                                         <div className='flex items-center space-x-[10px]'>
                                             <Image loading='lazy' alt='heartIcon' width={16} height={14} src='/assests/dashboard/icon/heart-icon.svg' />
                                             {/* <h1 style={Text3} className='text-[12px] md:text-[14px] lg:text-[14px] 2xl:text-[14px] xl:text-[13px]'>{totalLikes}<span style={Text2} className='pl-[5px] text-[14px] text-[#8B8B8B]'> Likes </span></h1> */}
-                                            <h1 style={Text3} id='live-count'  className='dark:text-[#FFF] text-[12px] md:text-[14px] lg:text-[14px] 2xl:text-[14px] xl:text-[13px]'>{LiveLikeCount}<span style={Text2} className='pl-[5px] text-[14px] text-[#8B8B8B]'> Likes </span></h1>
+                                            <h1 style={Text3} id='live-count' className='dark:text-[#FFF] text-[12px] md:text-[14px] lg:text-[14px] 2xl:text-[14px] xl:text-[13px]'>{LiveLikeCount}<span style={Text2} className='pl-[5px] text-[14px] text-[#8B8B8B]'> Likes </span></h1>
                                         </div>
                                     </li>
                                     <li>
@@ -767,12 +773,16 @@ function Profile() {
                 </div>
             </div>
 
-            {modalOpen && (
-                <Modal
-                    setModalOpen={setModalOpen}
-                    closeModal={() => setModalOpen(false)}
-                />
-            )}
+
+            <Modal
+                // setModalOpen={setModalOpen}
+                // closeModal={() => setModalOpen(false)}
+                handleClose={handleClose}
+                handleOpen={handleOpen}
+                setOpenProfileModal={setOpenProfileModal}
+                openProfileModal={openProfileModal}
+            />
+
 
         </>
     )

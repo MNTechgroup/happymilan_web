@@ -38,7 +38,7 @@ const ImageNotFoundText = {
                         (data && data.user && data.user.userProfilePic && data.user.userProfilePic.length > 0) ? (
                             data.user.userProfilePic.map((res, index) => (
                                 <SwiperSlide key={index}>
-                                    <Image loading='lazy' width={0} height={0} onClick={()=>handleClickOpen(res,index)} style={{objectFit:"cover"}} alt='user-images' className='space-x-[10px] rounded-[10px] h-[381px] w-[300px] cursor-pointer' src={res.url} />
+                                    <Image loading='lazy' width={0} height={0} onClick={()=>handleClickOpen(res,index)} style={{objectFit:"cover"}} alt='user-images' className='space-x-[10px] rounded-[10px] h-[381px] w-[300px] cursor-pointer' src={res?.url} />
                                 </SwiperSlide>
                             ))
                         ) : (

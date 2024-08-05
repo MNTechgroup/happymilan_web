@@ -9,6 +9,7 @@ import { useDarkMode } from '../../../ContextProvider/DarkModeContext'
 import dynamic from 'next/dynamic'
 import GridLikeUser from '../common/Buttons/GridLikeUser'
 import ShortlistUser from '../common/Buttons/ShortlistUser'
+import Avatar from 'react-avatar'
 
 // Dynamically imported components
 const ShareModal = dynamic(() => import("../Model/Models/ShareModal"));
@@ -50,16 +51,6 @@ function UserGridProfile() {
         borderRadius: "10px",
         background: darkMode ? "#242526" : "#FFF",
         boxShadow: "0px 0px 14px 0px rgba(0, 0, 0, 0.07)"
-    }
-
-    const ImagenotFound = {
-        color: "#B3CBF1",
-        textAlign: "center",
-        fontFamily: "Poppins",
-        fontSize: "12px",
-        fontStyle: "normal",
-        fontWeight: "500",
-        lineHeight: "normal"
     }
 
     const Urlmodaltext = {
@@ -208,8 +199,6 @@ function UserGridProfile() {
 
 
     const HandleVisitProfile = (res) => {
-        // () => router.push(`/longterm/dashboard/${user?.id}`)
-
         router.push(`/longterm/dashboard/${res?.id}`)
     }
 
@@ -286,9 +275,7 @@ function UserGridProfile() {
                                                     </>
                                                         :
                                                         <>
-                                                            <div className='grid place-items-center w-[102px] h-[102px] rounded-[50%] bg-[#F8FBFF]'>
-                                                                <h1 style={ImagenotFound}>No Image</h1>
-                                                            </div>
+                                                            <Avatar name={user?.name} round size='100' />
                                                         </>
                                                     }
                                                 </div>
@@ -316,7 +303,6 @@ function UserGridProfile() {
 
                 </div>
                 <div className=' relative left-[-5px] lg:left-[0px] flex pt-[50px] space-x-[40px] justify-center items-center w-[90%] 2xl:w-full xl:w-full'>
-                    {/* <button disabled={pagesdata?.hasPrevPage != true} onClick={HandlePrevPage} className='cursor-pointer w-[80px] h-[30px] rounded-[10px]' id='active-no'>Prev</button> */}
                     <button disabled={pagesdata?.hasPrevPage != true} onClick={HandlePrevPage} className='duration-300 cursor-pointer w-[44px] h-[44px] border-[1px] dark:border-[#FFF] border-[black] grid place-items-center rounded-full'>
                         {darkMode ?
                             <Image width={7} height={14} alt='prev-dark' src="/assests/gridSection/Prev-Data-dark.svg" />

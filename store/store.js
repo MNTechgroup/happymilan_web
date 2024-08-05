@@ -12,10 +12,10 @@ import { imageReducer } from './reducers/UploadImagereducer';
 import { searchformReducer } from './reducers/SearchUsersReducer';
 import Userseting from './reducers/UserSettingReducer';
 import SafetyConsentReducer from './reducers/safetyConsentReducer';
-import UpgradePlansReducer from './reducers/UpgradeReducer';
 import AuthReducer from './reducers/Authreducer';
 import SpamuserSlice from './reducers/SpamReportReducer'
 import UserStoryView from './reducers/UserStoryView';
+import UpgradePlansReducer from './reducers/UpgradeReducer';
 
 const store = configureStore({
   reducer: {

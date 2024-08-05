@@ -9,7 +9,7 @@ import setCanvasPreview from "../CanvasPreview";
 const ASPECT_RATIO = 1;
 const MIN_DIMENSION = 150;
 
-const ImageCropper = ({ setModalOpen , closeModal, updateAvatar }) => {
+const ImageCropper = ({ setModalOpen, handleClose, closeModal, updateAvatar }) => {
   const imgRef = useRef(null);
   const previewCanvasRef = useRef(null);
   const [imgSrc, setImgSrc] = useState("");
@@ -50,7 +50,7 @@ const ImageCropper = ({ setModalOpen , closeModal, updateAvatar }) => {
         key: file.name, // Use file name or any other identifier
         size: file.size
       };
-      
+
       const imageElement = new Image();
       const imageUrl = reader.result?.toString() || "";
       imageElement.src = imageUrl;
@@ -85,7 +85,7 @@ const ImageCropper = ({ setModalOpen , closeModal, updateAvatar }) => {
     setCrop(centeredCrop);
   };
 
-  
+
 
   const handleCropComplete = (crop) => {
     if (imgRef.current && crop.width && crop.height) {
@@ -141,7 +141,7 @@ const ImageCropper = ({ setModalOpen , closeModal, updateAvatar }) => {
 
   useEffect(() => {
     if (loader.process) {
-      setModalOpen(false)
+      handleClose();
       dispatch(Updateprofileimageprocess())
 
     }
@@ -157,16 +157,16 @@ const ImageCropper = ({ setModalOpen , closeModal, updateAvatar }) => {
               <h1 className="" style={SpanStyle}>Upload Photo</h1>
             </li>
             <li>
-              <img alt='close-icon' className="w-[24px] h-[24px] cursor-pointer" onClick={closeModal} src="/assests/social/close.svg" />
+              <img alt='close-icon' className="w-[24px] h-[24px] cursor-pointer" onClick={handleClose} src="/assests/social/close.svg" />
             </li>
           </ul>
         </div>
       </div>
       {InputVisible && (
-      
+
         <div className="grid place-items-center">
           <label htmlFor="dropzone-file">
-            <div className='relative top-[40px] rounded-[10px] grid place-items-center 2xl:w-[540px] 2xl:h-[425px] xl:w-[540px] xl:h-[325px] w-[90%] h-[325px] bg-[#F5F5F5]'>
+            <div className='relative top-[40px] rounded-[10px] grid place-items-center 2xl:w-[540px] 2xl:h-[400px] xl:w-[540px] xl:h-[325px] w-[90%] h-[325px] bg-[#F5F5F5]'>
               <div className=''>
                 <input id="dropzone-file" className="cursor-pointer opacity-0 absolute" type="file" accept="image/*" onChange={onSelectFile} />
                 <div className='w-full grid place-items-center mt-[-10%] mb-[10%]'>
@@ -227,7 +227,7 @@ const ImageCropper = ({ setModalOpen , closeModal, updateAvatar }) => {
                 canvas.toBlob((blob) => {
                   if (blob) {
                     const urldata = URL.createObjectURL(blob)
-                    
+
 
                     const CurrentImageData = {
                       key: ImageData.name,

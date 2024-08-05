@@ -202,7 +202,7 @@ function RecentViewUser() {
                                                                     return (
                                                                         <>
                                                                             <SwiperSlide key={Index}>
-                                                                                <Image loading='lazy' alt='img' width={197} height={258} style={{ borderRadius: "10px", objectFit: "cover" }} className='w-[197px] h-[258px]' src={imageurl.url} />
+                                                                                <Image  loading='lazy' alt='img' width={197} height={258} style={{ borderRadius: "10px", objectFit: "cover" }} className='w-[197px] h-[258px]' src={imageurl.url} />
                                                                             </SwiperSlide>
                                                                         </>
                                                                     )

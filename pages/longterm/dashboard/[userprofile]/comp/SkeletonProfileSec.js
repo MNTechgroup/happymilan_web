@@ -91,7 +91,7 @@ function SkeletonProfileSec() {
         )
     }
 
-   
+
 
 
 
@@ -103,27 +103,29 @@ function SkeletonProfileSec() {
 
             <div className="2xl:pl-0 2xl:pr-0 xl:pl-0 xl:pr-0 lg:pl-[0px] lg:pr-[30px] pl-[0px] pr-[20px] relative 2xl:left-[40px] xl:left-[45px] lg:left-0 left-[0px]">
                 <div className={`flex m-[10px] 2xl:w-[631px] 2xl:h-[294px] xl:w-[540px] xl:h-[284px] lg:w-full w-full bg-[#FFF]`}>
-                    <div id='grad-btn' className='w-full h-[100px] 2xl:h-[138px] xl:h-[138px] md:h-[138px] lg:h-[138px] bg-[#0F52BA] rounded-[10px]'>
+                    <div id='grad-btn'
+                        className="ml-[-5px] mt-[-3px] bg-custom-gradient w-full h-[100px] 2xl:h-[138px] xl:h-[138px] md:h-[138px] lg:h-[138px] bg-[#0F52BA] rounded-[10px]"
+                    // className='w-full h-[100px] 2xl:h-[138px] xl:h-[138px] md:h-[138px] lg:h-[138px] bg-[#0F52BA] rounded-[10px]'
+                    >
 
-                        <div>
+                        {/* <div>
                             <div className='absolute right-[20px] pt-[10px]'>
                                 <ul className='flex space-x-[20px] items-center'>
                                     <li><Image loading='lazy' alt="share" width={15} height={16} src='/assests/Black/Share-icon-2.svg' /></li>
                                     <li><Image loading='lazy' alt="download" width={33} height={32} src='/assests/Black/Download-2.svg' /></li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> */}
 
 
-                        <div className='flex justify-between'>
+                        {/* <div className='flex justify-between'>
                             <div>
-                                <Image loading='lazy' alt="arrow" width={32} height={32}  className='cursor-pointer m-[10px] w-[30px] h-[30px] md:w-[32px] md:h-[32px]' src='/assests/dashboard/story/arrow-left.svg' />
+                                <Image loading='lazy' alt="arrow" width={32} height={32} className='cursor-pointer m-[10px] w-[30px] h-[30px] md:w-[32px] md:h-[32px]' src='/assests/dashboard/story/arrow-left.svg' />
                             </div>
-                        </div>
-                        <div>
-                        </div>
-                        <div className='grid place-items-center'>
-                        <Skeleton variant="circular" width={184} height={184} className='mt-[5px] lg:mt-0 w-[80px] h-[80px] md:w-[100px] md:h-[100px] lg:w-[184px] lg:h-[184px] 2xl:w-[184px] 2xl:h-[184px] xl:w-[160px] xl:h-[160px]' />
+                        </div> */}
+                        
+                        <div className='grid place-items-center mt-[50px]'>
+                            <Skeleton variant="circular" width={184} height={184} className='mt-[5px] lg:mt-0 w-[80px] h-[80px] md:w-[100px] md:h-[100px] lg:w-[184px] lg:h-[184px] 2xl:w-[184px] 2xl:h-[184px] xl:w-[160px] xl:h-[160px]' />
                             <Skeleton className='pb-[10px] pt-[15px]'>
                                 <h1 style={Username} className='text-[18px] md:text-[20px] lg:text-[20px] xl:text-[20px] 2xl:text-[24px]'>{"Rohan Patel"}</h1>
                             </Skeleton>
@@ -157,10 +159,10 @@ function SkeletonProfileSec() {
                                 <p className='text-[12px] lg:text-[14px] md:text-[14px] 2xl:text-[14px] xl:text-[12px]' style={Text2}>I'd describe myself as someone who's reliable, trendy, smart and someone who always has a smile on the face. I am a big Nature & Animal lover. I have lived in different parts of India and appreciate all cultures & customs. </p>
                             </Skeleton>
 
-                            
+
 
                             <div className='hidden lg:block pt-[10px] pb-[30px]'>
-                                <GeneralTab/>
+                                <GeneralTab />
                                 {/* {RenderTab()} */}
                             </div>
                             <div className='block lg:hidden pt-[10px] pb-[30px]'>
@@ -171,7 +173,7 @@ function SkeletonProfileSec() {
 
                                     </div>
 
-                                    
+
                                 </div>
                             </div>
                         </div>

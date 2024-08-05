@@ -196,7 +196,7 @@ function HobbiesTab() {
                             </div>
                             <div className='w-[90%] flex justify-end pb-[10px] mt-[10px]'>
 
-                                <button onClick={SubmitChanges} id='profile-save-details-btn' className='rounded-[10px] text-[white] w-[80px] h-[40px]' >Save</button>
+                                <button onClick={SubmitChanges} id='grad-button' className='rounded-[10px] text-[white] w-[80px] h-[40px]' >Save</button>
 
                             </div>
                         </div>

@@ -317,6 +317,141 @@ const MediaMsg = ({ menu, userMessage, Outgoing, sendAt, Top, setTop, onDeleteMe
         </>
     )
 }
+const VideoMsg = ({ menu, userMessage, Outgoing, sendAt, Top, setTop, onDeleteMessage }) => {
+
+
+    const getMessageTime = (sendAt) => {
+        const timeDifference = Date.now() - sendAt;
+        if (timeDifference < 3600000) {
+            return moment(sendAt).fromNow(); // Format time as "X minutes ago"
+        } else {
+            return moment(sendAt).format('HH:mm'); // Format time as "HH:mm"
+        }
+    };
+
+    const messageTime = getMessageTime(sendAt);
+
+    const TimeText = {
+        color: "#C8C8C8",
+        fontFamily: "Poppins",
+        fontSize: "10px",
+        fontStyle: "normal",
+        fontWeight: "400",
+        lineHeight: "normal",
+    }
+
+
+
+    const scroll = useRef();
+
+
+    useEffect(() => {
+        scroll.current?.scrollIntoView({ behavior: "smooth" });
+    }, [userMessage.message])
+
+
+    const imgRef = useRef(null);
+
+    const handleImageClick = () => {
+        if (imgRef.current.requestFullscreen) {
+            imgRef.current.requestFullscreen();
+        } else if (imgRef.current.mozRequestFullScreen) { // Firefox
+            imgRef.current.mozRequestFullScreen();
+        } else if (imgRef.current.webkitRequestFullscreen) { // Chrome, Safari, and Opera
+            imgRef.current.webkitRequestFullscreen();
+        } else if (imgRef.current.msRequestFullscreen) { // IE/Edge
+            imgRef.current.msRequestFullscreen();
+        }
+    };
+
+
+
+
+    return (
+        <>
+            {Outgoing
+                ?
+                <>
+                    <Stack id="Chat-scroll-bar" ref={scroll} direction='row' justifyContent={'end'}>
+
+                        <Box p={2} sx={{
+                            backgroundColor: "#F8E8FF", borderRadius: 1.5, width: 'max-content'
+                        }}>
+                            <Stack spacing={1}>
+                                <video
+                                    id='chat-video'
+
+
+                                    width="100%"
+                                    height="auto"
+                                    src={userMessage.fileUrl}
+                                    style={{ cursor: "pointer", objectFit: "cover", maxHeight: 210, borderRadius: '10px' }}
+                                    alt="Description"
+                                    quality={45} // Note: This attribute is not applicable for video tags
+                                    controls // Add controls to allow user to play/pause the video
+                                    preload="metadata" // Preload metadata to get video dimensions and duration
+                                >
+                                    Your browser does not support the video tag.
+                                </video>
+                                <Stack direction="col" justifyContent={'space-between'} alignItems="center">
+                                    <Typography style={messageText} variant='body2' color={"#000"}>
+                                        {userMessage.message.length > 65 ? (
+                                            <>
+                                                {console.log("Message New Line")}
+                                                {userMessage.message.slice(0, 65)} {<br />} {userMessage.message.slice(65)}
+                                            </>
+                                        ) : (
+                                            userMessage.message
+                                        )}
+                                    </Typography>
+                                    <Typography className='pl-[20px]' style={TimeText} variant='body2' color={"#000"}>
+                                        {messageTime}
+                                    </Typography>
+                                </Stack>
+                            </Stack>
+
+                        </Box>
+                        <MessageOptions data={userMessage} onDeleteMessage={onDeleteMessage} />
+                    </Stack>
+
+                </>
+                :
+                <>
+
+                    <Stack id="Chat-scroll-bar" ref={scroll} direction='row' justifyContent={'start'}>
+                        <Box p={2} sx={{
+                            backgroundColor: "#E1EDFF", borderRadius: 1.5, width: 'max-content'
+                        }}>
+                            <Stack spacing={1}>
+                                <video
+                                    id='chat-video'
+                                    width="100%"
+                                    height="auto"
+                                    src={userMessage.fileUrl}
+                                    style={{ cursor: "pointer", objectFit: "cover", maxHeight: 210, borderRadius: '10px' }}
+                                    alt="Description"
+                                    quality={45} // Note: This attribute is not applicable for video tags
+                                    controls // Add controls to allow user to play/pause the video
+                                    preload="metadata" // Preload metadata to get video dimensions and duration
+                                >
+                                    Your browser does not support the video tag.
+                                </video>
+                                <Stack direction="col" justifyContent={'space-between'} alignItems="center">
+                                    <Typography style={messageText} variant='body2' color={"#000"}>
+                                        {userMessage.message}
+                                    </Typography>
+                                    <Typography style={TimeText} variant='body2' color={"#000"}>
+                                        {messageTime}
+                                    </Typography>
+                                </Stack>
+                            </Stack>
+                        </Box>
+                    </Stack>
+                </>
+            }
+        </>
+    )
+}
 
 
 const TextMsg = ({ el, Outgoing, userMessage, sendAt, onDeleteMessage }) => {
@@ -355,22 +490,21 @@ const TextMsg = ({ el, Outgoing, userMessage, sendAt, onDeleteMessage }) => {
             {
                 Outgoing ?
 
-                    <Stack id="Chat-scroll-bar" direction='row' justifyContent={'end'}>
+                    <Stack ref={scroll} id="Chat-scroll-bar" direction='row' justifyContent={'end'}>
                         <Box
                             p={2}
                             sx={{
                                 backgroundColor: "#F8E8FF",
                                 borderRadius: "18px",
-                                // width: "max-content",
                                 maxWidth: showFullMessage ? '50%' : '50%',
-
-
+                                wordWrap: 'break-word',
+                                wordBreak: 'break-word',
+                                overflowWrap: 'break-word',
                             }}
                         >
                             <Typography variant='body2' color='#000'>
                                 {displayedMessage}
                                 {isLongMessage && (
-
                                     <span onClick={handleToggleMessage} style={{ color: 'blue', cursor: 'pointer' }}>
                                         <br />
                                         {showFullMessage ? ' Show less' : '...Read more'}
@@ -389,19 +523,18 @@ const TextMsg = ({ el, Outgoing, userMessage, sendAt, onDeleteMessage }) => {
                         <Box>
                             <MessageOptions onDeleteMessage={onDeleteMessage} data={userMessage} />
                         </Box>
-                        {/* <ProfileImage size={40} /> */}
                     </Stack>
                     :
                     <Stack id="Chat-scroll-bar" ref={scroll} direction='row' justifyContent='start'>
-
                         <Box
                             p={2}
                             sx={{
                                 backgroundColor: "#E1EDFF",
                                 borderRadius: "18px",
-                                // width: 'max-content'
                                 maxWidth: showFullMessage ? '50%' : '50%',
-
+                                wordWrap: 'break-word',
+                                wordBreak: 'break-word',
+                                overflowWrap: 'break-word',
                             }}
                         >
                             <Typography variant='body2' color='#000'>
@@ -416,8 +549,8 @@ const TextMsg = ({ el, Outgoing, userMessage, sendAt, onDeleteMessage }) => {
                                         <h1 style={TimeText}>{getMessageTime(sendAt)}</h1>
                                     </div>
                                     {/* <div>
-                                        <Image width={15} height={15} src={"/assests/chat/receive-tick.svg"} loading='lazy' alt='receive' />
-                                    </div> */}
+                    <Image width={15} height={15} src={"/assests/chat/receive-tick.svg"} loading='lazy' alt='receive' />
+                </div> */}
                                 </div>
                             </Typography>
                         </Box>
@@ -647,6 +780,7 @@ const TypingMessage = () => {
 }
 
 const AudioMessage = ({ el, Outgoing, userMessage, sendAt, onDeleteMessage }) => {
+console.log("🚀 ~ AudioMessage ~ userMessage:", userMessage)
 
 
     const { userData, updateUser } = useContext(UserContext);
@@ -708,9 +842,9 @@ const AudioMessage = ({ el, Outgoing, userMessage, sendAt, onDeleteMessage }) =>
                 Outgoing ?
 
                     <Stack id="Chat-scroll-bar" direction='row' sx={{ marginRight: "10px" }} justifyContent={'end'}>
-                        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#F8E8FF" }} p={2.5} className="player-card">
-                            <Stack>
-                                <svg id='audio-img' xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "#F8E8FF", width: "261px", height: "53px", paddingLeft: "10px", paddingRight: "10px", borderRadius: "10px" }}>
+                            <div className='' style={{ marginLeft: "10px" }}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
                                     <path d="M5.05013 21.8167H2.2168C1.60291 21.8167 1.09527 21.616 0.69388 21.2146C0.292491 20.8132 0.0917969 20.3056 0.0917969 19.6917V10.9083C0.0917969 9.39722 0.37513 7.98056 0.941797 6.65833C1.50846 5.33611 2.28763 4.17917 3.2793 3.1875C4.27096 2.19583 5.42791 1.41667 6.75013 0.85C8.07235 0.283333 9.48902 0 11.0001 0C12.5112 0 13.9279 0.283333 15.2501 0.85C16.5724 1.41667 17.7293 2.19583 18.721 3.1875C19.7126 4.17917 20.4918 5.33611 21.0585 6.65833C21.6251 7.98056 21.9085 9.39722 21.9085 10.9083V19.6917C21.9085 20.3056 21.7078 20.8132 21.3064 21.2146C20.905 21.616 20.3974 21.8167 19.7835 21.8167H16.9501V13.8833H20.9168V10.9083C20.9168 8.14583 19.9546 5.80243 18.0303 3.87812C16.106 1.95382 13.7626 0.991667 11.0001 0.991667C8.23763 0.991667 5.89423 1.95382 3.96992 3.87812C2.04562 5.80243 1.08346 8.14583 1.08346 10.9083V13.8833H5.05013V21.8167ZM4.05846 14.875H1.08346V19.6917C1.08346 19.975 1.20152 20.2347 1.43763 20.4708C1.67374 20.7069 1.93346 20.825 2.2168 20.825H4.05846V14.875ZM17.9418 14.875V20.825H19.7835C20.0668 20.825 20.3265 20.7069 20.5626 20.4708C20.7987 20.2347 20.9168 19.975 20.9168 19.6917V14.875H17.9418Z" fill="url(#paint0_linear_607_198)" />
                                     <defs>
                                         <linearGradient id="paint0_linear_607_198" x1="-2.5" y1="-5.5" x2="22" y2="26.5" gradientUnits="userSpaceOnUse">
@@ -719,15 +853,15 @@ const AudioMessage = ({ el, Outgoing, userMessage, sendAt, onDeleteMessage }) =>
                                         </linearGradient>
                                     </defs>
                                 </svg>
-                            </Stack>
-                            <Stack>
+                            </div>
+                            <div>
                                 <button id='audio-button' onClick={handlePlayPause}>
-                                    <span class="material-symbols-rounded">
-                                        {isPlaying ? <img src='../assests/song/Pause-icon.svg' /> : <img src='../assests/song/Play-icon.svg' />}
+                                    <span>
+                                        {isPlaying ? <img src='/assests/song/Pause-icon.svg' /> : <img src='/assests/song/Play-icon.svg' />}
                                     </span>
                                 </button>
-                            </Stack>
-                            <Stack className='pt-[15px]'>
+                            </div>
+                            <div id="audioStack" className='pt-[15px]' style={{ position: "relative", right: "5px" }}>
                                 <input
                                     type="range"
                                     id='AudioRange'
@@ -739,14 +873,14 @@ const AudioMessage = ({ el, Outgoing, userMessage, sendAt, onDeleteMessage }) =>
 
                                 <audio ref={audioRef} src={userMessage?.fileUrl} />
 
-                                <Stack direction="row" className="track-duration">
+                                <div direction="row" className='flex justify-between text-[10px]'>
                                     <p>{formatDuration(currentTime)}</p>
                                     <p>{formatDuration(duration)}</p>
-                                </Stack>
+                                </div>
 
 
-                            </Stack>
-                        </Box>
+                            </div>
+                        </div>
                         <MessageOptions />
 
                     </Stack>
@@ -754,45 +888,49 @@ const AudioMessage = ({ el, Outgoing, userMessage, sendAt, onDeleteMessage }) =>
 
                     <Stack id="Chat-scroll-bar" direction='row' justifyContent={'start'}>
 
-                        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#E1EDFF" }} className="player-card">
-                            <Stack >
-                                {/* <img id='audio-img' src="./assets/cover-image.jpg" alt="Cover Image" /> */}
-                                <svg id='audio-img' xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-                                    <path d="M5.05013 21.8167H2.2168C1.60291 21.8167 1.09527 21.616 0.69388 21.2146C0.292491 20.8132 0.0917969 20.3056 0.0917969 19.6917V10.9083C0.0917969 9.39722 0.37513 7.98056 0.941797 6.65833C1.50846 5.33611 2.28763 4.17917 3.2793 3.1875C4.27096 2.19583 5.42791 1.41667 6.75013 0.85C8.07235 0.283333 9.48902 0 11.0001 0C12.5112 0 13.9279 0.283333 15.2501 0.85C16.5724 1.41667 17.7293 2.19583 18.721 3.1875C19.7126 4.17917 20.4918 5.33611 21.0585 6.65833C21.6251 7.98056 21.9085 9.39722 21.9085 10.9083V19.6917C21.9085 20.3056 21.7078 20.8132 21.3064 21.2146C20.905 21.616 20.3974 21.8167 19.7835 21.8167H16.9501V13.8833H20.9168V10.9083C20.9168 8.14583 19.9546 5.80243 18.0303 3.87812C16.106 1.95382 13.7626 0.991667 11.0001 0.991667C8.23763 0.991667 5.89423 1.95382 3.96992 3.87812C2.04562 5.80243 1.08346 8.14583 1.08346 10.9083V13.8833H5.05013V21.8167ZM4.05846 14.875H1.08346V19.6917C1.08346 19.975 1.20152 20.2347 1.43763 20.4708C1.67374 20.7069 1.93346 20.825 2.2168 20.825H4.05846V14.875ZM17.9418 14.875V20.825H19.7835C20.0668 20.825 20.3265 20.7069 20.5626 20.4708C20.7987 20.2347 20.9168 19.975 20.9168 19.6917V14.875H17.9418Z" fill="url(#paint0_linear_607_198)" />
-                                    <defs>
-                                        <linearGradient id="paint0_linear_607_198" x1="-2.5" y1="-5.5" x2="22" y2="26.5" gradientUnits="userSpaceOnUse">
-                                            <stop stopColor="#0F52BA" />
-                                            <stop offset="1" stopColor="#8225AF" />
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
-                            </Stack>
-                            <Stack>
-                                <button id='audio-button' onClick={handlePlayPause}>
-                                    <span class="material-symbols-rounded">
-                                        {isPlaying ? <img src='../assests/song/Pause-icon.svg' /> : <img src='../assests/song/Play-icon.svg' />}
-                                    </span>
-                                </button>
-                            </Stack>
-                            <Stack className='pt-[15px]'>
-                                <input
-                                    type="range"
-                                    min="0"
-                                    max={duration}
-                                    value={currentTime}
-                                    onChange={handleSeek}
-                                />
+                        <Stack id="Chat-scroll-bar" direction='row' sx={{ marginRight: "10px" }} justifyContent={'end'}>
+                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "#F8E8FF", width: "261px", height: "53px", paddingLeft: "10px", paddingRight: "10px", borderRadius: "10px" }}>
+                                <div className='' style={{ marginLeft: "10px" }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                                        <path d="M5.05013 21.8167H2.2168C1.60291 21.8167 1.09527 21.616 0.69388 21.2146C0.292491 20.8132 0.0917969 20.3056 0.0917969 19.6917V10.9083C0.0917969 9.39722 0.37513 7.98056 0.941797 6.65833C1.50846 5.33611 2.28763 4.17917 3.2793 3.1875C4.27096 2.19583 5.42791 1.41667 6.75013 0.85C8.07235 0.283333 9.48902 0 11.0001 0C12.5112 0 13.9279 0.283333 15.2501 0.85C16.5724 1.41667 17.7293 2.19583 18.721 3.1875C19.7126 4.17917 20.4918 5.33611 21.0585 6.65833C21.6251 7.98056 21.9085 9.39722 21.9085 10.9083V19.6917C21.9085 20.3056 21.7078 20.8132 21.3064 21.2146C20.905 21.616 20.3974 21.8167 19.7835 21.8167H16.9501V13.8833H20.9168V10.9083C20.9168 8.14583 19.9546 5.80243 18.0303 3.87812C16.106 1.95382 13.7626 0.991667 11.0001 0.991667C8.23763 0.991667 5.89423 1.95382 3.96992 3.87812C2.04562 5.80243 1.08346 8.14583 1.08346 10.9083V13.8833H5.05013V21.8167ZM4.05846 14.875H1.08346V19.6917C1.08346 19.975 1.20152 20.2347 1.43763 20.4708C1.67374 20.7069 1.93346 20.825 2.2168 20.825H4.05846V14.875ZM17.9418 14.875V20.825H19.7835C20.0668 20.825 20.3265 20.7069 20.5626 20.4708C20.7987 20.2347 20.9168 19.975 20.9168 19.6917V14.875H17.9418Z" fill="url(#paint0_linear_607_198)" />
+                                        <defs>
+                                            <linearGradient id="paint0_linear_607_198" x1="-2.5" y1="-5.5" x2="22" y2="26.5" gradientUnits="userSpaceOnUse">
+                                                <stop stopColor="#0F52BA" />
+                                                <stop offset="1" stopColor="#8225AF" />
+                                            </linearGradient>
+                                        </defs>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <button id='audio-button' onClick={handlePlayPause}>
+                                        <span>
+                                            {isPlaying ? <img src='../assests/song/Pause-icon.svg' /> : <img src='../assests/song/Play-icon.svg' />}
+                                        </span>
+                                    </button>
+                                </div>
+                                <div id="audioStack" className='pt-[15px]' style={{ position: "relative", right: "5px" }}>
+                                    <input
+                                        type="range"
+                                        id='AudioRange'
+                                        min="0"
+                                        max={duration}
+                                        value={currentTime}
+                                        onChange={handleSeek}
+                                    />
 
-                                <audio ref={audioRef} src={userMessage?.fileUrl} />
+                                    <audio ref={audioRef} src={userMessage?.fileUrl} />
 
-                                <Stack direction="row" className="track-duration">
-                                    <p>{formatDuration(currentTime)}</p>
-                                    <p>{formatDuration(duration)}</p>
-                                </Stack>
+                                    <div direction="row" className='flex justify-between text-[10px]'>
+                                        <p>{formatDuration(currentTime)}</p>
+                                        <p>{formatDuration(duration)}</p>
+                                    </div>
 
 
-                            </Stack>
-                        </Box>
+                                </div>
+                            </div>
+                            {/* <MessageOptions /> */}
+
+                        </Stack>
                     </Stack>
             }
         </>
@@ -801,4 +939,4 @@ const AudioMessage = ({ el, Outgoing, userMessage, sendAt, onDeleteMessage }) =>
 
 
 // should not be default export, because we need to export multiple things
-export { Safetytips, TextMsg, MediaMsg, ReplyMsg, LinkMsg, DocMsg, TypingMessage, AudioMessage }
+export { Safetytips, TextMsg, MediaMsg, ReplyMsg, LinkMsg, DocMsg, TypingMessage, AudioMessage, VideoMsg }

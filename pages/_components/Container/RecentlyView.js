@@ -8,6 +8,8 @@ import GridLikeUser from '../common/Buttons/GridLikeUser'
 import icons from '../../../utils/icons/icons'
 import { useDarkMode } from '../../../ContextProvider/DarkModeContext'
 import calculateAge from '../../../utils/helpers/CalculateAge'
+import Link from 'next/link'
+import Avatar from 'react-avatar'
 
 function RecentlyView() {
 
@@ -138,24 +140,29 @@ function RecentlyView() {
                     </div>
                     <div className='flex justify-center '>
                       {item?.viewerId?.profilePic ? <>
-                        <Image quality={40} loading='lazy' alt='profile' style={{ objectFit: "cover" }} width={102} height={102} className='w-[102px] h-[102px] rounded-[50%]' src={item?.viewerId.profilePic} />
+                        <Link href={`/longterm/dashboard/${item?.viewerId?.id}`}>
+                          <Image quality={40} loading='lazy' alt='profile' style={{ objectFit: "cover" }} width={102} height={102} className='hover:opacity-90 duration-100 w-[102px] h-[102px] rounded-[50%]' src={item?.viewerId.profilePic} />
+                        </Link>
                       </>
                         :
                         <>
-                          <div className='grid place-items-center w-[102px] h-[102px] rounded-[50%] bg-[#F8FBFF]'>
+                          {/* <div className='grid place-items-center w-[102px] h-[102px] rounded-[50%] bg-[#F8FBFF]'>
                             <h1 style={ImagenotFound}>No Image</h1>
-                          </div>
+                          </div> */}
+                          <Avatar name={item?.viewerId?.name} round size='102' />
                         </>
                       }
                     </div>
                     <div className='text-center'>
-                      <h1 style={ProfileName} className='text-[#000] dark:text-[#FFF] text-[18px]'>{item?.viewerId?.name}</h1>
+                      <Link href={`/longterm/dashboard/${item?.viewerId?.id}`}>
+                        <h1 style={ProfileName} className='hover:opacity-75 duration-100 text-[#000] dark:text-[#FFF] text-[18px]'>{item?.viewerId?.name}</h1>
+                      </Link>
                       <p style={ListText} className='text-[#000] dark:text-[#FFF] text-[14px]'>{calculateAge(item?.viewerId?.dateOfBirth)}, 5’3”</p>
                       <p style={ListText} className='text-[#000] dark:text-[#FFF] text-[14px]'>{item?.viewerId?.religion ? item?.viewerId?.religion : "hindu, patel"}</p>
                       <p style={ListText} className='text-[#000] dark:text-[#FFF] text-[14px]'>Never Married</p>
                     </div>
 
-                    <GridLikeUser from={"GridProfile"} user={item?.viewerId} theid={item?.viewerId} key={index} />
+                    <GridLikeUser from={"GridProfile"} theUserName={item?.viewerId?.name} user={item?.viewerId} theid={item?.viewerId} key={index} />
                   </div>
 
                 )

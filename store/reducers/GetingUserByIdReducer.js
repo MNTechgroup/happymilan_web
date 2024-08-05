@@ -7,7 +7,7 @@ import {
   const initialState = {
     user: null,
     loading: false,
-    error: null,
+    error: "",
   };
   
   const userByIdReducer = (state = initialState, action) => {
@@ -23,6 +23,7 @@ import {
           ...state,
           loading: false,
           user: action.payload,
+          error : ""
         };
       case FETCH_USER_BY_ID_FAILURE:
         return {

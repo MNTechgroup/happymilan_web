@@ -357,6 +357,18 @@ function Credentials() {
 
 
 
+    const [showPassword, setshowPassword] = useState({
+      inptut1: false,
+      inptut2: false,
+      inptut3: false,
+    })
+
+    const HandleShowPassword = (e) => {
+      const { name } = e.target;
+      setshowPassword((prev) => {
+        return { ...prev, [name]: !prev[name] };
+      })
+    }
 
 
 
@@ -408,7 +420,7 @@ function Credentials() {
           "password": userPassword.NewPassword,
           "otp": otpNumber
         });
-       
+
         let config = {
           method: 'post',
           maxBodyLength: Infinity,
@@ -431,7 +443,7 @@ function Credentials() {
 
 
       }
-  }
+    }
 
     switch (activeTab2) {
       case 1:
@@ -442,15 +454,21 @@ function Credentials() {
           </div>
           <h1 className="text-[10px] xl:text-[12px] mt-[20px] lg:mt-[25px] xl:mt-[30px] font-medium">Enter Current Password</h1>
           <div className="flex place-items-center w-[100%]  h-[37px] lg:h-[43px] xl:h-[50px] mt-[1%]  border-[1px] border-[#E6E6E6] rounded-[8px] px-[15px] ">
-            <input name="currentPassword" value={userPassword.currentPassword} onChange={HandlePasswordChange} type="password" className=" w-full h-full outline-none text-[12px] lg:text-[14px]  xl:text-[16px] " />
+            <input name="currentPassword" value={userPassword.currentPassword} onChange={HandlePasswordChange} type={showPassword?.inptut1 ? "text" : "password"} className=" w-full h-full outline-none text-[12px] lg:text-[14px]  xl:text-[16px] " />
+            <Image name="inptut1" alt="show-password" onClick={HandleShowPassword} width={18} height={14} className="absolute right-[60px] mt-[-0px]" src={showPassword?.inptut1 ? "/assests/Blue/pass-view.png" : "/assests/Blue/pass-hide.png"} />
+
           </div>
           <h1 className="text-[10px] xl:text-[12px] mt-[10px] lg:mt-[15px] xl:mt-[20px] font-medium">New Password</h1>
           <div className="flex place-items-center w-[100%]  h-[37px] lg:h-[43px] xl:h-[50px] mt-[1%]  border-[1px] border-[#E6E6E6] rounded-[8px] px-[15px] ">
-            <input name="NewPassword" value={userPassword.NewPassword} onChange={HandlePasswordChange} type="password" className=" w-full h-full outline-none text-[12px] lg:text-[14px]  xl:text-[16px] " />
+            <input name="NewPassword" value={userPassword.NewPassword} onChange={HandlePasswordChange} type={showPassword?.inptut2 ? "text" : "password"} className=" w-full h-full outline-none text-[12px] lg:text-[14px]  xl:text-[16px] " />
+            <Image name="inptut2" alt="show-password" onClick={HandleShowPassword} width={18} height={14} className="absolute right-[60px] mt-[-0px]" src={showPassword?.inptut2 ? "/assests/Blue/pass-view.png" : "/assests/Blue/pass-hide.png"} />
+
           </div>
           <h1 className="text-[10px] xl:text-[12px] mt-[10px] lg:mt-[15px] xl:mt-[20px] font-medium">Confirm Password</h1>
           <div className="flex place-items-center w-[100%]  h-[37px] lg:h-[43px] xl:h-[50px] mt-[1%]  border-[1px] border-[#E6E6E6] rounded-[8px] px-[15px] ">
-            <input name="confirmPassword" value={userPassword.confirmPassword} onChange={HandlePasswordChange} type="password" className=" w-full h-full outline-none text-[12px] lg:text-[14px]  xl:text-[16px] " />
+            <input name="confirmPassword" value={userPassword.confirmPassword} onChange={HandlePasswordChange} type={showPassword?.inptut3 ? "text" : "password"} className=" w-full h-full outline-none text-[12px] lg:text-[14px]  xl:text-[16px] " />
+            <Image name="inptut3" alt="show-password" onClick={HandleShowPassword} width={18} height={14} className="absolute right-[60px] mt-[-0px]" src={showPassword?.inptut3 ? "/assests/Blue/pass-view.png" : "/assests/Blue/pass-hide.png"} />
+
           </div>
 
           <div className="flex gap-x-[5%] mt-[15px] lg:mt-[20px] xl:mt-[30px] ">

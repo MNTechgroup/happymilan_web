@@ -60,7 +60,10 @@ import {
     UPLOAD_MY_STORY_MODAL,
     DELETE_STATUS_MODAL,
     DELETE_MY_STATUS,
-    DELETE_MY_STATUS_SUCCESS
+    DELETE_MY_STATUS_SUCCESS,
+    GET_MATCH_SCORE,
+    GET_MATCH_SCORE_SUCCESS,
+    GET_MATCH_SCORE_FAILURE
 } from '../type';
 import { STATUSES } from './MyProfile';
 import { LIKE_USER } from '../actions/GetingAlluser';
@@ -129,7 +132,7 @@ const initialState = {
         userData: null,
         totalPages: 1,
         currentPage: 1,
-        pagesdata : '',
+        pagesdata: '',
         loading: false,
         error: null
     },
@@ -151,6 +154,12 @@ const initialState = {
         error: null,
         modalClose: false
     },
+    MatchScore: {
+        loading: false,
+        matchScore: null,
+        error: ""
+    }
+
 
 
 };
@@ -718,7 +727,7 @@ const userReducer = (state = initialState, action) => {
                     data: null,
                     currentPage: 0,
                     totalPages: 0,
-                    pagesdata : '',
+                    pagesdata: '',
                     loading: true,
                     error: null
                 }
@@ -731,7 +740,7 @@ const userReducer = (state = initialState, action) => {
                     data: action.payload.userData,
                     totalPages: action.payload.totalPages,
                     currentPage: action.payload.currentPage,
-                    pagesdata : action.payload.pagesdata,
+                    pagesdata: action.payload.pagesdata,
                     loading: false,
                     error: null
                 }
@@ -744,7 +753,7 @@ const userReducer = (state = initialState, action) => {
                     data: null,
                     totalPages: 0,
                     currentPage: 0,
-                    pagesdata : '',
+                    pagesdata: '',
                     loading: false,
                     error: action.payload
                 }
@@ -877,6 +886,31 @@ const userReducer = (state = initialState, action) => {
                     loading: false,
                     error: null,
                     modalClose: false
+                }
+            }
+        }
+        case GET_MATCH_SCORE: {
+            return {
+                ...state,
+                MatchScore: {
+                    loading: true
+                }
+            }
+        }
+        case GET_MATCH_SCORE_SUCCESS: {
+            return {
+                ...state,
+                MatchScore: {
+                    loading: false,
+                    matchScore: action.payload
+                }
+            }
+        }
+        case GET_MATCH_SCORE_FAILURE: {
+            return {
+                ...state,
+                MatchScore: {
+                    error: action.payload
                 }
             }
         }

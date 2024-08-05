@@ -10,23 +10,31 @@ import GlobalFooter from '../layout/GlobalFooter';
 function NewLand() {
 
 
-    const Title = {
-        color: "#000",
-        textAlign: "center",
-        fontFamily: "Poppins",
-        fontStyle: "normal",
-        fontWeight: "700",
-        lineHeight: "50px", /* 92.593% */
-    }
+    const [isVisible, setIsVisible] = useState(false);
 
-    const btnText = {
-        textAlign: "center",
-        fontFamily: "Poppins",
-        fontStyle: "normal",
-        fontWeight: "400",
-        lineHeight: "normal",
-    }
+    useEffect(() => {
+        // Show button when page is scrolled up to a certain height
+        const toggleVisibility = () => {
+            if (window.pageYOffset > 500) {
+                setIsVisible(true);
+            } else {
+                setIsVisible(false);
+            }
+        };
 
+        window.addEventListener('scroll', toggleVisibility);
+
+        return () => {
+            window.removeEventListener('scroll', toggleVisibility);
+        };
+    }, []);
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+    };
 
     const GradientText = {
         fontFamily: "Poppins",
@@ -122,13 +130,6 @@ function NewLand() {
         fontWeight: "400",
         lineHeight: "normal",
     }
-    const TitleText4 = {
-        color: "#000",
-        fontFamily: "Poppins",
-        fontStyle: "normal",
-        fontWeight: "700",
-        lineHeight: "70px",
-    }
 
     const ProductName = {
         color: "#000",
@@ -223,20 +224,29 @@ function NewLand() {
 
     return (
         <>
+
+
+            <div className={`${isVisible ? "fixed" : "hidden"} bottom-10 right-10`}>
+                <button id='grad-button' onClick={scrollToTop} class="Scroll-Top-Btn">
+                    <svg height="1.2em" class="Scroll-top-arrow" viewBox="0 0 512 512"><path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"></path></svg>
+                    <p class="Scroll-Top-text">Back to Top</p>
+                </button>
+
+            </div>
             <div className='mt-[100px] w-full h-full bg-[#FFF]'>
                 <div className='space-y-[40px] 2xl:space-y-[40px] xl:space-y-[20px]'>
                     <div className='space-y-[55px] 2xl:space-y-[55px] xl:space-y-[45px]'>
-                        <h1 style={Title} className='2xl:text-[54px] xl:text-[40px] text-[40px]'>Single App, Multiple Choices. </h1>
+                        <h1 className='text-black text-center font-poppins font-bold leading-[50px] 2xl:text-[54px] xl:text-[40px] text-[40px]'>Single App, Multiple Choices. </h1>
                         <div>
                             <ul className='flex justify-center space-x-[20px]'>
                                 <li>
-                                    <button style={btnText} onClick={HandleProfile} name='long-term' className={`2xl:w-[134px] 2xl:h-[50px] xl:w-[120px] xl:h-[40px] w-[134px] h-[50px] 2xl:text-[16px] xl:text-[14px] text-[16px]  rounded-[32px]  border-[1px] border-[#000] ${Profiles?.id == 1 ? "bg-[#000] text-[#FFF]" : " text-[#000] bg-[#FFF] hover:bg-[#EFF5FF] hover:text-[#000]"}`}>Long Term</button>
+                                    <button onClick={HandleProfile} name='long-term' className={`text-center font-poppins font-normal leading-normal 2xl:w-[134px] 2xl:h-[50px] xl:w-[120px] xl:h-[40px] w-[134px] h-[50px] 2xl:text-[16px] xl:text-[14px] text-[16px]  rounded-[32px]  border-[1px] border-[#000] ${Profiles?.id == 1 ? "bg-[#000] text-[#FFF]" : " text-[#000] bg-[#FFF] hover:bg-[#EFF5FF] hover:text-[#000]"}`}>Long Term</button>
                                 </li>
                                 <li>
-                                    <button style={btnText} onClick={HandleProfile} name='dating' className={`2xl:w-[134px] 2xl:h-[50px] xl:w-[120px] xl:h-[40px] w-[134px] h-[50px] 2xl:text-[16px] xl:text-[14px] text-[16px]  rounded-[32px]   border-[1px] border-[#000] ${Profiles?.id == 2 ? "bg-[#000] text-[#FFF]" : " text-[#000] bg-[#FFF] hover:bg-[#EFF5FF] hover:text-[#000]"} `}>Dating</button>
+                                    <button onClick={HandleProfile} name='dating' className={`text-center font-poppins font-normal leading-normal 2xl:w-[134px] 2xl:h-[50px] xl:w-[120px] xl:h-[40px] w-[134px] h-[50px] 2xl:text-[16px] xl:text-[14px] text-[16px]  rounded-[32px]   border-[1px] border-[#000] ${Profiles?.id == 2 ? "bg-[#000] text-[#FFF]" : " text-[#000] bg-[#FFF] hover:bg-[#EFF5FF] hover:text-[#000]"} `}>Dating</button>
                                 </li>
                                 <li>
-                                    <button style={btnText} onClick={HandleProfile} name='friendship' className={`2xl:w-[134px] 2xl:h-[50px] xl:w-[120px] xl:h-[40px] w-[134px] h-[50px] 2xl:text-[16px] xl:text-[14px] text-[16px]  rounded-[32px]  border-[1px] border-[#000] ${Profiles?.id == 3 ? "bg-[#000] text-[#FFF]" : " text-[#000] bg-[#FFF] hover:bg-[#EFF5FF] hover:text-[#000]"}`}>Friendship</button>
+                                    <button onClick={HandleProfile} name='friendship' className={`text-center font-poppins font-normal leading-normal 2xl:w-[134px] 2xl:h-[50px] xl:w-[120px] xl:h-[40px] w-[134px] h-[50px] 2xl:text-[16px] xl:text-[14px] text-[16px]  rounded-[32px]  border-[1px] border-[#000] ${Profiles?.id == 3 ? "bg-[#000] text-[#FFF]" : " text-[#000] bg-[#FFF] hover:bg-[#EFF5FF] hover:text-[#000]"}`}>Friendship</button>
                                 </li>
                             </ul>
                         </div>
@@ -339,15 +349,15 @@ function NewLand() {
                                 </ul>
                                 <ul className='flex space-x-[25px]'>
                                     <li>
-                                        <button onClick={GotoLogin} style={btnText} className='w-[158px] h-[50px] rounded-[32px] bg-[#000] text-[#FFF]'>{"Start Chat"}</button>
+                                        <button onClick={GotoLogin} className='text-center font-poppins font-normal leading-normal w-[158px] h-[50px] rounded-[32px] bg-[#000] text-[#FFF]'>{"Start Chat"}</button>
                                     </li>
                                     <li>
-                                        <button style={btnText} className='w-[158px] h-[50px] rounded-[32px] border-[1px] border-[#000] text-[#000] hover:bg-[#EFF5FF]' onClick={() => router.push("/chat-features")}>Learn More</button>
+                                        <button className='text-center font-poppins font-normal leading-normal w-[158px] h-[50px] rounded-[32px] border-[1px] border-[#000] text-[#000] hover:bg-[#EFF5FF]' onClick={() => router.push("/chat-features")}>Learn More</button>
                                     </li>
                                 </ul>
                             </div>
                             <div>
-                                <Image width={0} height={0} alt='chat-ui' loading='lazy' src={"/heroSec/assests/chat-img.svg"} className='2xl:w-[530px] 2xl:h-[530px] xl:w-[490px] xl:h-[490px] lg:w-[530px] lg:h-[530px] w-[530px] h-[530px]' />
+                                <Image width={0} height={0} alt='chat-ui' loading='lazy' src={"/heroSec/assests/chat-img-1.svg"} className='2xl:w-[530px] 2xl:h-[530px] xl:w-[490px] xl:h-[490px] lg:w-[530px] lg:h-[530px] w-[530px] h-[530px]' />
                             </div>
                         </div>
                     </div>
@@ -397,7 +407,7 @@ function NewLand() {
                                 </li>
                             </ul>
                             <div>
-                                <button onClick={() => token ? router.push("/longterm/dashboard/upgrade") : router.push("/login")} style={btnText} className='w-[212px] h-[50px] rounded-[32px] border-[1px] border-[#8225AF] hover:bg-[#EFF5FF]'>Discover More Plans</button>
+                                <button onClick={() => token ? router.push("/longterm/dashboard/upgrade") : router.push("/login")} className='text-center font-poppins font-normal leading-normal w-[212px] h-[50px] rounded-[32px] border-[1px] border-[#8225AF] hover:bg-[#EFF5FF]'>Discover More Plans</button>
                             </div>
                         </div>
                         <div className='w-full text-center space-y-[40px]'>
@@ -412,7 +422,7 @@ function NewLand() {
 
                     <div className='border-b-[1px] border-b-[#E9E9E9] pb-[60px]'>
                         <div className='text-center'>
-                            <h1 className='2xl:text-[50px] xl:text-[40px] text-[60px] ' style={TitleText4}>Frequently Asked Questions</h1>
+                            <h1 className='2xl:text-[50px] xl:text-[40px] text-[60px] text-black font-poppins  font-bold leading-[70px]'>Frequently Asked Questions</h1>
                         </div>
                         <ul className='flex flex-col items-center space-y-[13px] mt-[80px]'>
                             <Accordion title={"How do I create an account on HappyMilan?"}>
@@ -478,13 +488,13 @@ function NewLand() {
                             </li>
                         </ul>
                         <div className='pt-[65px] text-center'>
-                            <button onClick={() => router.push("/faq")} className='w-[158px] h-[50px] rounded-[32px] border-[1px] border-[#8225AF] hover:bg-[#EFF5FF]' style={btnText}>Learn More</button>
+                            <button onClick={() => router.push("/faq")} className='w-[158px] h-[50px] rounded-[32px] border-[1px] border-[#8225AF] hover:bg-[#EFF5FF] text-center font-poppins font-normal leading-normal'>Learn More</button>
                         </div>
 
                     </div>
                     <div className='space-y-[80px]'>
                         <div className='text-center pt-[80px]'>
-                            <h1 className='2xl:text-[50px] xl:text-[40px] text-[60px] ' style={TitleText4}>Discover more apps</h1>
+                            <h1 className='2xl:text-[50px] xl:text-[40px] text-[60px] text-black font-poppins  font-bold leading-[70px]'>Discover more apps</h1>
                         </div>
                         <ul className='flex   justify-evenly   '>
                             <li className='cursor-pointer 2xl:w-[335px] 2xl:h-[335px] xl:w-[290px] xl:h-[290px] w-[323px] h-[323px] border-[1px]  border-[#E1E1E1] hover:border-[#8225AF] rounded-[24px] pl-[40px]'>

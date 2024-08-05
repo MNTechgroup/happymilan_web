@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Drawer from '@mui/material/Drawer';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -20,8 +20,6 @@ import { Getstoryviewsdata, ViewstoryPost } from '../../../store/actions/UserSto
 
 function UserStory({ formData, updateFormData }) {
 
-
-    const [EmojiData, setEmojiData] = useState([])
     const Text3 = {
         fontFamily: "Poppins",
         fontSize: "20px",
@@ -47,33 +45,32 @@ function UserStory({ formData, updateFormData }) {
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const response = await fetch('https://cdn.jsdelivr.net/npm/@emoji-mart/data');
-            const data = await response.json();
-            setEmojiData(data);
-        };
-
-        fetchData();
-    }, []);
-
 
     const { loading, data, mystory } = useSelector((state) => state.usersact.UsersStorydata)
 
     const [showPicker, setShowPicker] = useState(false);
+
+    const pickerRef = useRef(null);
+
+    const handleClickOutside = (event) => {
+        if (pickerRef.current && !pickerRef.current.contains(event.target)) {
+            setShowPicker(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     const hanldeEmojiInput = (emoji) => {
 
         SetStoryCaption((prev) => {
             return prev + emoji.emoji
         })
-
-
-        // setShowPicker(false);
     };
-
-
-
 
     useEffect(() => {
         dispatch(Getallstatus())
@@ -228,28 +225,34 @@ function UserStory({ formData, updateFormData }) {
     return (
         <>
             <div id='story-section-center' className='lg:top-0 top-20 pb-[20px] w-full lg:w-auto lg:pb-[0px] z-10 lg:z-0 bg-[white] mt-[-20px] lg:mt-0 lg:bg-none dark:bg-[#18191a] p-[5px] fixed  lg:relative left-[0px] 2xl:left-[50px] lg:left-[50px] xl:left-[60px] flex space-x-[15px]'>
-                {/* <div id='story-section-center' className='fixed z-10 lg:z-0 lg:bg-none dark:bg-[#18191a] pb-[20px lg:pb-[0px]'> */}
-
                 <>
                     {loading ? (
                         <Skeleton variant="circular" width={47} height={47} />
                     ) : (
                         <>
-                            {mystory?.length > 0 ? (
-                                mystory.map((res) => (
-                                    <div name="currentUser" onClick={(e) => HandleStoryOpen(e, res)} style={{ boxSizing: 'content-box' }} className='w-[47px] h-[47px] cursor-pointer bg-[#FFF] rounded-full grid place-items-center border-[2px] border-[blue]' id='story-gradient-border'><Image alt='user-1' width={47} height={47} style={{ objectFit: "cover", borderRadius: "50%", width: "47px", height: "47px", border: '2px solid transparent', }} src={res?.userId?.profilePic ? res?.userId?.profilePic : '/assests/dashboard/user/1.svg'} /></div>
 
-                                ))
+                            {mystory?.length > 0 ? (
+                                <ul>
+                                    {
+                                        mystory.map((res) => (
+                                            <li>
+                                                <div name="currentUser" onClick={(e) => HandleStoryOpen(e, res)} style={{ boxSizing: 'content-box' }} className='w-[47px] h-[47px] cursor-pointer bg-[#FFF] rounded-full grid place-items-center border-[2px] border-[blue]' id='story-gradient-border'><Image alt='user-1' width={47} height={47} style={{ objectFit: "cover", borderRadius: "50%", width: "47px", height: "47px", border: '2px solid transparent', }} src={res?.userId?.profilePic ? res?.userId?.profilePic : '/assests/dashboard/user/1.svg'} /></div>
+                                            </li>
+                                        ))
+                                    }
+                                </ul>
+
                             ) : (
-                                <div className='w-[47px] h-[47px] bg-[#FFF] rounded-full grid place-items-center'>
-                                    <div className='cursor-pointer'>
-                                        <ProfileImage size={47} />
-                                        <div className='relative left-[34px] top-[-17px]'>
-                                            <Image loading='lazy' alt='add-icon' width={18} height={18} onClick={handleClickOpen} src='/assests/stories/Add-story-icon.svg' />
+                                <ul>
+                                    <div className='w-[47px] h-[47px] bg-[#FFF] rounded-full grid place-items-center'>
+                                        <div className='cursor-pointer'>
+                                            <ProfileImage size={47} />
+                                            <div className='relative left-[34px] top-[-17px]'>
+                                                <Image loading='lazy' alt='add-icon' width={18} height={18} onClick={handleClickOpen} src='/assests/stories/Add-story-icon.svg' />
+                                            </div>
                                         </div>
                                     </div>
-                                    {/* <Image alt='add-icon' width={47} height={47} onClick={handleClickOpen} src='/assests/dashboard/user/add-story.svg' /> */}
-                                </div>
+                                </ul>
                             )}
                         </>
                     )}
@@ -302,13 +305,11 @@ function UserStory({ formData, updateFormData }) {
                                                     <div className=' grid place-items-center md:w-[120px] md:h-[120px] lg:h-auto lg:w-[150px] 2xl:w-[190px] 2xl:h-[241px] xl:w-[190px] xl:h-[241px]'>
                                                         <Image style={{ objectFit: "cover", borderRadius: "10px" }} loading='lazy' alt='upload' width={190} height={241} src={imagesrc} />
                                                     </div>
-                                                    {/* <div {...getRootProps()} className='relative left-[10%] md:left-[100px] lg:left-[120px] 2xl:left-[150px] xl:left-[150px]'> */}
                                                     <div onClick={HandleDeleteClick} className='relative top-[50px]'>
-                                                        {/* <input {...getInputProps()} className="hidden" /> */}
                                                         <Image loading='lazy' alt='delete-icon' width={19.695} height={22.17} className='w-[19.695px] h-[22.17px]' src='/assests/Black/Delete.svg' />
                                                     </div>
                                                 </div>
-                                                <div className='w-full'>
+                                                <div ref={pickerRef} className='w-full'>
 
                                                     <div onClick={() => setShowPicker(!showPicker)} className={`absolute left-[35px] bottom-[55px]  cursor-pointer`}>
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -323,20 +324,15 @@ function UserStory({ formData, updateFormData }) {
                                                             <div className='hover:bg-[#F2F7FF]  p-[12px] rounded-full'>
                                                                 <button disabled={StoryModal.loading} onClick={HandleNext}>
                                                                     <Image width={26} height={26} alt='send' src="/assests/chat/Send-Icon.svg" />
-                                                                    {/* <Image loading='lazy' alt="loader" width={25} height={25} className='animate-spin inline' src='/assests/animation/loaderIcon.svg' /> */}
                                                                 </button>
 
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    {/* mt-[-37px]  */}
-
                                                     <div>
 
                                                         {showPicker ?
                                                             <div className='absolute z-[110] left-[30px] h-[300px] top-[0px]'>
-                                                                {/* <EmojiPicker data={EmojiData} emojiSize={20}
-                                                                    emojiButtonSize={28} onEmojiSelect={hanldeEmojiInput} /> */}
                                                                 <EmojiPicker onEmojiClick={hanldeEmojiInput} />
                                                             </div>
                                                             : null}
@@ -356,20 +352,23 @@ function UserStory({ formData, updateFormData }) {
                 </Dialog>
                 {
                     loading ? <>
-                        {/* <Skeleton width={47} height={47} className='w-[47px] h-[47px] cursor-pointer bg-[#FFF] rounded-full grid place-items-center' variant='circuler'/> */}
                         <Skeleton variant="circular" width={47} height={47} />
                     </> : <>
 
-                        {
-                            data?.map((items) => {
-                                return (
-                                    <>
-                                        <div name="users-story" onClick={(e) => HandleStoryOpen(e, items)} style={{ boxSizing: 'content-box' }} className='duration-100 hover:scale-90 w-[47px] h-[47px] cursor-pointer bg-[#FFF] rounded-full grid place-items-center border-[2px] border-[blue]'><Image alt='user-1' width={47} height={47} style={{ objectFit: "cover", borderRadius: "50%", width: "47px", height: "47px", border: '2px solid transparent', }} src={items?.userId?.profilePic ? items?.userId?.profilePic : '/assests/dashboard/user/no-profile.svg'} /></div>
+                        <ul id='hide-Story-scrollbar' className='relative flex overflow-y-auto  space-x-[10px] w-[60%]'>
 
-                                    </>
-                                )
-                            })
-                        }
+                            {
+                                data?.map((items, index) => {
+                                    return (
+
+                                        <li key={index}>
+                                            <div name="users-story" onClick={(e) => HandleStoryOpen(e, items)} style={{ boxSizing: 'content-box' }} className='duration-100 hover:scale-90 w-[47px] h-[47px] cursor-pointer bg-[#FFF] rounded-full grid place-items-center border-[2px] border-[blue]'><Image alt='user-1' width={47} height={47} style={{ objectFit: "cover", borderRadius: "50%", width: "47px", height: "47px", border: '2px solid transparent', }} src={items?.userId?.profilePic ? items?.userId?.profilePic : '/assests/dashboard/user/no-profile.svg'} /></div>
+                                        </li>
+
+                                    )
+                                })
+                            }
+                        </ul>
                     </>
                 }
             </div>

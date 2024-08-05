@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import ProtectedRoutes from '../../routes/ProtectedRoutes';
 import { useSelector } from 'react-redux';
-import NavBar from '../../_components/layout/NavBar';
+// import NavBar from '../../_components/layout/NavBar';
 import SideBar from '../../_components/layout/SideBar';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -11,6 +11,7 @@ import { getCookie } from 'cookies-next';
 import Image from 'next/image';
 import { useDarkMode } from '../../../ContextProvider/DarkModeContext';
 import UserProfile from '../../_components/Container/UserProfile'
+import NavBar from '../../_components/layout/Navbar';
 // Lazy load your components;
 const UserGridProfile = dynamic(() => import('../../_components/Container/UserGridProfile'));
 const ProfileComplete = dynamic(() => import('../../_components/Container/ProfileComplete'));
@@ -40,10 +41,6 @@ function index() {
     } else {
       setIsModalOpen(true);
     }
-    // if (firstVisit === 'open') {
-    //   setIsModalOpen(true);
-    //   localStorage.setItem('modal', 'close');
-    // }
   }, []);
 
   const router = useRouter();
@@ -67,11 +64,13 @@ function index() {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearch = (searchTerm) => {
+    console.log("🚀 ~ handleSearch ~ searchTerm:", searchTerm)
+
     setSearchTerm(searchTerm);
     const axios = require("axios")
     const token = getCookie("authtoken")
 
-    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/user/userUniqueId/${searchTerm}`, {
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/user/userUniqueId/${searchTerm?.toLowerCase()}`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -99,20 +98,20 @@ function index() {
       <NavBar
         handleSearch={handleSearch}
       />
+
       <SideBar />
 
-      <div id='main-centerlized-content' className='dark:bg-[#18191a] flex justify-center flex-col'>
+      <div id='main-centerlized-content' className='flex justify-center flex-col'>
         <div id='first-child' className='pl-[0px] lg:pl-[240px] 2xl:pl-[280px] xl:pl-[240px] flex  mt-[100px]'>
 
-          <div className='h-full '>
+          <div className='h-full'>
             {/* Side Section 1 */}
 
             <div id='story-centerlized-content' className='pl-[15px] md:pl-[15px] lg:pl-[10px] 2xl:pl-0 xl:pl-0'>
-
               <UserStory />
             </div>
 
-            <div id='centerlized-content' className='dark:bg-[#18191a] 2xl:block xl:block lg:block md:block hidden'>
+            <div id='centerlized-content' className='ml-[-5px] 2xl:mt-0 xl:mt-0 lg:mt-0 mt-[80px]'>
               <div className='xl:left-0 lg:left-[10px] relative 2xl:w-[720px] xl:w-[645px] lg:w-[600px] m-[10px] flex justify-between'>
 
                 <h1 className='text-[#000] dark:text-[#FFF] p-[5px] relative lg:left-[15px] 2xl:left-[40px] xl:left-[55px]'><span style={Text6} >{searchTerm === '' ? "New Requests" : "Search Result"} </span></h1>

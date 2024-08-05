@@ -3,9 +3,9 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { GetupgradePlans } from '../../../../../store/actions/UpgradeAction';
 
-function PricingBox({ HandleCheckout }) {
+function PricingBox({ handleCheckout }) {
 
-    
+
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -45,7 +45,7 @@ function PricingBox({ HandleCheckout }) {
         <>
 
             <div className='flex justify-center space-x-[28px]'>
-             
+
                 {
                     data?.map((res, Index) => {
                         return (
@@ -90,10 +90,11 @@ function PricingBox({ HandleCheckout }) {
                                         </div>
                                     </div>
 
-                                    <button id='grad-btn' style={TabsText} onClick={() => HandleCheckout({
+                                    <button id='grad-btn' style={TabsText} onClick={() => handleCheckout({
                                         id: 1,
+                                        res: res,
                                         amount: res.price,
-                                        planId : res.id
+                                        planId: res.id
 
                                     })} className='relative top-[15px] 2xl:text-[16px] xl:text-[16px] lg:text-[12px] text-[16px] text-[#FFF] w-[226px] 2xl:w-[226px] 2xl:h-[50px] h-[50px] xl:w-[200px] xl:h-[40px] lg:w-[180px] lg:h-[35px] bg-[#0F52BA] rounded-[20px]'>Select This Plan</button>
 
@@ -108,7 +109,7 @@ function PricingBox({ HandleCheckout }) {
                 {/* Two Month */}
 
 
-                <div className='space-y-[15px] lg:space-y-[0px] 2xl:space-y-[15px] xl:space-y-[10px] 2xl:h-[397px] xl:h-[340px] xl:w-[240px] 2xl:w-[280px] bg-[#FFF] lg:w-[200px] lg:h-[290px] w-[280px] h-[397px] rounded-[20px] border-[1px] border-[#0F52BA]'>
+                {/* <div className='space-y-[15px] lg:space-y-[0px] 2xl:space-y-[15px] xl:space-y-[10px] 2xl:h-[397px] xl:h-[340px] xl:w-[240px] 2xl:w-[280px] bg-[#FFF] lg:w-[200px] lg:h-[290px] w-[280px] h-[397px] rounded-[20px] border-[1px] border-[#0F52BA]'>
 
                     <h1 style={Text1} className='text-[18px] 2xl:text-[18px] xl:text-[18px] lg:text-[12px]  text-[black] pt-[10px] text-center'><span className='text-[#0F52BA]'> Two </span>Month Plan</h1>
                     <div className='pt-[15px]'>
@@ -147,13 +148,20 @@ function PricingBox({ HandleCheckout }) {
                         </div>
                     </div>
 
-                    <button id='grad-btn' style={TabsText} onClick={() => HandleCheckout({
+                    <button id='grad-btn' style={TabsText} onClick={() => handleCheckout({
                         id: 2,
                         amount: 899,
 
+                         <button
+                    onClick={() => router.back()}
+                    className="absolute bottom-10 right-10 top-24 cursor-pointer border-[1px] border-[#8225AF] rounded-[23px] hover:bg-[#F3F8FF] w-[95px] h-[27px]"
+                >
+                    <span className="text-[12px]">I’ll do it later</span>
+                </button>
+
                     })} className='relative top-[15px] 2xl:text-[16px] xl:text-[16px] lg:text-[12px] text-[16px] text-[#FFF] w-[226px] 2xl:w-[226px] 2xl:h-[50px] h-[50px] xl:w-[200px] xl:h-[40px] lg:w-[180px] lg:h-[35px] bg-[#0F52BA] rounded-[20px]'>Select This Plan</button>
 
-                </div>
+                </div> */}
 
                 {/* Three Month  */}
 
@@ -197,7 +205,7 @@ function PricingBox({ HandleCheckout }) {
                         </div>
                     </div>
 
-                    <button id='grad-btn' style={TabsText} onClick={() => HandleCheckout({
+                    <button id='grad-btn' style={TabsText} onClick={() => handleCheckout({
                         id: 3,
                         amount: 1199,
 

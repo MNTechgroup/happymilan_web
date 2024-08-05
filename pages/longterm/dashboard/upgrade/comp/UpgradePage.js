@@ -3,6 +3,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
 import useRazorpay from "react-razorpay";
+import { useSelector } from "react-redux";
+import { capitalizeFirstLetter } from "../../../../../utils/form/Captitelize";
 
 function UpgradePage() {
     const TitleText = {
@@ -68,6 +70,8 @@ function UpgradePage() {
 
     const router = useRouter();
 
+    const { loading, data, error } = useSelector((state) => state.upgradeplans.ChoosedPlan)
+
     const [Razorpay] = useRazorpay();
 
 
@@ -87,7 +91,7 @@ function UpgradePage() {
                 }
             );
 
-           const callbackUrl = `${process.env.NEXT_PUBLIC_API_URL}/v1/user/razorpay/is-order-complete?authToken=${token}&paymentHistoryToken=${response.data.paymentHistoryToken}`
+            const callbackUrl = `${process.env.NEXT_PUBLIC_API_URL}/v1/user/razorpay/is-order-complete?authToken=${token}&paymentHistoryToken=${response.data.paymentHistoryToken}`
             const options = {
                 "key": "rzp_live_2SoKzqAUA6FY69",
                 "name": "Acme Corp",
@@ -148,7 +152,7 @@ function UpgradePage() {
                                 className="2xl:text-[20px] xl:text-[14px] lg:text-[14px] text-[14px]"
                                 style={Text2}
                             >
-                                Gold : One Month
+                                {capitalizeFirstLetter(data?.planName)} : {data?.planDuration === "monthly" ? "One Month" : "One Year"}
                             </h1>
                             <button
                                 onClick={() => router.back()}
@@ -163,7 +167,7 @@ function UpgradePage() {
                                 className="2xl:text-[20px] xl:text-[18px] lg:text-[14px] text-[14px]"
                                 style={Text2}
                             >
-                                INR 599.00
+                                INR {data?.price}.00
                             </h1>
                         </div>
                     </div>
@@ -190,7 +194,7 @@ function UpgradePage() {
                                         className="w-[14px] h-[14px]"
                                         src="/assests/dashboard/menu/verfied-tick.svg"
                                     />
-                                    <h1> Message to 10 Profiles</h1>
+                                    <h1> Message to {data?.allowNumberOfProfile} Profiles</h1>
                                 </li>
                                 <li
                                     style={ListText}
@@ -203,7 +207,7 @@ function UpgradePage() {
                                         className="w-[14px] h-[14px]"
                                         src="/assests/dashboard/menu/verfied-tick.svg"
                                     />
-                                    <h1>Send request to 10 Profiles</h1>
+                                    <h1>Send request to {data?.allowNumberOfRequest} Profiles</h1>
                                 </li>
                                 <li
                                     style={ListText}
@@ -239,7 +243,7 @@ function UpgradePage() {
                                 className="2xl:text-[20px] xl:text-[18px] lg:text-[14px] text-[14px]"
                                 style={Text2}
                             >
-                                INR 599.00
+                                INR {data?.price}.00
                             </h1>
                         </div>
                     </div>

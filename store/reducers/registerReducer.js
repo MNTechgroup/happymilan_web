@@ -3,8 +3,10 @@ import { UploadImages3, updateAddressData, updateEducationData, updateGeneralInf
 import { STATUSES } from "./MyProfile";
 import { ADD_NEW_SHORTLIST, MARK_SHORTLISTS_AS_SEEN } from "../actions/GetingAlluser";
 import { UPDATE_HOBBIES_VALUES, UPDATE_PARTNER_PREF } from "../type";
+import { getNameFromLocalStorage } from "../../utils/helpers/LocalStorage";
 
 
+const DefaultName = getNameFromLocalStorage("personal")
 
 
 
@@ -25,7 +27,7 @@ const initialState = {
     status: STATUSES.IDLE,
     general: {
       creatingProfileFor: "",
-      firstName: "",
+      firstName: DefaultName ? DefaultName : "",
       lastName: "",
       motherTongue: "",
       maritalStatus: "",
@@ -104,6 +106,25 @@ const initialState = {
       bufferdata: "",
       CaptionText: "",
     },
+    uploadChatVideo: {
+      imagesdata: {},
+      bufferdata: "",
+      CaptionText: "",
+    },
+    UploadChatContent: {
+      ContentType: "",
+      uploadChatVideo: {
+        imagesdata: {},
+        bufferdata: "",
+        CaptionText: "",
+      },
+      uploadChatImage: {
+        imagesdata: {},
+        bufferdata: "",
+        CaptionText: "",
+      },
+    },
+
     partnerpref: {
       age: {
         min: "",
@@ -116,7 +137,7 @@ const initialState = {
       country: [],
       state: [],
       city: [],
-      income: "",
+      income: 0,
       creative: [],
       fun: [],
       diet: []
@@ -147,6 +168,23 @@ export const formReducer = (state = initialState, action) => {
           ...state.formData,
           ...action.payload,
         },
+      };
+    case 'REMOVE_UPLOAD_DATA':
+      return {
+        ...state,
+        UploadChatContent: {
+          ContentType: "",
+          uploadChatVideo: {
+            imagesdata: {},
+            bufferdata: "",
+            CaptionText: "",
+          },
+          uploadChatImage: {
+            imagesdata: {},
+            bufferdata: "",
+            CaptionText: "",
+          }
+        }
       };
     case UPDATE_HOBBIES_VALUES:
       return {

@@ -212,8 +212,8 @@ function ShareModal({ isOpen, onClose, data , UserID }) {
                 ) : (
                   <>
                     <div
-                      id="grad-bg"
-                      className="w-[50px] h-[40px] absolute top-[-45px] flex items-center justify-center text-white rounded"
+                     
+                      className="bg-custom-gradient w-[50px] h-[40px] absolute top-[-45px] flex items-center justify-center text-white rounded"
                     >
                       <p className="text-[10px]"> Copied ! </p>
                     </div>

@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { Postrecentuserprofile, sendRequest } from '../../../../../store/actions/UsersAction'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,6 +9,7 @@ import RegisterAlertModal from '../../../../_components/Model/Models/RegisterAle
 import ShareModal from '../../../../_components/Model/Models/ShareModal'
 import ProfileMenu from '../../../../_components/Model/popover/MenuPop'
 import BlockUserModal from "../../../../_components/Model/Models/BlockModal";
+import { useRouter } from 'next/router'
 
 
 function SearchUsers({ searchResults }) {
@@ -60,16 +60,12 @@ function SearchUsers({ searchResults }) {
         setisReportModalOpen(false);
     }
 
+    const router = useRouter();
 
-    const HandleVisitProfile = (res) => {
-        // () => router.push(`/longterm/dashboard/${user?.id}`)
-
-        router.push(`/longterm/dashboard/${res?.id}`)
-    }
-
-
-
-
+    const HandlePushUser = (res) => {
+        router.push(`/longterm/dashboard/${res}`);
+        dispatch(Postrecentuserprofile(res));
+    };
 
 
     const ProfileName = {
@@ -103,17 +99,6 @@ function SearchUsers({ searchResults }) {
         boxShadow: "0px 0px 14px 0px rgba(0, 0, 0, 0.07)"
     }
 
-
-    const ImagenotFound = {
-        color: "#B3CBF1",
-        textAlign: "center",
-        fontFamily: "Poppins",
-        fontSize: "12px",
-        fontStyle: "normal",
-        fontWeight: "500",
-        lineHeight: "normal"
-    }
-
     const Urlmodaltext = {
         color: "#000",
         fontFamily: "Poppins",
@@ -123,13 +108,7 @@ function SearchUsers({ searchResults }) {
     };
 
 
-    const router = useRouter();
     const dispatch = useDispatch();
-
-    const HandlePushUser = (res) => {
-        router.push(`/longterm/dashboard/${res}`);
-        dispatch(Postrecentuserprofile(res));
-    };
 
 
     const [sentrequest, setsentRequest] = useState({});
@@ -192,11 +171,11 @@ function SearchUsers({ searchResults }) {
                                                 </li>
                                             </ul>
                                         </div>
-                                        <div onClick={() => HandlePushUser(user.id)} className='flex justify-center cursor-pointer'>
-                                            <Image width={102} height={102} style={{ objectFit: "cover" }} className='w-[102px] h-[102px] rounded-[50%]' src={user?.profilePic ? user.profilePic : ""} />
+                                        <div className='flex justify-center cursor-pointer'>
+                                            <Image onClick={() => HandlePushUser(user?.id)} width={102} height={102} style={{ objectFit: "cover" }} className='w-[102px] h-[102px] rounded-[50%] hover:opacity-90 duration-100' src={user?.profilePic ? user.profilePic : ""} />
                                         </div>
                                         <div className='text-center'>
-                                            <h1 onClick={() => HandlePushUser(user.id)} style={ProfileName} className='cursor-pointer text-[18px]'>{user?.name}</h1>
+                                            <h1 onClick={() => HandlePushUser(user?.id)} style={ProfileName} className='cursor-pointer text-[18px] hover:opacity-75 duration-100'>{user?.name}</h1>
                                             <p style={ListText} className='text-[14px]'>32, 5’3”</p>
                                             <p style={ListText} className='text-[14px]'>{`${user?.religion ? user.religion : "NA"} , ${user?.cast ? user.cast : "NA"}`}</p>
                                             <p style={ListText} className='text-[14px]'>{user?.maritalStatus ? user.maritalStatus : "NA"}</p>
