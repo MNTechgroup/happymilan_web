@@ -44,7 +44,7 @@ function ProductsListModal() {
 
     const GototPage = (res) => {
         if (res != "") {
-            window.open('https://hmbusiness-eace6.web.app/', "_blank")
+            window.open('https://proxale.com/', "_blank")
             SetOpenProductList(false)
         } else {
 
@@ -57,7 +57,7 @@ function ProductsListModal() {
     const ProductDataList = [
         {
             id: 1,
-            name: "Proffers",
+            name: "Proxale",
             content: "Explore Nearby Services",
             image: "/assests/product-assests/proffers.svg",
             IconWidth: "36.874px",

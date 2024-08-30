@@ -6,7 +6,7 @@ function Accordion({ title, children }) {
     const [accordionOpen, setAccordionOpen] = useState(false);
 
     return (
-        <li onClick={() => setAccordionOpen(!accordionOpen)} className='list-none group w-[70%] h-[full] border-[1px] hover:border-[#000] border-[#ECECEC] rounded-[18px] pr-[20px] pl-[20px]'>
+        <div onClick={() => setAccordionOpen(!accordionOpen)} className='list-none group w-[full] h-[full] border-[1px] hover:border-[#000] border-[#ECECEC] rounded-[18px] pr-[20px] pl-[20px]'>
             <div className="py-[20px]">
                 <button
                     onClick={() => setAccordionOpen(!accordionOpen)}
@@ -30,7 +30,7 @@ function Accordion({ title, children }) {
                     </div>
                 </div>
             </div>
-        </li>
+        </div>
     )
 }
 

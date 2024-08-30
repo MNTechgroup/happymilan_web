@@ -7,6 +7,8 @@ import Modal from "@mui/material/Modal";
 import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 import { Hidemyprofile, Hidemyprofileclosemodel } from "../../../../../../store/actions/UserSettingAction";
+import { getCookie } from "cookies-next";
+import { useRouter } from "next/router";
 
 function DeleteProfile() {
   const [open, setOpen] = React.useState(false);
@@ -77,6 +79,19 @@ function DeleteProfile() {
   const dispatch = useDispatch();
 
   const { loading, data, closemodal } = useSelector((state) => state.userseting.Profilehide)
+
+  const router = useRouter();
+
+  useEffect(() => {
+
+    if (getCookie("authtoken")) {
+
+    } else {
+      router.push("/login")
+    }
+
+
+  }, [data])
 
   useEffect(() => {
     if (closemodal) {

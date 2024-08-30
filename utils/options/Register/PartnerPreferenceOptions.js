@@ -1,13 +1,3 @@
-// const options = Array.from({ length: 23 }, (v, k) => {
-//     const value = k + 18;
-//     return { value, label: value.toString() };
-// });
-
-// const heightoption = Array.from({ length: 23 }, (v, k) => {
-//     const value = k + 5;
-//     return { value, label: value.toString() };
-// });
-
 export const heightoptionFun = (start, end) => {
     const options = [];
     for (let i = start; i <= end; i++) {

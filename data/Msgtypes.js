@@ -780,59 +780,84 @@ const TypingMessage = () => {
 }
 
 const AudioMessage = ({ el, Outgoing, userMessage, sendAt, onDeleteMessage }) => {
-console.log("🚀 ~ AudioMessage ~ userMessage:", userMessage)
+    console.log("🚀 ~ AudioMessage ~ userMessage:", userMessage)
 
 
     const { userData, updateUser } = useContext(UserContext);
 
+const [isPlaying, setIsPlaying] = useState(false);
+const [currentTime, setCurrentTime] = useState(0);
+const [duration, setDuration] = useState(0);
+const audioRef = useRef(null);
 
-
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [currentTime, setCurrentTime] = useState(0);
-    const [duration, setDuration] = useState(0);
-    const audioRef = useRef(null);
-
-    const handlePlay = () => {
+const handlePlay = () => {
+    if (audioRef.current) {
         audioRef.current.play();
         setIsPlaying(true);
-    };
+    }
+};
 
-    const handlePause = () => {
+const handlePause = () => {
+    if (audioRef.current) {
         audioRef.current.pause();
         setIsPlaying(false);
-    };
+    }
+};
 
-    const handlePlayPause = () => {
-        if (isPlaying) {
-            handlePause();
-        } else {
-            handlePlay();
+const handlePlayPause = () => {
+    if (isPlaying) {
+        handlePause();
+    } else {
+        handlePlay();
+    }
+};
+
+const handleTimeUpdate = () => {
+    if (audioRef.current) {
+        const currentTime = audioRef.current.currentTime;
+        const duration = audioRef.current.duration;
+
+        setCurrentTime(isFinite(currentTime) ? currentTime : 0);
+        setDuration(isFinite(duration) ? duration : 0);
+    }
+};
+
+const handleSeek = (e) => {
+    if (audioRef.current) {
+        audioRef.current.currentTime = e.target.value;
+        setCurrentTime(e.target.value);
+    }
+};
+
+function formatDuration(durationSeconds) {
+    const minutes = Math.floor(durationSeconds / 60);
+    const seconds = Math.floor(durationSeconds % 60);
+    const formattedSeconds = seconds.toString().padStart(2, "0");
+    return `${minutes}:${formattedSeconds}`;
+}
+
+useEffect(() => {
+    const audioElement = audioRef.current;
+
+    const handleLoadedMetadata = () => {
+        console.log("Metadata Loaded: ", audioElement.duration);
+        if (audioElement) {
+            setDuration(isFinite(audioElement.duration) ? audioElement.duration : 0);
         }
     };
 
-    const handleTimeUpdate = () => {
-        setCurrentTime(audioRef.current.currentTime);
-        setDuration(audioRef.current.duration);
-    };
-
-    const handleSeek = (e) => {
-        audioRef.current.currentTime = e.target.value;
-        setCurrentTime(e.target.value);
-    };
-
-    function formatDuration(durationSeconds) {
-        const minutes = Math.floor(durationSeconds / 60);
-        const seconds = Math.floor(durationSeconds % 60);
-        const formattedSeconds = seconds.toString().padStart(2, "0");
-        return `${minutes}:${formattedSeconds}`;
+    if (audioElement) {
+        audioElement.addEventListener("loadedmetadata", handleLoadedMetadata);
+        audioElement.addEventListener("timeupdate", handleTimeUpdate);
     }
 
-    useEffect(() => {
-        audioRef.current?.addEventListener("timeupdate", handleTimeUpdate);
-        return () => {
-            audioRef.current?.removeEventListener("timeupdate", handleTimeUpdate);
-        };
-    }, []);
+    return () => {
+        if (audioElement) {
+            audioElement.removeEventListener("loadedmetadata", handleLoadedMetadata);
+            audioElement.removeEventListener("timeupdate", handleTimeUpdate);
+        }
+    };
+}, []);
 
     // #audio-img #audio-button
 
@@ -881,7 +906,7 @@ console.log("🚀 ~ AudioMessage ~ userMessage:", userMessage)
 
                             </div>
                         </div>
-                        <MessageOptions />
+                        <MessageOptions data={userMessage} onDeleteMessage={onDeleteMessage} />
 
                     </Stack>
                     :
@@ -889,7 +914,7 @@ console.log("🚀 ~ AudioMessage ~ userMessage:", userMessage)
                     <Stack id="Chat-scroll-bar" direction='row' justifyContent={'start'}>
 
                         <Stack id="Chat-scroll-bar" direction='row' sx={{ marginRight: "10px" }} justifyContent={'end'}>
-                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "#F8E8FF", width: "261px", height: "53px", paddingLeft: "10px", paddingRight: "10px", borderRadius: "10px" }}>
+                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "#E1EDFF", width: "261px", height: "53px", paddingLeft: "10px", paddingRight: "10px", borderRadius: "10px" }}>
                                 <div className='' style={{ marginLeft: "10px" }}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
                                         <path d="M5.05013 21.8167H2.2168C1.60291 21.8167 1.09527 21.616 0.69388 21.2146C0.292491 20.8132 0.0917969 20.3056 0.0917969 19.6917V10.9083C0.0917969 9.39722 0.37513 7.98056 0.941797 6.65833C1.50846 5.33611 2.28763 4.17917 3.2793 3.1875C4.27096 2.19583 5.42791 1.41667 6.75013 0.85C8.07235 0.283333 9.48902 0 11.0001 0C12.5112 0 13.9279 0.283333 15.2501 0.85C16.5724 1.41667 17.7293 2.19583 18.721 3.1875C19.7126 4.17917 20.4918 5.33611 21.0585 6.65833C21.6251 7.98056 21.9085 9.39722 21.9085 10.9083V19.6917C21.9085 20.3056 21.7078 20.8132 21.3064 21.2146C20.905 21.616 20.3974 21.8167 19.7835 21.8167H16.9501V13.8833H20.9168V10.9083C20.9168 8.14583 19.9546 5.80243 18.0303 3.87812C16.106 1.95382 13.7626 0.991667 11.0001 0.991667C8.23763 0.991667 5.89423 1.95382 3.96992 3.87812C2.04562 5.80243 1.08346 8.14583 1.08346 10.9083V13.8833H5.05013V21.8167ZM4.05846 14.875H1.08346V19.6917C1.08346 19.975 1.20152 20.2347 1.43763 20.4708C1.67374 20.7069 1.93346 20.825 2.2168 20.825H4.05846V14.875ZM17.9418 14.875V20.825H19.7835C20.0668 20.825 20.3265 20.7069 20.5626 20.4708C20.7987 20.2347 20.9168 19.975 20.9168 19.6917V14.875H17.9418Z" fill="url(#paint0_linear_607_198)" />

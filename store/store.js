@@ -16,6 +16,7 @@ import AuthReducer from './reducers/Authreducer';
 import SpamuserSlice from './reducers/SpamReportReducer'
 import UserStoryView from './reducers/UserStoryView';
 import UpgradePlansReducer from './reducers/UpgradeReducer';
+import SignupReducer from './reducers/SignUpReducer';
 
 const store = configureStore({
   reducer: {
@@ -35,6 +36,7 @@ const store = configureStore({
     usersact: userReducer,
     upgradeplans: UpgradePlansReducer,
     chatSafetyConsent: SafetyConsentReducer,
+    signUp: SignupReducer
 
   },
 });

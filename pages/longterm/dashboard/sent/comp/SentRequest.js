@@ -13,7 +13,7 @@ import { Pagination } from 'swiper';
 import Image from 'next/image';
 import { Dialog, DialogContent } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { Cancelfriendrequest, getSentrequestData } from '../../../../../store/actions/UsersAction';
+import { getSentrequestData } from '../../../../../store/actions/UsersAction';
 import UserprofileSkeleton from '../../../../../components/common/shader/UserprofileSkeleton';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';

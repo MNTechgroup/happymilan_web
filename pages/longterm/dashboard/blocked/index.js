@@ -5,6 +5,7 @@ import Footer from '../../../_components/layout/Footer'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import NavBar from '../../../_components/layout/Navbar'
+import useUserActivity from '../../../../utils/hooks/UserActivity'
 const UserStory = dynamic(() => import('../../../_components/Container/UserStory'));
 const BlockedUser = dynamic(() => import('./comp/BlockedUser'));
 const ProfileComplete = dynamic(() => import('../../../_components/Container/ProfileComplete'));
@@ -12,6 +13,7 @@ const MoreSuggestion = dynamic(() => import('../../../_components/Container/More
 const BlockedUserGrid = dynamic(() => import('./comp/BlockUserGrid'));
 const ProtectedRoutes = dynamic(() => import('../../../routes/ProtectedRoutes'));
 function index() {
+  useUserActivity();
 
   const Text6 = {
     color: "#000",

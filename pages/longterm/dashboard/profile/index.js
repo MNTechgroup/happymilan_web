@@ -2,6 +2,7 @@
 
 import React from 'react'
 import dynamic from 'next/dynamic';
+import useUserActivity from '../../../../utils/hooks/UserActivity';
 // import NavBar from '../../../_components/layout/Navbar';
 const NavBar = dynamic(() => import('../../../_components/layout/Navbar'));
 const SideBar = dynamic(() => import('../../../_components/layout/SideBar'));
@@ -14,6 +15,7 @@ function index() {
 
   const handleSearch = (searchTerm) => { }
 
+  useUserActivity();
 
   return (
     <>

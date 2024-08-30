@@ -11,6 +11,7 @@ import { SocketProvider } from "../ContextProvider/SocketContext";
 import Head from "next/head";
 import "./global.css";
 import { ChatSettingsProvider } from "../ContextProvider/ChatSetingContext";
+import { UserActivityProvider } from "../ContextProvider/UserActivityContext";
 
 
 
@@ -36,7 +37,7 @@ export default function MyApp({
 
       <Head>
         <title>HappyMilan</title>
-        <meta name="description" content="Your meta description goes here" />
+        <meta name="description" content="Your meta description goes hereerrr" />
         {/* Add more meta tags as needed */}
       </Head>
 
@@ -48,15 +49,17 @@ export default function MyApp({
             <SocketProvider>
               <UsersConversationProvider>
                 <ChatSettingsProvider>
+                  <UserActivityProvider>
 
-                  {/* <DrawerProvider> */}
-                  <ThemeProvider>
+                    {/* <DrawerProvider> */}
+                    <ThemeProvider>
 
-                    {/* <Nextjsprogress height={2} color="#3742b6" /> */}
-                    {/* <Component {...pageProps} toggleDarkMode={toggleDarkMode} darkMode={darkMode}/> */}
+                      {/* <Nextjsprogress height={2} color="#3742b6" /> */}
+                      {/* <Component {...pageProps} toggleDarkMode={toggleDarkMode} darkMode={darkMode}/> */}
 
-                    <Component {...pageProps} />
-                  </ThemeProvider>
+                      <Component {...pageProps} />
+                    </ThemeProvider>
+                  </UserActivityProvider>
                   {/* </DrawerProvider> */}
                 </ChatSettingsProvider>
               </UsersConversationProvider>

@@ -3,7 +3,6 @@ import { GET_PRIVACY_QUESTIONS, GET_PRIVACY_QUESTIONS_FAILURE, GET_PRIVACY_QUEST
 import { logoutuser } from "./UsersAction";
 
 export const Hidemyprofile = (credetials) => {
-    console.log("🚀 ~ Hidemyprofile ~ credetials:", credetials)
     return (dispatch) => {
 
 
@@ -11,23 +10,15 @@ export const Hidemyprofile = (credetials) => {
 
         const axios = require('axios');
         const token = getCookie("authtoken")
-
-        const Credentials = {
-            "profileHideAndDelete": {
-                "isProfileDelete": credetials?.isProfileDelete,
-                "reasonForProfileDelete": credetials?.reasonForProfileDelete
-            }
-        }
+        const userID = getCookie("userid")
 
         let config = {
-            method: 'put',
+            method: 'delete',
             maxBodyLength: Infinity,
-            url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/auth/update-user`,
+            url: `https://happymilan.tech/api/v1/user/user`,
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
-            },
-            data: Credentials
+            }
         };
 
         axios.request(config)
@@ -40,6 +31,37 @@ export const Hidemyprofile = (credetials) => {
                 dispatch({ type: HIDE_MY_PROFILE_FAILURE, payload: error })
                 console.log(error);
             });
+
+
+
+        // const Credentials = {
+        //     "profileHideAndDelete": {
+        //         "isProfileDelete": credetials?.isProfileDelete,
+        //         "reasonForProfileDelete": credetials?.reasonForProfileDelete
+        //     }
+        // }
+
+        // let config = {
+        //     method: 'put',
+        //     maxBodyLength: Infinity,
+        //     url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/auth/update-user`,
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': `Bearer ${token}`
+        //     },
+        //     data: Credentials
+        // };
+
+        // axios.request(config)
+        //     .then((response) => {
+        //         console.log(JSON.stringify(response.data));
+        //         dispatch({ type: HIDE_MY_PROFILE_SUCCESS, payload: response.data })
+        //         dispatch(logoutuser())
+        //     })
+        //     .catch((error) => {
+        //         dispatch({ type: HIDE_MY_PROFILE_FAILURE, payload: error })
+        //         console.log(error);
+        //     });
 
 
     }

@@ -3,6 +3,7 @@ import CommonNavbar from '../_components/layout/AuthNavbar'
 import Image from 'next/image'
 import { getCookie } from 'cookies-next'
 import GlobalFooter from '../_components/layout/GlobalFooter'
+import { useRouter } from 'next/router'
 
 function index() {
 
@@ -83,7 +84,15 @@ function index() {
         setToken(getCookie("jwtToken"))
     }, [])
 
+    const router = useRouter();
+
     const GotoLogin = () => {
+
+        if (token) {
+            router.push("/longterm/dashboard")
+        } else {
+            router.push("/login")
+        }
 
     }
     return (
@@ -93,7 +102,7 @@ function index() {
             <div className='pt-[100px] 2xl:pt-[120px] xl:pt-[90px] lg:pt-[90px] space-y-[80px]'>
                 <div className='w-full flex justify-center items-center'>
                     <div className='w-[75%] flex justify-evenly space-x-[176px] items-center'>
-                    {/* <div className='flex justify-evenly space-x-[176px] items-center'> */}
+                        {/* <div className='flex justify-evenly space-x-[176px] items-center'> */}
                         <div>
                             <Image width={0} height={0} alt='image-1' src={"/assests/about/grid-layout.svg"} className='w-[356px] h-[530px]' />
                         </div>

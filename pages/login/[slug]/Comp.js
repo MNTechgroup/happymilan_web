@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import Navbar from "../../_components/layout/AuthNavbar";
 import Image from "next/image";
 import { updateFormData } from "../../../store/actions/registerUser";
 import { connect } from "react-redux";
+import { getCookie } from "cookies-next";
 
 const profileOptions = [
     {
@@ -35,9 +36,18 @@ const profileOptions = [
 ];
 
 function Comp({ formData, updateFormData }) {
+
     const router = useRouter();
     const [activebtn, setActivebtn] = useState(0);
     const [hover, setHover] = useState(null);
+
+    const Token = getCookie("authtoken")
+
+    useEffect(() => {
+        if (!Token) {
+            router.push('/login')
+        }
+    }, [router])
 
     const handleSubmit = () => {
         if (activebtn === 0) return;
@@ -121,12 +131,12 @@ function Comp({ formData, updateFormData }) {
                                         />
                                     </div>
                                     <div>
-                                        <h1 style={Text} className={`${activebtn === option.id ? "text-[#FFF]" : "group-hover:text-[#FFF] text-[#000]"}`}>
+                                        <h1 style={Text} className={`select-none ${activebtn === option.id ? "text-[#FFF]" : "group-hover:text-[#FFF] text-[#000]"}`}>
                                             {option.title}
                                         </h1>
                                     </div>
                                     <div style={Text2} className="w-[180px]">
-                                        <p className={`${activebtn === option.id ? "text-[#FFF]" : "group-hover:text-[#FFF] text-[#000]"}`}>
+                                        <p className={`select-none ${activebtn === option.id ? "text-[#FFF]" : "group-hover:text-[#FFF] text-[#000]"}`}>
                                             {option.description}
                                         </p>
                                     </div>

@@ -12,6 +12,7 @@ import Image from 'next/image';
 import { useDarkMode } from '../../../ContextProvider/DarkModeContext';
 import UserProfile from '../../_components/Container/UserProfile'
 import NavBar from '../../_components/layout/Navbar';
+import useUserActivity from '../../../utils/hooks/UserActivity';
 // Lazy load your components;
 const UserGridProfile = dynamic(() => import('../../_components/Container/UserGridProfile'));
 const ProfileComplete = dynamic(() => import('../../_components/Container/ProfileComplete'));
@@ -33,15 +34,25 @@ function index() {
   const [listType, setListType] = useState(false);
 
 
+  useUserActivity();
+
+
+  const { data, status } = useSelector((state) => state.myprofile);
+
   useEffect(() => {
-    const firstVisit = localStorage.getItem('modal');
-    const UserRegister = localStorage.getItem('UserRegister');
-    if (UserRegister === 'false' || !UserRegister) {
-      setIsModalOpen(false);
-    } else {
+    // const firstVisit = localStorage.getItem('modal');
+    // const UserRegister = localStorage.getItem('UserRegister');
+
+    if (status === "idle" && data?.userProfileCompleted === false) {
+      // Open the modal if profile is not completed
       setIsModalOpen(true);
+      console.log("Open Modal...");
+    } else {
+      // Close the modal if profile is completed
+      setIsModalOpen(false);
+      console.log("Don't Open Modal...");
     }
-  }, []);
+  }, [status, data]);
 
   const router = useRouter();
 
@@ -64,7 +75,6 @@ function index() {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearch = (searchTerm) => {
-    console.log("🚀 ~ handleSearch ~ searchTerm:", searchTerm)
 
     setSearchTerm(searchTerm);
     const axios = require("axios")
@@ -143,7 +153,7 @@ function index() {
                 <div>
 
                   {searchResults.length === 0 ? (
-                    <div>No search results</div>
+                    <div className='relative left-[55px]'>No search results</div>
                   ) : (
                     <div>
                       <SearchUsers searchResults={searchResults} />

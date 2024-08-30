@@ -19,10 +19,14 @@ import {
     UPDATE_ADDRESS_DATA_FAILURE, UPDATE_ADDRESS_DATA_SUCCESS, FETCH_GRID_USER_DATA_REQUEST, FETCH_GRID_USER_DATA_REQUEST_SUCCESS,
     LIKED_USERS_PROFILE_DATA, LIKED_USERS_PROFILE_DATA_SUCCESS, UPLOAD_MY_STORY, UPLOAD_MY_STORY_SUCCESS, UPLOAD_MY_STORY_FAILURE,
     GET_ALL_STATUS_SUCCESS, GET_ALL_STATUS, GET_ALL_STATUS_FAILURE, UPLOAD_MY_STORY_MODAL, DELETE_MY_STATUS_SUCCESS,
-    DELETE_STATUS_MODAL
+    DELETE_STATUS_MODAL,
+    GET_MATCH_SCORE,
+    GET_MATCH_SCORE_SUCCESS,
+    GET_MATCH_SCORE_FAILURE
 } from '../type';
 import { GET_REQUEST, GET_REQUEST_SUCCESS, GET_REQUEST_FAILURE } from '../type';
 import { fetchMyProfileData } from '../reducers/MyProfile';
+// import { io } from 'socket.io-client';
 // import { useRouter } from 'next/router';
 
 export const sendRequest = (requestData) => {
@@ -400,7 +404,7 @@ export const getAcceptedRequestData = () => {
 
             const friendRequests = response.data.data.map((res) => currentUser == res?.friend?.id ? res?.user : res?.friend);
             // console.log("🚀 ~ return ~ friendRequests:", friendRequests)
-            
+
 
             // dispatch({ type: GET_ACCEPTED_REQUEST_DATA_SUCCESS, payload: response.data });
             dispatch({
@@ -514,12 +518,18 @@ export const getSentrequestDataFailure = (error) => ({
 export const logoutuser = () => {
     console.log("Logout from Redux...")
 
+
+
+    // const socket = useSocket();
+
+
     // const router = useRouter();
     return async (dispatch) => {
 
         dispatch({
             type: LOGOUT_USER
         });
+        // Get the authentication token from cookies
 
         try {
             // Clear cookies
@@ -529,6 +539,7 @@ export const logoutuser = () => {
             deleteCookie('userName', { path: '/' });
             deleteCookie('data', { path: '/' });
             deleteCookie('userid', { path: '/' });
+            deleteCookie('fcmToken', { path: '/' });
             localStorage.clear(); // Clear local storage
 
         } catch (error) {
@@ -1325,5 +1336,37 @@ export const DeleteMystatus = (StatusID) => {
 export const GetMatchScore = (MatchID) => {
     console.log("🚀 ~ GetMatchScore ~ MatchID:", MatchID)
     return async (dispatch) => {
+
+        dispatch({
+            type: GET_MATCH_SCORE
+        })
+
+        const axios = require('axios');
+        const token = getCookie("authtoken")
+
+        let config = {
+            method: 'get',
+            maxBodyLength: Infinity,
+            url: `https://happymilan.tech/api/v1/user/user/get-match-user/${MatchID}`,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+
+        axios.request(config)
+            .then((response) => {
+                console.log(JSON.stringify(response.data));
+                dispatch({
+                    type: GET_MATCH_SCORE_SUCCESS,
+                    payload: response?.data?.data[0]
+                })
+            })
+            .catch((error) => {
+                console.log(error);
+                dispatch({
+                    type: GET_MATCH_SCORE_FAILURE
+                })
+            });
+
     }
 }

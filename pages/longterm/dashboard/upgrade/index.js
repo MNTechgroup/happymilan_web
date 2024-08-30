@@ -7,11 +7,25 @@ import NavBar from '../../../_components/layout/Navbar';
 import { capitalizeFirstLetter } from '../../../../utils/form/Captitelize';
 import { useDispatch } from 'react-redux';
 import { getPlansByID } from '../../../../store/actions/UpgradeAction';
+import BodySection from './comp/BodySection';
+import useUserActivity from '../../../../utils/hooks/UserActivity';
 
 const PricingBox = dynamic(() => import('./comp/PricingBox'));
 const PricingBox2 = dynamic(() => import('./comp/PricingBox2'));
 
 const PricingPage = () => {
+
+    useUserActivity();
+    
+    const Title = {
+        color: "#000",
+        fontFamily: "Poppins",
+        fontStyle: "normal",
+        fontWeight: "520",
+        lineHeight: "normal",
+    }
+
+
     const [currentTab, setCurrentTab] = useState(1);
     const [userName, setUserName] = useState('User');
     const router = useRouter();
@@ -23,12 +37,17 @@ const PricingPage = () => {
 
     const dispatch = useDispatch();
 
-    const handleCheckout = async (e) => {
+    const handleCheckout =  (e) => {
         console.log("<== E ==>", e)
         // console.log("<== RES ==>",res)
         if (e?.planId) {
+            console.log("🚀 ~ handleCheckout ~ e?.planId:", e?.planId)
+            
             dispatch(getPlansByID(e?.planId))
+            setTimeout(() => {
             router.push(`/longterm/dashboard/upgrade/${e?.planId}`);
+                
+            }, 1000);
         }
     };
 
@@ -36,7 +55,7 @@ const PricingPage = () => {
         {
             label: 'Silver',
             value: 'dashboard',
-            desc: <PricingBox handleCheckout={handleCheckout} />,
+            desc: <PricingBox HandleCheckout={handleCheckout} />,
         },
         {
             label: 'Gold',
@@ -51,7 +70,7 @@ const PricingPage = () => {
     ];
 
     const handleSearch = (searchTerm) => {
-        // Implement search functionality
+        // Implement search functionality z-
     };
 
     return (
@@ -67,9 +86,9 @@ const PricingPage = () => {
                 </button>
                 <div className="grid place-items-center w-full h-full">
                     <div className="text-center bg-[#FFF]">
-                        <div className="flex flex-col justify-center items-center relative top-[90px] z-[10] w-full h-full">
+                        <div className="flex flex-col justify-center items-center relative top-[90px] w-full h-full">
                             <div className="flex justify-between">
-                                <h1 className="2xl:text-[20px] xl:text-[18px] text-[#000]">
+                                <h1 style={Title} className="2xl:text-[20px] xl:text-[18px] text-[#000]">
                                     Hi {capitalizeFirstLetter(userName)}, Upgrade Your Profile
                                 </h1>
                             </div>
@@ -90,14 +109,20 @@ const PricingPage = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div id="pricing-box" className="mt-[20px]">
+                                <div id="pricing-box" className="mt-[40px]">
                                     {data[currentTab - 1].desc}
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
+                    <BodySection />
                 </div>
+
+
             </div>
+
             <div id="PriceBox2" className="pt-[50px]">
                 <PricingBox2 />
             </div>

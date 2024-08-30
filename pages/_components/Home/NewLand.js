@@ -6,6 +6,7 @@ import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import Accordion from '../../../components/common/Features/Accordion';
 import GlobalFooter from '../layout/GlobalFooter';
+import Link from 'next/link';
 
 function NewLand() {
 
@@ -425,47 +426,49 @@ function NewLand() {
                             <h1 className='2xl:text-[50px] xl:text-[40px] text-[60px] text-black font-poppins  font-bold leading-[70px]'>Frequently Asked Questions</h1>
                         </div>
                         <ul className='flex flex-col items-center space-y-[13px] mt-[80px]'>
-                            <Accordion title={"How do I create an account on HappyMilan?"}>
-                                <ul style={AccordingBody}>
-                                    <li>
-                                        Step 1: Click on{" "}
-                                        <span className="text-[#0F52BA]"> “Sign up.”</span>
-                                    </li>
-                                    <li>
-                                        Step 2: Enter your{" "}
-                                        <span className="text-[#0F52BA]">
-                                            {" "}
-                                            “Email or mobile number.”
-                                        </span>
-                                    </li>
-                                    <li>Step 3: Choose a password.</li>
-                                    <li>
-                                        Step 4: Select the registration type, either{" "}
-                                        <span className="text-[#0F52BA]">
-                                            {" "}
-                                            “Marriage or Dating”
-                                        </span>
-                                    </li>
-                                    <li className="mt-[30px]">
-                                        after selection of registration type , you’ll be redirecting
-                                        to your own dashboard and at this stage you’ll have
-                                        successfully registered on HappyMilan. But you’ll be
-                                        restricted to send request until you don’t complete the
-                                        registration form. Once we’ve all the information, we’ll be
-                                        able to give you perfect suggestion matches based on your
-                                        information.
-                                    </li>
+                            <li className='w-[70%]'>
+                                <Accordion title={"How do I create an account on HappyMilan?"}>
+                                    <ul style={AccordingBody}>
+                                        <li>
+                                            Step 1: Click on{" "}
+                                            <span className="text-[#0F52BA]"> “Sign up.”</span>
+                                        </li>
+                                        <li>
+                                            Step 2: Enter your{" "}
+                                            <span className="text-[#0F52BA]">
+                                                {" "}
+                                                “Email or mobile number.”
+                                            </span>
+                                        </li>
+                                        <li>Step 3: Choose a password.</li>
+                                        <li>
+                                            Step 4: Select the registration type, either{" "}
+                                            <span className="text-[#0F52BA]">
+                                                {" "}
+                                                “Marriage or Dating”
+                                            </span>
+                                        </li>
+                                        <li className="mt-[30px]">
+                                            after selection of registration type , you’ll be redirecting
+                                            to your own dashboard and at this stage you’ll have
+                                            successfully registered on HappyMilan. But you’ll be
+                                            restricted to send request until you don’t complete the
+                                            registration form. Once we’ve all the information, we’ll be
+                                            able to give you perfect suggestion matches based on your
+                                            information.
+                                        </li>
 
-                                    <li className="mt-[21px]">
-                                        Wish you’ll have great experience on HappyMilan.com
-                                    </li>
-                                </ul>
-                            </Accordion>
-
-                            <Accordion title="Is HappyMilan for Long Term, Dating and Friendship?">
-                                HappyMilan is a social networking website that caters to both categories: matrimony and dating. Users can select either option when registering
-                            </Accordion>
-
+                                        <li className="mt-[21px]">
+                                            Wish you’ll have great experience on HappyMilan.com
+                                        </li>
+                                    </ul>
+                                </Accordion>
+                            </li>
+                            <li className='w-[70%]'>
+                                <Accordion title="Is HappyMilan for Long Term, Dating and Friendship?">
+                                    HappyMilan is a social networking website that caters to both categories: matrimony and dating. Users can select either option when registering
+                                </Accordion>
+                            </li>
                             <li className='w-[70%] h-[64px] border-[1px] border-[#ECECEC] rounded-[18px] flex justify-between pl-[20px] pr-[20px] items-center'>
                                 <p>What are top features of HappyMilan?</p>
                                 <Image className={`opacity-50 transform origin-center transition duration-200 ease-out`} width={14} height={14} alt='plus' src={"/assests/animation/plus-img.png"} />
@@ -498,18 +501,20 @@ function NewLand() {
                         </div>
                         <ul className='flex   justify-evenly   '>
                             <li className='cursor-pointer 2xl:w-[335px] 2xl:h-[335px] xl:w-[290px] xl:h-[290px] w-[323px] h-[323px] border-[1px]  border-[#E1E1E1] hover:border-[#8225AF] rounded-[24px] pl-[40px]'>
-                                <div className='flex flex-col justify-evenly w-full h-full'>
-                                    <div>
-                                        <Image width={0} height={0} alt='proffers' src={"/assests/product-assests/proffers.svg"} className='w-[50.702px] h-[44px]' />
+                                <Link target='_blank' href={"https://proxale.com/"}>
+                                    <div className='flex flex-col justify-evenly w-full h-full'>
+                                        <div>
+                                            <Image width={0} height={0} alt='proffers' src={"/assests/product-assests/proffers.svg"} className='w-[50.702px] h-[44px]' />
+                                        </div>
+                                        <div className='space-y-[20px]'>
+                                            <h1 style={ProductName}>Proxale</h1>
+                                            <p style={ProductList}>Explore Nearby Services</p>
+                                        </div>
+                                        <div className='flex justify-end pr-[31px]'>
+                                            <Image width={25.667} height={26.341} alt='arrow-icon' src={"/heroSec/icon/arrow-icon.svg"} />
+                                        </div>
                                     </div>
-                                    <div className='space-y-[20px]'>
-                                        <h1 style={ProductName}>Proffers</h1>
-                                        <p style={ProductList}>Explore Nearby Services</p>
-                                    </div>
-                                    <div className='flex justify-end pr-[31px]'>
-                                        <Image width={25.667} height={26.341} alt='arrow-icon' src={"/heroSec/icon/arrow-icon.svg"} />
-                                    </div>
-                                </div>
+                                </Link>
                             </li>
                             <li className='cursor-pointer 2xl:w-[335px] 2xl:h-[335px] xl:w-[290px] xl:h-[290px] w-[323px] h-[323px] border-[1px]  border-[#E1E1E1] hover:border-[#8225AF] rounded-[24px] pl-[40px]'>
                                 <div className='flex flex-col justify-evenly w-full h-full'>

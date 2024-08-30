@@ -1,16 +1,18 @@
 'use client'
 import React, { useState } from 'react'
-import NavBar from '../../../_components/layout/NavBar';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import SideBar from './comp/Sidebar';
 import dynamic from 'next/dynamic';
+import useUserActivity from '../../../../utils/hooks/UserActivity';
+import NavBar from '../../../_components/layout/Navbar';
 const Credentials = dynamic(() => import('./credentials/comp/Credential'));
 const DeleteProfile = dynamic(() => import('./deleteprofile/comp/Deleteprofile'));
 const EmailAlert = dynamic(() => import('./emailalert'));
 const PrivacySeting = dynamic(() => import('./privacyseting'));
 
 const index = ({ children }) => {
+    useUserActivity();
 
     const router = useRouter();
     const menuItem = [

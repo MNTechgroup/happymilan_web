@@ -262,15 +262,16 @@ function UserStory({ formData, updateFormData }) {
                 <Dialog
                     open={open}
                     onClose={handleClose}
-                    className='flex justify-center'
+                   
+                    className='flex justify-center rounded-[20px]'
 
                 >
 
 
 
-                    <DialogContent className='dark:bg-[#18191a]'>
+                    <DialogContent   className='dark:bg-[#18191a] rounded-[20px]'>
 
-                        <div className='space-y-[20px]'>
+                        <div className='space-y-[20px] rounded-[20px]'>
                             <div className='lg:pb-0 pb-[20px] flex items-center justify-between space-x-[20px]'>
                                 <div>
                                     <h1 style={Text3}>Add Story</h1>
@@ -285,7 +286,7 @@ function UserStory({ formData, updateFormData }) {
                                     ActiveTab == 1 ? (
                                         <>
 
-                                            <div className='md:pb-[20px] lg:pb-0 flex flex-col justify-center items-center space-y-[20px] w-full h-full   md:w-[350px] md:h-[150px] lg:w-[426px] lg:h-[257px] 2xl:w-[526px] 2xl:h-[450px] xl:w-[526px] xl:h-[357px] dark:bg-[#242526] bg-[#F5F5F5] rounded-[10px]'>
+                                            <div className='md:pb-[20px] lg:pb-0 flex flex-col justify-center items-center space-y-[20px] w-full h-full   md:w-[350px] md:h-[150px] lg:w-[426px] lg:h-[257px] 2xl:w-[526px] 2xl:h-[450px] xl:w-[526px] xl:h-[357px] dark:bg-[#242526] bg-[#F5F5F5] rounded-[20px]'>
                                                 <div {...getRootProps()} className='mt-[10%] lg:mt-0 md:w-[60px] md:h-[60px] lg:w-auto lg:h-auto 2xl:w-auto 2xl:h-auto xl:w-auto xl:h-auto'>
                                                     <input {...getInputProps()} className="hidden" />
                                                     <Image loading='lazy' alt="drag-drop" width={63} height={44} src='/loginassests/register-icons/Drag-Drop.svg' />
@@ -305,7 +306,7 @@ function UserStory({ formData, updateFormData }) {
                                                     <div className=' grid place-items-center md:w-[120px] md:h-[120px] lg:h-auto lg:w-[150px] 2xl:w-[190px] 2xl:h-[241px] xl:w-[190px] xl:h-[241px]'>
                                                         <Image style={{ objectFit: "cover", borderRadius: "10px" }} loading='lazy' alt='upload' width={190} height={241} src={imagesrc} />
                                                     </div>
-                                                    <div onClick={HandleDeleteClick} className='relative top-[50px]'>
+                                                    <div onClick={HandleDeleteClick} className='cursor-pointer relative top-[50px]'>
                                                         <Image loading='lazy' alt='delete-icon' width={19.695} height={22.17} className='w-[19.695px] h-[22.17px]' src='/assests/Black/Delete.svg' />
                                                     </div>
                                                 </div>

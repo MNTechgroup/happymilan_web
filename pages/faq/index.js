@@ -1,6 +1,5 @@
 import React from "react";
 import Navbar from "../_components/layout/AuthNavbar";
-import Footer from "../_components/layout/Footer";
 import Image from "next/image";
 import CustomAccordion from '../../components/common/Features/Accordion'
 import GlobalFooter from "../_components/layout/GlobalFooter";
@@ -48,8 +47,8 @@ function index() {
   return (
     <>
       <Navbar />
-      <div className="w-full pt-[80px] lg:pt-[120px] mt-[37px] h-full  lg:grid place-items-center pb-[40px]">
-        <div className="">
+      <div className="w-full pt-[80px] lg:pt-[120px] mt-[37px] h-full lg:grid place-items-center pb-[40px]">
+        <div>
           <h1 className="text-center">
             <span id="faq-title-1">Frequently asked questions</span>
             <span id="faq-title-2" className="block mt-[10px]">
@@ -58,9 +57,9 @@ function index() {
           </h1>
         </div>
 
-        <div className="mt-[30px] pb-[0px]">
-          <div className="w-full flex justify-center ">
-            <div className="w-full grid place-items-center space-y-[20px]">
+        <div className="w-full h-full grid place-items-center mt-[30px]">
+          <ul className="w-full flex flex-col items-center space-y-[13px]">
+            <li className="w-[55%]">
               <CustomAccordion title={"How do I create an account on HappyMilan.com?"}>
                 <ul style={AccordingBody}>
                   <li>
@@ -97,6 +96,8 @@ function index() {
                   </li>
                 </ul>
               </CustomAccordion>
+            </li>
+            <li className="w-[55%]">
 
               <CustomAccordion title={"Is HappyMilan for dating or matrimony purposes?"}>
                 <ul style={AccordingBody}>
@@ -107,7 +108,8 @@ function index() {
                   </li>
                 </ul>
               </CustomAccordion>
-
+            </li>
+            <li className="w-[55%]">
 
               <CustomAccordion title={" What are the top feature of HappyMilan?"}>
                 <ul style={AccordingBody}>
@@ -132,7 +134,8 @@ function index() {
                 </ul>
               </CustomAccordion>
 
-
+            </li>
+            <li className="w-[55%]">
 
               <CustomAccordion title={" How can I manage my profile and account settings?"}>
 
@@ -161,6 +164,8 @@ function index() {
                   <li>Step 2: Click on</li>
                 </ul>
               </CustomAccordion>
+            </li>
+            <li className="w-[55%]">
               <CustomAccordion title={" Are there any safety tips for online dating on HappyMilan?"}>
                 <ul style={AccordingBody}>
                   <li>
@@ -179,6 +184,8 @@ function index() {
                   </li>
                 </ul>
               </CustomAccordion>
+            </li>
+            <li className="w-[55%]">
               <CustomAccordion title={"How can I contact customer support?"}>
 
                 <ul style={AccordingBody}>
@@ -196,6 +203,8 @@ function index() {
                   </li>
                 </ul>
               </CustomAccordion>
+            </li>
+            <li className="w-[55%]">
               <CustomAccordion title={"How to verify my account on HappyMilan?"}>
 
                 <ul style={AccordingBody}>
@@ -221,6 +230,8 @@ function index() {
 
                 </ul>
               </CustomAccordion>
+            </li>
+            <li className="w-[55%]">
               <CustomAccordion title={"What is your cancellation policy?"}>
 
                 <ul style={AccordingBody}>
@@ -236,6 +247,8 @@ function index() {
 
                 </ul>
               </CustomAccordion>
+            </li>
+            <li className="w-[55%]">
               <CustomAccordion title={"Can I change my plan later?"}>
 
 
@@ -245,6 +258,8 @@ function index() {
                   </li>
                 </ul>
               </CustomAccordion>
+            </li>
+            <li className="w-[55%]">
               <CustomAccordion title={"How’s I delete my account?"}>
 
 
@@ -269,6 +284,8 @@ function index() {
                   </li>
                 </ul>
               </CustomAccordion>
+            </li>
+            <li className="w-[55%]">
               <CustomAccordion title={"How I change my login details?"}>
                 <ul style={AccordingBody}>
                   <li>
@@ -288,12 +305,9 @@ function index() {
 
                 </ul>
               </CustomAccordion>
-            </div>
-            <div className=" h-[10px]"></div>
-          </div>
-        </div >
-
-
+            </li>
+          </ul>
+        </div>
 
         <div className="md:pl-0 md:pr-0 md:pb-0 pb-[20px] pl-[25px] pr-[25px]">
           <div

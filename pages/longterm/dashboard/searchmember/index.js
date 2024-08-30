@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import dynamic from 'next/dynamic'
 import { useDarkMode } from '../../../../ContextProvider/DarkModeContext'
 import NavBar from '../../../_components/layout/Navbar'
+import useUserActivity from '../../../../utils/hooks/UserActivity'
 const UserStory = dynamic(() => import('../../../_components/Container/UserStory'));
 const ModifySearch = dynamic(() => import('./comp/ModifySearch'));
 const ProfileComplete = dynamic(() => import('../../../_components/Container/ProfileComplete'));
@@ -19,6 +20,7 @@ function index() {
 
   const { darkMode, toggleDarkMode } = useDarkMode();
 
+  useUserActivity();
 
   const Text4 = {
     color: "#000",

@@ -2,6 +2,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { getCookie, setCookie } from 'cookies-next';
+// import { useSocket } from '../../ContextProvider/SocketContext';
+import { io } from 'socket.io-client';
 
 // Define an async thunk to handle the login request
 export const loginAsync = createAsyncThunk('/dashboard/myprofile', async (credentials) => {
@@ -67,6 +69,9 @@ const loginAuth = createSlice({
 
         // Set cookies and local storage data (consider moving this logic outside of the reducer)
         setCookiesAndLocalStorage(data);
+        SocketConnect(data);
+
+
 
         // You might want to reset the error state upon successful login
         state.error = null;
@@ -83,7 +88,29 @@ const loginAuth = createSlice({
 
 });
 
+
+function SocketConnect(data) {
+  // const socket = useSocket();
+
+
+  const socket = io.connect(`https://happymilan.tech`, {
+    path: '/api/socket.io',
+    query: { token: data.tokens.refresh.token }
+  });
+
+  socket.on('connect', () => {
+    console.log('Connected to socket');
+  });
+
+  socket?.on("onlineUser", (data) => {
+    console.log("Data from socket : ", data)
+  })
+  socket?.emit("userActive")
+}
+
 function setCookiesAndLocalStorage(data) {
+
+
   console.log("🚀 ~ setCookiesAndLocalStorage ~ data:", data)
   localStorage.setItem("personal", JSON.stringify(data?.user))
   const objectData = {

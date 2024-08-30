@@ -9,6 +9,7 @@ import { getFriendsList } from '../../../../store/actions/UsersAction'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import NavBar from '../../../_components/layout/Navbar'
+import useUserActivity from '../../../../utils/hooks/UserActivity'
 
 
 const UserStory = dynamic(() => import('../../../_components/Container/UserStory'));
@@ -18,7 +19,7 @@ const ProfileComplete = dynamic(() => import('../../../_components/Container/Pro
 const MoreSuggestion = dynamic(() => import('../../../_components/Container/MoreSuggestion'));
 function index() {
 
-
+  useUserActivity();
   const Text6 = {
     color: "#000",
     fontFamily: "Poppins",

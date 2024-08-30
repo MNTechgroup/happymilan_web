@@ -6,6 +6,7 @@ import ProtectedRoutes from '../../../routes/ProtectedRoutes'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import NavBar from '../../../_components/layout/Navbar'
+import useUserActivity from '../../../../utils/hooks/UserActivity'
 
 const GridUserProfile = dynamic(() => import('./comp/GridUserProfile'));
 const Footer = dynamic(() => import('../../../_components/layout/Footer'));
@@ -17,6 +18,8 @@ const UserProfile = dynamic(() => import('./comp/UserProfile'))
 
 
 function index() {
+
+  useUserActivity();
 
   const Text6 = {
     color: "#000",

@@ -11,7 +11,9 @@ import DeleteGridUser from './comp/DeleteGridUser'
 import ProtectedRoutes from '../../../routes/ProtectedRoutes'
 import Image from 'next/image'
 import NavBar from '../../../_components/layout/Navbar'
+import useUserActivity from '../../../../utils/hooks/UserActivity'
 function index() {
+  useUserActivity();
 
 
   const Text6 = {
@@ -28,6 +30,7 @@ function index() {
 
   return (
     <>
+
       <ProtectedRoutes />
       <NavBar handleSearch={handleSearch} />
 

@@ -10,6 +10,7 @@ import UserprofileSkeleton from '../../../../components/common/shader/Userprofil
 import { getCookie } from 'cookies-next'
 import dynamic from 'next/dynamic'
 import NavBar from '../../../_components/layout/Navbar'
+import useUserActivity from '../../../../utils/hooks/UserActivity'
 
 const UserStory = dynamic(() => import('../../../_components/Container/UserStory'));
 const CanceledProfile = dynamic(() => import('./comp/CanceledProfile'));
@@ -17,6 +18,7 @@ const ProfileComplete = dynamic(() => import('../../../_components/Container/Pro
 const MoreSuggestion = dynamic(() => import('../../../_components/Container/MoreSuggestion'));
 const GridUserCancel = dynamic(() => import('./comp/GridUserCancel'));
 function index() {
+  useUserActivity();
 
   const Text6 = {
     color: "#000",

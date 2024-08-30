@@ -7,6 +7,7 @@ import { capitalizeFirstLetter } from "../../../../../../utils/form/Captitelize"
 import DisplayNameSelect from "./function/DisplayNameSelect";
 import { Dialog } from "@mui/material";
 import { UPDATE_DISPLAY_STATUS } from "../../../../../../store/type";
+import PrivacyOptions from "./function/PrivacyOptions";
 
 function PrivacySeting() {
 
@@ -76,61 +77,7 @@ function PrivacySeting() {
 
   const postDataToApi = () => {
 
-
     dispatch(UpdateDisplayName(SelectedDisplayName))
-
-
-    // setTimeout(() => {
-    //   setshowbtn(false);
-    // }, 1000);
-    // const changedFields = formData.map((question) => ({
-    //   id: question.id,
-    //   question: question.question,
-    //   options: question.options,
-    // }));
-
-    // try {
-    //   // Iterate over each question in formData
-    //   for (const question of formData) {
-    //     // Prepare the data object for the PUT request
-    //     const requestData = {
-    //       question: question.question,
-    //       options: question.options,
-    //     };
-
-    //     let updatedOptions = question.options.map(({ _id, option, isSelected }) => ({ option, isSelected }));
-
-    //     // Check if the request was successful
-    //     const axios = require('axios');
-    //     const token = getCookie('authtoken')
-    //     let data = JSON.stringify({
-    //       "question": question.question,
-    //       "options": updatedOptions
-    //     });
-
-    //     let config = {
-    //       method: 'put',
-    //       maxBodyLength: Infinity,
-    //       url: `https://happymilan.tech/api/v1/user/privacy/update-privacy/${question.id}`,
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //         'Authorization': `Bearer ${token}`
-    //       },
-    //       data: data
-    //     };
-
-    //     axios.request(config)
-    //       .then((response) => {
-    //         dispatch(Getprivacyquestions())
-    //       })
-    //       .catch((error) => {
-    //         console.log(error);
-    //       });
-
-    //   }
-    // } catch (error) {
-    //   console.error('Error occurred while making PUT request:', error);
-    // }
   }
   const TextHeading = {
     color: "#6A6A6A",
@@ -165,47 +112,8 @@ function PrivacySeting() {
         <div className=" mt-[20px] xl:mt-[25px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
         <DisplayNameSelect HandleChangeUserName={HandleChangeUserName} />
         <div className=" mt-[10px] xl:mt-[25px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
-        {loading ? " " :
-          <>
-            <div>
-              {formData?.map((question, questionIndex) => (
-                <div key={questionIndex} className="mt-[20px]">
-                  <h1 className="text-[15px] xl:text-[16px] font-medium mb-[20px]">
-                    {question.question}
-                  </h1>
-                  {question.options.map((option, optionIndex) => (
-                    <div key={optionIndex} className="mt-[15px] flex">
-                      <div className="flex justify-center items-center">
-                        <input
-                          className="w-[15.5px]  xl:w-[16px] h-[15.5px] xl:h-[16px]"
-                          type="radio"
-                          id={`${questionIndex}-${optionIndex}`}
-                          name={`question-${questionIndex}`}
-                          checked={option.isSelected} // Apply default selection based on isSelected property
-                          onChange={() => handleOptionChange(questionIndex, optionIndex)}
-                        />
-                        <label
-                          htmlFor={`${questionIndex}-${optionIndex}`}
-                          className="ml-[10px] text-[13px] xl:text-[14px]"
-                        >
-                          {option.option}
-                        </label>
-                      </div>
-                    </div>
-                  ))}
-                  <div className=" mt-[20px] xl:mt-[25px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
-                </div>
-              ))}
-              {/* <button onClick={postDataToApi}>Submit</button> */}
-
-              <div className="w-full">
-                <div className="flex justify-end mt-[10px]">
-                  {showbtn ?
-                    <button onClick={postDataToApi} id="grad-button" className="w-[100px] h-[40px] rounded-[22px]">Save</button> : ""}
-                </div>
-              </div>
-            </div>
-          </>}
+        <PrivacyOptions />
+        <div className=" mt-[10px] xl:mt-[25px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
       </div>
 
       <Dialog

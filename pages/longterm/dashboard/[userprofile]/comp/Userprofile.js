@@ -16,8 +16,10 @@ import ContactTab from "./tabs/ContactTab";
 import LocationTab from "./tabs/LocationTab";
 import Notfound from "../../../../../components/common/Error/Notfound";
 import Avatar from "react-avatar";
+import StyledBadge from "../../../../../components/common/animation/StyleBadge";
 
-function Userprofile({ toggleDrawer }) {
+function Userprofile({ params , toggleDrawer }) {
+  console.log("🚀 ~ Userprofile ~ params:", params)
   const Username = {
     color: "#000",
     fontFamily: "Poppins",
@@ -773,17 +775,6 @@ function Userprofile({ toggleDrawer }) {
     dispatch(fetchUserById(userprofile));
   }, [userprofile, dispatch]);
 
-  const ImageNotFoundText = {
-    color: "#B3CBF1",
-    textAlign: "center",
-    fontFamily: "Poppins",
-    fontSize: "12px",
-    fontStyle: "normal",
-    fontWeight: "500",
-    lineHeight: "normal",
-    position: "relative",
-    top: "-25px",
-  };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -1036,7 +1027,10 @@ function Userprofile({ toggleDrawer }) {
 
 
             <div className="grid place-items-center mt-[50px]">
+
+
               {user?.profilePic ? (
+
                 <Image loading="lazy"
                   alt="img"
                   style={{ objectFit: "cover" }}

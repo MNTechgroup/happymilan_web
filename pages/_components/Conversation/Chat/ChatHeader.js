@@ -6,6 +6,7 @@ import { UserContext } from '../../../../ContextProvider/UsersConversationContex
 import { useRouter } from 'next/router';
 import ReportModal from '../../Model/Models/ReportModal';
 import { useSocket } from '../../../../ContextProvider/SocketContext';
+import StyledBadge from '../../../../components/common/animation/StyleBadge';
 
 
 
@@ -113,6 +114,7 @@ const Header = () => {
     const currentUser = getCookie("authtoken")
 
     socket?.on('typing', (data) => {
+        console.log("🚀 ~ socket?.on ~ data:", data)
 
         // Check if the typing event is for the current user
         if (data.from != currentUser) { // Replace currentUserID with the ID of the current user
@@ -185,12 +187,33 @@ const Header = () => {
                     <Stack direction={'row'} spacing={2}>
                         <Box className="cursor-pointer" onClick={HandleOpenProfile}>
                             {userData?.profilePic ?
-                                <Image loading='lazy' width={47} height={47} alt='profile-image' style={{ objectFit: "cover", borderRadius: "50%" }} className='w-[47px] h-[47px]' src={userData?.profilePic} />
+                                <StyledBadge
+                                    overlap="circular"
+                                    anchorOrigin={{ // position
+                                        vertical: "bottom",
+                                        horizontal: "right",
+                                    }}
+                                    variant="dot"
+                                    invisible={!userData?.ActiveUser} // Hide the badge when the user is inactive
+                                >
+
+                                    <Image loading='lazy' width={47} height={47} alt='profile-image' style={{ objectFit: "cover", borderRadius: "50%" }} className='w-[47px] h-[47px]' src={userData?.profilePic} />
+                                </StyledBadge>
                                 :
-                                <div className='bg-[#F8FBFF] grid place-items-center' style={{ height: "47px", width: "47px", borderRadius: "50%", objectFit: "cover" }}>
-                                    <Image loading='lazy' alt='not-found' width={16} height={16} src={"/assests/dashboard/icon/NotFound-img.svg"} />
-                                    <h1 className='relative top-[-5px]' style={ImagenotFound}>No Image</h1>
-                                </div>
+                                <StyledBadge
+                                    overlap="circular"
+                                    anchorOrigin={{ // position
+                                        vertical: "bottom",
+                                        horizontal: "right",
+                                    }}
+                                    variant="dot"
+                                    invisible={!userData?.ActiveUser} // Hide the badge when the user is inactive
+                                >
+                                    <div className='bg-[#F8FBFF] grid place-items-center' style={{ height: "47px", width: "47px", borderRadius: "50%", objectFit: "cover" }}>
+                                        <Image loading='lazy' alt='not-found' width={16} height={16} src={"/assests/dashboard/icon/NotFound-img.svg"} />
+                                        <h1 className='relative top-[-5px]' style={ImagenotFound}>No Image</h1>
+                                    </div>
+                                </StyledBadge>
                             }
                         </Box>
                         <Stack spacing={0} style={{ position: "relative", top: "1px" }}>
@@ -198,7 +221,9 @@ const Header = () => {
                                 {userData?.userName}
                             </h1>
                             <p style={ActiveText}>
-                                {userTyping ? "Typing..." : "Online"}
+                                {userTyping ? "Typing..." :
+                                    userData?.ActiveUser ? "Online" : <span className='text-[#a6a6a6]'>Offline</span>
+                                }
                             </p>
                         </Stack>
                         <Stack className=''>

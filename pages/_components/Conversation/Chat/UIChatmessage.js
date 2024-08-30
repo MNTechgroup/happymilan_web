@@ -18,6 +18,7 @@ const Message = () => {
   }, [userData]);
 
   const onDeleteMessage = (msgId) => {
+    console.log("🚀 ~ onDeleteMessage ~ msgId:", msgId)
     setMessages(prevMessages => prevMessages.filter(message => message.id !== msgId));
   };
 
@@ -33,6 +34,12 @@ const Message = () => {
 
     socket.on('message', (data) => {
       console.log("🚀 ~ socket.on ~ data:", data);
+
+      if(data?.data?.message === 'file upload url generated'){
+        setMessages((prev) =>{
+          return [...prev, data.data?.chatMessage]
+        })
+      }
 
       if (data?.data?.message === 'messages received') {
         setMessages(prevMessages => {
@@ -107,6 +114,7 @@ const Message = () => {
       case 'text':
         return <TextMsg key={message.id} el={message} Outgoing={isOutgoing} sendAt={message.sendAt} userMessage={message} onDeleteMessage={onDeleteMessage} />;
       case 'audio':
+        console.log("audio==> ",message)
         return <AudioMessage key={message.id} el={message} Outgoing={isOutgoing} sendAt={message.sendAt} userMessage={message} onDeleteMessage={onDeleteMessage} />;
       case 'video':
         return <VideoMsg key={message.id} el={message} Outgoing={isOutgoing} sendAt={message.sendAt} userMessage={message} onDeleteMessage={onDeleteMessage} />;
@@ -119,7 +127,7 @@ const Message = () => {
     const groupedMessages = groupMessagesByTime(messages);
     return groupedMessages.map(({ label, messages }) => (
       <Box key={label}>
-        <Box sx={{ textAlign: 'center', color: 'gray', position: "relative" , marginTop:"10px" , marginTop:"10px"}}>
+        <Box sx={{ textAlign: 'center', color: 'gray', position: "relative" , marginTop:"10px" , marginBottom:"10px"}}>
           {label}
         </Box>
         <Stack spacing={3}>

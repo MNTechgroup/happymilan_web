@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image'
 import { useDarkMode } from '../../../../ContextProvider/DarkModeContext'
 import NavBar from '../../../_components/layout/Navbar'
+import useUserActivity from '../../../../utils/hooks/UserActivity'
 
 const Footer = dynamic(() => import('../../../_components/layout/Footer'))
 const UserStory = dynamic(() => import('../../../_components/Container/UserStory'));
@@ -18,6 +19,7 @@ const RecentViewUser = dynamic(() => import('./comp/RecentViewUser'));
 const GridUser = dynamic(() => import('./comp/GridUser'));
 
 function index() {
+  useUserActivity();
 
   const Text6 = {
     color: "#000",

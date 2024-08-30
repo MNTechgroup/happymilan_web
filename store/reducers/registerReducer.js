@@ -27,13 +27,13 @@ const initialState = {
     status: STATUSES.IDLE,
     general: {
       creatingProfileFor: "",
-      firstName: DefaultName ? DefaultName : "",
+      firstName: "",
       lastName: "",
-      motherTongue: "",
+      // motherTongue: "",
       maritalStatus: "",
       gender: "",
-      dateOfBirth: "",
-      birthTime: "",
+      // dateOfBirth: "",
+      // birthTime: "",
       religion: "",
       cast: "",
       height: "",
@@ -47,6 +47,7 @@ const initialState = {
       currentResidenceAddress: "",
       currentCity: "",
       currentCountry: "",
+      currentState: ""
       // originResidenceAddress: "",
       // originCity: "",
       // originCountry: ""
@@ -91,6 +92,9 @@ const initialState = {
           "values": []
         }
       ],
+    },
+    hobby: {
+      hobbyval: []
     },
     upload: {
       images: [],

@@ -1,55 +1,74 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
-import Navbar from "../_components/layout/AuthNavbar";
 import { useDispatch, useSelector } from "react-redux";
 import { updateAddressData, updateEducationData, updateGeneralInfo, updatePartnerPrefData, updateProffessionalData, updatehobbiesData } from "../../store/actions/registerUser";
 import { setFormValidation } from "../../store/reducers/registerReducer";
 import { ImageUpload } from "../../store/actions/ImageUpload";
 import dynamic from "next/dynamic";
+// import GenralSection from "../test/comp/GenralSection";
+import GenralSec from "../test/comp/GenralSec";
+import AddressSec from "../test/comp/AddressSec";
+import ContactSec from "../test/comp/ContactSec";
+import EducationSec from "../test/comp/EducationSec";
+import ProffSec from "../test/comp/ProffSec";
+import HobbySec from "../test/comp/HobbySec";
+import UploadPicSec from "../test/comp/UploadPicSec";
+import ProfileSelection from "../test/comp/ProfileSelection";
+import Image from "next/image";
+import PartnerPrefSec from "../test/comp/PartnerPrefSec";
 
-const GeneralSection = dynamic(() => import("./Registersection/GeneralSec"));
-const ContactSection = dynamic(() => import("./Registersection/ContactSec"));
-const AddressSection = dynamic(() => import("./Registersection/AddressSec"));
-const EducationSec = dynamic(() => import("./Registersection/EducationSec"));
-const ProfessionalSec = dynamic(() => import("./Registersection/ProfessionalSec"));
-const HobbiesSec = dynamic(() => import("./Registersection/HobbiesSec"));
-const UploadSec = dynamic(() => import("./Registersection/UploadSec"));
-const GridphotoSec = dynamic(() => import("./Registersection/GridphotoSec"));
-const PartnerPreference = dynamic(() => import("./Registersection/PartnerPreference"));
-
-
-
-
-const btnstyle = {
-    fontFamily: "Poppins",
-    fontSize: "14px",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "normal",
-};
 
 function Home() {
 
-    const [FormOpen, setFormOpen] = useState(true);
-
-    useEffect(() => {
-        if (!FormOpen) {
-            window.scrollTo(0, 0)
-        }
-    }, [FormOpen]);
-
-
-    const [activeTab, setActiveTab] = useState(1);
+    const [activeTab, setActiveTab] = useState(0);
 
     const dispatch = useDispatch();
     const { status, upload, general, address, contact, education, professional, partnerpref, allhobbies } = useSelector((state) => state.form?.formData)
 
-    const [TheValidation, setTheValidation] = useState()
+
+
+    const ContentOfForm = [
+        {
+            id: 1,
+            name: "General Details"
+        },
+        {
+            id: 2,
+            name: "Address Details"
+        },
+        {
+            id: 3,
+            name: "Contact Details"
+        },
+        {
+            id: 4,
+            name: "Education Details"
+        },
+        {
+            id: 5,
+            name: "Job Details"
+        },
+        {
+            id: 6,
+            name: "Hobbies & Interests"
+        },
+        {
+            id: 7,
+            name: "Upload Photos"
+        },
+        {
+            id: 8,
+            name: "Prefer Partner"
+        },
+    ]
+
+
+
     const HandleTabclick = (id) => {
 
         if (activeTab === 1) {
-            
+
             const isFormValid = Object.values(general).every(value => value.trim() !== '');
 
             if (isFormValid) {
@@ -70,67 +89,49 @@ function Home() {
             }
 
         } else if (activeTab === 2) {
-            const isFormValid = Object.values(address).every(value => value.trim() !== '');
-            if (isFormValid) {
-                console.log("done")
-                dispatch(updateAddressData(address))
-                if (status == "idle") {
-                    setActiveTab(3)
-                }
+            // Check if at least one field is filled
+            const isAnyFieldFilled = Object.values(address).some(value => value.trim() !== '');
+
+            if (isAnyFieldFilled) {
+                console.log("At least one field is filled. Dispatching data...");
+                dispatch(updateAddressData(address));
+                setActiveTab(3);
+            } else {
+                setActiveTab(3);
+                // alert("hello")
             }
-            else {
-                console.log("not done")
-            }
-
-            setActiveTab(id);
-
-
         } else if (activeTab === 3) {
 
-            const isFormValid = Object.values(contact).every(value => value.trim() !== '');
+            const isAnyFieldFilled = Object.values(contact).some(value => value.trim() !== '');
 
-            if (isFormValid) {
+            if (isAnyFieldFilled) {
                 dispatch(updateGeneralInfo({
 
-                    mobileNumber: contact.mobileCode + contact.mobileNumber,
-                    homeMobileNumber: contact.homeCode + contact.homeMobileNumber
-
+                    mobileNumber: contact.mobileNumber,
+                    homeMobileNumber: contact.homeMobileNumber
                 }))
-
-                localStorage.setItem('mobilenumber', contact.mobileCode + contact.mobileNumber)
-                if (status == "idle") {
-                    setActiveTab(4)
-                }
-            } else {
-                console.log("not done")
+                localStorage.setItem('mobilenumber', contact.mobileNumber)
+                setActiveTab(4)
             }
-
             setActiveTab(id);
 
         } else if (activeTab === 4) {
-            const isFormValid = Object.values(education).every(value => value.trim() !== '');
-            if (isFormValid) {
+            const isAnyFieldFilled = Object.values(education).some(value => value.trim() !== '');
 
+            if (isAnyFieldFilled) {
                 dispatch(updateEducationData(education))
-                if (status == "idle") {
-                    setActiveTab(5)
-                }
+                setActiveTab(5)
             } else {
                 setActiveTab(id);
             }
         } else if (activeTab === 5) {
-            const isFormValid = Object.values(professional).every(value => value.trim() !== '');
-            if (isFormValid) {
+            const isAnyFieldFilled = Object.values(professional).some(value => value.trim() !== '');
+
+            if (isAnyFieldFilled) {
                 dispatch(updateProffessionalData(professional))
+                setActiveTab(6)
 
-                if (status == "idle") {
-                    setActiveTab(6)
-                }
-
-            } else {
-                console.log("not done")
-            }
-            setActiveTab(id)
+            } setActiveTab(id)
         } else if (activeTab === 6) {
 
             if (!allhobbies.hobbies.length == 0) {
@@ -146,11 +147,6 @@ function Home() {
             // console.log("Hobby",allhobbies)
         }
         else if (activeTab === 7) {
-            setActiveTab(id)
-
-        }
-        else if (activeTab === 8) {
-
             console.log(upload)
 
             if (!upload.images.length == 0) {
@@ -161,7 +157,8 @@ function Home() {
             }
             setActiveTab(id)
         }
-        else if (activeTab >= 9) {
+        else if (activeTab === 8) {
+
             const isFormValid = Object.values(partnerpref).every(value => {
                 // Check if the value is a string before applying trim()
                 if (typeof value === 'string') {
@@ -182,258 +179,201 @@ function Home() {
 
         }
 
-        if (activeTab >= 9) {
-            router.push("/longterm/dashboard")
+        setActiveTab(id);
 
-        }
-
-        // setActiveTab(id);
-        setFormOpen(true)
     };
 
 
     const renderTabContent = () => {
         switch (activeTab) {
+            case 0:
+                return <ProfileSelection />
             case 1:
-                return <GeneralSection setTheValidation={setTheValidation} TheValidation={TheValidation} activeTab={activeTab} />;
+                return <GenralSec />
+            //  <GeneralSection setTheValidation={setTheValidation} TheValidation={TheValidation} activeTab={activeTab} />;
             case 2:
-                return <AddressSection HandleTabclick={HandleTabclick} activeTab={activeTab} />;
+                return <AddressSec />
+            // <AddressSection HandleTabclick={HandleTabclick} activeTab={activeTab} />;
             case 3:
-                return <ContactSection HandleTabclick={HandleTabclick} activeTab={activeTab} />;
+                return <ContactSec />
+            // <ContactSection HandleTabclick={HandleTabclick} activeTab={activeTab} />;
             case 4:
-                return <EducationSec HandleTabclick={HandleTabclick} activeTab={activeTab} />;
+                return <EducationSec />
+            // <EducationSec HandleTabclick={HandleTabclick} activeTab={activeTab} />;
             case 5:
-                return <ProfessionalSec HandleTabclick={HandleTabclick} activeTab={activeTab} />;
+                return <ProffSec />
+            // <ProfessionalSec HandleTabclick={HandleTabclick} activeTab={activeTab} />;
             case 6:
-                return <HobbiesSec HandleTabclick={HandleTabclick} activeTab={activeTab} />;
+                return <HobbySec />
+            // <HobbiesSec HandleTabclick={HandleTabclick} activeTab={activeTab} />;
+            case 7:
+                return <UploadPicSec />
+            // <UploadSec HandleTabclick={HandleTabclick} activeTab={activeTab} />
+            // case 8:
+            //     return
+            // // <GridphotoSec />
+            case 8:
+                return <PartnerPrefSec />
+            // <PartnerPreference />
             default:
                 "";
         }
     };
 
 
-    
-    const router = useRouter();
 
-    const Text1 = {
+
+
+
+    const Title = {
+        color: "#000",
+        fontFamily: "Poppins",
+        fontSize: "34px",
+        fontStyle: "normal",
+        fontWeight: "600",
+        lineHeight: "normal",
+    }
+
+    const Content = {
         color: "#000",
         fontFamily: "Poppins",
         fontSize: "16px",
         fontStyle: "normal",
+        fontWeight: "400",
         lineHeight: "normal",
-    };
+    }
+
+    const HelpText = {
+        fontFamily: "Poppins",
+        fontSize: "18px",
+        fontStyle: "normal",
+        fontWeight: "400",
+        lineHeight: "normal",
+    }
+
+    const router = useRouter();
+
+
+    if (activeTab == 0) {
+        return <ProfileSelection SetActiveTab={setActiveTab} />
+    }
+
     return (
         <>
-            <Navbar />
-            {activeTab === 8 ? <GridphotoSec /> : <>
-                {activeTab === 7 ? <UploadSec HandleTabclick={HandleTabclick} activeTab={activeTab} /> : <>
-
-                    <div className='w-full h-full grid place-items-center pt-[100px]'>
 
 
 
+            <div className='w-full h-full grid place-items-center pt-[100px]'>
 
-                        <div className='block lg:flex  2xl:gap-x-[70px] xl:gap-x-[0px]'>
+                <div className='flex justify-evenly items-center w-full'>
 
-                            <div className='lg:block hidden 2xl:mr-0 xl:mr-0 lg:ml-0 2xl:w-[400px] xl:w-[400px] lg:w-[300px] w-full  h-[600px] 2xl:ml-0 xl:ml-[100px] '>
-                                <div className='fixed'>
+                    <div className="xl:block hidden w-[332px]">
+                        <ul className='fixed left-[120px] top-[200px] space-y-[40px]'>
+                            <li className='space-y-[11px] w-[335px]'>
+                                <h1 style={Title}>{ContentOfForm[activeTab - 1]?.name}</h1>
+                                <p style={Content} className="w-[332px]">Welcome to Matrimoney, the premier online platform for finding your perfect life partner! </p>
+                            </li>
+                            <li>
+                                <div className='h-[1px] w-full bg-[#EBEBEB]'></div>
+                            </li>
+                            <li>
+                                <p style={HelpText} className='text-[#000]'>Need any help? <span className='text-[#0F52BA]'>Contact Us</span></p>
+                            </li>
+                        </ul>
+                    </div>
 
-                                    <div className='pb-[17px]'>
-                                        <h1 className='text-[#000]' style={Text1}>Welcome to Happy Milan!</h1>
-                                    </div>
-                                    <img src='/assests/common/Mariage-img-1.png' onClick={() => router.push("/successstories/1")} className='cursor-pointer 2xl:h-auto xl:h-[300px]' />
-                                </div>
+                    <div className='h-[511px] w-[707px] border-l-[1px] border-l-[#EBEBEB]'>
+
+
+                        <div className='ml-[66px] w-[647px]'>
+
+                            <div className='w-full'>
+                                {activeTab > 6 ?
+                                    <ul className="flex space-x-[100px]">
+                                        <li>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                <path d="M2.01937 20C1.44396 20 0.963542 19.8073 0.578125 19.4219C0.192708 19.0365 0 18.556 0 17.9806V2.01937C0 1.44396 0.192708 0.963542 0.578125 0.578125C0.963542 0.192708 1.44396 0 2.01937 0H17.9806C18.556 0 19.0365 0.192708 19.4219 0.578125C19.8073 0.963542 20 1.44396 20 2.01937V17.9806C20 18.556 19.8073 19.0365 19.4219 19.4219C19.0365 19.8073 18.556 20 17.9806 20H2.01937ZM2.01937 18.75H17.9806C18.1731 18.75 18.3495 18.6699 18.5097 18.5097C18.6699 18.3495 18.75 18.1731 18.75 17.9806V2.01937C18.75 1.82687 18.6699 1.65052 18.5097 1.49031C18.3495 1.3301 18.1731 1.25 17.9806 1.25H2.01937C1.82687 1.25 1.65052 1.3301 1.49031 1.49031C1.3301 1.65052 1.25 1.82687 1.25 2.01937V17.9806C1.25 18.1731 1.3301 18.3495 1.49031 18.5097C1.65052 18.6699 1.82687 18.75 2.01937 18.75ZM4.375 15.625H15.8172L12.2838 10.9134L9.01437 15.0481L6.82687 12.4038L4.375 15.625Z" fill="black" />
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="20" viewBox="0 0 22 20" fill="none">
+                                                <path d="M10.515 9.30166C9.16558 9.30166 8.05309 8.86387 7.17752 7.9883C6.30195 7.11273 5.86416 5.99799 5.86416 4.6441C5.86416 3.29019 6.30195 2.17769 7.17752 1.3066C8.05309 0.435533 9.16558 0 10.515 0C11.8644 0 12.9769 0.435533 13.8525 1.3066C14.728 2.17769 15.1658 3.29019 15.1658 4.6441C15.1658 5.99799 14.728 7.11273 13.8525 7.9883C12.9769 8.86387 11.8644 9.30166 10.515 9.30166ZM0 20V17.3389C0 16.5858 0.199517 15.9298 0.59855 15.3708C0.997584 14.8118 1.51615 14.3822 2.15425 14.082C3.62993 13.4259 5.05245 12.9316 6.42181 12.5991C7.79119 12.2666 9.15544 12.1003 10.5146 12.1003C11.8737 12.1003 13.2345 12.2702 14.597 12.6099C15.9594 12.9496 17.3756 13.4435 18.8454 14.0915C19.5084 14.3909 20.0383 14.8187 20.4349 15.3749C20.8316 15.9312 21.03 16.5858 21.03 17.3389V20H0ZM1.59071 18.4093H19.4393V17.3389C19.4393 16.9741 19.3238 16.6245 19.0928 16.2901C18.8618 15.9558 18.5603 15.6934 18.1882 15.5028C16.8096 14.8324 15.5092 14.3628 14.2871 14.0941C13.065 13.8254 11.8076 13.691 10.515 13.691C9.22239 13.691 7.95559 13.8254 6.71458 14.0941C5.47357 14.3628 4.17543 14.8324 2.82016 15.5028C2.4481 15.6934 2.15017 15.9558 1.92639 16.2901C1.7026 16.6245 1.59071 16.9741 1.59071 17.3389V18.4093ZM10.515 7.71098C11.3903 7.71098 12.1192 7.41979 12.7016 6.8374C13.2839 6.25503 13.5751 5.52617 13.5751 4.65083C13.5751 3.77549 13.2839 3.04664 12.7016 2.46427C12.1192 1.8819 11.3903 1.59071 10.515 1.59071C9.63965 1.59071 8.91079 1.8819 8.32843 2.46427C7.74606 3.04664 7.45487 3.77549 7.45487 4.65083C7.45487 5.52617 7.74606 6.25503 8.32843 6.8374C8.91079 7.41979 9.63965 7.71098 10.515 7.71098Z" fill={activeTab >= 8 ? "black" : "#C0C0C0"} />
+                                            </svg>
+                                        </li>
+                                    </ul>
+                                    :
+                                    <ul className='flex justify-between'>
+
+                                        <li><svg xmlns="http://www.w3.org/2000/svg" width="22" height="20" viewBox="0 0 22 20" fill="none">
+                                            <path d="M10.515 9.30166C9.16558 9.30166 8.05309 8.86387 7.17752 7.9883C6.30195 7.11273 5.86416 5.99799 5.86416 4.6441C5.86416 3.29019 6.30195 2.17769 7.17752 1.3066C8.05309 0.435533 9.16558 0 10.515 0C11.8644 0 12.9769 0.435533 13.8525 1.3066C14.728 2.17769 15.1658 3.29019 15.1658 4.6441C15.1658 5.99799 14.728 7.11273 13.8525 7.9883C12.9769 8.86387 11.8644 9.30166 10.515 9.30166ZM0 20V17.3389C0 16.5858 0.199517 15.9298 0.59855 15.3708C0.997584 14.8118 1.51615 14.3822 2.15425 14.082C3.62993 13.4259 5.05245 12.9316 6.42181 12.5991C7.79119 12.2666 9.15544 12.1003 10.5146 12.1003C11.8737 12.1003 13.2345 12.2702 14.597 12.6099C15.9594 12.9496 17.3756 13.4435 18.8454 14.0915C19.5084 14.3909 20.0383 14.8187 20.4349 15.3749C20.8316 15.9312 21.03 16.5858 21.03 17.3389V20H0ZM1.59071 18.4093H19.4393V17.3389C19.4393 16.9741 19.3238 16.6245 19.0928 16.2901C18.8618 15.9558 18.5603 15.6934 18.1882 15.5028C16.8096 14.8324 15.5092 14.3628 14.2871 14.0941C13.065 13.8254 11.8076 13.691 10.515 13.691C9.22239 13.691 7.95559 13.8254 6.71458 14.0941C5.47357 14.3628 4.17543 14.8324 2.82016 15.5028C2.4481 15.6934 2.15017 15.9558 1.92639 16.2901C1.7026 16.6245 1.59071 16.9741 1.59071 17.3389V18.4093ZM10.515 7.71098C11.3903 7.71098 12.1192 7.41979 12.7016 6.8374C13.2839 6.25503 13.5751 5.52617 13.5751 4.65083C13.5751 3.77549 13.2839 3.04664 12.7016 2.46427C12.1192 1.8819 11.3903 1.59071 10.515 1.59071C9.63965 1.59071 8.91079 1.8819 8.32843 2.46427C7.74606 3.04664 7.45487 3.77549 7.45487 4.65083C7.45487 5.52617 7.74606 6.25503 8.32843 6.8374C8.91079 7.41979 9.63965 7.71098 10.515 7.71098Z" fill="black" />
+                                        </svg></li>
+                                        <li>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 16 20" fill="none">
+                                                <path d="M7.94624 9.66109C8.41776 9.66109 8.81976 9.49321 9.15224 9.15745C9.48474 8.82167 9.65099 8.41803 9.65099 7.94653C9.65099 7.47501 9.4831 7.07302 9.14732 6.74053C8.81154 6.40803 8.4079 6.24178 7.9364 6.24178C7.46489 6.24178 7.06289 6.40967 6.73041 6.74545C6.39791 7.08123 6.23166 7.48487 6.23166 7.95637C6.23166 8.42789 6.39955 8.82989 6.73532 9.16237C7.0711 9.49485 7.47474 9.66109 7.94624 9.66109ZM7.94132 18.4178C10.1386 16.458 11.8125 14.5891 12.9631 12.8114C14.1136 11.0336 14.6889 9.48038 14.6889 8.15174C14.6889 6.12105 14.044 4.45202 12.7541 3.14466C11.4642 1.83728 9.85996 1.18359 7.94132 1.18359C6.02269 1.18359 4.41844 1.83728 3.12856 3.14466C1.83866 4.45202 1.19372 6.12105 1.19372 8.15174C1.19372 9.48038 1.77878 11.0336 2.94891 12.8114C4.11904 14.5891 5.78318 16.458 7.94132 18.4178ZM7.94132 20C5.29355 17.7056 3.30805 15.5704 1.98482 13.5944C0.661606 11.6183 0 9.80409 0 8.15174C0 5.72384 0.785368 3.75824 2.3561 2.25495C3.92682 0.751649 5.78856 0 7.94132 0C10.0941 0 11.9558 0.751649 13.5265 2.25495C15.0973 3.75824 15.8826 5.72384 15.8826 8.15174C15.8826 9.80409 15.221 11.6183 13.8978 13.5944C12.5746 15.5704 10.5891 17.7056 7.94132 20Z" fill={activeTab >= 2 ? "#000" : "#C0C0C0"} />
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
+                                                <path d="M18.7173 20C16.5214 20 14.3117 19.4362 12.0885 18.3087C9.86528 17.1812 7.85848 15.7242 6.06808 13.9376C4.27771 12.151 2.81876 10.1479 1.69125 7.92849C0.563749 5.70905 0 3.50134 0 1.30535C0 0.932393 0.124315 0.621602 0.372944 0.372973C0.621572 0.124324 0.932364 0 1.30532 0H4.67644C4.97747 0 5.24002 0.0972424 5.46409 0.291727C5.68815 0.486211 5.83347 0.748415 5.90007 1.07834L6.60609 4.25198C6.65301 4.54255 6.6462 4.80664 6.58566 5.04425C6.52513 5.28186 6.40923 5.47874 6.23798 5.63488L3.45512 8.35642C4.58718 10.2391 5.84258 11.863 7.22132 13.2282C8.60007 14.5933 10.1892 15.767 11.9886 16.7492L14.6561 13.9819C14.8528 13.7655 15.0734 13.6149 15.3178 13.5301C15.5622 13.4454 15.8161 13.4325 16.0794 13.4915L18.9444 14.1226C19.2683 14.189 19.529 14.3426 19.7265 14.5833C19.9239 14.824 20.0227 15.1124 20.0227 15.4484V18.6947C20.0227 19.0676 19.8983 19.3784 19.6497 19.627C19.4011 19.8757 19.0903 20 18.7173 20ZM2.7741 7.14191L5.20996 4.77868C5.24024 4.7484 5.26106 4.70677 5.27241 4.65381C5.28376 4.60083 5.28565 4.55164 5.27808 4.50625L4.63336 1.52099C4.62578 1.46045 4.60119 1.41505 4.55958 1.38479C4.51794 1.35451 4.46686 1.33937 4.40632 1.33937H1.49827C1.45286 1.33937 1.41502 1.35451 1.38476 1.38479C1.35448 1.41505 1.33934 1.45289 1.33934 1.4983C1.32421 2.27318 1.44037 3.12563 1.68782 4.05563C1.93527 4.98563 2.29736 6.01439 2.7741 7.14191ZM13.244 17.378C14.0507 17.7745 14.9338 18.0833 15.8933 18.3042C16.8528 18.5252 17.7298 18.6478 18.5244 18.672C18.5698 18.672 18.6076 18.6568 18.6379 18.6266C18.6682 18.5963 18.6833 18.5585 18.6833 18.5131V15.6164C18.6833 15.5558 18.6682 15.5047 18.6379 15.4631C18.6076 15.4215 18.5622 15.3969 18.5017 15.3893L15.8252 14.8377C15.7798 14.8301 15.7401 14.832 15.706 14.8434C15.6719 14.8547 15.636 14.8755 15.5982 14.9058L13.244 17.378Z" fill={activeTab >= 3 ? "#000" : "#C0C0C0"} />
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="20" viewBox="0 0 25 20" fill="none">
+                                                <path d="M12.227 20L4.01184 15.5035V8.83687L0 6.66666L12.227 0L24.4917 6.66666V15.4397H23.097V7.48225L20.4421 8.83687V15.5035L12.227 20ZM12.227 11.7518L21.5532 6.66666L12.227 1.65009L2.93851 6.66666L12.227 11.7518ZM12.227 18.4184L19.0473 14.669V9.68317L12.227 13.3333L5.4066 9.63354V14.669L12.227 18.4184Z" fill={activeTab >= 4 ? "#000" : "#C0C0C0"} />
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="20" viewBox="0 0 22 20" fill="none">
+                                                <path d="M1.64838 20C1.20021 20 0.813433 19.8373 0.48806 19.5119C0.162687 19.1866 0 18.7998 0 18.3516V5.45712C0 5.00896 0.162687 4.6222 0.48806 4.29682C0.813433 3.97145 1.20021 3.80877 1.64838 3.80877H7.06598V1.64835C7.06598 1.20018 7.22867 0.813415 7.55404 0.488061C7.8794 0.162688 8.26616 0 8.71434 0H13C13.4482 0 13.835 0.162688 14.1603 0.488061C14.4857 0.813415 14.6484 1.20018 14.6484 1.64835V3.80877H20.066C20.5142 3.80877 20.9009 3.97145 21.2263 4.29682C21.5517 4.6222 21.7144 5.00896 21.7144 5.45712V18.3516C21.7144 18.7998 21.5517 19.1866 21.2263 19.5119C20.9009 19.8373 20.5142 20 20.066 20H1.64838ZM8.36268 3.80877H13.3517V1.64835C13.3517 1.56043 13.3151 1.47984 13.2418 1.40658C13.1685 1.3333 13.0879 1.29666 13 1.29666H8.71434C8.62641 1.29666 8.54582 1.3333 8.47256 1.40658C8.39931 1.47984 8.36268 1.56043 8.36268 1.64835V3.80877ZM20.4177 13.2022H13.1055V14.7846H8.64399V13.2022H1.29669V18.3516C1.29669 18.4395 1.33332 18.5201 1.40658 18.5934C1.47986 18.6667 1.56046 18.7033 1.64838 18.7033H20.066C20.1539 18.7033 20.2345 18.6667 20.3078 18.5934C20.381 18.5201 20.4177 18.4395 20.4177 18.3516V13.2022ZM9.94069 13.4879H11.8088V11.6198H9.94069V13.4879ZM1.29669 11.9055H8.64399V10.3231H13.1055V11.9055H20.4177V5.45712C20.4177 5.36921 20.381 5.28862 20.3078 5.21534C20.2345 5.14209 20.1539 5.10546 20.066 5.10546H1.64838C1.56046 5.10546 1.47986 5.14209 1.40658 5.21534C1.33332 5.28862 1.29669 5.36921 1.29669 5.45712V11.9055Z" fill={activeTab >= 5 ? "#000" : "#C0C0C0"} />
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                <path d="M1.2105 9.40284H4.97775C4.87519 8.527 4.63294 7.68927 4.25101 6.88968C3.8691 6.09008 3.38596 5.40147 2.80161 4.82386C2.35087 5.47165 1.98009 6.17881 1.68927 6.94533C1.39844 7.71188 1.23885 8.53105 1.2105 9.40284ZM15.0222 9.40284H18.7895C18.7611 8.53779 18.6016 7.72368 18.3107 6.96052C18.0199 6.19736 17.6491 5.49189 17.1984 4.84412C16.5546 5.47435 16.0567 6.17274 15.7044 6.93928C15.3522 7.70581 15.1248 8.527 15.0222 9.40284ZM2.80161 15.1397C3.42511 14.5095 3.91803 13.8138 4.28038 13.0526C4.64273 12.2915 4.87519 11.473 4.97775 10.5972H1.2105C1.24559 11.469 1.40686 12.282 1.69432 13.0364C1.98178 13.7908 2.35087 14.4919 2.80161 15.1397ZM17.1984 15.1397C17.6491 14.4919 18.0199 13.7891 18.3107 13.0314C18.6016 12.2736 18.7611 11.4622 18.7895 10.5972H15.0222C15.1248 11.473 15.3522 12.2915 15.7044 13.0526C16.0567 13.8138 16.5546 14.5095 17.1984 15.1397ZM6.17812 9.40284H9.40284V1.2105C8.26789 1.29957 7.20918 1.57859 6.22673 2.04756C5.24425 2.51652 4.36907 3.14304 3.60119 3.92712C4.32725 4.64642 4.91159 5.47638 5.35422 6.41702C5.79687 7.35763 6.07151 8.35291 6.17812 9.40284ZM10.5972 9.40284H13.8219C13.9285 8.35291 14.2041 7.35594 14.6488 6.41194C15.0935 5.46795 15.6822 4.63968 16.415 3.92712C15.6539 3.14304 14.7777 2.51652 13.7864 2.04756C12.7952 1.57859 11.7321 1.29957 10.5972 1.2105V9.40284ZM9.40284 18.7895V10.5972H6.17812C6.07151 11.6606 5.79857 12.6548 5.3593 13.58C4.92002 14.5051 4.33398 15.3239 3.60119 16.0364C4.36907 16.8205 5.22569 17.4531 6.17104 17.9342C7.11639 18.4153 8.19366 18.7004 9.40284 18.7895ZM10.5972 18.7895C11.7996 18.7004 12.8795 18.4187 13.837 17.9443C14.7945 17.47 15.6539 16.8408 16.415 16.0567C15.6822 15.3441 15.0935 14.5219 14.6488 13.5901C14.2041 12.6582 13.9285 11.6606 13.8219 10.5972H10.5972V18.7895ZM10 20C8.61808 20 7.31883 19.7372 6.10223 19.2115C4.88563 18.6859 3.82726 17.973 2.92714 17.0729C2.027 16.1727 1.31411 15.1144 0.788476 13.8978C0.262825 12.6812 0 11.3819 0 10C0 8.61808 0.262825 7.31883 0.788476 6.10223C1.31411 4.88563 2.027 3.82726 2.92714 2.92714C3.82726 2.027 4.88563 1.31411 6.10223 0.788477C7.31883 0.262826 8.61808 0 10 0C11.3819 0 12.6812 0.262826 13.8978 0.788477C15.1144 1.31411 16.1727 2.027 17.0729 2.92714C17.973 3.82726 18.6859 4.88563 19.2115 6.10223C19.7372 7.31883 20 8.61808 20 10C20 11.3819 19.7372 12.6812 19.2115 13.8978C18.6859 15.1144 17.973 16.1727 17.0729 17.0729C16.1727 17.973 15.1144 18.6859 13.8978 19.2115C12.6812 19.7372 11.3819 20 10 20Z" fill={activeTab >= 6 ? "#000" : "#C0C0C0"} />
+                                            </svg>
+                                        </li>
+                                    </ul>
+                                }
                             </div>
 
-                            <div className='lg:pb-0 2xl:pb-0 xl:pb-0 w-[90%] md:w-[700px] lg:w-[700px] h-screen '>
-                                <div className='w-full h-full pt-[40px] ml-2 md:ml-[10px]'>
+                            <div className=''>
 
-                                    {activeTab === 9 ? <PartnerPreference /> :
-                                        <>
-                                            <div className='flex gap-x-[10px] md:gap-x-[20px]'>
+                                {renderTabContent()}
 
-                                                <div
-                                                    onClick={() => HandleTabclick(1)}
-                                                    id={activeTab === 1 ? "active-reg-tab" : ""}
-                                                    className={` rounded-[50%] w-[54px] h-[54px] grid place-items-center bg-[#0F52BA] ${activeTab === 2 ||
-                                                        activeTab === 3 ||
-                                                        activeTab === 4 ||
-                                                        activeTab === 5 ||
-                                                        activeTab === 6
-                                                        ? "bg-green-500"
-                                                        : ""
-                                                        } ${activeTab === 1 ? "bg-[#0F52BA]" : ""}`}
-                                                >
-                                                    <img src="/loginassests/register-icons/profile-icon-white.svg" />
-                                                </div>
-                                                <div
-                                                    onClick={() => HandleTabclick(2)}
-                                                    id={activeTab === 2 ? "active-reg-tab" : ""}
-                                                    className={` ${activeTab === 1 ? "bg-[#EAEAEA]" : ""} rounded-[50%] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 3 ||
-                                                        activeTab === 4 ||
-                                                        activeTab === 5 ||
-                                                        activeTab === 6
-                                                        ? "bg-green-500"
-                                                        : ""
-                                                        }  ${activeTab === 2 ? "bg-[#0F52BA]" : ""}`}
-                                                >
-                                                    {
-                                                        activeTab === 2 ||
-                                                            activeTab === 3 ||
-                                                            activeTab === 4 ||
-                                                            activeTab === 5 ||
-                                                            activeTab === 6 ? <svg width="15" height="18" viewBox="0 0 15 18" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M7.15162 8.69498C7.57598 8.69498 7.93778 8.54389 8.23702 8.2417C8.53627 7.9395 8.68589 7.57623 8.68589 7.15188C8.68589 6.72751 8.53479 6.36571 8.23259 6.06648C7.93039 5.76723 7.56711 5.61761 7.14276 5.61761C6.7184 5.61761 6.3566 5.76871 6.05737 6.07091C5.75812 6.37311 5.60849 6.73638 5.60849 7.16073C5.60849 7.5851 5.75959 7.9469 6.06179 8.24613C6.36399 8.54537 6.72727 8.69498 7.15162 8.69498ZM7.14719 16.5761C9.12473 14.8122 10.6313 13.1302 11.6668 11.5302C12.7023 9.93022 13.22 8.53234 13.22 7.33657C13.22 5.50894 12.6396 4.00681 11.4787 2.83019C10.3178 1.65355 8.87396 1.06523 7.14719 1.06523C5.42042 1.06523 3.97659 1.65355 2.8157 2.83019C1.6548 4.00681 1.07434 5.50894 1.07434 7.33657C1.07434 8.53234 1.6009 9.93022 2.65402 11.5302C3.70714 13.1302 5.20486 14.8122 7.14719 16.5761ZM7.14719 18C4.76419 15.935 2.97724 14.0134 1.78634 12.2349C0.595445 10.4565 0 8.82368 0 7.33657C0 5.15146 0.706831 3.38242 2.12049 2.02945C3.53414 0.676484 5.20971 0 7.14719 0C9.08467 0 10.7602 0.676484 12.1739 2.02945C13.5876 3.38242 14.2944 5.15146 14.2944 7.33657C14.2944 8.82368 13.6989 10.4565 12.508 12.2349C11.3171 14.0134 9.53019 15.935 7.14719 18Z" fill="white" />
-                                                        </svg> : <svg width="15" height="18" viewBox="0 0 15 18" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M7.15162 8.69498C7.57598 8.69498 7.93778 8.54389 8.23702 8.2417C8.53627 7.9395 8.68589 7.57623 8.68589 7.15188C8.68589 6.72751 8.53479 6.36571 8.23259 6.06648C7.93039 5.76723 7.56711 5.61761 7.14276 5.61761C6.7184 5.61761 6.3566 5.76871 6.05737 6.07091C5.75812 6.37311 5.60849 6.73638 5.60849 7.16073C5.60849 7.5851 5.75959 7.9469 6.06179 8.24613C6.36399 8.54537 6.72727 8.69498 7.15162 8.69498ZM7.14719 16.5761C9.12473 14.8122 10.6313 13.1302 11.6668 11.5302C12.7023 9.93022 13.22 8.53234 13.22 7.33657C13.22 5.50894 12.6396 4.00681 11.4787 2.83019C10.3178 1.65355 8.87396 1.06523 7.14719 1.06523C5.42042 1.06523 3.97659 1.65355 2.8157 2.83019C1.6548 4.00681 1.07434 5.50894 1.07434 7.33657C1.07434 8.53234 1.6009 9.93022 2.65402 11.5302C3.70714 13.1302 5.20486 14.8122 7.14719 16.5761ZM7.14719 18C4.76419 15.935 2.97724 14.0134 1.78634 12.2349C0.595445 10.4565 0 8.82368 0 7.33657C0 5.15146 0.706831 3.38242 2.12049 2.02945C3.53414 0.676484 5.20971 0 7.14719 0C9.08467 0 10.7602 0.676484 12.1739 2.02945C13.5876 3.38242 14.2944 5.15146 14.2944 7.33657C14.2944 8.82368 13.6989 10.4565 12.508 12.2349C11.3171 14.0134 9.53019 15.935 7.14719 18Z" fill="black" />
-                                                        </svg>
-                                                    }
+                            </div>
 
+                            <div className='w-full h-full grid place-items-center'>
+                                <div className='fixed  z-10 bottom-0 flex justify-center bg-[#FFF]  w-full 2xl:h-[100px] xl:h-[100px] lg:h-[80px] h-[80px]'>
 
-                                                </div>
-                                                <div
-                                                    onClick={() => HandleTabclick(3)}
-                                                    id={activeTab === 3 ? "active-reg-tab" : ""}
-                                                    className={`${activeTab === 1 || activeTab === 2 ? "bg-[#EAEAEA]" : ""} rounded-[50%] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 4 || activeTab === 5 || activeTab === 6
-                                                        ? "bg-green-500"
-                                                        : ""
-                                                        }   ${activeTab === 3 ? "bg-[#0F52BA]" : ""}`}
-                                                >
-                                                    {
-                                                        activeTab === 3 ||
-                                                            activeTab === 4 ||
-                                                            activeTab === 5 ||
-                                                            activeTab === 6 ?
-                                                            <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <path d="M16.8456 18C14.8692 18 12.8806 17.4926 10.8797 16.4779C8.87876 15.4631 7.07263 14.1518 5.46128 12.5438C3.84994 10.9359 2.53689 9.13314 1.52212 7.13564C0.507374 5.13815 0 3.1512 0 1.17481C0 0.839154 0.111883 0.559442 0.335649 0.335676C0.559415 0.111892 0.839127 0 1.17479 0H4.2088C4.47972 0 4.71601 0.0875181 4.91768 0.262554C5.11933 0.43759 5.25012 0.673573 5.31006 0.970506L5.94548 3.82678C5.98771 4.0883 5.98158 4.32598 5.9271 4.53983C5.87261 4.75368 5.76831 4.93087 5.61419 5.07139L3.10961 7.52078C4.12846 9.21521 5.25832 10.6767 6.49919 11.9054C7.74006 13.134 9.17025 14.1903 10.7898 15.0743L13.1905 12.5837C13.3675 12.3889 13.5661 12.2534 13.786 12.1771C14.006 12.1008 14.2345 12.0892 14.4715 12.1424L17.0499 12.7104C17.3415 12.7701 17.5761 12.9083 17.7538 13.125C17.9315 13.3416 18.0204 13.6012 18.0204 13.9036V16.8252C18.0204 17.1608 17.9085 17.4406 17.6847 17.6643C17.461 17.8881 17.1813 18 16.8456 18ZM2.49669 6.42772L4.68897 4.30081C4.71622 4.27356 4.73495 4.2361 4.74517 4.18843C4.75539 4.14074 4.75709 4.09648 4.75027 4.05562L4.17002 1.36889C4.1632 1.31441 4.14107 1.27355 4.10362 1.24631C4.06615 1.21906 4.02017 1.20544 3.96569 1.20544H1.34844C1.30757 1.20544 1.27352 1.21906 1.24629 1.24631C1.21903 1.27355 1.20541 1.3076 1.20541 1.34847C1.19179 2.04587 1.29634 2.81307 1.51904 3.65007C1.74174 4.48707 2.06763 5.41295 2.49669 6.42772ZM11.9196 15.6402C12.6456 15.9971 13.4404 16.2749 14.304 16.4738C15.1675 16.6727 15.9569 16.783 16.672 16.8048C16.7128 16.8048 16.7469 16.7912 16.7741 16.7639C16.8014 16.7367 16.815 16.7026 16.815 16.6618V14.0547C16.815 14.0002 16.8014 13.9543 16.7741 13.9168C16.7469 13.8793 16.706 13.8572 16.6515 13.8504L14.2427 13.3539C14.2018 13.3471 14.166 13.3488 14.1354 13.359C14.1047 13.3692 14.0724 13.388 14.0383 13.4152L11.9196 15.6402Z" fill="white" />
-                                                            </svg> : <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <path d="M16.8456 18C14.8692 18 12.8806 17.4926 10.8797 16.4779C8.87876 15.4631 7.07263 14.1518 5.46128 12.5438C3.84994 10.9359 2.53689 9.13314 1.52212 7.13564C0.507374 5.13815 0 3.1512 0 1.17481C0 0.839154 0.111883 0.559442 0.335649 0.335676C0.559415 0.111892 0.839127 0 1.17479 0H4.2088C4.47972 0 4.71601 0.0875181 4.91768 0.262554C5.11933 0.43759 5.25012 0.673573 5.31006 0.970506L5.94548 3.82678C5.98771 4.0883 5.98158 4.32598 5.9271 4.53983C5.87261 4.75368 5.76831 4.93087 5.61419 5.07139L3.10961 7.52078C4.12846 9.21521 5.25832 10.6767 6.49919 11.9054C7.74006 13.134 9.17025 14.1903 10.7898 15.0743L13.1905 12.5837C13.3675 12.3889 13.5661 12.2534 13.786 12.1771C14.006 12.1008 14.2345 12.0892 14.4715 12.1424L17.0499 12.7104C17.3415 12.7701 17.5761 12.9083 17.7538 13.125C17.9315 13.3416 18.0204 13.6012 18.0204 13.9036V16.8252C18.0204 17.1608 17.9085 17.4406 17.6847 17.6643C17.461 17.8881 17.1813 18 16.8456 18ZM2.49669 6.42772L4.68897 4.30081C4.71622 4.27356 4.73495 4.2361 4.74517 4.18843C4.75539 4.14074 4.75709 4.09648 4.75027 4.05562L4.17002 1.36889C4.1632 1.31441 4.14107 1.27355 4.10362 1.24631C4.06615 1.21906 4.02017 1.20544 3.96569 1.20544H1.34844C1.30757 1.20544 1.27352 1.21906 1.24629 1.24631C1.21903 1.27355 1.20541 1.3076 1.20541 1.34847C1.19179 2.04587 1.29634 2.81307 1.51904 3.65007C1.74174 4.48707 2.06763 5.41295 2.49669 6.42772ZM11.9196 15.6402C12.6456 15.9971 13.4404 16.2749 14.304 16.4738C15.1675 16.6727 15.9569 16.783 16.672 16.8048C16.7128 16.8048 16.7469 16.7912 16.7741 16.7639C16.8014 16.7367 16.815 16.7026 16.815 16.6618V14.0547C16.815 14.0002 16.8014 13.9543 16.7741 13.9168C16.7469 13.8793 16.706 13.8572 16.6515 13.8504L14.2427 13.3539C14.2018 13.3471 14.166 13.3488 14.1354 13.359C14.1047 13.3692 14.0724 13.388 14.0383 13.4152L11.9196 15.6402Z" fill="black" />
-                                                            </svg>
-                                                    }
-                                                </div>
-                                                <div
-                                                    onClick={() => HandleTabclick(4)}
-                                                    id={activeTab === 4 ? "active-reg-tab" : ""}
-                                                    className={`${activeTab === 4 || activeTab === 5 || activeTab === 6 ? "" : "bg-[#EAEAEA]"} rounded-[50%] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 5 || activeTab === 6 ? "bg-green-500" : ""
-                                                        }  ${activeTab === 4 ? "bg-[#0F52BA]" : ""}`}
-                                                >
-                                                    {
+                                    {activeTab > 0 ? <>
+                                        <div className='w-[647px] mt-[20px]'>
+                                            <ul className='flex justify-between w-[647px]'>
+                                                <li className=''>
+                                                    <button onClick={() => setActiveTab(activeTab - 1)} className='w-[97px] h-[44px] border-[1px] border-[#000] rounded-[22px]'>
+                                                        Back
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button onClick={() => HandleTabclick(activeTab + 1)} className='w-[153px] h-[44px] border-[1px] border-[#000] rounded-[22px] bg-[#000] text-[#FFF]'>
+                                                        Continue
+                                                        <Image width={24} height={24} alt='next' src={"/assests/login/Arrow-reg.svg"} className='relative left-[8px] inline' />
 
-                                                        activeTab === 4 ||
-                                                            activeTab === 5 ||
-                                                            activeTab === 6 ?
-                                                            <svg width="23" height="18" viewBox="0 0 23 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <path d="M11.0043 18L3.61065 13.9532V7.95319L0 5.99999L11.0043 0L22.0426 5.99999V13.8957H20.7873V6.73403L18.3979 7.95319V13.9532L11.0043 18ZM11.0043 10.5766L19.3979 5.99999L11.0043 1.48508L2.64466 5.99999L11.0043 10.5766ZM11.0043 16.5766L17.1426 13.2021V8.71486L11.0043 12L4.86594 8.67018V13.2021L11.0043 16.5766Z" fill="white" />
-                                                            </svg> : <svg width="23" height="18" viewBox="0 0 23 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <path d="M11.0043 18L3.61065 13.9532V7.95319L0 5.99999L11.0043 0L22.0426 5.99999V13.8957H20.7873V6.73403L18.3979 7.95319V13.9532L11.0043 18ZM11.0043 10.5766L19.3979 5.99999L11.0043 1.48508L2.64466 5.99999L11.0043 10.5766ZM11.0043 16.5766L17.1426 13.2021V8.71486L11.0043 12L4.86594 8.67018V13.2021L11.0043 16.5766Z" fill="black" />
-                                                            </svg>
-                                                    }
-
-                                                </div>
-                                                <div
-                                                    onClick={() => HandleTabclick(5)}
-                                                    id={activeTab === 5 ? "active-reg-tab" : ""}
-                                                    className={`${activeTab === 5 || activeTab === 6 ? "" : "bg-[#EAEAEA]"} rounded-[50%] w-[54px] h-[54px] flex items-center justify-center ${activeTab === 6 ? "bg-green-500" : ""
-                                                        }  ${activeTab === 5 ? "bg-[#0F52BA]" : ""}`}
-                                                >
-                                                    {
-                                                        activeTab === 5 ||
-                                                            activeTab === 6 ?
-                                                            <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <path d="M1.48354 18C1.08019 18 0.73209 17.8536 0.439254 17.5607C0.146418 17.2679 0 16.9198 0 16.5165V4.91141C0 4.50807 0.146418 4.15998 0.439254 3.86714C0.73209 3.57431 1.08019 3.42789 1.48354 3.42789H6.35939V1.48352C6.35939 1.08016 6.5058 0.732074 6.79864 0.439255C7.09146 0.146419 7.43955 0 7.8429 0H11.7C12.1034 0 12.4515 0.146419 12.7443 0.439255C13.0371 0.732074 13.1835 1.08016 13.1835 1.48352V3.42789H18.0594C18.4627 3.42789 18.8108 3.57431 19.1037 3.86714C19.3965 4.15998 19.5429 4.50807 19.5429 4.91141V16.5165C19.5429 16.9198 19.3965 17.2679 19.1037 17.5607C18.8108 17.8536 18.4627 18 18.0594 18H1.48354ZM7.52641 3.42789H12.0165V1.48352C12.0165 1.40439 11.9835 1.33185 11.9176 1.26592C11.8517 1.19997 11.7792 1.167 11.7 1.167H7.8429C7.76377 1.167 7.69124 1.19997 7.62531 1.26592C7.55938 1.33185 7.52641 1.40439 7.52641 1.48352V3.42789ZM18.3759 11.8819H11.795V13.3061H7.77959V11.8819H1.16702V16.5165C1.16702 16.5956 1.19999 16.6681 1.26592 16.7341C1.33187 16.8 1.40441 16.833 1.48354 16.833H18.0594C18.1385 16.833 18.2111 16.8 18.277 16.7341C18.3429 16.6681 18.3759 16.5956 18.3759 16.5165V11.8819ZM8.94662 12.1391H10.628V10.4578H8.94662V12.1391ZM1.16702 10.7149H7.77959V9.29078H11.795V10.7149H18.3759V4.91141C18.3759 4.83229 18.3429 4.75976 18.277 4.69381C18.2111 4.62788 18.1385 4.59491 18.0594 4.59491H1.48354C1.40441 4.59491 1.33187 4.62788 1.26592 4.69381C1.19999 4.75976 1.16702 4.83229 1.16702 4.91141V10.7149Z" fill="white" />
-                                                            </svg> : <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <path d="M1.48354 18C1.08019 18 0.73209 17.8536 0.439254 17.5607C0.146418 17.2679 0 16.9198 0 16.5165V4.91141C0 4.50807 0.146418 4.15998 0.439254 3.86714C0.73209 3.57431 1.08019 3.42789 1.48354 3.42789H6.35939V1.48352C6.35939 1.08016 6.5058 0.732074 6.79864 0.439255C7.09146 0.146419 7.43955 0 7.8429 0H11.7C12.1034 0 12.4515 0.146419 12.7443 0.439255C13.0371 0.732074 13.1835 1.08016 13.1835 1.48352V3.42789H18.0594C18.4627 3.42789 18.8108 3.57431 19.1037 3.86714C19.3965 4.15998 19.5429 4.50807 19.5429 4.91141V16.5165C19.5429 16.9198 19.3965 17.2679 19.1037 17.5607C18.8108 17.8536 18.4627 18 18.0594 18H1.48354ZM7.52641 3.42789H12.0165V1.48352C12.0165 1.40439 11.9835 1.33185 11.9176 1.26592C11.8517 1.19997 11.7792 1.167 11.7 1.167H7.8429C7.76377 1.167 7.69124 1.19997 7.62531 1.26592C7.55938 1.33185 7.52641 1.40439 7.52641 1.48352V3.42789ZM18.3759 11.8819H11.795V13.3061H7.77959V11.8819H1.16702V16.5165C1.16702 16.5956 1.19999 16.6681 1.26592 16.7341C1.33187 16.8 1.40441 16.833 1.48354 16.833H18.0594C18.1385 16.833 18.2111 16.8 18.277 16.7341C18.3429 16.6681 18.3759 16.5956 18.3759 16.5165V11.8819ZM8.94662 12.1391H10.628V10.4578H8.94662V12.1391ZM1.16702 10.7149H7.77959V9.29078H11.795V10.7149H18.3759V4.91141C18.3759 4.83229 18.3429 4.75976 18.277 4.69381C18.2111 4.62788 18.1385 4.59491 18.0594 4.59491H1.48354C1.40441 4.59491 1.33187 4.62788 1.26592 4.69381C1.19999 4.75976 1.16702 4.83229 1.16702 4.91141V10.7149Z" fill="black" />
-                                                            </svg>
-
-                                                    }
-
-                                                </div>
-                                                <div
-                                                    onClick={() => HandleTabclick(6)}
-                                                    id={activeTab === 6 ? "active-reg-tab" : ""}
-                                                    className={`${activeTab === 6 ? "" : "bg-[#EAEAEA]"} rounded-[50%] w-[54px] h-[54px] flex items-center justify-center   ${activeTab === 6 ? "bg-[#0F52BA]" : ""
-                                                        }`}
-                                                >
-                                                    {
-                                                        activeTab === 6 ?
-                                                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <path d="M1.08945 8.46256H4.47997C4.38767 7.6743 4.16965 6.92035 3.82591 6.20071C3.48219 5.48107 3.04737 4.86132 2.52145 4.34147C2.11579 4.92448 1.78208 5.56092 1.52034 6.2508C1.2586 6.94069 1.11497 7.67794 1.08945 8.46256ZM13.52 8.46256H16.9105C16.885 7.68401 16.7414 6.95131 16.4797 6.26447C16.2179 5.57762 15.8842 4.9427 15.4785 4.35971C14.8992 4.92691 14.451 5.55546 14.134 6.24535C13.817 6.93523 13.6123 7.6743 13.52 8.46256ZM2.52145 13.6257C3.08259 13.0585 3.52622 12.4324 3.85234 11.7474C4.17846 11.0623 4.38767 10.3257 4.47997 9.53744H1.08945C1.12103 10.3221 1.26618 11.0538 1.52489 11.7328C1.7836 12.4118 2.11579 13.0427 2.52145 13.6257ZM15.4785 13.6257C15.8842 13.0427 16.2179 12.4102 16.4797 11.7282C16.7414 11.0463 16.885 10.316 16.9105 9.53744H13.52C13.6123 10.3257 13.817 11.0623 14.134 11.7474C14.451 12.4324 14.8992 13.0585 15.4785 13.6257ZM5.56031 8.46256H8.46256V1.08945C7.4411 1.16962 6.48827 1.42073 5.60405 1.8428C4.71982 2.26487 3.93217 2.82874 3.24107 3.5344C3.89452 4.18177 4.42043 4.92874 4.8188 5.77531C5.21719 6.62187 5.46436 7.51762 5.56031 8.46256ZM9.53744 8.46256H12.4397C12.5356 7.51762 12.7837 6.62035 13.1839 5.77074C13.5841 4.92116 14.114 4.17571 14.7735 3.5344C14.0885 2.82874 13.2999 2.26487 12.4078 1.8428C11.5157 1.42073 10.5589 1.16962 9.53744 1.08945V8.46256ZM8.46256 16.9105V9.53744H5.56031C5.46436 10.4945 5.21871 11.3894 4.82337 12.222C4.42802 13.0546 3.90059 13.7915 3.24107 14.4328C3.93217 15.1385 4.70312 15.7078 5.55394 16.1408C6.40476 16.5738 7.3743 16.8304 8.46256 16.9105ZM9.53744 16.9105C10.6196 16.8304 11.5916 16.5768 12.4533 16.1499C13.3151 15.723 14.0885 15.1567 14.7735 14.451C14.114 13.8097 13.5841 13.0697 13.1839 12.2311C12.7837 11.3924 12.5356 10.4945 12.4397 9.53744H9.53744V16.9105ZM9 18C7.75627 18 6.58694 17.7635 5.492 17.2904C4.39706 16.8173 3.44454 16.1757 2.63442 15.3656C1.8243 14.5555 1.1827 13.6029 0.709628 12.508C0.236543 11.4131 0 10.2437 0 9C0 7.75628 0.236543 6.58694 0.709628 5.492C1.1827 4.39706 1.8243 3.44454 2.63442 2.63443C3.44454 1.8243 4.39706 1.1827 5.492 0.709629C6.58694 0.236544 7.75627 0 9 0C10.2437 0 11.4131 0.236544 12.508 0.709629C13.6029 1.1827 14.5555 1.8243 15.3656 2.63443C16.1757 3.44454 16.8173 4.39706 17.2904 5.492C17.7635 6.58694 18 7.75628 18 9C18 10.2437 17.7635 11.4131 17.2904 12.508C16.8173 13.6029 16.1757 14.5555 15.3656 15.3656C14.5555 16.1757 13.6029 16.8173 12.508 17.2904C11.4131 17.7635 10.2437 18 9 18Z" fill="white" />
-                                                            </svg> : <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <path d="M1.08945 8.46256H4.47997C4.38767 7.6743 4.16965 6.92035 3.82591 6.20071C3.48219 5.48107 3.04737 4.86132 2.52145 4.34147C2.11579 4.92448 1.78208 5.56092 1.52034 6.2508C1.2586 6.94069 1.11497 7.67794 1.08945 8.46256ZM13.52 8.46256H16.9105C16.885 7.68401 16.7414 6.95131 16.4797 6.26447C16.2179 5.57762 15.8842 4.9427 15.4785 4.35971C14.8992 4.92691 14.451 5.55546 14.134 6.24535C13.817 6.93523 13.6123 7.6743 13.52 8.46256ZM2.52145 13.6257C3.08259 13.0585 3.52622 12.4324 3.85234 11.7474C4.17846 11.0623 4.38767 10.3257 4.47997 9.53744H1.08945C1.12103 10.3221 1.26618 11.0538 1.52489 11.7328C1.7836 12.4118 2.11579 13.0427 2.52145 13.6257ZM15.4785 13.6257C15.8842 13.0427 16.2179 12.4102 16.4797 11.7282C16.7414 11.0463 16.885 10.316 16.9105 9.53744H13.52C13.6123 10.3257 13.817 11.0623 14.134 11.7474C14.451 12.4324 14.8992 13.0585 15.4785 13.6257ZM5.56031 8.46256H8.46256V1.08945C7.4411 1.16962 6.48827 1.42073 5.60405 1.8428C4.71982 2.26487 3.93217 2.82874 3.24107 3.5344C3.89452 4.18177 4.42043 4.92874 4.8188 5.77531C5.21719 6.62187 5.46436 7.51762 5.56031 8.46256ZM9.53744 8.46256H12.4397C12.5356 7.51762 12.7837 6.62035 13.1839 5.77074C13.5841 4.92116 14.114 4.17571 14.7735 3.5344C14.0885 2.82874 13.2999 2.26487 12.4078 1.8428C11.5157 1.42073 10.5589 1.16962 9.53744 1.08945V8.46256ZM8.46256 16.9105V9.53744H5.56031C5.46436 10.4945 5.21871 11.3894 4.82337 12.222C4.42802 13.0546 3.90059 13.7915 3.24107 14.4328C3.93217 15.1385 4.70312 15.7078 5.55394 16.1408C6.40476 16.5738 7.3743 16.8304 8.46256 16.9105ZM9.53744 16.9105C10.6196 16.8304 11.5916 16.5768 12.4533 16.1499C13.3151 15.723 14.0885 15.1567 14.7735 14.451C14.114 13.8097 13.5841 13.0697 13.1839 12.2311C12.7837 11.3924 12.5356 10.4945 12.4397 9.53744H9.53744V16.9105ZM9 18C7.75627 18 6.58694 17.7635 5.492 17.2904C4.39706 16.8173 3.44454 16.1757 2.63442 15.3656C1.8243 14.5555 1.1827 13.6029 0.709628 12.508C0.236543 11.4131 0 10.2437 0 9C0 7.75628 0.236543 6.58694 0.709628 5.492C1.1827 4.39706 1.8243 3.44454 2.63442 2.63443C3.44454 1.8243 4.39706 1.1827 5.492 0.709629C6.58694 0.236544 7.75627 0 9 0C10.2437 0 11.4131 0.236544 12.508 0.709629C13.6029 1.1827 14.5555 1.8243 15.3656 2.63443C16.1757 3.44454 16.8173 4.39706 17.2904 5.492C17.7635 6.58694 18 7.75628 18 9C18 10.2437 17.7635 11.4131 17.2904 12.508C16.8173 13.6029 16.1757 14.5555 15.3656 15.3656C14.5555 16.1757 13.6029 16.8173 12.508 17.2904C11.4131 17.7635 10.2437 18 9 18Z" fill="black" />
-                                                            </svg>
-
-                                                    }
-
-                                                </div>
-
-                                            </div>
-
-                                            <div className='2xl:ml-[5px] xl:ml-[5px]'>
-
-                                                {renderTabContent()}
-
-                                            </div>
-
-                                        </>}
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </> : ""}
 
                                 </div>
 
                             </div>
 
-                        </div>
 
-
-
-                    </div>
-
-
-                </>}
-            </>}
-
-
-            <div className=' w-full h-full grid place-items-center'>
-                <div className='fixed z-10 bottom-0 flex justify-center bg-[#FFF] border-[1px] border-[#ECECEC] w-full 2xl:h-[100px] xl:h-[100px] lg:h-[80px] h-[80px]'>
-
-                    <div className="m-5 flex justify-end w-full lg:w-full 2xl:w-[1130px] xl:w-[1162px] md:w-full ">
-                        <div className="flex lg:gap-5 ml-[5px]">
-                            {activeTab < 1 ? (
-                                <>
-                                    <button
-                                        style={btnstyle}
-                                        className="text-[#FFF] bg-[#0F52BA] rounded-[22px] w-[130px] md:w-[100px] relative right-[20px] lg:left-[0px]   lg:w-[125px] h-[49px]"
-                                        onClick={() => HandleTabclick(activeTab + 1)}
-                                    >
-                                        Continue
-                                    </button>
-                                </>
-                            ) : (
-                                <>
-                                    <div className="flex lg:gap-5 ">
-                                        <button
-                                            style={btnstyle}
-                                            onClick={() => HandleTabclick(activeTab - 1)}
-                                            className={`${activeTab === 1 ? "hidden" : ""} text-[#000] hover:bg-[#F2F7FF] relative lg:right-[8px] right-[14%] mr-[5%] lg:mr-0 border-[1px] border-[#000] rounded-[22px] w-[120px] sm:w-[120px] md:w-[120px] lg:w-[120px] h-[49px]`}
-                                        >
-                                            Back
-                                        </button>
-                                        <button
-                                            style={btnstyle}
-                                            id="grad-btn"
-                                            onClick={() => HandleTabclick(activeTab + 1)}
-                                            className="text-[#FFF] bg-[#0F52BA] rounded-[22px]  w-[130px] md:w-[100px]  relative right-[20px] lg:left-[0px]
-                                               lg:w-[125px] h-[49px]"
-                                        >
-                                            {activeTab === 8 ? "Explore Now" : "Continue"}
-                                        </button>
-                                    </div>
-                                </>
-                            )}
                         </div>
                     </div>
-
                 </div>
-
             </div>
+
 
         </>
     );

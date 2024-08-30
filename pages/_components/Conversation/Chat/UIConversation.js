@@ -58,5 +58,5 @@ function UIConversation({ UserDetails }) {
 
 // export default UIConversation;
 // export default UIConversation;
-export default UIConversation;
-// export default UpgradeValidation(UIConversation);
+// export default UIConversation;
+export default UpgradeValidation(UIConversation);

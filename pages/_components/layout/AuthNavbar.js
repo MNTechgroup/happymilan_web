@@ -326,10 +326,12 @@ function CommonNavbar({ background }) {
                         <Box sx={{ outline: "none" }} className="absolute right-0">
                             <div className="pt-[20px] w-[278px] h-[296px]" style={BoxSdow2}>
                                 <div className="flex flex-col justify-evenly h-full pl-[24px] pr-[24px]">
-                                    <div className="mt-[-10px] space-y-[5px]">
+                                    <div className="mt-[-10px] space-y-[10px]">
                                         <ProfileImage size={60} />
-                                        <h1 style={MenuNameText}>{myProfile?.name}</h1>
-                                        <p style={MenuIDText}>ID: {myProfile?.userUniqueId?.toUpperCase()}</p>
+                                        <ul className="relative left-[5px] space-y-[5px]">
+                                            <li> <h1 style={MenuNameText}>{myProfile?.name}</h1></li>
+                                            <li> <p style={MenuIDText}>ID: {myProfile?.userUniqueId?.toUpperCase()}</p></li>
+                                        </ul>
                                     </div>
                                     <div className="h-[1px] w-[90%] bg-[#EBEBEB]"></div>
                                     <div>

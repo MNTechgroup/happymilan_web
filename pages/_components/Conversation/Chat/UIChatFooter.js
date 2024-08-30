@@ -54,8 +54,10 @@ const ChatInput = ({ HandleStopVoice, HanldeVoiceChat, setOpenPicker, StartVoice
 
     };
 
-    const [recordingDuration, setRecordingDuration] = useState(0);
 
+
+    const [recordingDuration, setRecordingDuration] = useState(0);
+    let fun = true;
 
     useEffect(() => {
         let intervalId;
@@ -69,15 +71,13 @@ const ChatInput = ({ HandleStopVoice, HanldeVoiceChat, setOpenPicker, StartVoice
             setRecordingDuration(0);
         }
 
-        return () => clearInterval(intervalId); // Clean up the interval on component unmount or when StartVoice changes
+        return () => clearInterval(intervalId); // Clean up the interval on component unmount or when startVoice changes
     }, [StartVoice]);
-
-
 
     if (StartVoice) {
         return (
-            <RecordingInput HandleStopVoice={HandleStopVoice} HanldeVoiceChat={HanldeVoiceChat} recordingDuration={recordingDuration} />
-        )
+            <RecordingInput handleStopVoice={HandleStopVoice} handleVoiceChat={HanldeVoiceChat} recordingDuration={recordingDuration} />
+        );
     }
 
     return (
@@ -149,7 +149,7 @@ const ChatFooter = ({ formData, updateFormData }) => {
     const { imagesdata, bufferdata } = useSelector((state) => state.form.formData.uploadChatImage);
     const socket = useSocket();
 
-    
+
     const pickerRef = useRef(null);
 
     const handleClickOutside = (event) => {
@@ -285,23 +285,27 @@ const ChatFooter = ({ formData, updateFormData }) => {
     };
 
     const handleVoiceChat = async () => {
-        setStartVoice(!startVoice);
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            recorderRef.current = new MediaRecorder(stream);
-            recorderRef.current.ondataavailable = (e) => audioChunks.current.push(e.data);
-            recorderRef.current.start();
+        if (startVoice) {
+            handleStopVoice();
+        } else {
             setStartVoice(true);
-        } catch (err) {
-            console.error('Error accessing microphone:', err);
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                recorderRef.current = new MediaRecorder(stream);
+                recorderRef.current.ondataavailable = (e) => audioChunks.current.push(e.data);
+                recorderRef.current.start();
+            } catch (err) {
+                console.error('Error accessing microphone:', err);
+                setStartVoice(false);
+            }
         }
     };
-
+    
     const uploadAndEmitAudioBlob = () => {
         if (audioChunks.current.length === 0) return;
-
-        console.log("Audio-chunk" , audioChunks.current)
-
+    
+        console.log("Audio-chunk", audioChunks.current);
+    
         const blob = new Blob(audioChunks.current, { type: 'audio/webm' });
         const chatContent = {
             "from": currentUserID,
@@ -309,17 +313,17 @@ const ChatFooter = ({ formData, updateFormData }) => {
             "fileName": "audio.webm",
             "type": "audio",
         };
-
+    
         socket.emit("uploadContent", chatContent);
-
+    
         socket.on('message', (data) => {
             if (!data.data?.result?.url) {
                 console.error("Missing upload URL in response!");
                 return;
             }
-
+    
             const uploadUrl = data.data.result.url;
-
+    
             const config = {
                 method: 'put',
                 maxBodyLength: Infinity,
@@ -330,7 +334,7 @@ const ChatFooter = ({ formData, updateFormData }) => {
                 },
                 data: blob
             };
-
+    
             axios.request(config)
                 .then(() => {
                     const chatContent2 = {
@@ -340,7 +344,7 @@ const ChatFooter = ({ formData, updateFormData }) => {
                         "fileName": "audio",
                         "type": blob.type
                     };
-
+    
                     socket.emit("sendMessage", chatContent2);
                     setMessage('');
                     audioChunks.current = [];
@@ -350,19 +354,25 @@ const ChatFooter = ({ formData, updateFormData }) => {
                 });
         });
     };
-
+    
     const handleStopVoice = () => {
-        setStartVoice(false);
-        if (recorderRef.current) {
+        if (recorderRef.current && recorderRef.current.state === "recording") {
             recorderRef.current.stop();
-            uploadAndEmitAudioBlob();
+            recorderRef.current.onstop = () => {
+                uploadAndEmitAudioBlob();
+                recorderRef.current.stream.getTracks().forEach(track => track.stop());
+                recorderRef.current = null;
+                audioChunks.current = [];
+                setStartVoice(false);
+            };
         }
     };
-
+    
     useEffect(() => {
         return () => {
             if (recorderRef.current) {
-                recorderRef.current.stop();
+                recorderRef.current.stream.getTracks().forEach(track => track.stop());
+                recorderRef.current = null;
             }
         };
     }, []);
@@ -383,11 +393,11 @@ const ChatFooter = ({ formData, updateFormData }) => {
                     borderRadius: 1.5
                 }}>
                     <Stack sx={{ height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                        {startVoice ? <></> : <>
-                            <IconButton onClick={handleSendMessage}>
+                        
+                            <IconButton onClick={startVoice ? handleStopVoice : handleSendMessage}>
                                 <Image loading='lazy' alt="send-message" width={29} height={24} src="/assests/chat/Send-Icon.svg" />
                             </IconButton>
-                        </>}
+                       
                     </Stack>
 
                 </Box>

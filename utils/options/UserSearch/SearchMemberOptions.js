@@ -36,8 +36,6 @@ export const religionOptions = [
 ];
 
 
-
-
 export const statesOptions = [
     { value: 'gujarat', label: 'Gujarat' },
     { value: 'otava', label: 'Otava' },

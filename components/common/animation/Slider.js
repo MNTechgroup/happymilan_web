@@ -60,7 +60,7 @@ const Wrapper = styled.div`
 `;
 const Marquee = styled.div`
   display: flex;
-  width: 1200px;
+  width: 100vw;
   overflow: hidden;
   user-select: none;
 

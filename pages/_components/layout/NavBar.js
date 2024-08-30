@@ -25,6 +25,7 @@ import icons from "../../../utils/icons/icons";
 import { useChatSettings } from "../../../ContextProvider/ChatSetingContext";
 import DarkModeToggle from '../common/Buttons/Darkmode/DarkModeToggle'
 import ProductsListModal from "../Model/Models/ProductsListModal";
+import { io } from "socket.io-client";
 
 const RequestNotification = dynamic(() => import("../../../components/LongTerm/Notification/RequestNotification"), {
     ssr: false
@@ -255,6 +256,9 @@ function NavBar({ handleSearch }) {
 
     const [innerDrawerOpen, setInnerDrawerOpen] = useState(false);
     const toggleInnerDrawer = (res) => {
+
+        console.log("done...")
+        console.log("🚀 ~ toggleInnerDrawer ~ res:", res)
         SetChatUser(res)
         updateUser(res)
 
@@ -283,7 +287,7 @@ function NavBar({ handleSearch }) {
     };
 
 
-   
+
 
 
 
@@ -425,10 +429,25 @@ function NavBar({ handleSearch }) {
     const HandleLogout = (e) => {
         if (e.target.name === "stay") {
             setOpenLogoutModal(false);
-
-
         }
         else {
+            const Token = getCookie("authtoken")
+
+            const socket = io.connect(`https://happymilan.tech`, {
+                path: '/api/socket.io',
+                query: { token: Token }
+            });
+
+            socket.on('connect', () => {
+                console.log('Connected to socket');
+            });
+
+            socket?.on("onlineUser", (data) => {
+                console.log("Data from logout : ", data)
+            })
+            socket?.emit("userInActive")
+
+
             dispatch(logoutuser())
             router.push("/login")
         }

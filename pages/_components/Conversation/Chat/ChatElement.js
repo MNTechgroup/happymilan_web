@@ -2,9 +2,10 @@ import { Box, Stack } from '@mui/material';
 import Image from 'next/image';
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../../../ContextProvider/UsersConversationContext';
+import StyledBadge from '../../../../components/common/animation/StyleBadge';
 //single chat element
-const ChatElement = ({ toggleInnerDrawer, id, name, profilePic }) => {
-console.log("🚀 ~ ChatElement ~ name:", name)
+const ChatElement = ({ toggleInnerDrawer, isUserActive, id, name, profilePic }) => {
+    console.log("🚀 ~ ChatElement ~ name:", name)
 
 
     const Username2 = {
@@ -49,9 +50,10 @@ console.log("🚀 ~ ChatElement ~ name:", name)
             const thedata = {
                 userName: name,
                 profilePic: profilePic,
+                ActiveUser: isUserActive,
                 id: id
             }
-           
+
             SetSelectedUser(thedata.id)
             toggleInnerDrawer();
 
@@ -61,6 +63,7 @@ console.log("🚀 ~ ChatElement ~ name:", name)
             const thedata = {
                 userName: name,
                 profilePic: profilePic,
+                ActiveUser: isUserActive,
                 id: id
             }
             SetSelectedUser(thedata.id)
@@ -77,27 +80,47 @@ console.log("🚀 ~ ChatElement ~ name:", name)
         fontStyle: "normal",
         fontWeight: "500",
         lineHeight: "normal"
-      }
+    }
 
 
     return (
         <Box sx={{
             width: "100%",
             borderRadius: 1,
-            
+
         }}
         >
 
             <Stack direction="row" alignItems='center' justifyContent='space-between'>
                 <Stack direction='row' spacing={0}>
-                    <div style={{borderRadius:"40.5px"}} onClick={HandleOpenChat} className={`${userData?.id == selectedUser ? "bg-[#F4F9FF]" : ""} z-100  hover:bg-[#F4F9FF] cursor-pointer p-[10px] rounded-[10px] w-[278px] flex space-x-[19px]  items-center`}>
+                    <div style={{ borderRadius: "40.5px" }} onClick={HandleOpenChat} className={`${userData?.id == selectedUser ? "bg-[#F4F9FF]" : ""} z-100  hover:bg-[#F4F9FF] cursor-pointer p-[10px] rounded-[10px] w-[278px] flex space-x-[19px]  items-center`}>
                         {profilePic ?
-                            <Image  alt="img" width={47} height={47} className=" w-[47px] h-[47px] 2xl:w-[47px] 2xl:h-[47px] xl:w-[40px] xl:h-[40px]" style={{ objectFit: "cover", borderRadius: "50%" }} src={profilePic} loading="lazy" />
+                            <StyledBadge
+                                overlap="circular"
+                                anchorOrigin={{ // position
+                                    vertical: "bottom",
+                                    horizontal: "right",
+                                }}
+                                variant="dot"
+                                invisible={!isUserActive} // Hide the badge when the user is inactive
+                            >
+                                <Image alt="img" width={47} height={47} className=" w-[47px] h-[47px] 2xl:w-[47px] 2xl:h-[47px] xl:w-[40px] xl:h-[40px]" style={{ objectFit: "cover", borderRadius: "50%" }} src={profilePic} loading="lazy" />
+                            </StyledBadge>
                             :
-                            <div className='bg-[#F8FBFF] grid place-items-center' style={{ height: "44px", width: "44px", borderRadius: "50%", objectFit: "cover" }}>
-                                <Image loading='lazy' alt='not-found' width={16} height={16} src={"/assests/dashboard/icon/NotFound-img.svg"} />
-                                <h1 className='relative top-[-5px]' style={ImagenotFound}>No Image</h1>
-                            </div>
+                            <StyledBadge
+                                overlap="circular"
+                                anchorOrigin={{ // position
+                                    vertical: "bottom",
+                                    horizontal: "right",
+                                }}
+                                variant="dot"
+                                invisible={!isUserActive}
+                            >
+                                <div className='bg-[#F8FBFF] grid place-items-center' style={{ height: "44px", width: "44px", borderRadius: "50%", objectFit: "cover" }}>
+                                    <Image loading='lazy' alt='not-found' width={16} height={16} src={"/assests/dashboard/icon/NotFound-img.svg"} />
+                                    <h1 className='relative top-[-5px]' style={ImagenotFound}>No Image</h1>
+                                </div>
+                            </StyledBadge>
                         }
                         <div>
                             <h1 style={Username2}>{name} <span style={userStatus} className="text-[#A7A7A7] ml-[5px]">1h ago</span></h1>
@@ -106,7 +129,7 @@ console.log("🚀 ~ ChatElement ~ name:", name)
                     </div>
                 </Stack>
             </Stack>
-        </Box>
+        </Box >
     )
 };
 

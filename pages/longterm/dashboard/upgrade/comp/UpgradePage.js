@@ -6,7 +6,7 @@ import useRazorpay from "react-razorpay";
 import { useSelector } from "react-redux";
 import { capitalizeFirstLetter } from "../../../../../utils/form/Captitelize";
 
-function UpgradePage() {
+function UpgradePage({ plansId }) {
     const TitleText = {
         color: "#000",
         textAlign: "center",
@@ -71,6 +71,7 @@ function UpgradePage() {
     const router = useRouter();
 
     const { loading, data, error } = useSelector((state) => state.upgradeplans.ChoosedPlan)
+    console.log("🚀 ~ UpgradePage ~ data:", data)
 
     const [Razorpay] = useRazorpay();
 
@@ -82,7 +83,7 @@ function UpgradePage() {
 
         try {
 
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/razorpay/order`, { "planId": "667a53da5f57120e070eeed7" },
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/razorpay/order`, { "planId": plansId },
                 {
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -122,7 +123,7 @@ function UpgradePage() {
 
     return (
         <>
-            <div className="2xl:space-y-[30px] xl:space-y-[18px] lg:space-y-[20px] space-y-[10px] w-full h-full grid place-items-center 2xl:mt-[100px] xl:mt-[80px] lg:mt-[70px]">
+            <div className="pb-[40px] 2xl:space-y-[30px] xl:space-y-[18px] lg:space-y-[20px] space-y-[10px] w-full h-full grid place-items-center 2xl:mt-[100px] xl:mt-[80px] lg:mt-[70px]">
                 <div>
                     <h1 style={TitleText}>Your Plan Summary</h1>
                 </div>

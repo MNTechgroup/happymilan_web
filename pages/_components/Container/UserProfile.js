@@ -49,7 +49,6 @@ function SampleUserProfile({ users }) {
     };
     const statusText = {
         fontFamily: "Poppins",
-        fontSize: "8px",
         fontStyle: "normal",
         fontWeight: "400",
         lineHeight: "12px",
@@ -220,7 +219,7 @@ function SampleUserProfile({ users }) {
     };
 
 
-   
+
 
     if (loading) {
         return <UserprofileSkeleton />;
@@ -336,7 +335,11 @@ function SampleUserProfile({ users }) {
                                                             style={statusText}
                                                             className={`text-[#17C270]`}
                                                         >
-                                                            {"Online now"}
+                                                            {res?.isUserActive ?
+                                                                <span className="text-[9px] text-[#0091FF]">Online now</span>
+                                                                :
+                                                                <span className="text-[9px] text-[#a6a6a6]">Offline</span>
+                                                            }
                                                         </h1>
                                                     </div>
                                                     <div className="pr-[8px]">
