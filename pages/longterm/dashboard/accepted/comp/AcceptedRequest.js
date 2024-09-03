@@ -10,7 +10,7 @@ import { Pagination } from 'swiper';
 import Image from 'next/image';
 import { Dialog } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import {  getAcceptedRequestData } from '../../../../../store/actions/UsersAction';
+import { getAcceptedRequestData } from '../../../../../store/actions/UsersAction';
 import index from '../../profile';
 import UserprofileSkeleton from '../../../../../components/common/shader/UserprofileSkeleton';
 import Link from 'next/link';
@@ -187,6 +187,10 @@ function AcceptedRequest() {
 
                                 const IsUser = res?.friend?.id === isCurrentUser;
 
+                                if (res?.friend?.id == null) {
+                                    return null
+                                }
+
 
                                 return (
                                     <>
@@ -266,7 +270,7 @@ function AcceptedRequest() {
                                                             </ul>
                                                         </div>
                                                         <div className='mt-[20px] 2xl:mt-[20px] xl:mt-[15px]'>
-                                                            <ShowMore userid={IsUser ? res?.user.id : res?.friend.id} text={IsUser ? (res?.user?.writeBoutYourSelf ? res?.user?.writeBoutYourSelf : "NA") : (res?.friend?.writeBoutYourSelf ? res?.friend?.writeBoutYourSelf : "NA")} maxLength={100} />
+                                                            <ShowMore userid={IsUser ? res?.user?.id : res?.friend?.id} text={IsUser ? (res?.user?.writeBoutYourSelf ? res?.user?.writeBoutYourSelf : "NA") : (res?.friend?.writeBoutYourSelf ? res?.friend?.writeBoutYourSelf : "NA")} maxLength={100} />
                                                         </div>
                                                     </div>
                                                     <div className='flex justify-end items-center mt-[20px] 2xl:mt-[20px] xl:mt-[20px] mr-[20px] space-x-[10px]'>

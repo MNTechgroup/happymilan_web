@@ -118,7 +118,7 @@ function Credentials() {
         let config = {
           method: 'post',
           maxBodyLength: Infinity,
-          url: 'https://happymilan.tech/api/v1/user/auth/forgot-password',
+          url: `${NEXT_PUBLIC_API_URL}/v1/user/auth/forgot-password`,
           headers: {
             'Content-Type': 'application/json'
           },

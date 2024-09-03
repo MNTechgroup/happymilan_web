@@ -134,7 +134,7 @@ export const fetchshortlistdata = createAsyncThunk('shortlist/fetchData', async 
 export const FetchshortlistdatausingID = async (userId) => {
 
     try {
-        const token = localStorage.getItem('refoken');
+        const token = getCookie("authtoken")
 
         if (!token) {
             throw new Error('Token not found');

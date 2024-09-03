@@ -22,7 +22,7 @@ function LocationTab({ data }) {
         <>
 
             <div className="grid place-items-center">
-                <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 2xl:gap-[32px] xl:gap-[32px] lg:gap-[32px] md:gap-[32px] gap-[30px]">
+                <div className="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 2xl:gap-[32px] xl:gap-[32px] lg:gap-[32px] md:gap-[32px] gap-[30px]">
                     <div>
                         <p
                             style={Text2}

@@ -5,15 +5,16 @@ import firebaseApp from '../firebase/firebase';
 
 const useFcmToken = () => {
   const [token, setToken] = useState('');
-  const [notificationPermissionStatus, setNotificationPermissionStatus] =
-    useState('');
+  const [notificationPermissionStatus, setNotificationPermissionStatus] = useState('');
 
   useEffect(() => {
     const retrieveToken = async () => {
       try {
         if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+          // Register the service worker
+          const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+          
           const messaging = getMessaging(firebaseApp);
-          console.log("🚀 ~ retrieveToken ~ messaging:", messaging)
 
           // Retrieve the notification permission status
           const permission = await Notification.requestPermission();
@@ -23,13 +24,12 @@ const useFcmToken = () => {
           if (permission === 'granted') {
             const currentToken = await getToken(messaging, {
               vapidKey: 'BFYnbnwgg04Sn4hAgvSN4y1x-NYEclY52q99ag4B3iooUlDnigLjIYBolQwWB6S8U8Xmq7B_JWU6qk8TaECk_Y8',
+              serviceWorkerRegistration: registration, // Pass the registration
             });
             if (currentToken) {
               setToken(currentToken);
             } else {
-              console.log(
-                'No registration token available. Request permission to generate one.'
-              );
+              console.log('No registration token available. Request permission to generate one.');
             }
           }
         }

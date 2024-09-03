@@ -166,7 +166,7 @@ const ImageCropper = ({ setModalOpen, handleClose, closeModal, updateAvatar }) =
 
         <div className="grid place-items-center">
           <label htmlFor="dropzone-file">
-            <div className='relative top-[40px] rounded-[10px] grid place-items-center 2xl:w-[540px] 2xl:h-[400px] xl:w-[540px] xl:h-[325px] w-[90%] h-[325px] bg-[#F5F5F5]'>
+            <div className='relative top-[40px] rounded-[10px] grid place-items-center 2xl:w-[540px] 2xl:h-[400px] xl:w-[540px] xl:h-[325px] md:w-[300px] w-[90%] h-[325px] md:h-[325px]  bg-[#F5F5F5]'>
               <div className=''>
                 <input id="dropzone-file" className="cursor-pointer opacity-0 absolute" type="file" accept="image/*" onChange={onSelectFile} />
                 <div className='w-full grid place-items-center mt-[-10%] mb-[10%]'>

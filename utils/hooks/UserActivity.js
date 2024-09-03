@@ -10,11 +10,8 @@ const useUserActivity = () => {
     if (socket) {
       if (isUserActive) {
         socket.emit('userActive');
-        console.log("==> from fun active")
       } else {
         socket.emit('userInActive');
-        console.log("==> from fun Inactive")
-
       }
     }
   }, [socket, isUserActive]);

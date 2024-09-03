@@ -18,7 +18,7 @@ import Notfound from "../../../../../components/common/Error/Notfound";
 import Avatar from "react-avatar";
 import StyledBadge from "../../../../../components/common/animation/StyleBadge";
 
-function Userprofile({ params , toggleDrawer }) {
+function Userprofile({ params, toggleDrawer }) {
   console.log("🚀 ~ Userprofile ~ params:", params)
   const Username = {
     color: "#000",
@@ -94,7 +94,7 @@ function Userprofile({ params , toggleDrawer }) {
           <div className="grid place-items-center">
 
 
-            <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
+            <div className="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
               <div>
                 <p
                   style={Text2}
@@ -163,7 +163,7 @@ function Userprofile({ params , toggleDrawer }) {
             <div className="grid place-items-center w-[90%] h-[1px] bg-[#F1F1F1]"></div>
           </div>
           <div className="grid place-items-center">
-            <div class="w-[90%] relative top-[-15px] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
+            <div className="w-[90%] relative top-[-15px] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
               <div>
                 <p
                   style={Text2}
@@ -274,7 +274,7 @@ function Userprofile({ params , toggleDrawer }) {
             <div className="grid place-items-center w-[90%] h-[1px] bg-[#F1F1F1]"></div>
           </div>
           <div className="grid place-items-center">
-            <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
+            <div className="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
               <div>
                 <p
                   style={Text2}
@@ -382,7 +382,7 @@ function Userprofile({ params , toggleDrawer }) {
             <div className="grid place-items-center w-[90%] h-[1px] bg-[#F1F1F1]"></div>
           </div>
           <div className="grid place-items-center">
-            <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
+            <div className="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
               <div>
                 <p
                   style={Text2}
@@ -508,7 +508,7 @@ function Userprofile({ params , toggleDrawer }) {
             <div className="grid place-items-center w-[90%] h-[1px] bg-[#F1F1F1]"></div>
           </div>
           <div className="grid place-items-center">
-            <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
+            <div className="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
               <div>
                 <p
                   style={Text2}
@@ -597,7 +597,7 @@ function Userprofile({ params , toggleDrawer }) {
             <div className="grid place-items-center w-[90%] h-[1px] bg-[#F1F1F1]"></div>
           </div>
           <div className="grid place-items-center">
-            <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
+            <div className="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
               <div>
                 <p
                   style={Text2}

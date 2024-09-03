@@ -22,7 +22,7 @@ const ContactTab = ({ data }) => {
 
 
             <div className="grid place-items-center">
-                <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
+                <div className="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
                     <div>
                         <p
                             style={Text2}

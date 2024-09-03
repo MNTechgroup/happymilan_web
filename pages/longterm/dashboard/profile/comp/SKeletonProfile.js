@@ -28,7 +28,7 @@ function SkeletonProfile() {
         fontWeight: "600",
         lineHeight: "normal"
     }
-    
+
     const Text5 = {
         fontFamily: "Poppins",
         fontStyle: "normal",
@@ -64,7 +64,7 @@ function SkeletonProfile() {
                         <div className='grid place-items-center w-[90%] h-[1px] bg-[#F1F1F1]'></div>
                     </div>
                     <div className='grid place-items-center'>
-                        <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
+                        <div className="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
                             <Skeleton>
                                 <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Date of Birth</p>
                                 <h1 style={Text5} className='2xl:text-[16px] xl:text-[14px] text-[14px]'>02 . 03. 1986</h1>
@@ -88,7 +88,7 @@ function SkeletonProfile() {
                         <div className='grid place-items-center w-[90%] h-[1px] bg-[#F1F1F1]'></div>
                     </div>
                     <div className='grid place-items-center'>
-                        <div class="w-[90%] relative top-[-15px] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
+                        <div className="w-[90%] relative top-[-15px] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
                             <div>
                                 <Skeleton variant="p" style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'></Skeleton>
                                 <Skeleton variant='h1' style={Text5} className='2xl:text-[16px] xl:text-[14px] text-[14px]'></Skeleton>
@@ -137,7 +137,7 @@ function SkeletonProfile() {
 
 
                             <div className='block lg:hidden cursor-pointer pr-[20px] pt-[20px]'>
-                                <span class=" h-12 w-12 text-lg text-white "><i class={`bx bx-cog `}></i></span>
+                                <span className=" h-12 w-12 text-lg text-white "><i class={`bx bx-cog `}></i></span>
                             </div>
 
                         </div>

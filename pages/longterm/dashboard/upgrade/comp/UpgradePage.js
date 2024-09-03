@@ -6,7 +6,7 @@ import useRazorpay from "react-razorpay";
 import { useSelector } from "react-redux";
 import { capitalizeFirstLetter } from "../../../../../utils/form/Captitelize";
 
-function UpgradePage({ plansId }) {
+function UpgradePage() {
     const TitleText = {
         color: "#000",
         textAlign: "center",
@@ -71,7 +71,6 @@ function UpgradePage({ plansId }) {
     const router = useRouter();
 
     const { loading, data, error } = useSelector((state) => state.upgradeplans.ChoosedPlan)
-    console.log("🚀 ~ UpgradePage ~ data:", data)
 
     const [Razorpay] = useRazorpay();
 
@@ -83,7 +82,7 @@ function UpgradePage({ plansId }) {
 
         try {
 
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/razorpay/order`, { "planId": plansId },
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/razorpay/order`, { "planId": "667a53da5f57120e070eeed7" },
                 {
                     headers: {
                         'Authorization': `Bearer ${token}`,

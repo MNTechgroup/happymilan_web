@@ -6,7 +6,6 @@ import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import Accordion from '../../../components/common/Features/Accordion';
 import GlobalFooter from '../layout/GlobalFooter';
-import Link from 'next/link';
 
 function NewLand() {
 
@@ -228,9 +227,9 @@ function NewLand() {
 
 
             <div className={`${isVisible ? "fixed" : "hidden"} bottom-10 right-10`}>
-                <button id='grad-button' onClick={scrollToTop} class="Scroll-Top-Btn">
-                    <svg height="1.2em" class="Scroll-top-arrow" viewBox="0 0 512 512"><path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"></path></svg>
-                    <p class="Scroll-Top-text">Back to Top</p>
+                <button id='grad-button' onClick={scrollToTop} className="Scroll-Top-Btn">
+                    <svg height="1.2em" className="Scroll-top-arrow" viewBox="0 0 512 512"><path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"></path></svg>
+                    <p className="Scroll-Top-text">Back to Top</p>
                 </button>
 
             </div>
@@ -501,20 +500,18 @@ function NewLand() {
                         </div>
                         <ul className='flex   justify-evenly   '>
                             <li className='cursor-pointer 2xl:w-[335px] 2xl:h-[335px] xl:w-[290px] xl:h-[290px] w-[323px] h-[323px] border-[1px]  border-[#E1E1E1] hover:border-[#8225AF] rounded-[24px] pl-[40px]'>
-                                <Link target='_blank' href={"https://proxale.com/"}>
-                                    <div className='flex flex-col justify-evenly w-full h-full'>
-                                        <div>
-                                            <Image width={0} height={0} alt='proffers' src={"/assests/product-assests/proffers.svg"} className='w-[50.702px] h-[44px]' />
-                                        </div>
-                                        <div className='space-y-[20px]'>
-                                            <h1 style={ProductName}>Proxale</h1>
-                                            <p style={ProductList}>Explore Nearby Services</p>
-                                        </div>
-                                        <div className='flex justify-end pr-[31px]'>
-                                            <Image width={25.667} height={26.341} alt='arrow-icon' src={"/heroSec/icon/arrow-icon.svg"} />
-                                        </div>
+                                <div className='flex flex-col justify-evenly w-full h-full'>
+                                    <div>
+                                        <Image width={0} height={0} alt='proffers' src={"/assests/product-assests/proffers.svg"} className='w-[50.702px] h-[44px]' />
                                     </div>
-                                </Link>
+                                    <div className='space-y-[20px]'>
+                                        <h1 style={ProductName}>Proxale</h1>
+                                        <p style={ProductList}>Explore Nearby Services</p>
+                                    </div>
+                                    <div className='flex justify-end pr-[31px]'>
+                                        <Image width={25.667} height={26.341} alt='arrow-icon' src={"/heroSec/icon/arrow-icon.svg"} />
+                                    </div>
+                                </div>
                             </li>
                             <li className='cursor-pointer 2xl:w-[335px] 2xl:h-[335px] xl:w-[290px] xl:h-[290px] w-[323px] h-[323px] border-[1px]  border-[#E1E1E1] hover:border-[#8225AF] rounded-[24px] pl-[40px]'>
                                 <div className='flex flex-col justify-evenly w-full h-full'>

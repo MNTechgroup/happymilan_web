@@ -19,14 +19,12 @@ export const UserActivityProvider = ({ children }) => {
         });
 
         newSocket.on('connect', () => {
-            console.log('Connected to socket');
+            
         });
         setSocket(newSocket);
 
 
         newSocket?.on("onlineUser", (data) => {
-            // console.log("==> from fun active")
-            console.log("==> from context data : ", data)
         })
 
 

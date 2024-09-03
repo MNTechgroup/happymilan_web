@@ -50,8 +50,7 @@ export const GetupgradePlans = (currentPage) => {
     }
 }
 
-export const getPlansByID = (planID) => {
-    console.log("🚀 ~ getPlansByID ~ planID:", planID)
+export const getPlansByID = () => {
     return async (dispatch) => {
         dispatch({ type: GET_UPGRADE_PLANS_BY_ID })
 
@@ -61,7 +60,7 @@ export const getPlansByID = (planID) => {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `https://happymilan.tech/api/v1/user/plan/get-plan/${planID}`,
+            url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/plan/get-plan/667a53da5f57120e070eeed7`,
             headers: {
                 'Authorization': `Bearer ${AuthToken}`
             }

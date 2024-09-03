@@ -44,7 +44,7 @@ function ProductsListModal() {
 
     const GototPage = (res) => {
         if (res != "") {
-            window.open('https://proxale.com/', "_blank")
+            window.open('https://hmbusiness-eace6.web.app/', "_blank")
             SetOpenProductList(false)
         } else {
 

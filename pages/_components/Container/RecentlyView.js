@@ -90,7 +90,7 @@ function RecentlyView() {
         {loading ?
           <>
             {[0, 1, 2].map((res, Index) => {
-              return (<>
+              return (
                 <div key={Index} style={ProfileCard} className='bg-[#FFF] dark:bg-[#242526] inline-block lg:flex flex-col space-y-[15px]  2xl:w-[192px] w-[180px] xl:w-[170px] h-[327px rounded-[10px]'>
                   <div className='flex justify-center pt-[10px]'>
                     <Skeleton variant="text" width={120} className='pl-[10px] flex space-x-[10px]' />
@@ -111,7 +111,7 @@ function RecentlyView() {
                     <div><Skeleton variant="circular" alt='send' width={40} height={40} className='w-[40px] h-[40px]' src='/assests/dashboard/icon/send-icon-2.svg' /></div>
                   </div>
                 </div>
-              </>)
+              )
             })}
           </>
 

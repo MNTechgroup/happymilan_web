@@ -188,13 +188,13 @@ function SideBar() {
   return (
     <>
 
-      <aside id="separator-sidebar" class=" hidden lg:block w-[250px] pb-[100px] fixed top-[80px] 2xl:left-[15px] 2xl:pl-0 xl:pl-[10px] xl:left-0 bg-[#FFF] z-40 w-64 h-full transition-transform translate-x-full sm:translate-x-0" aria-label="Sidebar">
-        <div class="h-full px-3 py-4 overflow-y-auto bg-[#FFF] dark:bg-gray-800">
+      <aside id="separator-sidebar" className=" hidden lg:block w-[250px] pb-[100px] fixed top-[80px] 2xl:left-[15px] 2xl:pl-0 xl:pl-[10px] xl:left-0 bg-[#FFF] z-40 w-64 h-full transition-transform translate-x-full sm:translate-x-0" aria-label="Sidebar">
+        <div className="h-full px-3 py-4 overflow-y-auto bg-[#FFF] dark:bg-gray-800">
 
           <div className='p-[10px]'>
             <div>
               {/* <Avatar name='Riya Shah' size='47' round /> */}
-              <ProfileImageDating Username={"Riya Shah"} Size={47}/>
+              <ProfileImageDating Username={"Riya Shah"} Size={47} />
             </div>
             <div className='pt-[20px]'>
               <h1 onClick={Click} style={Text2}>Riya M Shah</h1>
@@ -204,7 +204,7 @@ function SideBar() {
             </div>
           </div>
 
-          <ul class="space-y-[10px] pb-[20px] font-medium border-t  border-gray-200 dark:border-gray-700 p-[10px]">
+          <ul className="space-y-[10px] pb-[20px] font-medium border-t  border-gray-200 dark:border-gray-700 p-[10px]">
 
             {/* <li className='pt-[8px] pb-[20px] flex items-center '>
               <div className='flex items-center justify-between w-[190px] '>
@@ -219,7 +219,7 @@ function SideBar() {
 
             <li className='pt-[8px] pb-[20px]'>
               <div className='flex'>
-                <input type='text' placeholder='search by location' className='w-[190px] outline-none pl-[15px] pr-[30px]'/>
+                <input type='text' placeholder='search by location' className='w-[190px] outline-none pl-[15px] pr-[30px]' />
                 <Image width={15} height={14} src="/assests/Black/Search.svg" className="relative right-[30px]" />
               </div>
             </li>
@@ -236,7 +236,7 @@ function SideBar() {
               </div>
             </li>
 
-            
+
 
 
 
@@ -247,7 +247,7 @@ function SideBar() {
 
 
           </ul>
-          <ul class=" pb-[20px] pt-2 mt-0 p-[10px] space-y-[10px] font-medium border-t border-gray-200 dark:border-gray-700">
+          <ul className=" pb-[20px] pt-2 mt-0 p-[10px] space-y-[10px] font-medium border-t border-gray-200 dark:border-gray-700">
             <li className='pt-[8px] flex items-center  '>
               <Image width={15} height={14} src='/assests/Black/RightTick.svg' />
               <Link href="#"><h1 style={Text3} className={`text-[14px] pl-[10px] hover:text-[#0F52BA] ${router.pathname === "/longterm/dashboard/accepted" ? "text-[#0F52BA]" : ""}`}>Accepted</h1></Link>

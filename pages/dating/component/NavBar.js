@@ -706,9 +706,9 @@ function NavBar() {
         >
             <link rel="stylesheet" href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" />
 
-            <div class="min-h-screen flex flex-row bg-gray-100">
-                <div class="flex flex-col w-56 bg-white rounded-r-3xl overflow-hidden">
-                    <div class="flex items-center justify-center">
+            <div className="min-h-screen flex flex-row bg-gray-100">
+                <div className="flex flex-col w-56 bg-white rounded-r-3xl overflow-hidden">
+                    <div className="flex items-center justify-center">
 
 
                         <div className="flex space-x-[20px] pl-[10px] pr-[10px] pt-[20px] pb-[20px] border-b-[1px] border-gray-200">
@@ -721,87 +721,87 @@ function NavBar() {
 
                             </div>
                             <div className="grid place-items-center">
-                                <span class=""><i class={`bx bx-dots-horizontal-rounded`}></i></span>
+                                <span className=""><i class={`bx bx-dots-horizontal-rounded`}></i></span>
                             </div>
                         </div>
 
 
                     </div>
-                    <ul class="flex flex-col py-0 border-b-[1px] border-gray-200">
+                    <ul className="flex flex-col py-0 border-b-[1px] border-gray-200">
                         <li>
 
-                            <Link href="/longterm/dashboard" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-home ${router.pathname === "/longterm/dashboard" ? "text-[#0F52BA]" : ""}`}></i></span>
+                            <Link href="/longterm/dashboard" className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-home ${router.pathname === "/longterm/dashboard" ? "text-[#0F52BA]" : ""}`}></i></span>
                                 <span class={`text-sm font-medium ${router.pathname === "/longterm/dashboard" ? "text-[#0F52BA]" : ""}`}>Home</span>
                             </Link>
                         </li>
                         <li>
 
-                            <Link href="/longterm/dashboard/searchmember" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-search ${router.pathname === "/longterm/dashboard/searchmember" ? "text-[#0F52BA]" : ""}`}></i></span>
+                            <Link href="/longterm/dashboard/searchmember" className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-search ${router.pathname === "/longterm/dashboard/searchmember" ? "text-[#0F52BA]" : ""}`}></i></span>
                                 <span class={`text-sm font-medium ${router.pathname === "/longterm/dashboard/searchmember" ? "text-[#0F52BA]" : ""}`}>Search Member</span>
                             </Link>
                         </li>
                         <li>
 
-                            <Link href="/longterm/dashboard/accepted" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-check-circle  ${router.pathname === "/longterm/dashboard/accepted" ? "text-[#0F52BA]" : ""}`}></i></span>
+                            <Link href="/longterm/dashboard/accepted" className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-check-circle  ${router.pathname === "/longterm/dashboard/accepted" ? "text-[#0F52BA]" : ""}`}></i></span>
                                 <span class={`text-sm font-medium ${router.pathname === "/longterm/dashboard/accepted" ? "text-[#0F52BA]" : ""}`}>Accepted</span>
                             </Link>
                         </li>
                         <li>
 
-                            <Link href="/longterm/dashboard/recentlyviewed" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-search ${router.pathname === "/longterm/dashboard/recentlyviewed" ? "text-[#0F52BA]" : ""}`}></i></span>
+                            <Link href="/longterm/dashboard/recentlyviewed" className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-search ${router.pathname === "/longterm/dashboard/recentlyviewed" ? "text-[#0F52BA]" : ""}`}></i></span>
                                 <span class={`text-sm font-medium ${router.pathname === "/longterm/dashboard/recentlyviewed" ? "text-[#0F52BA]" : ""}`}>recentlyviewed</span>
                             </Link>
                         </li>
                         <li>
 
-                            <Link href="/longterm/dashboard/newrequest" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-bell ${router.pathname === "/longterm/dashboard/newrequest" ? "text-[#0F52BA]" : ""}`}></i></span>
+                            <Link href="/longterm/dashboard/newrequest" className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-bell ${router.pathname === "/longterm/dashboard/newrequest" ? "text-[#0F52BA]" : ""}`}></i></span>
                                 <span class={`text-sm font-medium ${router.pathname === "/longterm/dashboard/newrequest" ? "text-[#0F52BA]" : ""}`}>New Requests</span>
                             </Link>
                         </li>
                         <li>
-                            <Link href="/longterm/dashboard/shortlists" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-star ${router.pathname === "/longterm/dashboard/shortlists" ? "text-[#0F52BA]" : ""}`}></i></span>
+                            <Link href="/longterm/dashboard/shortlists" className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-star ${router.pathname === "/longterm/dashboard/shortlists" ? "text-[#0F52BA]" : ""}`}></i></span>
                                 <span class={`text-sm font-medium ${router.pathname === "/longterm/dashboard/shortlists" ? "text-[#0F52BA]" : ""}`}>Shortlists</span>
                             </Link>
                         </li>
                         <li>
-                            <Link href="/longterm/dashboard/sent" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-search ${router.pathname === "/longterm/dashboard/sent" ? "text-[#0F52BA]" : ""}`}></i></span>
+                            <Link href="/longterm/dashboard/sent" className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-search ${router.pathname === "/longterm/dashboard/sent" ? "text-[#0F52BA]" : ""}`}></i></span>
                                 <span class={`text-sm font-medium ${router.pathname === "/longterm/dashboard/sent" ? "text-[#0F52BA]" : ""}`}>Sent</span>
                             </Link>
                         </li>
                     </ul>
-                    <ul class="flex flex-col py-4">
+                    <ul className="flex flex-col py-4">
                         <li>
 
-                            <Link href="/longterm/dashboard/cancelled" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-dislike ${router.pathname === "/longterm/dashboard/cancelled" ? "text-[#0F52BA]" : ""}`}></i></span>
+                            <Link href="/longterm/dashboard/cancelled" className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-dislike ${router.pathname === "/longterm/dashboard/cancelled" ? "text-[#0F52BA]" : ""}`}></i></span>
                                 <span class={`text-sm font-medium ${router.pathname === "/longterm/dashboard/cancelled" ? "text-[#0F52BA]" : ""}`}>Cancelled</span>
                             </Link>
                         </li>
                         <li>
 
-                            <Link href="/longterm/dashboard/blocked" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-block ${router.pathname === "/longterm/dashboard/blocked" ? "text-[#0F52BA]" : ""}`}></i></span>
+                            <Link href="/longterm/dashboard/blocked" className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-block ${router.pathname === "/longterm/dashboard/blocked" ? "text-[#0F52BA]" : ""}`}></i></span>
                                 <span class={`text-sm font-medium ${router.pathname === "/longterm/dashboard/blocked" ? "text-[#0F52BA]" : ""}`}>Blocked</span>
                             </Link>
                         </li>
                         <li>
 
-                            <Link href="/longterm/dashboard/deleted" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-trash ${router.pathname === "/longterm/dashboard/deleted" ? "text-[#0F52BA]" : ""}`}></i></span>
+                            <Link href="/longterm/dashboard/deleted" className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class={`bx bx-trash ${router.pathname === "/longterm/dashboard/deleted" ? "text-[#0F52BA]" : ""}`}></i></span>
                                 <span class={`text-sm font-medium ${router.pathname === "/longterm/dashboard/deleted" ? "text-[#0F52BA]" : ""}`}>Deleted</span>
                             </Link>
                         </li>
                         <li className="hidden">
-                            <a href="#" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-log-out"></i></span>
-                                <span class="text-sm font-medium">Logout</span>
+                            <a href="#" className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i className="bx bx-log-out"></i></span>
+                                <span className="text-sm font-medium">Logout</span>
                             </a>
                         </li>
                         {isUpgradeActive ? "" : <>

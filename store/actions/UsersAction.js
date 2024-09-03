@@ -26,13 +26,10 @@ import {
 } from '../type';
 import { GET_REQUEST, GET_REQUEST_SUCCESS, GET_REQUEST_FAILURE } from '../type';
 import { fetchMyProfileData } from '../reducers/MyProfile';
-// import { io } from 'socket.io-client';
-// import { useRouter } from 'next/router';
 
 export const sendRequest = (requestData) => {
     return async (dispatch) => {
         dispatch({ type: SEND_REQUEST });
-        // console.log(process.env.NEXT_PUBLIC_API_URL)
         const currentUser = getCookie("userid")
         const token = getCookie("authtoken")
         const axios = require('axios');
@@ -100,7 +97,6 @@ export const getFriendsList = () => {
                     throw new Error('Network response was not ok');
                 }
                 const data = await fetchResponse.json();
-                // console.log(JSON.stringify(data));
             } catch (error) {
                 console.error('There was a problem with your fetch operation:', error);
             }
@@ -152,7 +148,6 @@ export const acceptRequest = (requestData) => {
             .then((response) => {
 
                 dispatch({ type: ACCEPT_REQUEST_SUCCESS, payload: response.data })
-                // dispatch({type : GET_REQUEST })
             })
             .catch((error) => {
                 console.log(error);
@@ -200,7 +195,6 @@ export const rejectRequest = (requestData) => {
             .then((response) => {
 
                 dispatch({ type: REJECT_REQUEST_SUCCESS, payload: response.data })
-                // dispatch({type : GET_REQUEST })
             })
             .catch((error) => {
                 console.log(error);
@@ -382,6 +376,7 @@ export const getPartnerpreferenceFailure = (error) => ({
     payload: error
 })
 
+
 export const getAcceptedRequestData = () => {
     return async (dispatch) => {
         dispatch({ type: GET_ACCEPTED_REQUEST_DATA });
@@ -389,6 +384,11 @@ export const getAcceptedRequestData = () => {
         try {
             const axios = require('axios');
             const token = getCookie("authtoken");
+
+
+            if (!token) {
+                throw new Error('Authentication token is missing.');
+            }
 
             const config = {
                 method: 'get',
@@ -399,16 +399,24 @@ export const getAcceptedRequestData = () => {
             };
 
             const response = await axios(config);
-            console.log("🚀 ~ return ~ response:", response)
-            const currentUser = getCookie("userid")
+            const currentUser = getCookie("userid");
 
-            const friendRequests = response.data.data.map((res) => currentUser == res?.friend?.id ? res?.user : res?.friend);
-            // console.log("🚀 ~ return ~ friendRequests:", friendRequests)
+            if (!currentUser) {
+                throw new Error('User ID is missing.');
+            }
 
+            const friendRequests = response.data.data
+                .map((res) => {
+                    if (res?.user?.id && res?.friend?.id) {
+                        return currentUser === res.friend.id ? res.user : res.friend;
+                    }
+                    return null;
+                })
+                .filter((user) => user !== null); // Filter out any null values
 
-            // dispatch({ type: GET_ACCEPTED_REQUEST_DATA_SUCCESS, payload: response.data });
             dispatch({
-                type: GET_ACCEPTED_REQUEST_DATA_SUCCESS, payload: {
+                type: GET_ACCEPTED_REQUEST_DATA_SUCCESS,
+                payload: {
                     data: response.data,
                     acceptedUsers: friendRequests
                 }
@@ -419,6 +427,7 @@ export const getAcceptedRequestData = () => {
         }
     };
 };
+
 
 const fetchUserDataBatch = async (batchIds) => {
     const fetchPromises = batchIds.map(id => FetchUserDataById(id));
@@ -440,8 +449,6 @@ export const getAcceptedRequestDataFailure = (error) => ({
 export const getSentrequestData = () => {
     return async (dispatch) => {
         dispatch({ type: GET_SENTREQUEST_DATA });
-
-        // New 
 
         try {
             const axios = require('axios');
@@ -599,7 +606,7 @@ export const getblockuserdatafailure = (error) => (
 export const FetchUserDataById = async (userId) => {
 
     try {
-        const token = localStorage.getItem('refoken');
+        const token = getCookie("authtoken")
 
         if (!token) {
             throw new Error('Token not found');
@@ -1019,7 +1026,6 @@ export const GetrecentuserprofileData = () => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${authToken}`
             },
-            // data: data
         };
 
         axios.request(config)

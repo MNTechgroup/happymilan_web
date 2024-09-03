@@ -415,7 +415,7 @@ function ModifySearch({ state, updateSearchData, setFormOpen }) {
     return (
         <>
             <div className='dark:bg-[#18191a] flex w-full justify-evenly ml-[40px] items-center' >
-                <div class="2xl:ml-[210px] xl:ml-[210px] lg:ml-[150px] flex flex-col space-y-[40px] w-full  md:w-[600px] 2xl:mr-[110px] mt-[120px] pb-[50px]">
+                <div className="2xl:ml-[210px] xl:ml-[210px] lg:ml-[150px] flex flex-col space-y-[40px] w-full  md:w-[600px] 2xl:mr-[110px] mt-[120px] pb-[50px]">
                     <div>
                         <h1 className='text-[#000] dark:text-[#FFF]' style={Text1}>Search Your Match</h1>
                     </div>

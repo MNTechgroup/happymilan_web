@@ -50,13 +50,13 @@ function index() {
             <div className='w-full h-full grid place-items-center'>
                 <div className='w-full mt-[100px]  grid place-items-center pt-[80px]'>
                     <div className=''>
-                        <div class="">
-                            <div class="container mx-auto">
+                        <div>
+                            <div className="container mx-auto">
                                 <h1 style={PagginationText} className='md:pl-0 pl-[15px] relative bottom-[40px] text-[18px]'>Happy Milan Blogs</h1>
 
-                                <div class="2xl:w-[1100px] xl:w-[100%] lg:w-full md:w-full   mx-auto flex flex-wrap">
-                                    <Image width={359} height={359} alt="blog" class="md:pl-0 md:pr-0  pl-[15px] pr-[10px] lg:w-[359px] mr-[10px] w-full lg:h-[359px] h-64 object-cover object-center rounded-[20px] md:rounded-[10px]" src="/assests/common/blog-img-1.svg" />
-                                    <div class="lg:w-1/2 md:w-full ml-[10px]  w-full lg:pl-10 lg:py-0 mt-6 lg:mt-0">
+                                <div className="2xl:w-[1100px] xl:w-[100%] lg:w-full md:w-full   mx-auto flex flex-wrap">
+                                    <Image width={359} height={359} alt="blog" className="md:pl-0 md:pr-0  pl-[15px] pr-[10px] lg:w-[359px] mr-[10px] w-full lg:h-[359px] h-64 object-cover object-center rounded-[20px] md:rounded-[10px]" src="/assests/common/blog-img-1.svg" />
+                                    <div className="lg:w-1/2 md:w-full ml-[10px]  w-full lg:pl-10 lg:py-0 mt-6 lg:mt-0">
                                         <div className='md:pl-0 md:pr-0 pl-[10px] pr-[5px]'>
                                             <h1 className=' lg:w-[100%] 2xl:w-[700px] xl:w-[700px]  lg:text-[24px] text-[18px]' style={Title}>When the Tudor king fell for a young lady-in-waiting, Anne Boleyn, who possessed eyes "</h1>
                                             <p className='md:pt-0 pt-[10px]' style={Date}>10 July 2023,</p>
@@ -65,7 +65,7 @@ function index() {
                                             <Image alt='img' width={42} height={42} className='inline' src='/assests/common/blog-1-profile.svg' />
                                             <span className='ml-[10px]' style={Username}>Riya & Rohan </span>
                                         </div>
-                                        <div class="flex flex-col">
+                                        <div className="flex flex-col">
                                             <div className='pt-[38px] md:pl-0 pl-[10px] md:pr-0 pr-[10px]'>
                                                 <h1 style={Content} className='lg:w-full 2xl:w-[683px] xl:w-[683px]'>black and beautiful," he was long married to a Spanish princess. But Anne refused to be a royal mistress, and the king rocked the Western world to win his divorce and make Anne queen.</h1>
 
@@ -80,13 +80,13 @@ function index() {
                                 </div>
                             </div>
                         </div>
-                        <div class="flex md:w-full items-center justify-center mt-[50px]">
-                            <div class="container mx-auto">
+                        <div className="flex md:w-full items-center justify-center mt-[50px]">
+                            <div className="container mx-auto">
 
-                                <div class="2xl:w-[1100px] xl:w-[100%] lg:w-full md:w-full   mx-auto flex flex-wrap">
-                                    <Image width={359} height={359} alt="blog" class="md:pl-0 md:pr-0  pl-[15px] pr-[10px] lg:w-[359px] mr-[10px] w-full lg:h-[359px] h-64 object-cover object-center rounded-[20px] md:rounded-[10px]" src="/assests/common/blog-img-1.svg" />
+                                <div className="2xl:w-[1100px] xl:w-[100%] lg:w-full md:w-full   mx-auto flex flex-wrap">
+                                    <Image width={359} height={359} alt="blog" className="md:pl-0 md:pr-0  pl-[15px] pr-[10px] lg:w-[359px] mr-[10px] w-full lg:h-[359px] h-64 object-cover object-center rounded-[20px] md:rounded-[10px]" src="/assests/common/blog-img-1.svg" />
 
-                                    <div class="lg:w-1/2 md:w-full ml-[10px]  w-full lg:pl-10 lg:py-0 mt-6 lg:mt-0">
+                                    <div className="lg:w-1/2 md:w-full ml-[10px]  w-full lg:pl-10 lg:py-0 mt-6 lg:mt-0">
                                         <div className='md:pl-0 md:pr-0 pl-[10px] pr-[5px]'>
                                             <h1 className=' lg:w-[100%] 2xl:w-[700px] xl:w-[700px] lg:text-[24px] text-[18px]' style={Title}>When the Tudor king fell for a young lady-in-waiting, Anne Boleyn, who possessed eyes "</h1>
                                             <p className='md:pt-0 pt-[10px]' style={Date}>10 July 2023,</p>
@@ -95,7 +95,7 @@ function index() {
                                             <Image alt='blog-img' width={42} height={42} className='inline' src='/assests/common/blog-1-profile.svg' />
                                             <span className='ml-[10px]' style={Username}>Riya & Rohan </span>
                                         </div>
-                                        <div class="flex flex-col">
+                                        <div className="flex flex-col">
                                             <div className='md:pl-0 pl-[10px] md:pr-0 pr-[10px] pt-[38px]'>
                                                 <h1 style={Content} className='lg:w-full 2xl:w-[683px] xl:w-[683px]'>black and beautiful," he was long married to a Spanish princess. But Anne refused to be a royal mistress, and the king rocked the Western world to win his divorce and make Anne queen.</h1>
 

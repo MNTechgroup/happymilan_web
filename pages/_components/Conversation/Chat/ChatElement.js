@@ -5,8 +5,6 @@ import { UserContext } from '../../../../ContextProvider/UsersConversationContex
 import StyledBadge from '../../../../components/common/animation/StyleBadge';
 //single chat element
 const ChatElement = ({ toggleInnerDrawer, isUserActive, id, name, profilePic }) => {
-    console.log("🚀 ~ ChatElement ~ name:", name)
-
 
     const Username2 = {
         fontFamily: "Poppins",

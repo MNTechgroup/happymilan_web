@@ -388,7 +388,7 @@ function SampleUserProfile({ users }) {
                                                                     src={darkMode ? "/assests/Black/RightTickWhite.svg" : "/assests/Black/RightTick.svg"}
                                                                     className="inline pr-[5px]"
                                                                 />
-                                                                {`'32,5'3`}
+                                                                {`${res?.age},${res?.height}`}
                                                             </li>
 
                                                             <li
@@ -514,6 +514,9 @@ function SampleUserProfile({ users }) {
                                                 setActiveLike={setActiveLike}
                                                 userId={res._id}
                                                 TheUsername={res?.name}
+                                                userdata={res}
+
+
                                             />
                                         </>}
                                     </div>

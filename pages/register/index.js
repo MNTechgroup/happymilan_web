@@ -1,79 +1,51 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from "react-redux";
 import { updateAddressData, updateEducationData, updateGeneralInfo, updatePartnerPrefData, updateProffessionalData, updatehobbiesData } from "../../store/actions/registerUser";
 import { setFormValidation } from "../../store/reducers/registerReducer";
 import { ImageUpload } from "../../store/actions/ImageUpload";
-import dynamic from "next/dynamic";
-// import GenralSection from "../test/comp/GenralSection";
-import GenralSec from "../test/comp/GenralSec";
-import AddressSec from "../test/comp/AddressSec";
-import ContactSec from "../test/comp/ContactSec";
-import EducationSec from "../test/comp/EducationSec";
-import ProffSec from "../test/comp/ProffSec";
-import HobbySec from "../test/comp/HobbySec";
-import UploadPicSec from "../test/comp/UploadPicSec";
-import ProfileSelection from "../test/comp/ProfileSelection";
 import Image from "next/image";
-import PartnerPrefSec from "../test/comp/PartnerPrefSec";
+import dynamic from 'next/dynamic';
+
+// Lazy loading components with dynamic import
+const GenralSec = dynamic(() => import('./Registersection/GenralSec'), {
+    ssr: false, // Only if you want to disable server-side rendering for this component
+    loading: () => <p>Loading General Section...</p>, // Optional fallback component while loading 
+});
+
+const AddressSec = dynamic(() => import('./Registersection/AddressSec'), { ssr: false, loading: () => <p>Loading Address Section...</p>, });
+const ContactSec = dynamic(() => import('./Registersection/ContactSec'), { ssr: false, loading: () => <p>Loading Contact Section...</p>, });
+const EducationSec = dynamic(() => import('./Registersection/EducationSec'), { ssr: false, loading: () => <p>Loading Education Section...</p>, });
+const ProffSec = dynamic(() => import('./Registersection/ProffSec'), { ssr: false, loading: () => <p>Loading Professional Section...</p>, });
+const HobbySec = dynamic(() => import('./Registersection/HobbySec'), { ssr: false, loading: () => <p>Loading Hobby Section...</p>, });
+const UploadPicSec = dynamic(() => import('./Registersection/UploadPicSec'), { ssr: false, loading: () => <p>Loading Upload Picture Section...</p>, });
+const ProfileSelection = dynamic(() => import('./Registersection/ProfileSelection'), { ssr: false, loading: () => <p>Loading Profile Selection...</p>, });
+const PartnerPrefSec = dynamic(() => import('./Registersection/PartnerPrefSec'), { ssr: false, loading: () => <p>Loading Partner Preference Section...</p>, });
 
 
 function Home() {
 
     const [activeTab, setActiveTab] = useState(0);
-
     const dispatch = useDispatch();
     const { status, upload, general, address, contact, education, professional, partnerpref, allhobbies } = useSelector((state) => state.form?.formData)
-
-
-
     const ContentOfForm = [
-        {
-            id: 1,
-            name: "General Details"
-        },
-        {
-            id: 2,
-            name: "Address Details"
-        },
-        {
-            id: 3,
-            name: "Contact Details"
-        },
-        {
-            id: 4,
-            name: "Education Details"
-        },
-        {
-            id: 5,
-            name: "Job Details"
-        },
-        {
-            id: 6,
-            name: "Hobbies & Interests"
-        },
-        {
-            id: 7,
-            name: "Upload Photos"
-        },
-        {
-            id: 8,
-            name: "Prefer Partner"
-        },
+        { id: 1, name: "General Details" },
+        { id: 2, name: "Address Details" },
+        { id: 3, name: "Contact Details" },
+        { id: 4, name: "Education Details" },
+        { id: 5, name: "Job Details" },
+        { id: 6, name: "Hobbies & Interests" },
+        { id: 7, name: "Upload Photos" },
+        { id: 8, name: "Prefer Partner" },
     ]
-
-
 
     const HandleTabclick = (id) => {
 
         if (activeTab === 1) {
-
             const isFormValid = Object.values(general).every(value => value.trim() !== '');
-
             if (isFormValid) {
                 // Proceed to the next page or perform other actions
-
                 dispatch(updateGeneralInfo(general))
                 localStorage.setItem("UserRegister", false)
                 if (status == "idle") {
@@ -82,10 +54,7 @@ function Home() {
             } else {
                 // Display error message or prevent navigation to the next page
                 dispatch(setFormValidation(false))
-
                 alert("Please Complete General Details");
-
-
             }
 
         } else if (activeTab === 2) {
@@ -98,7 +67,6 @@ function Home() {
                 setActiveTab(3);
             } else {
                 setActiveTab(3);
-                // alert("hello")
             }
         } else if (activeTab === 3) {
 
@@ -143,14 +111,11 @@ function Home() {
 
             }
             setActiveTab(id)
-
-            // console.log("Hobby",allhobbies)
         }
         else if (activeTab === 7) {
             console.log(upload)
 
             if (!upload.images.length == 0) {
-                // dispatch(UploadImages3(upload))
                 dispatch(ImageUpload(upload))
             } else {
                 console.log("Null")
@@ -170,17 +135,12 @@ function Home() {
             });
             if (isFormValid) {
                 dispatch(updatePartnerPrefData(partnerpref))
-
-                // localStorage.setItem("regmodal",false)
                 router.push("/longterm/dashboard")
             } else {
                 router.push("/longterm/dashboard")
             }
-
         }
-
         setActiveTab(id);
-
     };
 
 
@@ -190,40 +150,24 @@ function Home() {
                 return <ProfileSelection />
             case 1:
                 return <GenralSec />
-            //  <GeneralSection setTheValidation={setTheValidation} TheValidation={TheValidation} activeTab={activeTab} />;
             case 2:
                 return <AddressSec />
-            // <AddressSection HandleTabclick={HandleTabclick} activeTab={activeTab} />;
             case 3:
                 return <ContactSec />
-            // <ContactSection HandleTabclick={HandleTabclick} activeTab={activeTab} />;
             case 4:
                 return <EducationSec />
-            // <EducationSec HandleTabclick={HandleTabclick} activeTab={activeTab} />;
             case 5:
                 return <ProffSec />
-            // <ProfessionalSec HandleTabclick={HandleTabclick} activeTab={activeTab} />;
             case 6:
                 return <HobbySec />
-            // <HobbiesSec HandleTabclick={HandleTabclick} activeTab={activeTab} />;
             case 7:
                 return <UploadPicSec />
-            // <UploadSec HandleTabclick={HandleTabclick} activeTab={activeTab} />
-            // case 8:
-            //     return
-            // // <GridphotoSec />
             case 8:
                 return <PartnerPrefSec />
-            // <PartnerPreference />
             default:
                 "";
         }
     };
-
-
-
-
-
 
     const Title = {
         color: "#000",
@@ -260,13 +204,8 @@ function Home() {
 
     return (
         <>
-
-
-
             <div className='w-full h-full grid place-items-center pt-[100px]'>
-
                 <div className='flex justify-evenly items-center w-full'>
-
                     <div className="xl:block hidden w-[332px]">
                         <ul className='fixed left-[120px] top-[200px] space-y-[40px]'>
                             <li className='space-y-[11px] w-[335px]'>
@@ -283,8 +222,6 @@ function Home() {
                     </div>
 
                     <div className='h-[511px] w-[707px] border-l-[1px] border-l-[#EBEBEB]'>
-
-
                         <div className='ml-[66px] w-[647px]'>
 
                             <div className='w-full'>
@@ -337,14 +274,11 @@ function Home() {
                             </div>
 
                             <div className=''>
-
                                 {renderTabContent()}
-
                             </div>
 
                             <div className='w-full h-full grid place-items-center'>
                                 <div className='fixed  z-10 bottom-0 flex justify-center bg-[#FFF]  w-full 2xl:h-[100px] xl:h-[100px] lg:h-[80px] h-[80px]'>
-
                                     {activeTab > 0 ? <>
                                         <div className='w-[647px] mt-[20px]'>
                                             <ul className='flex justify-between w-[647px]'>
@@ -363,20 +297,13 @@ function Home() {
                                             </ul>
                                         </div>
                                     </> : ""}
-
                                 </div>
-
                             </div>
-
-
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </>
     );
 }
-
 export default Home;

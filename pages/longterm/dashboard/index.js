@@ -13,6 +13,7 @@ import { useDarkMode } from '../../../ContextProvider/DarkModeContext';
 import UserProfile from '../../_components/Container/UserProfile'
 import NavBar from '../../_components/layout/Navbar';
 import useUserActivity from '../../../utils/hooks/UserActivity';
+import ProfileNotFound from '../../../components/common/Error/ProfileNotFound';
 // Lazy load your components;
 const UserGridProfile = dynamic(() => import('../../_components/Container/UserGridProfile'));
 const ProfileComplete = dynamic(() => import('../../_components/Container/ProfileComplete'));
@@ -33,24 +34,18 @@ function index() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [listType, setListType] = useState(false);
 
-
   useUserActivity();
-
 
   const { data, status } = useSelector((state) => state.myprofile);
 
   useEffect(() => {
-    // const firstVisit = localStorage.getItem('modal');
-    // const UserRegister = localStorage.getItem('UserRegister');
 
     if (status === "idle" && data?.userProfileCompleted === false) {
       // Open the modal if profile is not completed
       setIsModalOpen(true);
-      console.log("Open Modal...");
     } else {
       // Close the modal if profile is completed
       setIsModalOpen(false);
-      console.log("Don't Open Modal...");
     }
   }, [status, data]);
 
@@ -99,7 +94,7 @@ function index() {
 
   };
 
-  const { users, loading } = useSelector((state) => state.alluser);
+  const { users, loading, error } = useSelector((state) => state.alluser);
 
 
   return (
@@ -120,50 +115,56 @@ function index() {
             <div id='story-centerlized-content' className='pl-[15px] md:pl-[15px] lg:pl-[10px] 2xl:pl-0 xl:pl-0'>
               <UserStory />
             </div>
+            {
+              error != null ?
 
-            <div id='centerlized-content' className='ml-[-5px] 2xl:mt-0 xl:mt-0 lg:mt-0 mt-[80px]'>
-              <div className='xl:left-0 lg:left-[10px] relative 2xl:w-[720px] xl:w-[645px] lg:w-[600px] m-[10px] flex justify-between'>
-
-                <h1 className='text-[#000] dark:text-[#FFF] p-[5px] relative lg:left-[15px] 2xl:left-[40px] xl:left-[55px]'><span style={Text6} >{searchTerm === '' ? "New Requests" : "Search Result"} </span></h1>
-                <div className={`justify-center  w-[62px] h-[30px] rounded-[17.5px] border-[1px] ${darkMode ? "border-[#73757b]" : "border-[#F3F3F3]"} flex  relative right-[50px]`}>
-
-                  <div onClick={() => setListType(true)} style={{ cursor: "pointer", borderRadius: "17.5px 0PX 0px 17.5px" }} className={`w-[45px] ${darkMode ? "bg-[#141516] border-r-[#73757b]" : listType ? "border-r-[#F3F3F3] bg-[#F3F8FF]" : " hover:bg-[#F3F8FF] border-r-[#F3F3F3]"} grid place-items-center h-[28px] border-r-[1px] `}>
-                    <Image width={13} height={13} alt='listview' src={listType ? "/assests/dashboard/menus/after-grid.svg" : "/assests/dashboard/menus/before-grid.svg"} />
-
-                  </div>
-
-
-
-                  {/* Grid View Mode  */}
-
-                  <div onClick={() => setListType(false)} style={{ cursor: "pointer", borderRadius: "0px 17.5px 17.5px 0px" }} className={`w-[45px] ${darkMode ? "bg-[#141516] border-l-[#73757b]" : listType ? "border-l-[#F3F3F3]  " : " bg-[#F3F8FF] hover:bg-[#F3F8FF] border-l-[#F3F3F3]"}   grid place-items-center h-[28px] border-l-[1px]`}>
-                    <Image width={13} height={13} alt='listview' src={listType ? "/assests/dashboard/menus/before-list.svg" : "/assests/dashboard/menus/after-list.svg"} />
-
-                  </div>
-
+                <div id='centerlized-content' className='ml-[-5px] 2xl:mt-0 xl:mt-0 lg:mt-0 mt-[80px]'>
+                  <ProfileNotFound />
                 </div>
-              </div>
+                :
+
+                <div id='centerlized-content' className=' ml-[-5px] 2xl:mt-0 xl:mt-0 lg:mt-0 mt-[80px]'>
+                  <div className='xl:left-0 lg:left-[10px] relative 2xl:w-[720px] xl:w-[645px] lg:w-[600px] m-[10px] flex justify-between'>
+
+                    <h1 className='text-[#000] dark:text-[#FFF] p-[5px] relative lg:left-[15px] 2xl:left-[40px] xl:left-[55px]'><span style={Text6} >{searchTerm === '' ? "New Requests" : "Search Result"} </span></h1>
+                    <div className={`justify-center  w-[62px] h-[30px] rounded-[17.5px] border-[1px] ${darkMode ? "border-[#73757b]" : "border-[#F3F3F3]"} flex  relative right-[50px]`}>
+
+                      <div onClick={() => setListType(true)} style={{ cursor: "pointer", borderRadius: "17.5px 0PX 0px 17.5px" }} className={`w-[45px] ${darkMode ? "bg-[#141516] border-r-[#73757b]" : listType ? "border-r-[#F3F3F3] bg-[#F3F8FF]" : " hover:bg-[#F3F8FF] border-r-[#F3F3F3]"} grid place-items-center h-[28px] border-r-[1px] `}>
+                        <Image width={13} height={13} alt='listview' src={listType ? "/assests/dashboard/menus/after-grid.svg" : "/assests/dashboard/menus/before-grid.svg"} />
+
+                      </div>
 
 
-              {searchTerm === '' ? (
-                <>
-                  {!listType ? <UserProfile users={users} /> : <UserGridProfile />}
-                </>
-              ) : (
-                <div>
 
-                  {searchResults.length === 0 ? (
-                    <div className='relative left-[55px]'>No search results</div>
+                      {/* Grid View Mode  */}
+
+                      <div onClick={() => setListType(false)} style={{ cursor: "pointer", borderRadius: "0px 17.5px 17.5px 0px" }} className={`w-[45px] ${darkMode ? "bg-[#141516] border-l-[#73757b]" : listType ? "border-l-[#F3F3F3]  " : " bg-[#F3F8FF] hover:bg-[#F3F8FF] border-l-[#F3F3F3]"}   grid place-items-center h-[28px] border-l-[1px]`}>
+                        <Image width={13} height={13} alt='listview' src={listType ? "/assests/dashboard/menus/before-list.svg" : "/assests/dashboard/menus/after-list.svg"} />
+
+                      </div>
+
+                    </div>
+                  </div>
+
+
+                  {searchTerm === '' ? (
+                    <>
+                      {!listType ? <UserProfile users={users} /> : <UserGridProfile />}
+                    </>
                   ) : (
                     <div>
-                      <SearchUsers searchResults={searchResults} />
+
+                      {searchResults.length === 0 ? (
+                        <div className='relative left-[55px]'>No search results</div>
+                      ) : (
+                        <div>
+                          <SearchUsers searchResults={searchResults} />
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
-              )}
-            </div>
-
-
+            }
             <div className="block md:hidden relative top-[60px] pl-[15px]">
               <h1 className="p-[5px] relative 2xl:left-[40px] xl:left-[55px]">
                 <span className='text-[#000] dark:text-[#FFF]' style={Text6}>New Matches</span>
@@ -194,7 +195,7 @@ function index() {
         <div className="pt-[100px]">
           <Footer />
         </div>
-      </div>
+      </div >
       <CelebratingModal isOpen={isModalOpen} onClose={closeModal} />
     </>
   );

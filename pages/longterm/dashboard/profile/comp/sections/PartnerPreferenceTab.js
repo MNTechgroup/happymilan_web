@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { fetchPartnerPrefdata, updateMyPartnerPrefdata } from '../../../../../../store/reducers/MyProfile';
 import { updateFormData, updatePartnerPref } from '../../../../../../store/actions/registerUser';
+import SaveButton from '../../../../../../components/common/Buttons/SaveButton';
 
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
@@ -461,7 +462,7 @@ const PartnerPreferenceTab = ({ partnerPrefID, formData, updateFormData }) => {
                                     </div>
                                     <div className='w-[90%] flex justify-end pb-[10px] mt-[10px]'>
 
-                                        <button id='grad-button' className='rounded-[10px] text-[white] w-[80px] h-[40px]' onClick={SubmitChanges} >Save</button>
+                                        <SaveButton onClick={SubmitChanges} >Save</SaveButton>
 
                                     </div>
                                 </div>
@@ -472,7 +473,7 @@ const PartnerPreferenceTab = ({ partnerPrefID, formData, updateFormData }) => {
                                     <div className='grid place-items-center w-[90%] h-[1px] bg-[#F1F1F1]'></div>
                                 </div>
                                 <div className='grid place-items-center'>
-                                    <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
+                                    <div className="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
                                         <div>
                                             <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Age</p>
                                             <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.age?.min} - {data?.age?.max}</h1>

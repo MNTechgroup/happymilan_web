@@ -6,6 +6,7 @@ import { getEducationData, updateEducationData } from '../../../../../../store/a
 import { getCookie } from 'cookies-next';
 import { FetchMyEducationData, updateMyEducationData } from '../../../../../../store/reducers/MyProfile';
 import { capitalizeFirstLetter } from '../../../../../../utils/form/Captitelize';
+import SaveButton from '../../../../../../components/common/Buttons/SaveButton';
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
 function EducationTab() {
@@ -246,7 +247,7 @@ function EducationTab() {
 
                                             <div className='w-[90%] flex justify-end pb-[10px] mt-[10px]'>
 
-                                                <button onClick={HandleSubmit} id='grad-button' className='rounded-[10px] text-[white] w-[80px] h-[40px]' >Save</button>
+                                                <SaveButton onClick={HandleSubmit}>Save</SaveButton>
 
                                             </div>
                                         </div>
@@ -257,7 +258,7 @@ function EducationTab() {
                                             <div className='grid place-items-center w-[90%] h-[1px] bg-[#F1F1F1]'></div>
                                         </div>
                                         <div className='grid place-items-center'>
-                                            <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
+                                            <div className="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
                                                 <div>
                                                     <p style={Text2} className='dark:text-[#FFF]  2xl:text-[14px] xl:text-[12px] text-[12px]'>Degree</p>
                                                     <h1 style={Text5} className='dark:text-[#FFF]  2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.degree ? capitalizeFirstLetter(data.degree) : "NA"}</h1>

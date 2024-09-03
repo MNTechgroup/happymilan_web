@@ -2,6 +2,7 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import SaveButton from '../../../../../../components/common/Buttons/SaveButton';
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
 
@@ -111,7 +112,7 @@ const ContactTab = ({ data }) => {
             <div className={`w-full h-[270px] lg:h-${showForm ? "[450px]" : "[369px]"}  border-[1px] border-[#F1F1F1] rounded-[10px] 2xl:space-y-[20px] xl:space-y-[20px] lg:space-y-[20px] md:space-y-[20px] space-y-[10px]`}>
                 <div className='pt-[10px] grid place-items-center'>
                     <ul className='w-[90%] flex justify-between items-center m-[10px]'>
-                        <li><h1 style={Text2} className='dark:text-[#FFF]  2xl:text-[16px] xl:text-[16px] lg:text-[16px] md:text-[16px] text-[14px]'>{showForm ? "Modify Contact Details" : "Contact Details" }</h1></li>
+                        <li><h1 style={Text2} className='dark:text-[#FFF]  2xl:text-[16px] xl:text-[16px] lg:text-[16px] md:text-[16px] text-[14px]'>{showForm ? "Modify Contact Details" : "Contact Details"}</h1></li>
                         <li>
                             <div className='cursor-pointer w-[37px] h-[37px] hover:bg-[#F0F9FF] rounded-[50%] flex items-center justify-center'>
                                 {!showForm ?
@@ -173,7 +174,7 @@ const ContactTab = ({ data }) => {
 
                             <div className='w-[90%] flex justify-end pb-[10px] mt-[20px]'>
 
-                                <button id='grad-button' className='rounded-[10px] text-[white] w-[80px] h-[40px]' >Save</button>
+                                <SaveButton>Save</SaveButton>
 
                             </div>
                         </div>
@@ -185,7 +186,7 @@ const ContactTab = ({ data }) => {
                             <div className='grid place-items-center w-[90%] h-[1px] bg-[#F1F1F1]'></div>
                         </div>
                         <div className='grid place-items-center'>
-                            <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
+                            <div className="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
                                 <div>
                                     <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Mobile Number</p>
                                     {/* <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]'>+{data?.mobileNumber ? data.mobileNumber : 'NA'}</h1> */}

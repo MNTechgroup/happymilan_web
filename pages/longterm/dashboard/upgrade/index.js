@@ -37,17 +37,12 @@ const PricingPage = () => {
 
     const dispatch = useDispatch();
 
-    const handleCheckout =  (e) => {
+    const handleCheckout = async (e) => {
         console.log("<== E ==>", e)
         // console.log("<== RES ==>",res)
         if (e?.planId) {
-            console.log("🚀 ~ handleCheckout ~ e?.planId:", e?.planId)
-            
             dispatch(getPlansByID(e?.planId))
-            setTimeout(() => {
             router.push(`/longterm/dashboard/upgrade/${e?.planId}`);
-                
-            }, 1000);
         }
     };
 
@@ -55,7 +50,7 @@ const PricingPage = () => {
         {
             label: 'Silver',
             value: 'dashboard',
-            desc: <PricingBox HandleCheckout={handleCheckout} />,
+            desc: <PricingBox handleCheckout={handleCheckout} />,
         },
         {
             label: 'Gold',

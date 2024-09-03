@@ -141,15 +141,8 @@ const Chats = ({ toggleInnerDrawer, HandleWide }) => {
 
 
                                 {FriendeLists?.acceptedUsers?.map((el, index) => {
-                                    console.log("🚀 ~ {FriendeLists?.acceptedUsers?.map ~ el:", el)
                                     return <ChatElement
                                         key={index}
-                                        // key={response.id}
-                                        // res={response}
-                                        // user={response.user}
-                                        // friend={response.friend}
-                                        // isCurrentUser={isCurrentUser}
-                                        // loading={FriendeLists.loading}
                                         toggleInnerDrawer={toggleInnerDrawer} {...el} />
                                 })}
 

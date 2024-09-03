@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { updateHobbies, updatehobbiesData } from '../../../../../../store/actions/registerUser';
 import { fetchMyhoobies, updateMyHobbies } from '../../../../../../store/reducers/MyProfile';
+import SaveButton from '../../../../../../components/common/Buttons/SaveButton';
 
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
@@ -83,7 +84,7 @@ function HobbiesTab() {
         lineHeight: "normal",
     };
 
-    
+
 
     const customStyle = {
         control: (provided, state) => ({
@@ -196,7 +197,7 @@ function HobbiesTab() {
                             </div>
                             <div className='w-[90%] flex justify-end pb-[10px] mt-[10px]'>
 
-                                <button onClick={SubmitChanges} id='grad-button' className='rounded-[10px] text-[white] w-[80px] h-[40px]' >Save</button>
+                                <SaveButton onClick={SubmitChanges}>Save</SaveButton>
 
                             </div>
                         </div>

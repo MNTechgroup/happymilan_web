@@ -38,7 +38,7 @@ function index() {
               <UserStory />
             </div>
 
-            <div id='centerlized-content' className='2xl:block xl:block lg:block hidden'>
+            <div id='centerlized-content' className='2xl:block xl:block lg:block '>
               <div className='relative 2xl:w-[715px] xl:w-[635px] m-[10px] flex justify-between'>
 
                 <Profile />

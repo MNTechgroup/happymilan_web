@@ -50,7 +50,7 @@ function SkeletonProfileSec() {
                         <div className='grid place-items-center w-[90%] h-[1px] bg-[#F1F1F1]'></div>
                     </div>
                     <div className='grid place-items-center'>
-                        <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
+                        <div className="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
                             <Skeleton>
                                 <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Date of Birth</p>
                                 <h1 style={Text5} className='2xl:text-[16px] xl:text-[14px] text-[14px]'>02 . 03. 1986</h1>
@@ -74,7 +74,7 @@ function SkeletonProfileSec() {
                         <div className='grid place-items-center w-[90%] h-[1px] bg-[#F1F1F1]'></div>
                     </div>
                     <div className='grid place-items-center'>
-                        <div class="w-[90%] relative top-[-15px] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
+                        <div className="w-[90%] relative top-[-15px] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
                             <Skeleton>
                                 <p style={Text2} className='2xl:text-[14px] xl:text-[12px] text-[12px]'>Current City</p>
                                 <h1 style={Text5} className='2xl:text-[16px] xl:text-[14px] text-[14px]'>New York</h1>
@@ -123,7 +123,7 @@ function SkeletonProfileSec() {
                                 <Image loading='lazy' alt="arrow" width={32} height={32} className='cursor-pointer m-[10px] w-[30px] h-[30px] md:w-[32px] md:h-[32px]' src='/assests/dashboard/story/arrow-left.svg' />
                             </div>
                         </div> */}
-                        
+
                         <div className='grid place-items-center mt-[50px]'>
                             <Skeleton variant="circular" width={184} height={184} className='mt-[5px] lg:mt-0 w-[80px] h-[80px] md:w-[100px] md:h-[100px] lg:w-[184px] lg:h-[184px] 2xl:w-[184px] 2xl:h-[184px] xl:w-[160px] xl:h-[160px]' />
                             <Skeleton className='pb-[10px] pt-[15px]'>

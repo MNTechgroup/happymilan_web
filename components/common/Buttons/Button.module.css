@@ -1,0 +1,16 @@
+.button {
+    background: linear-gradient(103deg, #0F52BA -25.03%, #BA0FA9 137.92%); /* Use hex color values */
+    color: white;
+    border: none; /* Add this if you want to remove default button border */
+    padding: 10px 20px; /* Adjust padding as needed */
+    border-radius: 23px; /* Add border radius for rounded corners */
+    cursor: pointer; /* Add cursor style */
+    font-size: 16px; /* Adjust font size */
+    width: 80px;
+    height: 40px;
+}
+
+.button:hover {
+    transition: 0.3s;
+    opacity: 0.9;
+}

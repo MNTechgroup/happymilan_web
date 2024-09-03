@@ -7,8 +7,6 @@ import { STATUSES, fetchTotalLikes, updateMyProfileData } from '../../../../../s
 import { getCookie } from 'cookies-next';
 import Avatar from 'react-avatar';
 import SkeletonProfile from './SKeletonProfile'
-
-
 const AddressTab = dynamic(() => import('./sections/AddressTab'));
 const EducationTab = dynamic(() => import('./sections/EducationTab'));
 const ContactTab = dynamic(() => import('./sections/ContactTab'));
@@ -22,14 +20,14 @@ import { useSocket } from '../../../../../ContextProvider/SocketContext';
 import { capitalizeFirstLetter } from '../../../../../utils/form/Captitelize';
 import { useDarkMode } from '../../../../../ContextProvider/DarkModeContext';
 import calculateAge from '../../../../../utils/helpers/CalculateAge';
+import { heightoption, MaritalOptions, profileOptions, Religionoptions, subcastOption, weightoption } from '../../../../../utils/options/ProfileOptions/GeneralSection';
+import SaveButton from '../../../../../components/common/Buttons/SaveButton';
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
 function Profile() {
 
 
     const { darkMode, toggleDarkMode } = useDarkMode();
-
-
 
     const Username = {
         color: darkMode ? "#FFF" : "#000",
@@ -74,9 +72,8 @@ function Profile() {
 
     const GeneralTab = ({ data }) => {
 
-        // const [EditGender, setEditGender] = useState(data?.gender && data.gender);
-
         const [userdata, setuserdata] = useState({
+            cast: data?.cast && data?.cast,
             religion: data?.religion && data.religion,
             dateOfBirth: data?.dateOfBirth && data.dateOfBirth,
             birthTime: data?.birthTime && data.birthTime,
@@ -89,11 +86,11 @@ function Profile() {
 
 
         const handleUpdateGenProfile = () => {
-
             dispatch(updateMyProfileData(userdata));
         }
 
         const [CharCount, setCharCount] = useState(0)
+        const [birthTime, SetBirthTime] = useState()
 
 
         const handleInputChange = (e) => {
@@ -101,20 +98,35 @@ function Profile() {
             const name = e.target.name;
             if (name === 'gender') {
                 setuserdata((prevValue) => ({ ...prevValue, [name]: value }))
-                // setEditGender(value)
             }
             else if (name === 'religion') {
-                // Handle religion separately for DynamicSelect
-                const selectedReligion = options.find((option) => option.value === value);
+                const selectedReligion = Religionoptions.find((option) => option.value === value);
                 setSelectValue(selectedReligion);
                 setuserdata((prevValue) => ({ ...prevValue, [name]: value }));
             }
             else if (name === 'cast') {
+                console.log("casttttt")
+                console.log(userdata)
 
                 const selectedcast = subcastOption.find((option) => option.value === value);
                 SetSubCastValue(selectedcast)
                 setuserdata((prevValue) => ({ ...prevValue, [name]: value }))
 
+            }
+            else if (name == "birthTime") {
+                const currentDate = new Date();
+
+                // Extract the date parts
+                const year = currentDate.getFullYear();
+                const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based in JavaScript
+                const day = String(currentDate.getDate()).padStart(2, '0');
+
+                // Combine the date with the input time
+                const isoDateString = `${year}-${month}-${day}T${value}:00`;
+
+                // Corrected: Pass 'field' and 'value' correctly
+                setuserdata(prevValue => ({ ...prevValue, [name]: isoDateString }))
+                SetBirthTime(value)
             }
             else if (name === 'writeBoutYourSelf') {
                 const maxChars = 150
@@ -133,35 +145,6 @@ function Profile() {
         const handleEditClick = () => {
             setShowForm(!showForm);
         };
-
-        const profileOptions = [
-            { id: 1, label: 'My Self', value: "mySelf" },
-            { id: 2, label: 'My Son', value: "mySon" },
-            { id: 3, label: 'My Daughter', value: "myDaughter" },
-            { id: 4, label: 'My Brother', value: "myBrother" },
-            { id: 5, label: 'My Friend', value: "myFriend" },
-        ];
-
-        const MaritalOptions = [
-            { label: 'Single', value: 'single' },
-            { label: 'Never Married', value: 'never-married' },
-            { label: 'Married', value: 'married' },
-        ]
-
-
-
-
-        //Height Option 
-
-        const heightoption = Array.from({ length: 23 }, (v, k) => {
-            const value = k + 5;
-            return { value, label: value.toString() };
-        });
-
-        const weightoption = Array.from({ length: 23 }, (v, k) => {
-            const value = k + 40;
-            return { value, label: value.toString() };
-        });
 
 
         const genralbtnText = {
@@ -205,42 +188,13 @@ function Profile() {
             }),
         };
 
-
-
-        const options = [
-            { value: 'hindu', label: 'Hindu' },
-            { value: 'christianity', label: 'Christianity' },
-            { value: 'islam', label: 'Islam' },
-            { value: 'buddhism', label: 'Buddhism' },
-            { value: 'judaism', label: 'Judaism' },
-            { value: 'sikhism', label: 'Sikhism' },
-            { value: 'taoism', label: 'Taoism' },
-            { value: 'shinto', label: 'Shinto' },
-            { value: 'jainism', label: 'Jainism' },
-            { value: 'bahai', label: 'Baháʼí Faith' },
-        ];
-
-
-
-
         const [selectValue, setSelectValue] = useState(
             data?.religion
-                ? options.find((option) => option.value === data.religion)
+                ? Religionoptions.find((option) => option.value === data.religion)
                 : null
         );
 
-        const subcastOption = [
-            { value: 'brahmin', label: 'Brahmin' },
-            { value: 'kshatriya', label: 'Kshatriya' },
-            { value: 'vaishya', label: 'Vaishya' },
-            { value: 'shudra', label: 'Shudra' },
-            { value: 'jat', label: 'Jat' },
-            { value: 'rajput', label: 'Rajput' },
-            { value: 'kayastha', label: 'Kayastha' },
-            { value: 'patel', label: 'Patel' },
-            { value: 'agrawal', label: 'Agrawal' },
-            { value: 'baniya', label: 'Baniya' },
-        ]
+
 
         const [SubCastValue, SetSubCastValue] = useState(
             data?.cast
@@ -301,7 +255,6 @@ function Profile() {
                                         {profileOptions.map((options) => {
                                             return (<button
                                                 id={userdata?.creatingProfileFor == options.value ? "grad-button" : ""}
-                                                // id={"grad-button"} 
                                                 style={genralbtnText}
                                                 onClick={() => setuserdata(() => {
                                                     return { ...userdata, creatingProfileFor: options.value }
@@ -310,8 +263,6 @@ function Profile() {
                                         })}
                                     </div>
                                 </div>
-
-
                                 <div className='w-[90%] pt-[20px]'>
                                     <div className='flex justify-between space-x-[20px]'>
                                         <div>
@@ -334,7 +285,7 @@ function Profile() {
                                         </div>
                                         <div>
                                             <h1 style={labelText} className='dark:text-[#FFF] text-[#000] pb-[10px]' >Time of Birth</h1>
-                                            <input name="birthTime" onChange={handleInputChange} value={userdata.birthTime} type='time' placeholder='First Name' className='dark:text-[#FFF] dark:bg-[#141516] dark:border-[#787878] outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[280px] 2xl:w-[270px] xl:w-[235px] lg:w-[300px] border-[1px] border-[#e6e6e6] pl-[10px] rounded-[8px] ' />
+                                            <input name="birthTime" onChange={handleInputChange} value={birthTime} type='time' placeholder='First Name' className='dark:text-[#FFF] dark:bg-[#141516] dark:border-[#787878] outline-none focus:border-[1px] focus:border-[black] h-[50px] w-[280px] 2xl:w-[270px] xl:w-[235px] lg:w-[300px] border-[1px] border-[#e6e6e6] pl-[10px] rounded-[8px] ' />
                                         </div>
                                     </div>
                                     <div className='pt-[20px] flex justify-between space-x-[20px]'>
@@ -343,7 +294,7 @@ function Profile() {
                                             <DynamicSelect
                                                 className="h-[50px] w-[280px] 2xl:w-[270px] xl:w-[235px] lg:w-[300px] flex justify-end"
                                                 styles={customStyles}
-                                                options={options}
+                                                options={Religionoptions}
                                                 defaultValue={selectValue}
                                                 placeholder={
                                                     data && data.religion ? (data.religion) : ('Choose an option')
@@ -374,8 +325,6 @@ function Profile() {
                                                     options={heightoption}
                                                     placeholder={data?.height ? (data.height) : ('Select')}
                                                     onChange={(selectedOption) => handleInputChange({ target: { name: "height", value: selectedOption?.value } })}
-
-
                                                 />
                                             </div>
                                             <div>
@@ -411,13 +360,10 @@ function Profile() {
                                     </div>
                                     <div className='flex justify-end pb-[10px] mt-[10px]'>
 
-                                        <button onClick={handleUpdateGenProfile} id='profile-save-details-btn' className='rounded-[10px] text-[white] w-[80px] h-[40px]' >Save</button>
+                                        <SaveButton onClick={handleUpdateGenProfile} className={'rounded-[10px] text-[white] w-[80px] h-[40px]'} >Save</SaveButton>
 
                                     </div>
                                 </div>
-
-
-
                             </div>
 
                         </>
@@ -430,12 +376,10 @@ function Profile() {
                                 <div className="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
                                     <div>
                                         <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Date of Birth</p>
-                                        {/* <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px] xl:text-[14px] text-[14px]'>{data && data.dateOfBirth ? (data.dateOfBirth) : ("02 . 03. 1986")}</h1> */}
                                         <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px] xl:text-[14px] text-[14px]'>{formattedDateOfBirth}</h1>
                                     </div>
                                     <div>
                                         <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Birth of Time</p>
-                                        {/* <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px] xl:text-[14px] text-[14px]'>{data && data.birthTime ? (data.birthTime) : ("10:01:20 AM")}</h1> */}
                                         <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px] xl:text-[14px] text-[14px]'>{formattedDateOfBirthTime}</h1>
                                     </div>
                                     <div>
@@ -448,10 +392,6 @@ function Profile() {
                                     </div>
                                 </div>
                             </div>
-
-                            {/* <div className='hidden md:flex justify-center '>
-                                <div className='grid place-items-center w-[90%] h-[1px] bg-[#F1F1F1]'></div>
-                            </div> */}
                             <div className='grid place-items-center'>
                                 <div className="w-[90%] relative top-[-15px] m-[12px] grid grid-cols-2 grid-rows-2 gap-[32px]">
                                     <div>
@@ -478,19 +418,9 @@ function Profile() {
 
     const { data, status, totalLikes } = useSelector((state) => state.myprofile);
 
-
-
-
-
     const [token, settoken] = useState();
-
-
     const TotalSentRequest = useSelector((state) => state.usersact.sentrequestdata.sentUsersdata)
-
-    // data.sentrequestdata?.sentUsersdata?.m
-
     useEffect(() => {
-        // dispatch(fetchMyProfileData())
         dispatch(fetchTotalLikes())
         dispatch(getSentrequestData())
         settoken(getCookie("authtoken"))
@@ -504,7 +434,6 @@ function Profile() {
 
 
     socket?.on('message', (data) => {
-        console.log(" ~ socket?.on ~ data:", data);
         SetLiveLikeCount(data.data.data?.totalResults);
     });
 
@@ -522,7 +451,6 @@ function Profile() {
             case 4: return <EducationTab />;
                 break;
             case 5: return <ProfessionalTab />;
-
                 break;
             case 6: return <HobbiesTab />;
                 break;
@@ -556,14 +484,9 @@ function Profile() {
             <div className=" dark:bg-[#18191a] 2xl:pl-0 2xl:pr-0 xl:pl-0 xl:pr-0 lg:pl-[0px] lg:pr-[30px] pl-[0px] pr-[20px] relative 2xl:left-[40px] xl:left-[45px] lg:left-0 left-[0px]">
                 <div className={` flex m-[10px] 2xl:w-[631px] 2xl:h-[294px] xl:w-[540px] xl:h-[284px] lg:w-full w-full dark:bg-[#18191a] bg-[#FFF]`}>
                     <div
-                        // id='profile-background-grad' 
                         className='bg-custom-gradient w-full h-[100px] 2xl:h-[138px] xl:h-[138px] md:h-[138px] lg:h-[138px] bg-[#0F52BA] rounded-[10px]'>
 
                         <div className='flex justify-between pb-[50px]'>
-                            {/* <div>
-                                <Image loading='lazy' alt='left-Icon' width={32} height={32} onClick={() => router.back()} className='cursor-pointer m-[10px] w-[30px] h-[30px] md:w-[32px] md:h-[32px]' src='/assests/dashboard/story/arrow-left.svg' />
-                            </div> */}
-
                             <div onClick={() => router.push("/longterm/dashboard/seting")} className='block lg:hidden cursor-pointer pr-[20px] pt-[20px]'>
                                 <span className=" h-12 w-12 text-lg text-white "><i className={`bx bx-cog `}></i></span>
                             </div>
@@ -664,19 +587,19 @@ function Profile() {
                                     <li>
                                         <div className='flex items-center space-x-[10px]'>
 
-                                            <h1 style={Text2} className='dark:text-[#FFF] lg:text-[12px] md:text-[12px] text-[11px]'>{data?.gender ? data?.gender?.charAt(0).toUpperCase() + data?.gender.slice(1) : "NA"}&nbsp;,&nbsp;{calculateAge(data?.dateOfBirth)}</h1>
+                                            <h1 style={Text2} className='dark:text-[#FFF] lg:text-[12px] md:text-[12px] text-[11px]'>{data?.gender ? capitalizeFirstLetter(data?.gender) : "NA"}&nbsp;,&nbsp;{calculateAge(data?.dateOfBirth)}</h1>
                                         </div>
                                     </li>
                                     <li>
                                         <div className='flex items-center space-x-[10px]'>
                                             <Image loading='lazy' alt='bagIcon' width={14} height={12} src='/assests/dashboard/icon/bag-icon.svg' />
-                                            <h1 style={Text2} className='dark:text-[#FFF] lg:text-[12px] md:text-[12px] text-[11px]'>{data && data.proffesion ? (data?.proffesion && data.proffesion) : "NA"}</h1>
+                                            <h1 style={Text2} className='dark:text-[#FFF] lg:text-[12px] md:text-[12px] text-[11px]'>{data && data?.userProfessional ? capitalizeFirstLetter(data?.userProfessional?.jobTitle) : "NA"}</h1>
                                         </div>
                                     </li>
                                     <li>
                                         <div className='flex items-center space-x-[10px]'>
                                             <Image loading='lazy' alt='loactionIcon' width={10} height={12} src='/assests/dashboard/icon/location-icon.svg' />
-                                            <h1 style={Text2} className='dark:text-[#FFF] lg:text-[12px] md:text-[12px] text-[11px]'>{"NA"}</h1>
+                                            <h1 style={Text2} className='dark:text-[#FFF] lg:text-[12px] md:text-[12px] text-[11px]'>{data && data?.address ? capitalizeFirstLetter(data?.address?.currentCity) : "NA"}</h1>
                                         </div>
                                     </li>
                                 </ul>
@@ -731,43 +654,10 @@ function Profile() {
 
                             </div>
 
-                            <div className='dark:bg-[#18191a] hidden lg:block pt-[10px] pb-[30px] '>
+                            <div className='dark:bg-[#18191a] hidden lg:flex pt-[10px] pb-[30px] '>
                                 {RenderTab()}
                             </div>
-                            <div className='block lg:hidden pt-[10px] pb-[30px]'>
-                                <div className='flex flex-col space-y-[30px] pb-[50px]'>
-                                    {/* <Suspense fallback={"Loading"}>
-                                        <div>
-                                            <GeneralTab />
 
-                                        </div>
-
-                                        <div>
-                                            <AddressTab />
-                                        </div>
-
-                                        <div>
-                                            <ContactTab />
-                                        </div>
-
-                                        <div>
-                                            <EducationTab />
-                                        </div>
-
-                                        <div>
-                                            <ProfessionalTab />
-                                        </div>
-
-                                        <div>
-                                            <HobbiesTab />
-                                        </div>
-
-                                        <div>
-                                            <PartnerPreferenceTab />
-                                        </div>
-                                    </Suspense> */}
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -775,8 +665,6 @@ function Profile() {
 
 
             <Modal
-                // setModalOpen={setModalOpen}
-                // closeModal={() => setModalOpen(false)}
                 handleClose={handleClose}
                 handleOpen={handleOpen}
                 setOpenProfileModal={setOpenProfileModal}

@@ -7,7 +7,6 @@ import { capitalizeFirstLetter } from "../../../../../../utils/form/Captitelize"
 import DisplayNameSelect from "./function/DisplayNameSelect";
 import { Dialog } from "@mui/material";
 import { UPDATE_DISPLAY_STATUS } from "../../../../../../store/type";
-import PrivacyOptions from "./function/PrivacyOptions";
 
 function PrivacySeting() {
 
@@ -112,8 +111,47 @@ function PrivacySeting() {
         <div className=" mt-[20px] xl:mt-[25px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
         <DisplayNameSelect HandleChangeUserName={HandleChangeUserName} />
         <div className=" mt-[10px] xl:mt-[25px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
-        <PrivacyOptions />
-        <div className=" mt-[10px] xl:mt-[25px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
+        {loading ? " " :
+          <>
+            <div>
+              {formData?.map((question, questionIndex) => (
+                <div key={questionIndex} className="mt-[20px]">
+                  <h1 className="text-[15px] xl:text-[16px] font-medium mb-[20px]">
+                    {question.question}
+                  </h1>
+                  {question.options.map((option, optionIndex) => (
+                    <div key={optionIndex} className="mt-[15px] flex">
+                      <div className="flex justify-center items-center">
+                        <input
+                          className="w-[15.5px]  xl:w-[16px] h-[15.5px] xl:h-[16px]"
+                          type="radio"
+                          id={`${questionIndex}-${optionIndex}`}
+                          name={`question-${questionIndex}`}
+                          checked={option.isSelected} // Apply default selection based on isSelected property
+                          onChange={() => handleOptionChange(questionIndex, optionIndex)}
+                        />
+                        <label
+                          htmlFor={`${questionIndex}-${optionIndex}`}
+                          className="ml-[10px] text-[13px] xl:text-[14px]"
+                        >
+                          {option.option}
+                        </label>
+                      </div>
+                    </div>
+                  ))}
+                  <div className=" mt-[20px] xl:mt-[25px] w-[570px] lg:w-[640px] xl:w-[700px] h-[1px] bg-[#ECECEC]"></div>
+                </div>
+              ))}
+              {/* <button onClick={postDataToApi}>Submit</button> */}
+
+              <div className="w-full">
+                <div className="flex justify-end mt-[10px]">
+                  {showbtn ?
+                    <button onClick={postDataToApi} id="grad-button" className="w-[100px] h-[40px] rounded-[22px]">Save</button> : ""}
+                </div>
+              </div>
+            </div>
+          </>}
       </div>
 
       <Dialog

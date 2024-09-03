@@ -1,12 +1,13 @@
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 import { Checkbox } from '@material-tailwind/react';
-import { fetchAdressData, updateMyAddressData } from '../../../../../../store/reducers/MyProfile';
+import { updateMyAddressData } from '../../../../../../store/reducers/MyProfile';
 import { capitalizeFirstLetter } from '../../../../../../utils/form/Captitelize';
 import { useDarkMode } from '../../../../../../ContextProvider/DarkModeContext';
+import SaveButton from '../../../../../../components/common/Buttons/SaveButton';
 
 const AddressTab = ({ AddressID }) => {
 
@@ -15,14 +16,6 @@ const AddressTab = ({ AddressID }) => {
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-
-        // dispatch(getAddressData(AddressID))
-        dispatch(fetchAdressData(AddressID))
-
-    }, [])
-
-    // const { data, loading } = useSelector((state) => state.usersact.addressdata)
     const { loading, data } = useSelector((state) => state.myprofile.profileData.adressData)
 
     const Text2 = {
@@ -102,9 +95,9 @@ const AddressTab = ({ AddressID }) => {
 
 
     const [CurrentAddressData, SetCurrentAddressData] = useState({
-        currentResidenceAddress: data?.currentResidenceAddress ? data.currentResidenceAddress : "",
-        currentCity: data?.currentCity ? data.currentCity : "",
-        currentCountry: data?.currentCountry ? data.currentCountry : "",
+        currentResidenceAddress: AddressID?.currentResidenceAddress ? AddressID.currentResidenceAddress : "",
+        currentCity: AddressID?.currentCity ? AddressID.currentCity : "",
+        currentCountry: AddressID?.currentCountry ? AddressID.currentCountry : "",
 
     })
 
@@ -120,7 +113,7 @@ const AddressTab = ({ AddressID }) => {
     }
 
     const SaveUpdateDataBtn = () => {
-        dispatch(updateMyAddressData({ AdressID: AddressID, UpdatedDataforAddress: CurrentAddressData }))
+        dispatch(updateMyAddressData({ AdressID: AddressID?.id, UpdatedDataforAddress: CurrentAddressData }))
         setShowForm(false)
     }
 
@@ -163,7 +156,6 @@ const AddressTab = ({ AddressID }) => {
                                             <div className=''>
                                                 <h1 style={labelText} className="dark:text-[#FFF] pb-[10px]">Current Residing Address</h1>
                                                 <textarea style={InputFonts} name='currentResidenceAddress' onChange={handleInputChange} value={CurrentAddressData.currentResidenceAddress} type='text' className='hover:border-[#000] text-[14px] dark:text-[#FFF] dark:bg-[#141516] dark:border-[#787878] pt-[5px] outline-none focus:border-[1px] focus:border-[black]  2xl:h-[76px] xl:h-[76px] w-full border-[1px] border-[#e6e6e6] pl-[10px] rounded-[8px]' />
-                                                {/* value={formData?.address.currentResidenceAddress} name='currentResidenceAddress' onChange={handleInputChange} */}
                                             </div>
                                         </div>
                                         <div className='w-[90%] pt-[20px] flex justify-between space-x-[20px]'>
@@ -209,13 +201,10 @@ const AddressTab = ({ AddressID }) => {
                                             </div>
                                             <div className='flex justify-end pb-[10px] mt-[10px]'>
 
-                                                <button onClick={SaveUpdateDataBtn} id='grad-button' className='rounded-[10px] text-[white] w-[80px] h-[40px]' >Save</button>
+                                                <SaveButton onClick={SaveUpdateDataBtn}>Save</SaveButton>
 
                                             </div>
                                         </div>
-
-
-
 
                                     </div>
 
@@ -226,19 +215,19 @@ const AddressTab = ({ AddressID }) => {
                                         <div className='grid place-items-center w-[90%] h-[1px] bg-[#F1F1F1]'></div>
                                     </div>
                                     <div className='grid place-items-center'>
-                                        <div class="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 2xl:gap-[32px] xl:gap-[32px] lg:gap-[32px] md:gap-[32px] gap-[30px]">
+                                        <div className="w-[90%] m-[12px] grid grid-cols-2 grid-rows-2 2xl:gap-[32px] xl:gap-[32px] lg:gap-[32px] md:gap-[32px] gap-[30px]">
                                             <div className='col-span-2'>
                                                 <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Current Residing Address</p>
-                                                <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.currentResidenceAddress ? capitalizeFirstLetter(data.currentResidenceAddress) : "NA"}</h1>
+                                                <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]'>{AddressID?.currentResidenceAddress ? capitalizeFirstLetter(AddressID.currentResidenceAddress) : "NA"}</h1>
                                             </div>
 
                                             <div>
                                                 <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Current City</p>
-                                                <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.currentCity ? capitalizeFirstLetter(data.currentCity) : "NA"}</h1>
+                                                <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]'>{AddressID?.currentCity ? capitalizeFirstLetter(AddressID.currentCity) : "NA"}</h1>
                                             </div>
                                             <div>
                                                 <p style={Text2} className='dark:text-[#FFF] 2xl:text-[14px] xl:text-[12px] text-[12px]'>Current Residing Country</p>
-                                                <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]'>{data?.currentCountry ? capitalizeFirstLetter(data.currentCountry) : "NA"}</h1>
+                                                <h1 style={Text5} className='dark:text-[#FFF] 2xl:text-[16px]  xl:text-[14px] text-[14px]'>{AddressID?.currentCountry ? capitalizeFirstLetter(AddressID.currentCountry) : "NA"}</h1>
                                             </div>
 
                                         </div>
