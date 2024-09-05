@@ -8,9 +8,11 @@ module.exports = withMT({
     "path-to-your-node_modules/@material-tailwind/react/components/**/*.{js,ts,jsx,tsx}",
     "path-to-your-node_modules/@material-tailwind/react/theme/components/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: ["class"],
   theme: {
     extend: {
+      backgroundImage: {
+        'custom-gradient': 'linear-gradient(103deg, #0F52BA -25.03%, #BA0FA9 137.92%)',
+      },
       colors: {
         white: "#fff",
         tomato: "#ef4136",
