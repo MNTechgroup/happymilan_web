@@ -4,8 +4,9 @@ import ProtectedRoutes from '../../../routes/ProtectedRoutes'
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useDarkMode } from '../../../../ContextProvider/DarkModeContext';
-import NavBar from '../../../_components/layout/Navbar';
+// import NavBar from '../../../_components/layout/Navbar';
 import useUserActivity from '../../../../utils/hooks/UserActivity';
+import NavBar from '../../../_components/layout/NavBar';
 
 const Footer = dynamic(() => import('../../../_components/layout/Footer'));
 const UserStory = dynamic(() => import('../../../_components/Container/UserStory'));

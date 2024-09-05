@@ -24,8 +24,8 @@ function UpgradeValidation(WrappedComponent) {
     return (props) => {
         const dispatch = useDispatch();
         const router = useRouter();
-        const { hasPlan, status } = useSelector((state) => state.auth);
-      
+        const { hasPlan, status } = useSelector((state) => state?.auth);
+
         useEffect(() => {
             if (status === 'idle') {
                 dispatch(checkUserPlan());

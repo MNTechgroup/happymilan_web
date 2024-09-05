@@ -4,8 +4,8 @@ import SideBar from '../../../_components/layout/SideBar'
 import Footer from '../../../_components/layout/Footer'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import NavBar from '../../../_components/layout/Navbar'
 import useUserActivity from '../../../../utils/hooks/UserActivity'
+import NavBar from '../../../_components/layout/NavBar'
 const UserStory = dynamic(() => import('../../../_components/Container/UserStory'));
 const BlockedUser = dynamic(() => import('./comp/BlockedUser'));
 const ProfileComplete = dynamic(() => import('../../../_components/Container/ProfileComplete'));

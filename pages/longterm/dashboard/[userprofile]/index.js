@@ -3,7 +3,7 @@
 import React from 'react'
 import SideBar from '../../../_components/layout/SideBar'
 import dynamic from 'next/dynamic';
-import NavBar from '../../../_components/layout/Navbar';
+import Navbar from '../../../_components/layout/NavBar'
 import useUserActivity from '../../../../utils/hooks/UserActivity';
 const UserStory = dynamic(() => import('../../../_components/Container/UserStory'));
 const Profile = dynamic(() => import('./comp/Userprofile'));
@@ -14,7 +14,7 @@ const ProtectedRoutes = dynamic(() => import('../../../routes/ProtectedRoutes'))
 
 
 
-function index({params}) {
+function index({ params }) {
   console.log("🚀 ~ index ~ params:", params)
   const handleSearch = (searchTerm) => { }
   useUserActivity();
@@ -24,7 +24,7 @@ function index({params}) {
 
       <ProtectedRoutes />
 
-      <NavBar handleSearch={handleSearch} />
+      <Navbar handleSearch={handleSearch} />
 
 
       <SideBar />
