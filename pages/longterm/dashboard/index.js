@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import ProtectedRoutes from '../../routes/ProtectedRoutes';
 import { useSelector } from 'react-redux';
-// import NavBar from '../../_components/layout/NavBar';
 import SideBar from '../../_components/layout/SideBar';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -11,9 +10,9 @@ import { getCookie } from 'cookies-next';
 import Image from 'next/image';
 import { useDarkMode } from '../../../ContextProvider/DarkModeContext';
 import UserProfile from '../../_components/Container/UserProfile'
-import NavBar from '../../_components/layout/Navbar';
 import useUserActivity from '../../../utils/hooks/UserActivity';
 import ProfileNotFound from '../../../components/common/Error/ProfileNotFound';
+import NavBar from '../../_components/layout/Navbar';
 // Lazy load your components;
 const UserGridProfile = dynamic(() => import('../../_components/Container/UserGridProfile'));
 const ProfileComplete = dynamic(() => import('../../_components/Container/ProfileComplete'));

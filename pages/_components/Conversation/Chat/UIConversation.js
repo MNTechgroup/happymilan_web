@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SafetyConsentAction } from '../../../../store/actions/safetyConsentActions';
 import { UserContext } from '../../../../ContextProvider/UsersConversationContext';
 import UpgradeValidation from '../../../_security/Chat/withUpgradeValidation';
-// import withUpgradeValidation from '../../../validateFun/Chat/withUpgradeValidation';
 
 
 function UIConversation({ UserDetails }) {
@@ -56,7 +55,5 @@ function UIConversation({ UserDetails }) {
     );
 }
 
-// export default UIConversation;
-// export default UIConversation;
 export default UIConversation;
-// export default UpgradeValidation(UIConversation);
+// UpgradeValidation

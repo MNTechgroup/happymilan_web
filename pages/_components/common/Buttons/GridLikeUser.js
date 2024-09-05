@@ -13,13 +13,13 @@ function GridLikeUser({ theUserName, currentPage, from, user, RequestId, HandleR
     const [isUserLiked, setIsUserLiked] = useState(false);
     const [isUsershortlist, setisUsershortlist] = useState(false);
     const [isUserDisliked, setIsUserDisliked] = useState(false);
-    const [isRequestSent, setisRequestSent] = useState(false);
+    // const [isRequestSent, setisRequestSent] = useState(false);
 
-    const SentRequestData = useSelector((state) => state.usersact.sentrequestdata.sentUsersdata)
+    // const SentRequestData = useSelector((state) => state.usersact.sentrequestdata.sentUsersdata)
 
     useEffect(() => {
-        const FilledSent = SentRequestData?.some(item => item?.id === user?.id)
-        setisRequestSent(FilledSent)
+        // const FilledSent = SentRequestData?.some(item => item?.id === user?.id)
+        // setisRequestSent(FilledSent)
 
         if (data?.results) {
             const liked = data.results.some(item => item.likedUserId === user?.id && item.isLike);
@@ -166,7 +166,9 @@ function GridLikeUser({ theUserName, currentPage, from, user, RequestId, HandleR
                                     : '/assests/dashboard/icon/shortlist-before-icon.svg'} />
                     </div>
                     <div><Image onClick={HandleRequestModal} onMouseEnter={() => SetOnHover({ SentRequestHover: true })} onMouseLeave={() => SetOnHover({ SentRequestHover: false })} loading='lazy' alt='send' width={40} height={40} className='cursor-pointer w-[40px] h-[40px]'
-                        src={RequestId || isRequestSent ?
+                        src={RequestId 
+                            // Pending--v2 || isRequestSent 
+                            ?
                             '/assests/dashboard/icon/send-icon-2.svg'
                             : OnHover.SentRequestHover ?
                                 '/assests/dashboard/icon/send-icon-2.svg'
@@ -197,7 +199,9 @@ function GridLikeUser({ theUserName, currentPage, from, user, RequestId, HandleR
                                 : '/assests/dashboard/icon/heart-icon-2.svg'} />
                 </div>
                 <div><Image onMouseEnter={() => SetOnHover({ SentRequestHover: true })} onMouseLeave={() => SetOnHover({ SentRequestHover: false })} quality={45} loading='lazy' onClick={HandleRequestModal} alt='send' width={40} height={40} className='cursor-pointer w-[40px] h-[40px]'
-                    src={RequestId || isRequestSent ?
+                    src={RequestId 
+                        // Pending--v2 || isRequestSent 
+                        ?
                         '/assests/dashboard/icon/send-icon-2.svg'
                         : OnHover.SentRequestHover ?
                             '/assests/dashboard/icon/send-icon-2.svg'

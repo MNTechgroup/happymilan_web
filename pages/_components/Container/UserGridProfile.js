@@ -10,6 +10,8 @@ import dynamic from 'next/dynamic'
 import GridLikeUser from '../common/Buttons/GridLikeUser'
 import ShortlistUser from '../common/Buttons/ShortlistUser'
 import Avatar from 'react-avatar'
+import Pagination from '../../../components/common/Features/Pagination'
+import ProfileSkeletonLoader from '../../../components/common/animation/GridSkeleton'
 
 // Dynamically imported components
 const ShareModal = dynamic(() => import("../Model/Models/ShareModal"));
@@ -72,55 +74,17 @@ function UserGridProfile() {
     }, [currentPage, setCurrentPage, CurrentPageofUserdata, SetCurrentPageofUserdata])
 
 
-
-    const renderButtons = () => {
-        const buttons = [];
-        const maxButtonsToShow = 5; // Maximum number of buttons to show
-
-        // Calculate the start and end page numbers based on the current page and total pages
-        let startPage = Math.max(1, currentPage - Math.floor(maxButtonsToShow / 2));
-        let endPage = Math.min(totalPages, startPage + maxButtonsToShow - 1);
-
-        // If there are not enough pages to fill maxButtonsToShow, adjust the start and end page numbers
-        if (endPage - startPage + 1 < maxButtonsToShow) {
-            startPage = Math.max(1, endPage - maxButtonsToShow + 1);
-        }
-
-        // Render pagination buttons within the range of startPage to endPage
-        for (let i = startPage; i <= endPage; i++) {
-            buttons.push(
-                <Link key={i} href={`/longterm/dashboard?page=${i}`} className='inline-block'>
-                    <div id={currentPage === i ? "grid-active-btn" : (darkMode ? "DarkPagination" : "pagination-count")} onClick={() => setCurrentPage(i)} className='duration-300 cursor-pointer w-[44px] h-[44px] border-[1px] border-[black] grid place-items-center rounded-full'>{i}</div>
-                </Link>
-            );
-        }
-
-        return buttons;
-    };
-
     const router = useRouter()
-    const HanldeNextPage = () => {
-        const nextpage = currentPage + 1
-        setCurrentPage(nextpage)
-        router.push(`/longterm/dashboard?page=${nextpage}`)
-    }
-    const HandlePrevPage = () => {
-        const prevpage = currentPage - 1;
-        setCurrentPage(prevpage)
-        router.push(`/longterm/dashboard?page=${prevpage}`)
 
-    }
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
 
 
 
     const [sentrequest, setsentRequest] = useState({});
-
     const [openShortlistModal, setopenShortlistModal] = React.useState(false);
-
     const [shortlistText, setshortlistText] = useState();
-
-
-
     const thedata = useSelector((state) => state.myprofile);
 
 
@@ -149,16 +113,9 @@ function UserGridProfile() {
         }
     };
 
-
-
-
     // Popup Data
 
     const [CurrURL, SetCurURL] = useState("");
-
-
-
-
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isRegisterModalOpen, setisRegisterModalOpen] = useState(false);
     const [isReportModalOpen, setisReportModalOpen] = useState(false);
@@ -192,17 +149,12 @@ function UserGridProfile() {
         setisReportModalOpen(true);
 
     };
-
     const CloseReportModal = () => {
         setisReportModalOpen(false);
     }
-
-
     const HandleVisitProfile = (res) => {
         router.push(`/longterm/dashboard/${res?.id}`)
     }
-
-
     return (
         <>
             <div className='mt-[50px] lg:mt-0 h-full w-full 2xl:w-[730px] xl:w-[634px] '>
@@ -212,35 +164,7 @@ function UserGridProfile() {
                     {
                         loading ?
                             <>
-                                {[1, 2, 3, 4, 5, 6].map((res, index) => {
-                                    return (
-
-
-                                        <div key={index} style={ProfileCard} className='inline-block lg:flex flex-col space-y-[15px]  2xl:w-[192px] w-[180px] xl:w-[170px] h-[327px] bg-[#FFF] rounded-[10px]'>
-                                            <div className='flex justify-center pt-[10px]'>
-                                                <Skeleton variant="text" width={120} className='pl-[10px] flex space-x-[10px]' />
-
-                                            </div>
-                                            <div className='flex justify-center '>
-                                                <Skeleton variant="circular" alt='profile' style={{ objectFit: "cover" }} width={102} height={102} className='w-[102px] h-[102px] rounded-[50%]' src={""} />
-                                            </div>
-                                            <div className='text-center grid place-items-center'>
-                                                <Skeleton variant='h1' width={110} style={ProfileName} className='text-[18px]' />
-                                                {/* <Skeleton variant="text" width={90} style={ListText} className='text-[14px]' /> */}
-                                                <Skeleton variant="text" width={90} style={ListText} className='text-[14px]' />
-                                                <Skeleton variant="text" width={90} style={ListText} className='text-[14px]' />
-                                            </div>
-
-                                            <div className='flex space-x-[15px] justify-center'>
-                                                <div><Skeleton variant="circular" alt='ignore' width={40} height={40} className='w-[40px] h-[40px]' src='/assests/dashboard/icon/ignore-icon-2.svg' /></div>
-                                                <div><Skeleton variant="circular" alt='like' width={40} height={40} className='w-[40px] h-[40px]' src='/assests/dashboard/icon/heart-icon-2.svg' /></div>
-                                                <div><Skeleton variant="circular" alt='send' width={40} height={40} className='w-[40px] h-[40px]' src='/assests/dashboard/icon/send-icon-2.svg' /></div>
-                                            </div>
-                                        </div>
-
-
-                                    )
-                                })}
+                                <ProfileSkeletonLoader />
                             </>
                             :
                             <>
@@ -274,9 +198,7 @@ function UserGridProfile() {
                                                         <Image quality={45} loading='lazy' alt='profile-pic' width={100} height={100} style={{ objectFit: "cover" }} className='w-[100px] h-[100px] rounded-[50%]' src={user?.profilePic} />
                                                     </>
                                                         :
-                                                        <>
-                                                            <Avatar name={user?.name} round size='100' />
-                                                        </>
+                                                        <><Avatar name={user?.name} round size='100' /></>
                                                     }
                                                 </div>
                                                 <div className='text-center'>
@@ -285,42 +207,18 @@ function UserGridProfile() {
                                                     <p style={ListText} className=' text-[#000] dark:text-[#FFF] text-[14px]'>32, 5’3”</p>
                                                     <p style={ListText} className=' text-[#000] dark:text-[#FFF] text-[14px]'>{user?.religion ? user?.religion : "NA"}, {user?.cast ? user?.cast : "NA"}</p>
                                                     <p style={ListText} className=' text-[#000] dark:text-[#FFF] text-[14px]'>{user?.maritalStatus ? user?.maritalStatus : "NA"}</p>
-                                                </div>
 
+                                                </div>
                                                 <GridLikeUser RequestId={sentrequest[user?.id]}
                                                     HandleRequestModal={() => HandleRequestModal(user)} from={"GridProfile"} currentPage={currentPage} user={user} key={index} />
                                             </div>
-
                                         )
-
                                     })
                                 }
-
-
                             </>
                     }
-
-
                 </div>
-                <div className=' relative left-[-5px] lg:left-[0px] flex pt-[50px] space-x-[40px] justify-center items-center w-[90%] 2xl:w-full xl:w-full'>
-                    <button disabled={pagesdata?.hasPrevPage != true} onClick={HandlePrevPage} className='duration-300 cursor-pointer w-[44px] h-[44px] border-[1px] dark:border-[#FFF] border-[black] grid place-items-center rounded-full'>
-                        {darkMode ?
-                            <Image width={7} height={14} alt='prev-dark' src="/assests/gridSection/Prev-Data-dark.svg" />
-                            :
-                            <Image width={7} height={14} alt='prev-light' src="/assests/gridSection/Prev-Data.svg" />
-                        }
-                    </button>
-
-                    {renderButtons()}
-                    <button disabled={pagesdata?.hasNextPage != true} onClick={HanldeNextPage} className='duration-300 cursor-pointer w-[44px] h-[44px] border-[1px] dark:border-[#FFF] border-[black] grid place-items-center rounded-full'>
-                        {darkMode ?
-                            <Image width={7} height={14} className='transform scale-x-[-1]' alt='next-dark' src="/assests/gridSection/Prev-Data-dark.svg" />
-                            :
-                            <Image width={7} height={14} className='transform scale-x-[-1]' alt='next-light' src="/assests/gridSection/Prev-Data.svg" />}
-                    </button>
-
-                </div>
-
+                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} darkMode={false} URL={'/longterm/dashboard/'} />
             </div>
 
             <ShareModal isOpen={isModalOpen} onClose={closeModal} data={CurrURL} />

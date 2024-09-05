@@ -118,7 +118,7 @@ function Credentials() {
         let config = {
           method: 'post',
           maxBodyLength: Infinity,
-          url: `${NEXT_PUBLIC_API_URL}/v1/user/auth/forgot-password`,
+          url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/auth/forgot-password`,
           headers: {
             'Content-Type': 'application/json'
           },
@@ -152,7 +152,7 @@ function Credentials() {
         let config = {
           method: 'post',
           maxBodyLength: Infinity,
-          url: 'https://happymilan.tech/api/v1/user/auth/reset-password',
+          url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/auth/reset-password`,
           headers: {
             'Content-Type': 'application/json'
           },
@@ -388,7 +388,7 @@ function Credentials() {
         let config = {
           method: 'post',
           maxBodyLength: Infinity,
-          url: 'https://happymilan.tech/api/v1/user/auth/forgot-password',
+          url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/auth/forgot-password`,
           headers: {
             'Content-Type': 'application/json'
           },
@@ -424,7 +424,7 @@ function Credentials() {
         let config = {
           method: 'post',
           maxBodyLength: Infinity,
-          url: 'https://happymilan.tech/api/v1/user/auth/reset-password',
+          url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/auth/reset-password`,
           headers: {
             'Content-Type': 'application/json'
           },
@@ -663,7 +663,7 @@ function Credentials() {
         let config = {
           method: 'post',
           maxBodyLength: Infinity,
-          url: 'https://happymilan.tech/api/v1/user/auth/forgot-password',
+          url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/auth/forgot-password`,
           headers: {
             'Content-Type': 'application/json'
           },
@@ -697,7 +697,7 @@ function Credentials() {
         let config = {
           method: 'post',
           maxBodyLength: Infinity,
-          url: 'https://happymilan.tech/api/v1/user/auth/reset-password',
+          url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/auth/reset-password`,
           headers: {
             'Content-Type': 'application/json'
           },

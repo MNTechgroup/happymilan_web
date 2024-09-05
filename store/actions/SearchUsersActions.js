@@ -103,7 +103,7 @@ export const FetchSaveSearchData = () => {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `https://happymilan.tech/api/v1/user/search-history/get-by-user/${userID}`,
+            url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/search-history/get-by-user/${userID}`,
             headers: {
                 'Authorization': `Bearer ${authtoken}`
             }
@@ -187,7 +187,7 @@ export const SaveUserSearchPost = (searchData) => {
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: `https://happymilan.tech/api/v1/user/search-history/`,
+            url: `${process.env.NEXT_PUBLIC_API_URL}/v1/user/search-history/`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${authToken}`

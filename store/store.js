@@ -17,6 +17,7 @@ import SpamuserSlice from './reducers/SpamReportReducer'
 import UserStoryView from './reducers/UserStoryView';
 import UpgradePlansReducer from './reducers/UpgradeReducer';
 import SignupReducer from './reducers/SignUpReducer';
+import UserSentRequestGetSlice from './matrimoney-services/slices/UserSentRequestPagination'
 
 const store = configureStore({
   reducer: {
@@ -36,7 +37,8 @@ const store = configureStore({
     usersact: userReducer,
     upgradeplans: UpgradePlansReducer,
     chatSafetyConsent: SafetyConsentReducer,
-    signUp: SignupReducer
+    signUp: SignupReducer,
+    getsentrequestdata: UserSentRequestGetSlice
 
   },
 });

@@ -89,9 +89,6 @@ const planPrice2 = {
 
 function NavBar({ handleSearch }) {
 
-
-
-
     const [token, settoken] = useState()
     const [Uname, SetUname] = useState();
 
@@ -493,7 +490,7 @@ function NavBar({ handleSearch }) {
                 id="nav-links"
                 className="p-1 p-[5px]  font-normal poppins rounded-[100%] dark:hover:bg-[#383838] hover:bg-[#F3F8FF] w-[40px] h-[40px] grid place-items-center"
             >
-                <Image alt="img" width={26} height={26} className="cursor-pointer" onClick={toggleDrawer('right', true)}  layout="responsive" style={{ width: 'auto', height: "auto" }} src={darkMode ? "/assests/dashboard/icon/chat-icon-dark.svg" : "/assests/dashboard/icon/chat-icon-light.svg"} />
+                <Image alt="img" width={26} height={26} className="cursor-pointer" onClick={toggleDrawer('right', true)} layout="responsive" style={{ width: 'auto', height: "auto" }} src={darkMode ? "/assests/dashboard/icon/chat-icon-dark.svg" : "/assests/dashboard/icon/chat-icon-light.svg"} />
 
             </div>
             <div

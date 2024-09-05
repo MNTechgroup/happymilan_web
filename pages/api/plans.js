@@ -4,13 +4,13 @@ import { getCookie } from 'cookies-next';
 
 export default async function handler(req, res) {
 
-   
+
   if (req.method === 'GET') {
     try {
-        const token = getCookie("authtoken");
-        const response = await axios.get('https://happymilan.tech/api/v1/user/plan/get-plan', {
+      const token = getCookie("authtoken");
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/v1/user/plan/get-plan`, {
         headers: {
-            'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`
         },
       });
       res.status(200).json(response.data);

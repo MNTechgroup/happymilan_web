@@ -5,7 +5,7 @@ import {  useSelector } from 'react-redux';
 function UserLikesbtn({ HandleShortlistUser, HandleRequestModal , RequestId, user }) {
     const [isUserLiked, setIsUserLiked] = useState(false);
     const [isUserDisliked, setIsUserDisliked] = useState(false);
-    const [isRequestSent, setisRequestSent] = useState(false);
+    // const [isRequestSent, setisRequestSent] = useState(false);
     
 
     const [OnHover, SetOnHover] = useState({
@@ -15,12 +15,12 @@ function UserLikesbtn({ HandleShortlistUser, HandleRequestModal , RequestId, use
         shortlisthover: false,
     })
 
-    const SentRequestData = useSelector((state) => state.usersact.sentrequestdata.sentUsersdata)
+    // const SentRequestData = useSelector((state) => state.usersact.sentrequestdata.sentUsersdata)
    
-    useEffect(() => {
-        const FilledSent = SentRequestData?.some(item => item?.id === user?.id)
-        setisRequestSent(FilledSent)
-    }, [])
+    // useEffect(() => {
+    //     const FilledSent = SentRequestData?.some(item => item?.id === user?.id)
+    //     setisRequestSent(FilledSent)
+    // }, [])
 
 
     return (
@@ -53,7 +53,9 @@ function UserLikesbtn({ HandleShortlistUser, HandleRequestModal , RequestId, use
                                 : '/assests/dashboard/icon/shortlist-before-icon.svg'} />
                 </div>
                 <div><Image onClick={HandleRequestModal} onMouseEnter={() => SetOnHover({ SentRequestHover: true })} onMouseLeave={() => SetOnHover({ SentRequestHover: false })} loading='lazy' alt='send' width={40} height={40} className='cursor-pointer w-[40px] h-[40px]'
-                    src={RequestId || isRequestSent ?
+                    src={RequestId 
+                        // Pending--v2  // || isRequestSent 
+                        ?
                         '/assests/dashboard/icon/send-icon-2.svg'
                         : OnHover.SentRequestHover ?
                             '/assests/dashboard/icon/send-icon-2.svg'

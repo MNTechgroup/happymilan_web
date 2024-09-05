@@ -1,9 +1,7 @@
-import { FacebookIcon, FacebookMessengerIcon, FacebookMessengerShareButton, TwitterIcon, WhatsappIcon, WhatsappShareButton } from "next-share";
 import Image from "next/image";
 import React, { useState } from "react";
-import { FacebookShareButton, TwitterShareButton } from "react-share";
 
-function ShareModal({ isOpen, onClose, data, UserID }) {
+function ShareModal({ isOpen, onClose, data }) {
   if (!isOpen) return null;
   const TitleText = {
     fontFamily: "Poppins",
@@ -40,13 +38,6 @@ function ShareModal({ isOpen, onClose, data, UserID }) {
       .catch((error) => console.error("Failed to copy:", error));
   };
 
-  const NewTabOpen = () => {
-    // const baseUrl = window.location.origin; // This will automatically take care of local and hosted environments
-    const baseUrl = window.location.origin; // This will automatically take care of local and hosted environments
-    const url = `${baseUrl}/longterm/dashboard/${UserID}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
-  }
-
   return (
     <>
       <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -80,9 +71,12 @@ function ShareModal({ isOpen, onClose, data, UserID }) {
               <div className="flex lg:justify-evenly flex-wrap lg:flex-nowrap lg:w-[520px] gap-y-[20px] gap-x-[30px]">
                 <div className="group grid place-items-center space-y-[5px]">
                   <div className="grid place-items-center w-[70px] h-[70px] rounded-[50%] cursor-pointer bg-[#e5f1ff] group-hover:bg-[#cce4fe]">
-                    <WhatsappShareButton url={data} title="Check out this profile!">
-                      <WhatsappIcon size={40} style={{ borderRadius: "50%" }}></WhatsappIcon>
-                    </WhatsappShareButton>
+                    <Image
+                      width={40}
+                      height={40}
+                      loading='lazy'
+                      src="/assests/social/icons8-whatsapp.svg"
+                    />
                   </div>
                   <div>
                     <label
@@ -98,7 +92,6 @@ function ShareModal({ isOpen, onClose, data, UserID }) {
                 </div>
                 <div className="group grid place-items-center space-y-[5px]">
                   <div className="grid place-items-center w-[70px] h-[70px] rounded-[50%] cursor-pointer bg-[#e5f1ff] group-hover:bg-[#cce4fe]">
-
                     <Image
                       width={40}
                       height={40}
@@ -119,15 +112,12 @@ function ShareModal({ isOpen, onClose, data, UserID }) {
                 </div>
                 <div className="group grid place-items-center space-y-[5px]">
                   <div className="grid place-items-center w-[70px] h-[70px] rounded-[50%] cursor-pointer bg-[#e5f1ff] group-hover:bg-[#cce4fe]">
-                    <FacebookShareButton url={data} title="Check out this profile!">
-                      <FacebookIcon size={40} style={{ borderRadius: "50%" }}></FacebookIcon>
-                    </FacebookShareButton>
-                    {/* <Image
+                    <Image
                       width={40}
                       height={40}
                       loading='lazy'
                       src="/assests/social/icons8-facebook.svg"
-                    /> */}
+                    />
                   </div>
                   <div>
                     <label
@@ -162,14 +152,12 @@ function ShareModal({ isOpen, onClose, data, UserID }) {
                 </div>
                 <div className="group grid place-items-center space-y-[5px]">
                   <div className="grid place-items-center w-[70px] h-[70px] rounded-[50%] cursor-pointer bg-[#e5f1ff] group-hover:bg-[#cce4fe]">
-                    <TwitterShareButton url={`https://happymilanweb.web.app/`}>
-                      <Image
-                        width={35}
-                        height={35}
-                        loading='lazy'
-                        src="/assests/social/icons8-twitterx.svg"
-                      />
-                    </TwitterShareButton>
+                    <Image
+                      width={35}
+                      height={35}
+                      loading='lazy'
+                      src="/assests/social/icons8-twitterx.svg"
+                    />
                   </div>
                   <div>
                     <label
@@ -218,8 +206,8 @@ function ShareModal({ isOpen, onClose, data, UserID }) {
                 ) : (
                   <>
                     <div
-
-                      className="bg-custom-gradient w-[50px] h-[40px] absolute top-[-45px] flex items-center justify-center text-white rounded"
+                      id="grad-bg"
+                      className="w-[50px] h-[40px] absolute top-[-45px] flex items-center justify-center text-white rounded"
                     >
                       <p className="text-[10px]"> Copied ! </p>
                     </div>
@@ -246,8 +234,7 @@ function ShareModal({ isOpen, onClose, data, UserID }) {
             <div>
               <button
                 style={Btntext}
-                // onClick={() => window.open(data, "_blank")}
-                onClick={NewTabOpen}
+                onClick={() => window.open(data, "_blank")}
                 className="w-[500px] h-[50px] border-[1px] group-hover:border-[black] duration-150 border-[#B9BABC] rounded-[10px] bg-[white] outline-none group-hover:text-[#3c41b5]"
               >
                 Visit page (opens in new tab)

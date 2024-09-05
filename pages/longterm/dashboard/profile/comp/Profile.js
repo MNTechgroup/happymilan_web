@@ -419,7 +419,7 @@ function Profile() {
     const { data, status, totalLikes } = useSelector((state) => state.myprofile);
 
     const [token, settoken] = useState();
-    const TotalSentRequest = useSelector((state) => state.usersact.sentrequestdata.sentUsersdata)
+    // const TotalSentRequest = useSelector((state) => state.usersact.sentrequestdata.sentUsersdata)
     useEffect(() => {
         dispatch(fetchTotalLikes())
         dispatch(getSentrequestData())
@@ -562,14 +562,14 @@ function Profile() {
                                     <li>
                                         <div className='flex items-center space-x-[10px]'>
                                             <Image loading='lazy' alt='heartIcon' width={16} height={14} src='/assests/dashboard/icon/heart-icon.svg' />
-                                            {/* <h1 style={Text3} className='text-[12px] md:text-[14px] lg:text-[14px] 2xl:text-[14px] xl:text-[13px]'>{totalLikes}<span style={Text2} className='pl-[5px] text-[14px] text-[#8B8B8B]'> Likes </span></h1> */}
                                             <h1 style={Text3} id='live-count' className='dark:text-[#FFF] text-[12px] md:text-[14px] lg:text-[14px] 2xl:text-[14px] xl:text-[13px]'>{LiveLikeCount}<span style={Text2} className='pl-[5px] text-[14px] text-[#8B8B8B]'> Likes </span></h1>
                                         </div>
                                     </li>
                                     <li>
                                         <div className='flex items-center space-x-[10px]'>
                                             <Image loading='lazy' alt='upIcon' width={14} height={14} src='/assests/dashboard/icon/up-arrow.svg' />
-                                            <h1 style={Text3} className='dark:text-[#FFF] text-[12px] md:text-[14px] lg:text-[14px] 2xl:text-[14px] xl:text-[13px]'>{TotalSentRequest?.length}<span style={Text2} className='pl-[5px] text-[14px] text-[#8B8B8B]'>Sent</span></h1>
+                                        {/* Pending--v2  */}
+                                            <h1 style={Text3} className='dark:text-[#FFF] text-[12px] md:text-[14px] lg:text-[14px] 2xl:text-[14px] xl:text-[13px]'>{"0"}<span style={Text2} className='pl-[5px] text-[14px] text-[#8B8B8B]'>Sent</span></h1>
                                         </div>
                                     </li>
                                     <li>
